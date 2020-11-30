@@ -1,3 +1,3 @@
-# Rust Monorepo
+# Cosmos Rust
 
-This is a place for commonly shared rust resources related to the Cosmos ecosystem.
+The home of all shared rust resources for the Cosmos ecosystem.
