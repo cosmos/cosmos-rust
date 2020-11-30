@@ -9,6 +9,10 @@
 Rust crate for interacting with Cosmos SDK
 [Protobuf structs](https://github.com/cosmos/cosmos-sdk/tree/master/proto/).
 
+The goal of this crate is to provide complete proto struct definitions for interacting
+with a CosmosSDK blockchain. Currently this crate only provides a minority of the many
+total structs exported by proto files. Pull requests to expand coverage are welcome.
+
 [Documentation][docs-link]
 
 ## Requirements
