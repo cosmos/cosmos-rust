@@ -1,0 +1,15 @@
+[package]
+name = "proto-build"
+version = "0.1.0"
+authors = ["Justin Kilpatrick <justin@althea.net>"]
+edition = "2018"
+
+
+[dependencies]
+prost = "0.6"
+tonic = "0.3.1"
+git2 = "0.13"
+prost-build = "0.6"
+tempdir = "0.3"
+walkdir = "2"
+tonic-build = "0.3.1"
