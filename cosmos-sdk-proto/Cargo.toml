@@ -5,6 +5,7 @@ authors = ["Justin Kilpatrick <justin@althea.net>", "Greg Szabo <greg@informal.s
 edition = "2018"
 license = "Apache-2.0"
 repository = "https://github.com/cosmos/cosmos-rust/tree/master/cosmos-sdk-proto"
+description = "Protobuf stuct defintions for interacting Cosmos SDK powered blockchains"
 readme     = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
 keywords   = ["blockchain", "cosmos", "tendermint", "proto"]
