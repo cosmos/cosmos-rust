@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Justin Kilpatrick <justin@althea.net>", "Greg Szabo <greg@informal.systems>"]
 edition = "2018"
 license = "Apache-2.0"

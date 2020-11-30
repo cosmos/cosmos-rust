@@ -3,7 +3,6 @@
 [![Crate][crate-image]][crate-link]
 [![Docs][docs-image]][docs-link]
 [![Build Status][build-image]][build-link]
-[![Audit Status][audit-image]][audit-link]
 [![Apache 2.0 Licensed][license-image]][license-link]
 ![Rust 1.39+][rustc-image]
 
