@@ -5,8 +5,7 @@
 //! worth considering that modules seem to show up and go away with every RC.
 //! TODO actually implement features tag based compilation
 
-#![deny(warnings, trivial_casts, trivial_numeric_casts, unused_import_braces)]
-#![allow(clippy::large_enum_variant)]
+#![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 #![forbid(unsafe_code)]
 //#![doc(html_root_url = "https://docs.rs/cosmos-sdk-proto/0.4.0")]
 

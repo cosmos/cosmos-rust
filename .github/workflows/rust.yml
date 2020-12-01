@@ -2,26 +2,48 @@ name: Rust
 
 on:
   push:
-    branches: [master]
+    branches: main
+    paths-ignore:
+      - README.md
   pull_request:
-    branches: [master]
+    paths-ignore:
+      - README.md
 
 env:
   CARGO_TERM_COLOR: always
+  RUSTFLAGS: -Dwarnings
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-      - name: Build Orchestrator
-        run: cargo build --all --verbose
-      - name: Run Orchestrator tests
-        run: cargo test --all --verbose
-  fmt:
+      - run: cargo build --all --verbose
+      - run: cargo test --all --verbose
+
+  rustfmt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run fmt check
-        run: cargo fmt --all -- --check
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.48.0 # MSRV
+          components: rustfmt
+          override: true
+          profile: minimal
+      - uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
+
+  clippy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.48.0 # MSRV
+          components: clippy
+          override: true
+          profile: minimal
+      - run: cargo clippy --all --all-features -- -D warnings
