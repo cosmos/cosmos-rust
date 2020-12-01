@@ -1,0 +1,25 @@
+[package]
+name = "cosmos-sdk-proto"
+version = "0.1.1"
+authors = ["Justin Kilpatrick <justin@althea.net>", "Greg Szabo <greg@informal.systems>"]
+edition = "2018"
+license = "Apache-2.0"
+repository = "https://github.com/cosmos/cosmos-rust/tree/master/cosmos-sdk-proto"
+description = "Protobuf stuct defintions for interacting Cosmos SDK powered blockchains"
+readme     = "README.md"
+categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
+keywords   = ["blockchain", "cosmos", "tendermint", "proto"]
+
+
+[dependencies]
+prost = "0.6"
+prost-types = "0.6"
+tonic = "0.3.1"
+git2 = "0.13"
+prost-build = "0.6"
+tempdir = "0.3"
+walkdir = "2"
+tonic-build = "0.3.1"
+
+[dependencies.tendermint-proto]
+version = "=0.17.0-rc3"
