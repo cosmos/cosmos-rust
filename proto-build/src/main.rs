@@ -142,6 +142,7 @@ fn compile_protos(sdk_dir: &Path, out_dir: &Path) {
         format!("{}/../proto/definitions/mock", root),
         format!("{}/proto/ibc", sdk_dir.display()),
         format!("{}/proto/cosmos/tx", sdk_dir.display()),
+        format!("{}/proto/cosmos/bank", sdk_dir.display()),
         format!("{}/proto/cosmos/base", sdk_dir.display()),
         format!("{}/proto/cosmos/staking", sdk_dir.display()),
     ];
@@ -198,6 +199,9 @@ fn compile_proto_services(sdk_dir: impl AsRef<Path>, out_dir: impl AsRef<Path>) 
     let proto_services_path = [
         sdk_dir.join("proto/cosmos/auth/v1beta1/query.proto"),
         sdk_dir.join("proto/cosmos/staking/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/bank/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/tx/v1beta1/service.proto"),
+        sdk_dir.join("proto/cosmos/tx/v1beta1/tx.proto"),
     ];
 
     // List available paths for dependencies
