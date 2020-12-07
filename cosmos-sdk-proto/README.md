@@ -4,7 +4,7 @@
 [![Docs][docs-image]][docs-link]
 [![Build Status][build-image]][build-link]
 [![Apache 2.0 Licensed][license-image]][license-link]
-![Rust 1.39+][rustc-image]
+![MSRV][rustc-image]
 
 Rust crate for interacting with Cosmos SDK
 [Protobuf structs](https://github.com/cosmos/cosmos-sdk/tree/master/proto/).
@@ -17,7 +17,7 @@ total structs exported by proto files. Pull requests to expand coverage are welc
 
 ## Requirements
 
-- Rust 1.39+
+- Rust 1.48+
 - Cosmos SDK (downloaded automatically)
 
 [//]: # "badges"
@@ -29,6 +29,6 @@ total structs exported by proto files. Pull requests to expand coverage are welc
 [build-link]: https://github.com/cosmos/cosmos-rust/actions?query=workflow%3ARust
 [license-image]: https://img.shields.io/badge/license-Apache2.0-blue.svg
 [license-link]: https://github.com/cosmos/cosmos-rust/blob/master/LICENSE
-[rustc-image]: https://img.shields.io/badge/rustc-1.39+-blue.svg
+[rustc-image]: https://img.shields.io/badge/rustc-1.48+-blue.svg
 [//]: # "general links"
 [cosmos sdk]: https://github.com/cosmos/cosmos-sdk

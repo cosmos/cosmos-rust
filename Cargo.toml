@@ -3,4 +3,5 @@
 members = [
     "proto-build",
     "cosmos-sdk-proto",
+    "cosmos-tx"
 ]

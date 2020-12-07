@@ -1,0 +1,36 @@
+name: cosmos-tx
+
+on:
+  push:
+    branches: main
+  pull_request:
+    paths:
+      - "cosmos-sdk-proto/**"
+      - "cosmos-tx/**"
+      - "Cargo.*"
+
+defaults:
+  run:
+    working-directory: cosmos-tx
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -Dwarnings
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - 1.48.0 # MSRV
+          - stable
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+      - run: cargo build --release
+      - run: cargo test --release
