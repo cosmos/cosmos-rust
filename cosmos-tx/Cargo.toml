@@ -1,0 +1,22 @@
+[package]
+name = "cosmos-tx"
+version = "0.1.0"
+authors = ["Tony Arcieri <tony@iqlusion.io>"]
+edition = "2018"
+license = "Apache-2.0"
+repository = "https://github.com/cosmos/cosmos-rust/tree/master/cosmos-tx"
+description = "Transaction builder and signer for Cosmos-based blockchains"
+readme     = "README.md"
+categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]
+keywords   = ["blockchain", "cosmos", "tendermint", "transaction"]
+
+[dependencies]
+cosmos-sdk-proto = { version = "0.1", path = "../cosmos-sdk-proto" }
+ecdsa = { version = "0.8", features = ["std"] }
+eyre = "0.6"
+k256 = { version = "0.6", features = ["ecdsa", "sha256"] }
+prost = "0.6"
+prost-types = "0.6"
+rust_decimal = "1.7"
+tendermint = "=0.17.0-rc3"
+thiserror = "1"
