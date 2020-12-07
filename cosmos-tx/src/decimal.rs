@@ -1,5 +1,4 @@
-//! Decimal type providing equivalent semantics to the [cosmos-sdk `Dec`][1]
-//! type.
+//! Decimal type with equivalent semantics to the [Cosmos `sdk.Dec`][1] type.
 //!
 //! [1]: https://pkg.go.dev/github.com/cosmos/cosmos-sdk/types#Dec
 
@@ -11,14 +10,14 @@ use std::{
     str::FromStr,
 };
 
-/// Number of decimal places required
+/// Number of decimal places required by an `sdk.Dec`
 /// See: <https://github.com/cosmos/cosmos-sdk/blob/018915b/types/decimal.go#L23>
 pub const PRECISION: u32 = 18;
 
 /// Maximum value of the decimal part of an `sdk.Dec`
 pub const FRACTIONAL_DIGITS_MAX: u64 = 9_999_999_999_999_999_999;
 
-/// Decimal type which follows Cosmos [cosmos-sdk `Dec`][1] conventions.
+/// Decimal type which follows Cosmos [Cosmos `sdk.Dec`][1] conventions.
 ///
 /// [1]: https://pkg.go.dev/github.com/cosmos/cosmos-sdk/types#Dec
 #[derive(Copy, Clone, Eq, PartialEq, PartialOrd, Ord)]

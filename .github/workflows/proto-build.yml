@@ -1,0 +1,25 @@
+name: proto-build
+
+on:
+  push:
+    branches: main
+  pull_request:
+    paths:
+      - "proto-build/**"
+      - "Cargo.*"
+
+defaults:
+  run:
+    working-directory: proto-build
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -Dwarnings
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cargo build --verbose
+      - run: cargo test --verbose

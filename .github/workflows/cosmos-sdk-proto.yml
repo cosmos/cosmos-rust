@@ -1,0 +1,25 @@
+name: cosmos-sdk-proto
+
+on:
+  push:
+    branches: main
+  pull_request:
+    paths:
+      - "cosmos-sdk-proto/**"
+      - "Cargo.*"
+
+defaults:
+  run:
+    working-directory: cosmos-sdk-proto
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: -Dwarnings
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cargo build --verbose
+      - run: cargo test --verbose

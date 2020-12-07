@@ -1,4 +1,4 @@
-name: Rust
+name: Workspace
 
 on:
   push:
@@ -14,13 +14,6 @@ env:
   RUSTFLAGS: -Dwarnings
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: cargo build --all --verbose
-      - run: cargo test --all --verbose
-
   rustfmt:
     runs-on: ubuntu-latest
     steps:
