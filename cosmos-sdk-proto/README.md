@@ -25,8 +25,8 @@ total structs exported by proto files. Pull requests to expand coverage are welc
 [crate-link]: https://crates.io/crates/cosmos-rust
 [docs-image]: https://docs.rs/cosmos-rust/badge.svg
 [docs-link]: https://docs.rs/cosmos-rust/
-[build-image]: https://github.com/cosmos/cosmos-rust/workflows/Rust/badge.svg
-[build-link]: https://github.com/cosmos/cosmos-rust/actions?query=workflow%3ARust
+[build-image]: https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-proto/badge.svg
+[build-link]: https://github.com/cosmos/cosmos-rust/actions?query=workflow:cosmos-sdk-proto
 [license-image]: https://img.shields.io/badge/license-Apache2.0-blue.svg
 [license-link]: https://github.com/cosmos/cosmos-rust/blob/master/LICENSE
 [rustc-image]: https://img.shields.io/badge/rustc-1.48+-blue.svg
