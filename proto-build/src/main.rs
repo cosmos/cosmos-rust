@@ -4,8 +4,12 @@
 //! in github.com/informalsystems/ibc-rs
 
 use git2::{Oid, Reference, Repository};
-use std::{fs, fs::copy, fs::create_dir_all, path::Path, process};
-use std::{fs::remove_dir_all, path::PathBuf};
+use std::{
+    fs::{self, create_dir_all, remove_dir_all},
+    io,
+    path::{Path, PathBuf},
+    process,
+};
 use walkdir::WalkDir;
 
 /// The Cosmos commit or tag to be cloned and used to build the proto files
@@ -24,6 +28,13 @@ const TMP_BRANCH: &str = "tmp-branch";
 const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 /// The temporary directory where cosmos-sdk is cloned into to read proto files from
 const TMP_REPO_DIR: &str = "/tmp/tmp-cosmos-sdk/";
+
+// Patch strings used by `copy_and_patch`
+
+/// Attribute preceeding a Tonic service definition
+const TONIC_SERVICE_ATTRIBUTE: &str = "# [doc = r\" Generated client implementations.\"] pub mod";
+/// Cargo feature attribute to add to Tonic service definitions
+const GRPC_FEATURE_ATTRIBUTE: &str = "#[cfg(feature = \"grpc\")]";
 
 fn main() {
     let tmp_build_dir: PathBuf = TMP_BUILD_DIR.parse().unwrap();
@@ -243,7 +254,7 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
         .map(|e| {
             let filename = e.file_name().to_os_string().to_str().unwrap().to_string();
             filenames.push(filename.clone());
-            copy(e.path(), format!("{}/{}", to_dir.display(), &filename))
+            copy_and_patch(e.path(), format!("{}/{}", to_dir.display(), &filename))
         })
         .filter_map(|e| e.err())
         .collect::<Vec<_>>();
@@ -255,4 +266,16 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 
         panic!("[error] Aborted.");
     }
+}
+
+fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
+    let contents = fs::read_to_string(src)?;
+
+    // Patch each service definition with a feature attribute
+    let patched_contents = contents.replace(
+        TONIC_SERVICE_ATTRIBUTE,
+        &format!("{}\n{}", GRPC_FEATURE_ATTRIBUTE, TONIC_SERVICE_ATTRIBUTE),
+    );
+
+    fs::write(dest, patched_contents)
 }
