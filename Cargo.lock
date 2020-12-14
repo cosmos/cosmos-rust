@@ -183,7 +183,7 @@ name = "cosmos-tx"
 version = "0.1.0"
 dependencies = [
  "cosmos-sdk-proto",
- "ecdsa 0.8.5",
+ "ecdsa",
  "eyre",
  "k256",
  "prost",
@@ -233,21 +233,11 @@ dependencies = [
 
 [[package]]
 name = "ecdsa"
-version = "0.8.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "87bf8bfb05ea8a6f74ddf48c7d1774851ba77bbe51ac984fdfa6c30310e1ff5f"
-dependencies = [
- "elliptic-curve 0.6.6",
- "signature",
-]
-
-[[package]]
-name = "ecdsa"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f488ad19df443921d9fa5b9ce13a282b552709c511d2d90b1fd635e0204d74d5"
 dependencies = [
- "elliptic-curve 0.7.1",
+ "elliptic-curve",
  "hmac",
  "signature",
 ]
@@ -282,18 +272,6 @@ name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
-
-[[package]]
-name = "elliptic-curve"
-version = "0.6.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "396db09c483e7fca5d4fdb9112685632b3e76c9a607a2649c1bf904404a01366"
-dependencies = [
- "digest",
- "generic-array",
- "rand_core 0.5.1",
- "subtle",
-]
 
 [[package]]
 name = "elliptic-curve"
@@ -700,8 +678,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4aebc14f2c1f2c5fd414f878084102b9ccb100fd90706e35979cd70a32f5d938"
 dependencies = [
  "cfg-if 1.0.0",
- "ecdsa 0.9.0",
- "elliptic-curve 0.7.1",
+ "ecdsa",
+ "elliptic-curve",
  "sha2",
 ]
 
