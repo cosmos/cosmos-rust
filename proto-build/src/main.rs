@@ -4,12 +4,16 @@
 //! in github.com/informalsystems/ibc-rs
 
 use std::{
+    ffi::OsStr,
     fs::{self, create_dir_all, remove_dir_all},
     io,
     path::{Path, PathBuf},
     process,
 };
 use walkdir::WalkDir;
+
+/// The Cosmos commit or tag to be cloned and used to build the proto files
+const COSMOS_REV: &str = "v0.40.0-rc3";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -18,8 +22,6 @@ use walkdir::WalkDir;
 const COSMOS_SDK_PROTO_DIR: &str = "../cosmos-sdk-proto/src/prost/";
 /// Directory where the submodule is located
 const COSMOS_SDK_DIR: &str = "../cosmos-sdk";
-/// Path to file containing the current HEAD of the `cosmos-sdk` repo
-const COSMOS_SDK_HEAD: &str = "../.git/modules/cosmos-sdk/HEAD";
 /// A temporary directory for proto building
 const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
@@ -47,22 +49,26 @@ fn main() {
     copy_generated_files(&tmp_build_dir, &proto_dir)
 }
 
-fn update_submodule() {
-    println!("[info] Updating cosmos/cosmos-sdk submodule...");
-
+fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
     let exit_status = process::Command::new("git")
-        .args(&["submodule", "update", "--init"])
+        .args(args)
         .status()
-        .unwrap();
+        .expect("git exit status missing");
 
     if !exit_status.success() {
         panic!("git exited with error code: {:?}", exit_status.code());
     }
 }
 
+fn update_submodule() {
+    println!("[info] Updating cosmos/cosmos-sdk submodule...");
+    run_git(&["submodule", "update", "--init"]);
+    run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_REV]);
+}
+
 fn output_sdk_version(out_dir: &Path) {
     let path = out_dir.join("COSMOS_SDK_COMMIT");
-    fs::copy(COSMOS_SDK_HEAD, path).unwrap();
+    fs::write(path, COSMOS_REV).unwrap();
 }
 
 fn compile_protos(out_dir: &Path) {
