@@ -3,8 +3,8 @@
 //! proto files for further compilation. This is based on the proto-compiler code
 //! in github.com/informalsystems/ibc-rs
 
-use git2::{Oid, Reference, Repository};
 use std::{
+    ffi::OsStr,
     fs::{self, create_dir_all, remove_dir_all},
     io,
     path::{Path, PathBuf},
@@ -14,20 +14,16 @@ use walkdir::WalkDir;
 
 /// The Cosmos commit or tag to be cloned and used to build the proto files
 const COSMOS_REV: &str = "v0.40.0-rc3";
-/// The Cosmos sdk repo url, must be a publicly available git repo and a proper git clone string
-const COSMOS_SDK_REPO: &str = "https://github.com/cosmos/cosmos-sdk";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
 
 /// The directory generated proto files go into in this repo
 const COSMOS_SDK_PROTO_DIR: &str = "../cosmos-sdk-proto/src/prost/";
-/// A temporary branch created in the cloned repo
-const TMP_BRANCH: &str = "tmp-branch";
+/// Directory where the submodule is located
+const COSMOS_SDK_DIR: &str = "../cosmos-sdk";
 /// A temporary directory for proto building
 const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
-/// The temporary directory where cosmos-sdk is cloned into to read proto files from
-const TMP_REPO_DIR: &str = "/tmp/tmp-cosmos-sdk/";
 
 // Patch strings used by `copy_and_patch`
 
@@ -38,109 +34,46 @@ const GRPC_FEATURE_ATTRIBUTE: &str = "#[cfg(feature = \"grpc\")]";
 
 fn main() {
     let tmp_build_dir: PathBuf = TMP_BUILD_DIR.parse().unwrap();
-    let tmp_repo_dir: PathBuf = TMP_REPO_DIR.parse().unwrap();
     let proto_dir: PathBuf = COSMOS_SDK_PROTO_DIR.parse().unwrap();
 
-    if tmp_repo_dir.exists() {
-        fs::remove_dir_all(tmp_repo_dir.clone()).unwrap();
-    }
     if tmp_build_dir.exists() {
         fs::remove_dir_all(tmp_build_dir.clone()).unwrap();
     }
 
-    println!("[info] Cloning cosmos/cosmos-sdk repository...");
-
-    let repo = Repository::clone(COSMOS_SDK_REPO, &tmp_repo_dir).unwrap_or_else(|e| {
-        println!("[error] Failed to clone the repository: {}", e);
-        process::exit(1)
-    });
     fs::create_dir(tmp_build_dir.clone()).unwrap();
 
-    println!("[info] Cloned at '{}'", tmp_repo_dir.display());
-
-    if let Ok(oid) = Oid::from_str(COSMOS_REV) {
-        checkout_commit(&repo, oid).unwrap_or_else(|e| {
-            println!("[error] Failed to checkout commit {}: {}", COSMOS_REV, e);
-            process::exit(1)
-        });
-    } else if let Some(ref tag) = have_tag(&repo, COSMOS_REV) {
-        checkout_tag(&repo, tag).unwrap_or_else(|e| {
-            println!("[error] Failed to checkout tag {}: {}", COSMOS_REV, e);
-            process::exit(1)
-        });
-    } else {
-        panic!(
-            "Failed to interpret {} as either a valid git tag or commit hash!",
-            COSMOS_REV
-        );
-    }
-
+    update_submodule();
     output_sdk_version(&tmp_build_dir);
-    compile_protos(&tmp_repo_dir, &tmp_build_dir);
-    compile_proto_services(&tmp_repo_dir, &tmp_build_dir);
+    compile_protos(&tmp_build_dir);
+    compile_proto_services(&tmp_build_dir);
     copy_generated_files(&tmp_build_dir, &proto_dir)
 }
 
-fn have_tag<'a>(repo: &'a Repository, tag_name: &str) -> Option<Reference<'a>> {
-    // Find a tag with name `tag_name`
-    // refactored from this code, the exact interpretation of flatten and flat_map
-    // is hard to intuit.
-    // repo.references()
-    //     .unwrap()
-    //     .into_iter()
-    //     .flatten()
-    //     .filter(|r| r.is_tag())
-    //     .flat_map(|r| r.peel_to_tag())
-    //     .find(|t| t.name() == Some(tag_name))
-    for git_ref in repo.references().unwrap().into_iter() {
-        if let Ok(git_ref) = git_ref {
-            if git_ref.name() == Some(&format!("refs/tags/{}", tag_name)) {
-                return Some(git_ref);
-            }
-        }
+fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
+    let exit_status = process::Command::new("git")
+        .args(args)
+        .status()
+        .expect("git exit status missing");
+
+    if !exit_status.success() {
+        panic!("git exited with error code: {:?}", exit_status.code());
     }
-    None
 }
 
-fn checkout_commit(repo: &Repository, oid: Oid) -> Result<(), git2::Error> {
-    let commit = repo.find_commit(oid)?;
-
-    // Create a new branch `rev` that points to `commit`
-    repo.branch(TMP_BRANCH, &commit, true)?;
-
-    // Checkout the newly created branch
-    let treeish = format!("refs/heads/{}", TMP_BRANCH);
-    let object = repo.revparse_single(&treeish)?;
-    repo.checkout_tree(&object, None)?;
-    repo.set_head(&treeish)?;
-
-    Ok(())
-}
-
-fn checkout_tag(repo: &Repository, git_ref: &Reference) -> Result<(), git2::Error> {
-    let rev = format!("refs/heads/{}", TMP_BRANCH);
-    // Checkout the newly created branch
-    let obj = repo.revparse_single(&git_ref.name().unwrap())?;
-
-    // Get the commit this tag points to
-    let commit = obj.as_commit().unwrap();
-
-    // Create a new branch `tag_name` that points to `commit`
-    repo.branch(TMP_BRANCH, &commit, true)?;
-    repo.checkout_tree(&obj, None)?;
-    repo.set_head(&rev)?;
-
-    println!("[info] Checked out tag {}", TMP_BRANCH);
-
-    Ok(())
+fn update_submodule() {
+    println!("[info] Updating cosmos/cosmos-sdk submodule...");
+    run_git(&["submodule", "update", "--init"]);
+    run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_REV]);
 }
 
 fn output_sdk_version(out_dir: &Path) {
     let path = out_dir.join("COSMOS_SDK_COMMIT");
-    std::fs::write(path, COSMOS_REV).unwrap();
+    fs::write(path, COSMOS_REV).unwrap();
 }
 
-fn compile_protos(sdk_dir: &Path, out_dir: &Path) {
+fn compile_protos(out_dir: &Path) {
+    let sdk_dir = Path::new(COSMOS_SDK_DIR);
+
     println!(
         "[info] Compiling .proto files to Rust into '{}'...",
         out_dir.display()
@@ -191,9 +124,9 @@ fn compile_protos(sdk_dir: &Path, out_dir: &Path) {
     config.compile_protos(&protos, &includes).unwrap();
 }
 
-fn compile_proto_services(sdk_dir: impl AsRef<Path>, out_dir: impl AsRef<Path>) {
+fn compile_proto_services(out_dir: impl AsRef<Path>) {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let sdk_dir = sdk_dir.as_ref().to_owned();
+    let sdk_dir = PathBuf::from(COSMOS_SDK_DIR);
 
     let proto_includes_paths = [
         root.join("../proto"),
