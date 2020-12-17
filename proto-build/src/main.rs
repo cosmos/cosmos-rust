@@ -3,6 +3,7 @@
 //! proto files for further compilation. This is based on the proto-compiler code
 //! in github.com/informalsystems/ibc-rs
 
+use regex::Regex;
 use std::{
     ffi::OsStr,
     fs::{self, create_dir_all, remove_dir_all},
@@ -27,8 +28,8 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 // Patch strings used by `copy_and_patch`
 
-/// Pattern which identifies types in the `tendermint_proto` crate
-const MALFORMED_TENDERMINT_PROTO_CRATE_PATH: &str = "super::super::super::tendermint";
+/// Regex for locating instances of `tendermint-proto` in prost/tonic build output
+const TENDERMINT_PROTO_REGEX: &str = "(super::)+tendermint";
 /// Attribute preceeding a Tonic client definition
 const TONIC_CLIENT_ATTRIBUTE: &str = "#[doc = r\" Generated client implementations.\"]";
 /// Cargo feature attribute to add to Tonic service definitions
@@ -206,13 +207,12 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
     let contents = fs::read_to_string(src)?;
 
-    // For undetermined reasons `prost-build` is outputting this path for types
-    // defined in the `tendermint-proto` crate. Patch them to use the real crate.
-    // See: https://github.com/cosmos/cosmos-rust/issues/15
-    // TODO(tarcieri): mega hax, find a real solution
-    let contents = contents
-        .replace(MALFORMED_TENDERMINT_PROTO_CRATE_PATH, "tendermint_proto")
-        .replace("super::tendermint_proto", "tendermint_proto");
+    // `prost-build` output references types from `tendermint-proto` crate
+    // relative paths, which we need to munge into `tendermint_proto` in
+    // order to leverage types from the upstream crate.
+    let contents = Regex::new(TENDERMINT_PROTO_REGEX)
+        .unwrap()
+        .replace_all(&contents, "tendermint_proto");
 
     // Patch each service definition with a feature attribute
     let patched_contents = contents.replace(
