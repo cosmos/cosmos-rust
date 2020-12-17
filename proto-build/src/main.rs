@@ -22,7 +22,7 @@ const COSMOS_REV: &str = "v0.40.0-rc3";
 /// The directory generated proto files go into in this repo
 const COSMOS_SDK_PROTO_DIR: &str = "../cosmos-sdk-proto/src/prost/";
 /// Directory where the submodule is located
-const COSMOS_SDK_DIR: &str = "../cosmos-sdk";
+const COSMOS_SDK_DIR: &str = "../cosmos-sdk-go";
 /// A temporary directory for proto building
 const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
