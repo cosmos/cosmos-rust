@@ -210,13 +210,9 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
     // defined in the `tendermint-proto` crate. Patch them to use the real crate.
     // See: https://github.com/cosmos/cosmos-rust/issues/15
     // TODO(tarcieri): mega hax, find a real solution
-    let contents = contents.replace(
-        MALFORMED_TENDERMINT_PROTO_CRATE_PATH,
-        "tendermint_proto"
-    ).replace(
-        "super::tendermint_proto",
-            "tendermint_proto"
-    );
+    let contents = contents
+        .replace(MALFORMED_TENDERMINT_PROTO_CRATE_PATH, "tendermint_proto")
+        .replace("super::tendermint_proto", "tendermint_proto");
 
     // Patch each service definition with a feature attribute
     let patched_contents = contents.replace(
