@@ -1,15 +1,16 @@
 [package]
 name = "proto-build"
 version = "0.1.0"
-authors = ["Justin Kilpatrick <justin@althea.net>"]
+authors = ["Justin Kilpatrick <justin@althea.net>", "Tony Arcieri <tony@iqlusion.io>"]
 edition = "2018"
 publish = false
 
 
 [dependencies]
 prost = "0.6"
-tonic = "0.3.1"
 prost-build = "0.6"
+tonic = "0.3.1"
+tonic-build = "0.3.1"
+regex = "1"
 tempdir = "0.3"
 walkdir = "2"
-tonic-build = "0.3.1"

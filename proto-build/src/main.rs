@@ -3,6 +3,7 @@
 //! proto files for further compilation. This is based on the proto-compiler code
 //! in github.com/informalsystems/ibc-rs
 
+use regex::Regex;
 use std::{
     ffi::OsStr,
     fs::{self, create_dir_all, remove_dir_all},
@@ -27,8 +28,10 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 // Patch strings used by `copy_and_patch`
 
-/// Attribute preceeding a Tonic service definition
-const TONIC_SERVICE_ATTRIBUTE: &str = "# [doc = r\" Generated client implementations.\"] pub mod";
+/// Regex for locating instances of `tendermint-proto` in prost/tonic build output
+const TENDERMINT_PROTO_REGEX: &str = "(super::)+tendermint";
+/// Attribute preceeding a Tonic client definition
+const TONIC_CLIENT_ATTRIBUTE: &str = "#[doc = r\" Generated client implementations.\"]";
 /// Cargo feature attribute to add to Tonic service definitions
 const GRPC_FEATURE_ATTRIBUTE: &str = "#[cfg(feature = \"grpc\")]";
 
@@ -159,7 +162,7 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
     tonic_build::configure()
         .build_client(true)
         .build_server(false)
-        .format(false)
+        .format(true)
         .out_dir(out_dir)
         .compile(&services, &includes)
         .unwrap();
@@ -204,10 +207,17 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
     let contents = fs::read_to_string(src)?;
 
+    // `prost-build` output references types from `tendermint-proto` crate
+    // relative paths, which we need to munge into `tendermint_proto` in
+    // order to leverage types from the upstream crate.
+    let contents = Regex::new(TENDERMINT_PROTO_REGEX)
+        .unwrap()
+        .replace_all(&contents, "tendermint_proto");
+
     // Patch each service definition with a feature attribute
     let patched_contents = contents.replace(
-        TONIC_SERVICE_ATTRIBUTE,
-        &format!("{}\n{}", GRPC_FEATURE_ATTRIBUTE, TONIC_SERVICE_ATTRIBUTE),
+        TONIC_CLIENT_ATTRIBUTE,
+        &format!("{}\n{}", GRPC_FEATURE_ATTRIBUTE, TONIC_CLIENT_ATTRIBUTE),
     );
 
     fs::write(dest, patched_contents)
