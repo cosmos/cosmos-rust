@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.1.2"
+version = "0.2.0" # Also update html_root_url in lib.rs when bumping this
 authors = ["Justin Kilpatrick <justin@althea.net>", "Greg Szabo <greg@informal.systems>"]
 edition = "2018"
 license = "Apache-2.0"
