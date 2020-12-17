@@ -27,8 +27,10 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 // Patch strings used by `copy_and_patch`
 
-/// Attribute preceeding a Tonic service definition
-const TONIC_SERVICE_ATTRIBUTE: &str = "# [doc = r\" Generated client implementations.\"] pub mod";
+/// Pattern which identifies types in the `tendermint_proto` crate
+const MALFORMED_TENDERMINT_PROTO_CRATE_PATH: &str = "super::super::super::tendermint";
+/// Attribute preceeding a Tonic client definition
+const TONIC_CLIENT_ATTRIBUTE: &str = "#[doc = r\" Generated client implementations.\"]";
 /// Cargo feature attribute to add to Tonic service definitions
 const GRPC_FEATURE_ATTRIBUTE: &str = "#[cfg(feature = \"grpc\")]";
 
@@ -159,7 +161,7 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
     tonic_build::configure()
         .build_client(true)
         .build_server(false)
-        .format(false)
+        .format(true)
         .out_dir(out_dir)
         .compile(&services, &includes)
         .unwrap();
@@ -204,10 +206,22 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
     let contents = fs::read_to_string(src)?;
 
+    // For undetermined reasons `prost-build` is outputting this path for types
+    // defined in the `tendermint-proto` crate. Patch them to use the real crate.
+    // See: https://github.com/cosmos/cosmos-rust/issues/15
+    // TODO(tarcieri): mega hax, find a real solution
+    let contents = contents.replace(
+        MALFORMED_TENDERMINT_PROTO_CRATE_PATH,
+        "tendermint_proto"
+    ).replace(
+        "super::tendermint_proto",
+            "tendermint_proto"
+    );
+
     // Patch each service definition with a feature attribute
     let patched_contents = contents.replace(
-        TONIC_SERVICE_ATTRIBUTE,
-        &format!("{}\n{}", GRPC_FEATURE_ATTRIBUTE, TONIC_SERVICE_ATTRIBUTE),
+        TONIC_CLIENT_ATTRIBUTE,
+        &format!("{}\n{}", GRPC_FEATURE_ATTRIBUTE, TONIC_CLIENT_ATTRIBUTE),
     );
 
     fs::write(dest, patched_contents)
