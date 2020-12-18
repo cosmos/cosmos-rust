@@ -23,3 +23,7 @@ version = "0.17"
 [features]
 default = ["grpc"]
 grpc = ["tonic"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

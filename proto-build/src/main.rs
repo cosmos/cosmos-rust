@@ -32,8 +32,12 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 const TENDERMINT_PROTO_REGEX: &str = "(super::)+tendermint";
 /// Attribute preceeding a Tonic client definition
 const TONIC_CLIENT_ATTRIBUTE: &str = "#[doc = r\" Generated client implementations.\"]";
-/// Cargo feature attribute to add to Tonic service definitions
-const GRPC_FEATURE_ATTRIBUTE: &str = "#[cfg(feature = \"grpc\")]";
+/// Attributes to add to gRPC clients
+const GRPC_CLIENT_ATTRIBUTES: &[&str] = &[
+    "#[cfg(feature = \"grpc\")]",
+    "#[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
+    TONIC_CLIENT_ATTRIBUTE,
+];
 
 fn main() {
     let tmp_build_dir: PathBuf = TMP_BUILD_DIR.parse().unwrap();
@@ -215,10 +219,8 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
         .replace_all(&contents, "tendermint_proto");
 
     // Patch each service definition with a feature attribute
-    let patched_contents = contents.replace(
-        TONIC_CLIENT_ATTRIBUTE,
-        &format!("{}\n{}", GRPC_FEATURE_ATTRIBUTE, TONIC_CLIENT_ATTRIBUTE),
-    );
+    let patched_contents =
+        contents.replace(TONIC_CLIENT_ATTRIBUTE, &GRPC_CLIENT_ATTRIBUTES.join("\n"));
 
     fs::write(dest, patched_contents)
 }
