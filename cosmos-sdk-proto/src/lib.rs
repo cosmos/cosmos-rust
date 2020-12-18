@@ -5,13 +5,18 @@
 //! worth considering that modules seem to show up and go away with every RC.
 //! TODO actually implement features tag based compilation
 
-#![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
+#![cfg_attr(docsrs, feature(doc_cfg))]
+#![doc(
+    html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png",
+    html_root_url = "https://docs.rs/cosmos-sdk-proto/0.1.2"
+)]
 #![forbid(unsafe_code)]
-//#![doc(html_root_url = "https://docs.rs/cosmos-sdk-proto/0.4.0")]
+#![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
 pub const COSMOS_SDK_VERSION: &str = include_str!("prost/COSMOS_SDK_COMMIT");
 
+/// Cosmos protobuf definitions
 pub mod cosmos {
     pub mod auth {
         pub mod v1beta1 {
@@ -77,6 +82,7 @@ pub mod cosmos {
     }
 }
 
+/// IBC protobuf definitions
 pub mod ibc {
     pub mod applications {
         pub mod transfer {
@@ -131,6 +137,7 @@ pub mod ibc {
     }
 }
 
+/// ICS23 protobuf definitions
 pub mod ics23 {
     include!("prost/ics23.rs");
 }

@@ -559,6 +559,7 @@ pub enum EvidenceType {
     LightClientAttack = 2,
 }
 #[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 #[doc = r" Generated client implementations."]
 pub mod abci_application_client {
     #![allow(unused_variables, dead_code, missing_docs)]
