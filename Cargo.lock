@@ -223,6 +223,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "der"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "51f59c66c30bb7445c8320a5f9233e437e3572368099f25532a59054328899b4"
+dependencies = [
+ "const-oid",
+]
+
+[[package]]
 name = "digest"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -233,9 +242,9 @@ dependencies = [
 
 [[package]]
 name = "ecdsa"
-version = "0.10.1"
+version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d39be153f0e278ffba17d1c05e8999641fcf3df7584a7251b5e660742fcab1ef"
+checksum = "41fbdb4ff710acb4db8ca29f93b897529ea6d6a45626d5183b47e012aa6ae7e4"
 dependencies = [
  "elliptic-curve",
  "hmac",
@@ -275,9 +284,9 @@ checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
 
 [[package]]
 name = "elliptic-curve"
-version = "0.8.1"
+version = "0.8.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02b76528f382c916bbb94470b4e7ad107a3d01619503f7ffba86c93aea04e215"
+checksum = "592b1c857559479c056b73a3053c717108a70e4dce320ad28c79c63f5c2e62ba"
 dependencies = [
  "bitvec",
  "digest",
@@ -857,11 +866,11 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
 name = "pkcs8"
-version = "0.3.2"
+version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9911ed9965aeee333588f226ad2baeabda478bf5ec151550735ed1760df759ba"
+checksum = "b4839a901843f3942576e65857f0ebf2e190ef7024d3c62a94099ba3f819ad1d"
 dependencies = [
- "const-oid",
+ "der",
 ]
 
 [[package]]
