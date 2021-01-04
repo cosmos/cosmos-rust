@@ -62,7 +62,6 @@ pub struct TxBody {
     /// those messages define the number and order of elements in AuthInfo's
     /// signer_infos and Tx's signatures. Each required signer address is added to
     /// the list only the first time it occurs.
-    ///
     /// By convention, the first required signer (usually from the first message)
     /// is referred to as the primary signer and pays the fee for the whole
     /// transaction.
@@ -187,6 +186,49 @@ pub struct Fee {
     #[prost(string, tag = "4")]
     pub granter: std::string::String,
 }
+/// GetTxsEventRequest is the request type for the Service.TxsByEvents
+/// RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetTxsEventRequest {
+    /// events is the list of transaction event type.
+    #[prost(string, repeated, tag = "1")]
+    pub events: ::std::vec::Vec<std::string::String>,
+    /// pagination defines an pagination for the request.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::std::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
+/// GetTxsEventResponse is the response type for the Service.TxsByEvents
+/// RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetTxsEventResponse {
+    /// txs is the list of queried transactions.
+    #[prost(message, repeated, tag = "1")]
+    pub txs: ::std::vec::Vec<Tx>,
+    /// tx_responses is the list of queried TxResponses.
+    #[prost(message, repeated, tag = "2")]
+    pub tx_responses: ::std::vec::Vec<super::super::base::abci::v1beta1::TxResponse>,
+    /// pagination defines an pagination for the response.
+    #[prost(message, optional, tag = "3")]
+    pub pagination: ::std::option::Option<super::super::base::query::v1beta1::PageResponse>,
+}
+/// BroadcastTxRequest is the request type for the Service.BroadcastTxRequest
+/// RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BroadcastTxRequest {
+    /// tx_bytes is the raw transaction.
+    #[prost(bytes, tag = "1")]
+    pub tx_bytes: std::vec::Vec<u8>,
+    #[prost(enumeration = "BroadcastMode", tag = "2")]
+    pub mode: i32,
+}
+/// BroadcastTxResponse is the response type for the
+/// Service.BroadcastTx method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BroadcastTxResponse {
+    /// tx_response is the queried TxResponses.
+    #[prost(message, optional, tag = "1")]
+    pub tx_response: ::std::option::Option<super::super::base::abci::v1beta1::TxResponse>,
+}
 /// SimulateRequest is the request type for the Service.Simulate
 /// RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -206,7 +248,7 @@ pub struct SimulateResponse {
     #[prost(message, optional, tag = "2")]
     pub result: ::std::option::Option<super::super::base::abci::v1beta1::Result>,
 }
-/// GetTx is the request type for the Service.GetTx
+/// GetTxRequest is the request type for the Service.GetTx
 /// RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxRequest {
@@ -220,6 +262,25 @@ pub struct GetTxResponse {
     /// tx is the queried transaction.
     #[prost(message, optional, tag = "1")]
     pub tx: ::std::option::Option<Tx>,
+    /// tx_response is the queried TxResponses.
+    #[prost(message, optional, tag = "2")]
+    pub tx_response: ::std::option::Option<super::super::base::abci::v1beta1::TxResponse>,
+}
+/// BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC method.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum BroadcastMode {
+    /// zero-value for mode ordering
+    Unspecified = 0,
+    /// BROADCAST_MODE_BLOCK defines a tx broadcasting mode where the client waits for
+    /// the tx to be committed in a block.
+    Block = 1,
+    /// BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits for
+    /// a CheckTx execution response only.
+    Sync = 2,
+    /// BROADCAST_MODE_ASYNC defines a tx broadcasting mode where the client returns
+    /// immediately.
+    Async = 3,
 }
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
@@ -285,6 +346,38 @@ pub mod service_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/GetTx");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " BroadcastTx broadcast transaction."]
+        pub async fn broadcast_tx(
+            &mut self,
+            request: impl tonic::IntoRequest<super::BroadcastTxRequest>,
+        ) -> Result<tonic::Response<super::BroadcastTxResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/BroadcastTx");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " GetTxsEvent fetches txs by event."]
+        pub async fn get_txs_event(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetTxsEventRequest>,
+        ) -> Result<tonic::Response<super::GetTxsEventResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/GetTxsEvent");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }

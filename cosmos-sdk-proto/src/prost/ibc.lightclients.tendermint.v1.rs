@@ -22,22 +22,23 @@ pub struct ClientState {
     /// Latest height the client was updated to
     #[prost(message, optional, tag = "7")]
     pub latest_height: ::std::option::Option<super::super::super::core::client::v1::Height>,
-    /// Consensus params of the chain
-    #[prost(message, optional, tag = "8")]
-    pub consensus_params: ::std::option::Option<::tendermint_proto::abci::ConsensusParams>,
     /// Proof specifications used in verifying counterparty state
-    #[prost(message, repeated, tag = "9")]
+    #[prost(message, repeated, tag = "8")]
     pub proof_specs: ::std::vec::Vec<super::super::super::super::ics23::ProofSpec>,
-    /// Path at which next upgraded client will be committed
-    #[prost(string, tag = "10")]
-    pub upgrade_path: std::string::String,
+    /// Path at which next upgraded client will be committed.
+    /// Each element corresponds to the key for a single CommitmentProof in the chained proof.
+    /// NOTE: ClientState must stored under `{upgradePath}/{upgradeHeight}/clientState`
+    /// ConsensusState must be stored under `{upgradepath}/{upgradeHeight}/consensusState`
+    /// For SDK chains using the default upgrade module, upgrade_path should be []string{"upgrade", "upgradedIBCState"}`
+    #[prost(string, repeated, tag = "9")]
+    pub upgrade_path: ::std::vec::Vec<std::string::String>,
     /// This flag, when set to true, will allow governance to recover a client
     /// which has expired
-    #[prost(bool, tag = "11")]
+    #[prost(bool, tag = "10")]
     pub allow_update_after_expiry: bool,
     /// This flag, when set to true, will allow governance to unfreeze a client
     /// whose chain has experienced a misbehaviour event
-    #[prost(bool, tag = "12")]
+    #[prost(bool, tag = "11")]
     pub allow_update_after_misbehaviour: bool,
 }
 /// ConsensusState defines the consensus state from Tendermint.
@@ -59,11 +60,9 @@ pub struct ConsensusState {
 pub struct Misbehaviour {
     #[prost(string, tag = "1")]
     pub client_id: std::string::String,
-    #[prost(string, tag = "2")]
-    pub chain_id: std::string::String,
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag = "2")]
     pub header_1: ::std::option::Option<Header>,
-    #[prost(message, optional, tag = "4")]
+    #[prost(message, optional, tag = "3")]
     pub header_2: ::std::option::Option<Header>,
 }
 /// Header defines the Tendermint client consensus Header.
@@ -89,11 +88,11 @@ pub struct Header {
     #[prost(message, optional, tag = "4")]
     pub trusted_validators: ::std::option::Option<::tendermint_proto::types::ValidatorSet>,
 }
-/// Fraction defines the protobuf message type for tmmath.Fraction
+/// Fraction defines the protobuf message type for tmmath.Fraction that only supports positive values.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Fraction {
-    #[prost(int64, tag = "1")]
-    pub numerator: i64,
-    #[prost(int64, tag = "2")]
-    pub denominator: i64,
+    #[prost(uint64, tag = "1")]
+    pub numerator: u64,
+    #[prost(uint64, tag = "2")]
+    pub denominator: u64,
 }
