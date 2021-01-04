@@ -17,6 +17,6 @@ eyre = "0.6"
 k256 = { version = "0.7", features = ["ecdsa", "sha256"] }
 prost = "0.6"
 prost-types = "0.6"
-rust_decimal = "1.7"
+rust_decimal = "1.9"
 tendermint = "0.17"
 thiserror = "1"
