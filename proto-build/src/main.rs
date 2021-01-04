@@ -28,6 +28,9 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 // Patch strings used by `copy_and_patch`
 
+/// Protos belonging to these Protobuf packages will be excluded
+/// (i.e. because they are sourced from `tendermint-proto`)
+const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint"];
 /// Regex for locating instances of `tendermint-proto` in prost/tonic build output
 const TENDERMINT_PROTO_REGEX: &str = "(super::)+tendermint";
 /// Attribute preceeding a Tonic client definition
@@ -209,6 +212,15 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 }
 
 fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
+    // Skip proto files belonging to `EXCLUDED_PROTO_PACKAGES`
+    for package in EXCLUDED_PROTO_PACKAGES {
+        if let Some(filename) = src.as_ref().file_name().and_then(OsStr::to_str) {
+            if filename.starts_with(&format!("{}.", package)) {
+                return Ok(());
+            }
+        }
+    }
+
     let contents = fs::read_to_string(src)?;
 
     // `prost-build` output references types from `tendermint-proto` crate
