@@ -128,7 +128,11 @@ fn compile_protos(out_dir: &Path) {
     let mut config = prost_build::Config::default();
     config.out_dir(out_dir);
     config.extern_path(".tendermint", "::tendermint_proto");
-    config.compile_protos(&protos, &includes).unwrap();
+
+    if let Err(e) = config.compile_protos(&protos, &includes) {
+        eprintln!("[error] couldn't compile protos: {}", e);
+        panic!("protoc failed!");
+    }
 }
 
 fn compile_proto_services(out_dir: impl AsRef<Path>) {
@@ -201,7 +205,7 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 
     if !errors.is_empty() {
         for e in errors {
-            println!("[error] Error while copying compiled file: {}", e);
+            eprintln!("[error] Error while copying compiled file: {}", e);
         }
 
         panic!("[error] Aborted.");
