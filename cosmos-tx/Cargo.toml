@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-tx"
-version = "0.1.0"
+version = "0.2.0-pre" # Also update html_root_url in lib.rs when bumping this
 authors = ["Tony Arcieri <tony@iqlusion.io>"]
 edition = "2018"
 license = "Apache-2.0"
@@ -11,7 +11,7 @@ categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]
 keywords   = ["blockchain", "cosmos", "tendermint", "transaction"]
 
 [dependencies]
-cosmos-sdk-proto = { version = "0.1", default-features = false, path = "../cosmos-sdk-proto" }
+cosmos-sdk-proto = { version = "0.2", default-features = false, path = "../cosmos-sdk-proto" }
 ecdsa = { version = "0.10", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.7", features = ["ecdsa", "sha256"] }

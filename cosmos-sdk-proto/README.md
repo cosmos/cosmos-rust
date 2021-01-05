@@ -6,29 +6,33 @@
 [![Apache 2.0 Licensed][license-image]][license-link]
 ![MSRV][rustc-image]
 
-Rust crate for interacting with Cosmos SDK
-[Protobuf structs](https://github.com/cosmos/cosmos-sdk/tree/master/proto/).
+Rust crate for interacting with [Protobufs] defined by the [Cosmos SDK].
 
 The goal of this crate is to provide complete proto struct definitions for interacting
-with a CosmosSDK blockchain. Currently this crate only provides a minority of the many
-total structs exported by proto files. Pull requests to expand coverage are welcome.
+with a Cosmos SDK blockchain.
+
+Currently this crate only provides a minority of the many total structs exported by
+proto files.
+
+Pull requests to expand coverage are welcome.
 
 [Documentation][docs-link]
 
-## Requirements
+## Minimum Supported Rust Version
 
-- Rust 1.48+
-- Cosmos SDK (downloaded automatically)
+Requires Rust **1.48** or newer.
 
 [//]: # "badges"
-[crate-image]: https://img.shields.io/crates/v/cosmos-rust.svg
-[crate-link]: https://crates.io/crates/cosmos-rust
-[docs-image]: https://docs.rs/cosmos-rust/badge.svg
-[docs-link]: https://docs.rs/cosmos-rust/
+[crate-image]: https://img.shields.io/crates/v/cosmos-sdk-proto.svg
+[crate-link]: https://crates.io/crates/cosmos-sdk-proto
+[docs-image]: https://docs.rs/cosmos-sdk-proto/badge.svg
+[docs-link]: https://docs.rs/cosmos-sdk-proto/
 [build-image]: https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-proto/badge.svg
 [build-link]: https://github.com/cosmos/cosmos-rust/actions?query=workflow:cosmos-sdk-proto
 [license-image]: https://img.shields.io/badge/license-Apache2.0-blue.svg
 [license-link]: https://github.com/cosmos/cosmos-rust/blob/master/LICENSE
 [rustc-image]: https://img.shields.io/badge/rustc-1.48+-blue.svg
+
 [//]: # "general links"
-[cosmos sdk]: https://github.com/cosmos/cosmos-sdk
+[Protobufs]: (https://github.com/cosmos/cosmos-sdk/tree/master/proto/)
+[Cosmos SDK]: https://github.com/cosmos/cosmos-sdk
