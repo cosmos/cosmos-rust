@@ -176,6 +176,9 @@ pub struct GenesisState {
     pub recv_sequences: ::std::vec::Vec<PacketSequence>,
     #[prost(message, repeated, tag = "7")]
     pub ack_sequences: ::std::vec::Vec<PacketSequence>,
+    /// the sequence for the next generated channel identifier
+    #[prost(uint64, tag = "8")]
+    pub next_channel_sequence: u64,
 }
 /// PacketSequence defines the genesis type necessary to retrieve and store
 /// next send and receive sequences.
@@ -194,11 +197,9 @@ pub struct PacketSequence {
 pub struct MsgChannelOpenInit {
     #[prost(string, tag = "1")]
     pub port_id: std::string::String,
-    #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag = "2")]
     pub channel: ::std::option::Option<Channel>,
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "3")]
     pub signer: std::string::String,
 }
 /// MsgChannelOpenInitResponse defines the Msg/ChannelOpenInit response type.
@@ -210,19 +211,19 @@ pub struct MsgChannelOpenInitResponse {}
 pub struct MsgChannelOpenTry {
     #[prost(string, tag = "1")]
     pub port_id: std::string::String,
+    /// in the case of crossing hello's, when both chains call OpenInit, we need the channel identifier
+    /// of the previous channel in state INIT
     #[prost(string, tag = "2")]
-    pub desired_channel_id: std::string::String,
-    #[prost(string, tag = "3")]
-    pub counterparty_chosen_channel_id: std::string::String,
-    #[prost(message, optional, tag = "4")]
+    pub previous_channel_id: std::string::String,
+    #[prost(message, optional, tag = "3")]
     pub channel: ::std::option::Option<Channel>,
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "4")]
     pub counterparty_version: std::string::String,
-    #[prost(bytes, tag = "6")]
+    #[prost(bytes, tag = "5")]
     pub proof_init: std::vec::Vec<u8>,
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "6")]
     pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
-    #[prost(string, tag = "8")]
+    #[prost(string, tag = "7")]
     pub signer: std::string::String,
 }
 /// MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type.
@@ -306,7 +307,7 @@ pub struct MsgRecvPacket {
     #[prost(message, optional, tag = "1")]
     pub packet: ::std::option::Option<Packet>,
     #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    pub proof_commitment: std::vec::Vec<u8>,
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "4")]
@@ -321,7 +322,7 @@ pub struct MsgTimeout {
     #[prost(message, optional, tag = "1")]
     pub packet: ::std::option::Option<Packet>,
     #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    pub proof_unreceived: std::vec::Vec<u8>,
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
     #[prost(uint64, tag = "4")]
@@ -338,7 +339,7 @@ pub struct MsgTimeoutOnClose {
     #[prost(message, optional, tag = "1")]
     pub packet: ::std::option::Option<Packet>,
     #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    pub proof_unreceived: std::vec::Vec<u8>,
     #[prost(bytes, tag = "3")]
     pub proof_close: std::vec::Vec<u8>,
     #[prost(message, optional, tag = "4")]
@@ -359,7 +360,7 @@ pub struct MsgAcknowledgement {
     #[prost(bytes, tag = "2")]
     pub acknowledgement: std::vec::Vec<u8>,
     #[prost(bytes, tag = "3")]
-    pub proof: std::vec::Vec<u8>,
+    pub proof_acked: std::vec::Vec<u8>,
     #[prost(message, optional, tag = "4")]
     pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "5")]
@@ -482,12 +483,12 @@ pub struct QueryChannelConsensusStateRequest {
     /// channel unique identifier
     #[prost(string, tag = "2")]
     pub channel_id: std::string::String,
-    /// version number of the consensus state
+    /// revision number of the consensus state
     #[prost(uint64, tag = "3")]
-    pub version_number: u64,
-    /// version height of the consensus state
+    pub revision_number: u64,
+    /// revision height of the consensus state
     #[prost(uint64, tag = "4")]
-    pub version_height: u64,
+    pub revision_height: u64,
 }
 /// QueryChannelClientStateResponse is the Response type for the
 /// Query/QueryChannelClientState RPC method

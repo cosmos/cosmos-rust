@@ -2,7 +2,8 @@
 // https://github.com/cosmos/ics/tree/master/spec/ics-003-connection-semantics#data-structures
 
 /// ConnectionEnd defines a stateful object on a chain connected to another
-/// separate one. NOTE: there must only be 2 defined ConnectionEnds to establish
+/// separate one.
+/// NOTE: there must only be 2 defined ConnectionEnds to establish
 /// a connection between two chains.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConnectionEnd {
@@ -10,7 +11,7 @@ pub struct ConnectionEnd {
     #[prost(string, tag = "1")]
     pub client_id: std::string::String,
     /// IBC version which can be utilised to determine encodings or protocols for
-    /// channels or packets utilising this connection
+    /// channels or packets utilising this connection.
     #[prost(message, repeated, tag = "2")]
     pub versions: ::std::vec::Vec<Version>,
     /// current state of the connection end.
@@ -19,6 +20,10 @@ pub struct ConnectionEnd {
     /// counterparty chain associated with this connection.
     #[prost(message, optional, tag = "4")]
     pub counterparty: ::std::option::Option<Counterparty>,
+    /// delay period that must pass before a consensus state can be used for packet-verification
+    /// NOTE: delay period logic is only implemented by some clients.
+    #[prost(uint64, tag = "5")]
+    pub delay_period: u64,
 }
 /// IdentifiedConnection defines a connection with additional connection
 /// identifier field.
@@ -40,6 +45,9 @@ pub struct IdentifiedConnection {
     /// counterparty chain associated with this connection.
     #[prost(message, optional, tag = "5")]
     pub counterparty: ::std::option::Option<Counterparty>,
+    /// delay period associated with this connection.
+    #[prost(uint64, tag = "6")]
+    pub delay_period: u64,
 }
 /// Counterparty defines the counterparty chain associated with a connection end.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -52,7 +60,7 @@ pub struct Counterparty {
     /// given connection.
     #[prost(string, tag = "2")]
     pub connection_id: std::string::String,
-    /// commitment merkle prefix of the counterparty chain
+    /// commitment merkle prefix of the counterparty chain.
     #[prost(message, optional, tag = "3")]
     pub prefix: ::std::option::Option<super::super::commitment::v1::MerklePrefix>,
 }
@@ -106,6 +114,9 @@ pub struct GenesisState {
     pub connections: ::std::vec::Vec<IdentifiedConnection>,
     #[prost(message, repeated, tag = "2")]
     pub client_connection_paths: ::std::vec::Vec<ConnectionPaths>,
+    /// the sequence for the next generated connection identifier
+    #[prost(uint64, tag = "3")]
+    pub next_connection_sequence: u64,
 }
 /// MsgConnectionOpenInit defines the msg sent by an account on Chain A to
 /// initialize a connection with Chain B.
@@ -113,12 +124,12 @@ pub struct GenesisState {
 pub struct MsgConnectionOpenInit {
     #[prost(string, tag = "1")]
     pub client_id: std::string::String,
-    #[prost(string, tag = "2")]
-    pub connection_id: std::string::String,
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag = "2")]
     pub counterparty: ::std::option::Option<Counterparty>,
-    #[prost(message, optional, tag = "4")]
+    #[prost(message, optional, tag = "3")]
     pub version: ::std::option::Option<Version>,
+    #[prost(uint64, tag = "4")]
+    pub delay_period: u64,
     #[prost(string, tag = "5")]
     pub signer: std::string::String,
 }
@@ -131,14 +142,16 @@ pub struct MsgConnectionOpenInitResponse {}
 pub struct MsgConnectionOpenTry {
     #[prost(string, tag = "1")]
     pub client_id: std::string::String,
+    /// in the case of crossing hello's, when both chains call OpenInit, we need the connection identifier
+    /// of the previous connection in state INIT
     #[prost(string, tag = "2")]
-    pub desired_connection_id: std::string::String,
-    #[prost(string, tag = "3")]
-    pub counterparty_chosen_connection_id: std::string::String,
-    #[prost(message, optional, tag = "4")]
+    pub previous_connection_id: std::string::String,
+    #[prost(message, optional, tag = "3")]
     pub client_state: ::std::option::Option<::prost_types::Any>,
-    #[prost(message, optional, tag = "5")]
+    #[prost(message, optional, tag = "4")]
     pub counterparty: ::std::option::Option<Counterparty>,
+    #[prost(uint64, tag = "5")]
+    pub delay_period: u64,
     #[prost(message, repeated, tag = "6")]
     pub counterparty_versions: ::std::vec::Vec<Version>,
     #[prost(message, optional, tag = "7")]
@@ -311,9 +324,9 @@ pub struct QueryConnectionConsensusStateRequest {
     #[prost(string, tag = "1")]
     pub connection_id: std::string::String,
     #[prost(uint64, tag = "2")]
-    pub version_number: u64,
+    pub revision_number: u64,
     #[prost(uint64, tag = "3")]
-    pub version_height: u64,
+    pub revision_height: u64,
 }
 /// QueryConnectionConsensusStateResponse is the response type for the
 /// Query/ConnectionConsensusState RPC method

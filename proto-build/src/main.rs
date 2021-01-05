@@ -14,7 +14,7 @@ use std::{
 use walkdir::WalkDir;
 
 /// The Cosmos commit or tag to be cloned and used to build the proto files
-const COSMOS_REV: &str = "v0.40.0-rc3";
+const COSMOS_REV: &str = "v0.40.0-rc6";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -73,6 +73,7 @@ fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
 fn update_submodule() {
     println!("[info] Updating cosmos/cosmos-sdk submodule...");
     run_git(&["submodule", "update", "--init"]);
+    run_git(&["-C", COSMOS_SDK_DIR, "fetch"]);
     run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_REV]);
 }
 
