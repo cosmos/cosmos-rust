@@ -14,7 +14,7 @@ use std::{
 use walkdir::WalkDir;
 
 /// The Cosmos commit or tag to be cloned and used to build the proto files
-const COSMOS_REV: &str = "v0.40.0-rc6";
+const COSMOS_REV: &str = "v0.40.0";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
