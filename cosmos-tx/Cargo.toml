@@ -15,8 +15,8 @@ cosmos-sdk-proto = { version = "0.2", default-features = false, path = "../cosmo
 ecdsa = { version = "0.10", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.7", features = ["ecdsa", "sha256"] }
-prost = "0.6"
-prost-types = "0.6"
+prost = "0.7"
+prost-types = "0.7"
 rust_decimal = "1.9"
 tendermint = "0.17"
 thiserror = "1"
