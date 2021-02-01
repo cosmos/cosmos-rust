@@ -4,20 +4,20 @@
 pub struct IdentifiedClientState {
     /// client identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// client state
     #[prost(message, optional, tag = "2")]
-    pub client_state: ::std::option::Option<::prost_types::Any>,
+    pub client_state: ::core::option::Option<::prost_types::Any>,
 }
 /// ConsensusStateWithHeight defines a consensus state with an additional height field.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConsensusStateWithHeight {
     /// consensus state height
     #[prost(message, optional, tag = "1")]
-    pub height: ::std::option::Option<Height>,
+    pub height: ::core::option::Option<Height>,
     /// consensus state
     #[prost(message, optional, tag = "2")]
-    pub consensus_state: ::std::option::Option<::prost_types::Any>,
+    pub consensus_state: ::core::option::Option<::prost_types::Any>,
 }
 /// ClientConsensusStates defines all the stored consensus states for a given
 /// client.
@@ -25,10 +25,10 @@ pub struct ConsensusStateWithHeight {
 pub struct ClientConsensusStates {
     /// client identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// consensus states and their heights associated with the client
     #[prost(message, repeated, tag = "2")]
-    pub consensus_states: ::std::vec::Vec<ConsensusStateWithHeight>,
+    pub consensus_states: ::prost::alloc::vec::Vec<ConsensusStateWithHeight>,
 }
 /// ClientUpdateProposal is a governance proposal. If it passes, the client is
 /// updated with the provided header. The update may fail if the header is not
@@ -37,16 +37,16 @@ pub struct ClientConsensusStates {
 pub struct ClientUpdateProposal {
     /// the title of the update proposal
     #[prost(string, tag = "1")]
-    pub title: std::string::String,
+    pub title: ::prost::alloc::string::String,
     /// the description of the proposal
     #[prost(string, tag = "2")]
-    pub description: std::string::String,
+    pub description: ::prost::alloc::string::String,
     /// the client identifier for the client to be updated if the proposal passes
     #[prost(string, tag = "3")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// the header used to update the client if the proposal passes
     #[prost(message, optional, tag = "4")]
-    pub header: ::std::option::Option<::prost_types::Any>,
+    pub header: ::core::option::Option<::prost_types::Any>,
 }
 /// Height is a monotonically increasing data type
 /// that can be compared against another Height for the purposes of updating and
@@ -71,22 +71,22 @@ pub struct Height {
 pub struct Params {
     /// allowed_clients defines the list of allowed client state types.
     #[prost(string, repeated, tag = "1")]
-    pub allowed_clients: ::std::vec::Vec<std::string::String>,
+    pub allowed_clients: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// GenesisState defines the ibc client submodule's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// client states with their corresponding identifiers
     #[prost(message, repeated, tag = "1")]
-    pub clients: ::std::vec::Vec<IdentifiedClientState>,
+    pub clients: ::prost::alloc::vec::Vec<IdentifiedClientState>,
     /// consensus states from each client
     #[prost(message, repeated, tag = "2")]
-    pub clients_consensus: ::std::vec::Vec<ClientConsensusStates>,
+    pub clients_consensus: ::prost::alloc::vec::Vec<ClientConsensusStates>,
     /// metadata from each client
     #[prost(message, repeated, tag = "3")]
-    pub clients_metadata: ::std::vec::Vec<IdentifiedGenesisMetadata>,
+    pub clients_metadata: ::prost::alloc::vec::Vec<IdentifiedGenesisMetadata>,
     #[prost(message, optional, tag = "4")]
-    pub params: ::std::option::Option<Params>,
+    pub params: ::core::option::Option<Params>,
     /// create localhost on initialization
     #[prost(bool, tag = "5")]
     pub create_localhost: bool,
@@ -99,33 +99,33 @@ pub struct GenesisState {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisMetadata {
     /// store key of metadata without clientID-prefix
-    #[prost(bytes, tag = "1")]
-    pub key: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "1")]
+    pub key: ::prost::alloc::vec::Vec<u8>,
     /// metadata value
-    #[prost(bytes, tag = "2")]
-    pub value: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub value: ::prost::alloc::vec::Vec<u8>,
 }
 /// IdentifiedGenesisMetadata has the client metadata with the corresponding client id.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IdentifiedGenesisMetadata {
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     #[prost(message, repeated, tag = "2")]
-    pub client_metadata: ::std::vec::Vec<GenesisMetadata>,
+    pub client_metadata: ::prost::alloc::vec::Vec<GenesisMetadata>,
 }
 /// MsgCreateClient defines a message to create an IBC client
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateClient {
     /// light client state
     #[prost(message, optional, tag = "1")]
-    pub client_state: ::std::option::Option<::prost_types::Any>,
+    pub client_state: ::core::option::Option<::prost_types::Any>,
     /// consensus state associated with the client that corresponds to a given
     /// height.
     #[prost(message, optional, tag = "2")]
-    pub consensus_state: ::std::option::Option<::prost_types::Any>,
+    pub consensus_state: ::core::option::Option<::prost_types::Any>,
     /// signer address
     #[prost(string, tag = "3")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgCreateClientResponse defines the Msg/CreateClient response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -136,13 +136,13 @@ pub struct MsgCreateClientResponse {}
 pub struct MsgUpdateClient {
     /// client unique identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// header to update the light client
     #[prost(message, optional, tag = "2")]
-    pub header: ::std::option::Option<::prost_types::Any>,
+    pub header: ::core::option::Option<::prost_types::Any>,
     /// signer address
     #[prost(string, tag = "3")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgUpdateClientResponse defines the Msg/UpdateClient response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -152,22 +152,22 @@ pub struct MsgUpdateClientResponse {}
 pub struct MsgUpgradeClient {
     /// client unique identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// upgraded client state
     #[prost(message, optional, tag = "2")]
-    pub client_state: ::std::option::Option<::prost_types::Any>,
+    pub client_state: ::core::option::Option<::prost_types::Any>,
     /// upgraded consensus state, only contains enough information to serve as a basis of trust in update logic
     #[prost(message, optional, tag = "3")]
-    pub consensus_state: ::std::option::Option<::prost_types::Any>,
+    pub consensus_state: ::core::option::Option<::prost_types::Any>,
     /// proof that old chain committed to new client
-    #[prost(bytes, tag = "4")]
-    pub proof_upgrade_client: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "4")]
+    pub proof_upgrade_client: ::prost::alloc::vec::Vec<u8>,
     /// proof that old chain committed to new consensus state
-    #[prost(bytes, tag = "5")]
-    pub proof_upgrade_consensus_state: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "5")]
+    pub proof_upgrade_consensus_state: ::prost::alloc::vec::Vec<u8>,
     /// signer address
     #[prost(string, tag = "6")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgUpgradeClientResponse defines the Msg/UpgradeClient response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -178,13 +178,13 @@ pub struct MsgUpgradeClientResponse {}
 pub struct MsgSubmitMisbehaviour {
     /// client unique identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// misbehaviour used for freezing the light client
     #[prost(message, optional, tag = "2")]
-    pub misbehaviour: ::std::option::Option<::prost_types::Any>,
+    pub misbehaviour: ::core::option::Option<::prost_types::Any>,
     /// signer address
     #[prost(string, tag = "3")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgSubmitMisbehaviourResponse defines the Msg/SubmitMisbehaviour response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -195,7 +195,7 @@ pub struct MsgSubmitMisbehaviourResponse {}
 pub struct QueryClientStateRequest {
     /// client state unique identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
 }
 /// QueryClientStateResponse is the response type for the Query/ClientState RPC
 /// method. Besides the client state, it includes a proof and the height from
@@ -204,13 +204,13 @@ pub struct QueryClientStateRequest {
 pub struct QueryClientStateResponse {
     /// client state associated with the request identifier
     #[prost(message, optional, tag = "1")]
-    pub client_state: ::std::option::Option<::prost_types::Any>,
+    pub client_state: ::core::option::Option<::prost_types::Any>,
     /// merkle proof of existence
-    #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<Height>,
+    pub proof_height: ::core::option::Option<Height>,
 }
 /// QueryClientStatesRequest is the request type for the Query/ClientStates RPC
 /// method
@@ -218,7 +218,7 @@ pub struct QueryClientStateResponse {
 pub struct QueryClientStatesRequest {
     /// pagination request
     #[prost(message, optional, tag = "1")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
 }
@@ -228,10 +228,10 @@ pub struct QueryClientStatesRequest {
 pub struct QueryClientStatesResponse {
     /// list of stored ClientStates of the chain.
     #[prost(message, repeated, tag = "1")]
-    pub client_states: ::std::vec::Vec<IdentifiedClientState>,
+    pub client_states: ::prost::alloc::vec::Vec<IdentifiedClientState>,
     /// pagination response
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
 }
@@ -242,7 +242,7 @@ pub struct QueryClientStatesResponse {
 pub struct QueryConsensusStateRequest {
     /// client identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// consensus state revision number
     #[prost(uint64, tag = "2")]
     pub revision_number: u64,
@@ -260,13 +260,13 @@ pub struct QueryConsensusStateRequest {
 pub struct QueryConsensusStateResponse {
     /// consensus state associated with the client identifier at the given height
     #[prost(message, optional, tag = "1")]
-    pub consensus_state: ::std::option::Option<::prost_types::Any>,
+    pub consensus_state: ::core::option::Option<::prost_types::Any>,
     /// merkle proof of existence
-    #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<Height>,
+    pub proof_height: ::core::option::Option<Height>,
 }
 /// QueryConsensusStatesRequest is the request type for the Query/ConsensusStates
 /// RPC method.
@@ -274,10 +274,10 @@ pub struct QueryConsensusStateResponse {
 pub struct QueryConsensusStatesRequest {
     /// client identifier
     #[prost(string, tag = "1")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// pagination request
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
 }
@@ -287,10 +287,10 @@ pub struct QueryConsensusStatesRequest {
 pub struct QueryConsensusStatesResponse {
     /// consensus states associated with the identifier
     #[prost(message, repeated, tag = "1")]
-    pub consensus_states: ::std::vec::Vec<ConsensusStateWithHeight>,
+    pub consensus_states: ::prost::alloc::vec::Vec<ConsensusStateWithHeight>,
     /// pagination response
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
 }
@@ -302,5 +302,5 @@ pub struct QueryClientParamsRequest {}
 pub struct QueryClientParamsResponse {
     /// params defines the parameters of the module.
     #[prost(message, optional, tag = "1")]
-    pub params: ::std::option::Option<Params>,
+    pub params: ::core::option::Option<Params>,
 }

@@ -11,14 +11,14 @@ pub struct Channel {
     pub ordering: i32,
     /// counterparty channel end
     #[prost(message, optional, tag = "3")]
-    pub counterparty: ::std::option::Option<Counterparty>,
+    pub counterparty: ::core::option::Option<Counterparty>,
     /// list of connection identifiers, in order, along which packets sent on
     /// this channel will travel
     #[prost(string, repeated, tag = "4")]
-    pub connection_hops: ::std::vec::Vec<std::string::String>,
+    pub connection_hops: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// opaque channel version, which is agreed upon during the handshake
     #[prost(string, tag = "5")]
-    pub version: std::string::String,
+    pub version: ::prost::alloc::string::String,
 }
 /// IdentifiedChannel defines a channel with additional port and channel
 /// identifier fields.
@@ -32,30 +32,30 @@ pub struct IdentifiedChannel {
     pub ordering: i32,
     /// counterparty channel end
     #[prost(message, optional, tag = "3")]
-    pub counterparty: ::std::option::Option<Counterparty>,
+    pub counterparty: ::core::option::Option<Counterparty>,
     /// list of connection identifiers, in order, along which packets sent on
     /// this channel will travel
     #[prost(string, repeated, tag = "4")]
-    pub connection_hops: ::std::vec::Vec<std::string::String>,
+    pub connection_hops: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// opaque channel version, which is agreed upon during the handshake
     #[prost(string, tag = "5")]
-    pub version: std::string::String,
+    pub version: ::prost::alloc::string::String,
     /// port identifier
     #[prost(string, tag = "6")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel identifier
     #[prost(string, tag = "7")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
 }
 /// Counterparty defines a channel end counterparty
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Counterparty {
     /// port on the counterparty chain which owns the other end of the channel.
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel end on the counterparty chain
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
 }
 /// Packet defines a type that carries data across different chains through IBC
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -67,22 +67,22 @@ pub struct Packet {
     pub sequence: u64,
     /// identifies the port on the sending chain.
     #[prost(string, tag = "2")]
-    pub source_port: std::string::String,
+    pub source_port: ::prost::alloc::string::String,
     /// identifies the channel end on the sending chain.
     #[prost(string, tag = "3")]
-    pub source_channel: std::string::String,
+    pub source_channel: ::prost::alloc::string::String,
     /// identifies the port on the receiving chain.
     #[prost(string, tag = "4")]
-    pub destination_port: std::string::String,
+    pub destination_port: ::prost::alloc::string::String,
     /// identifies the channel end on the receiving chain.
     #[prost(string, tag = "5")]
-    pub destination_channel: std::string::String,
+    pub destination_channel: ::prost::alloc::string::String,
     /// actual opaque bytes transferred directly to the application module
-    #[prost(bytes, tag = "6")]
-    pub data: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "6")]
+    pub data: ::prost::alloc::vec::Vec<u8>,
     /// block height after which the packet times out
     #[prost(message, optional, tag = "7")]
-    pub timeout_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub timeout_height: ::core::option::Option<super::super::client::v1::Height>,
     /// block timestamp (in nanoseconds) after which the packet times out
     #[prost(uint64, tag = "8")]
     pub timeout_timestamp: u64,
@@ -95,16 +95,16 @@ pub struct Packet {
 pub struct PacketState {
     /// channel port identifier.
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier.
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// packet sequence.
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
     /// embedded data that represents packet state.
-    #[prost(bytes, tag = "4")]
-    pub data: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "4")]
+    pub data: ::prost::alloc::vec::Vec<u8>,
 }
 /// Acknowledgement is the recommended acknowledgement format to be used by
 /// app-specific protocols.
@@ -117,16 +117,17 @@ pub struct PacketState {
 pub struct Acknowledgement {
     /// response contains either a result or an error and must be non-empty
     #[prost(oneof = "acknowledgement::Response", tags = "21, 22")]
-    pub response: ::std::option::Option<acknowledgement::Response>,
+    pub response: ::core::option::Option<acknowledgement::Response>,
 }
+/// Nested message and enum types in `Acknowledgement`.
 pub mod acknowledgement {
     /// response contains either a result or an error and must be non-empty
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(bytes, tag = "21")]
-        Result(std::vec::Vec<u8>),
+        Result(::prost::alloc::vec::Vec<u8>),
         #[prost(string, tag = "22")]
-        Error(std::string::String),
+        Error(::prost::alloc::string::String),
     }
 }
 /// State defines if a channel is in one of the following states:
@@ -163,19 +164,19 @@ pub enum Order {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
-    pub channels: ::std::vec::Vec<IdentifiedChannel>,
+    pub channels: ::prost::alloc::vec::Vec<IdentifiedChannel>,
     #[prost(message, repeated, tag = "2")]
-    pub acknowledgements: ::std::vec::Vec<PacketState>,
+    pub acknowledgements: ::prost::alloc::vec::Vec<PacketState>,
     #[prost(message, repeated, tag = "3")]
-    pub commitments: ::std::vec::Vec<PacketState>,
+    pub commitments: ::prost::alloc::vec::Vec<PacketState>,
     #[prost(message, repeated, tag = "4")]
-    pub receipts: ::std::vec::Vec<PacketState>,
+    pub receipts: ::prost::alloc::vec::Vec<PacketState>,
     #[prost(message, repeated, tag = "5")]
-    pub send_sequences: ::std::vec::Vec<PacketSequence>,
+    pub send_sequences: ::prost::alloc::vec::Vec<PacketSequence>,
     #[prost(message, repeated, tag = "6")]
-    pub recv_sequences: ::std::vec::Vec<PacketSequence>,
+    pub recv_sequences: ::prost::alloc::vec::Vec<PacketSequence>,
     #[prost(message, repeated, tag = "7")]
-    pub ack_sequences: ::std::vec::Vec<PacketSequence>,
+    pub ack_sequences: ::prost::alloc::vec::Vec<PacketSequence>,
     /// the sequence for the next generated channel identifier
     #[prost(uint64, tag = "8")]
     pub next_channel_sequence: u64,
@@ -185,9 +186,9 @@ pub struct GenesisState {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PacketSequence {
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
 }
@@ -196,11 +197,11 @@ pub struct PacketSequence {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenInit {
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub channel: ::std::option::Option<Channel>,
+    pub channel: ::core::option::Option<Channel>,
     #[prost(string, tag = "3")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgChannelOpenInitResponse defines the Msg/ChannelOpenInit response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -210,21 +211,21 @@ pub struct MsgChannelOpenInitResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenTry {
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// in the case of crossing hello's, when both chains call OpenInit, we need the channel identifier
     /// of the previous channel in state INIT
     #[prost(string, tag = "2")]
-    pub previous_channel_id: std::string::String,
+    pub previous_channel_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
-    pub channel: ::std::option::Option<Channel>,
+    pub channel: ::core::option::Option<Channel>,
     #[prost(string, tag = "4")]
-    pub counterparty_version: std::string::String,
-    #[prost(bytes, tag = "5")]
-    pub proof_init: std::vec::Vec<u8>,
+    pub counterparty_version: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", tag = "5")]
+    pub proof_init: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "6")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "7")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -234,19 +235,19 @@ pub struct MsgChannelOpenTryResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenAck {
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
-    pub counterparty_channel_id: std::string::String,
+    pub counterparty_channel_id: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
-    pub counterparty_version: std::string::String,
-    #[prost(bytes, tag = "5")]
-    pub proof_try: std::vec::Vec<u8>,
+    pub counterparty_version: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", tag = "5")]
+    pub proof_try: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "6")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "7")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgChannelOpenAckResponse defines the Msg/ChannelOpenAck response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -256,15 +257,15 @@ pub struct MsgChannelOpenAckResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenConfirm {
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
-    #[prost(bytes, tag = "3")]
-    pub proof_ack: std::vec::Vec<u8>,
+    pub channel_id: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", tag = "3")]
+    pub proof_ack: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "4")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "5")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgChannelOpenConfirmResponse defines the Msg/ChannelOpenConfirm response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -274,11 +275,11 @@ pub struct MsgChannelOpenConfirmResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelCloseInit {
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgChannelCloseInitResponse defines the Msg/ChannelCloseInit response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -288,15 +289,15 @@ pub struct MsgChannelCloseInitResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelCloseConfirm {
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
-    #[prost(bytes, tag = "3")]
-    pub proof_init: std::vec::Vec<u8>,
+    pub channel_id: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", tag = "3")]
+    pub proof_init: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "4")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "5")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgChannelCloseConfirmResponse defines the Msg/ChannelCloseConfirm response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -305,13 +306,13 @@ pub struct MsgChannelCloseConfirmResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRecvPacket {
     #[prost(message, optional, tag = "1")]
-    pub packet: ::std::option::Option<Packet>,
-    #[prost(bytes, tag = "2")]
-    pub proof_commitment: std::vec::Vec<u8>,
+    pub packet: ::core::option::Option<Packet>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof_commitment: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "4")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgRecvPacketResponse defines the Msg/RecvPacket response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -320,15 +321,15 @@ pub struct MsgRecvPacketResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgTimeout {
     #[prost(message, optional, tag = "1")]
-    pub packet: ::std::option::Option<Packet>,
-    #[prost(bytes, tag = "2")]
-    pub proof_unreceived: std::vec::Vec<u8>,
+    pub packet: ::core::option::Option<Packet>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof_unreceived: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(uint64, tag = "4")]
     pub next_sequence_recv: u64,
     #[prost(string, tag = "5")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgTimeoutResponse defines the Msg/Timeout response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -337,17 +338,17 @@ pub struct MsgTimeoutResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgTimeoutOnClose {
     #[prost(message, optional, tag = "1")]
-    pub packet: ::std::option::Option<Packet>,
-    #[prost(bytes, tag = "2")]
-    pub proof_unreceived: std::vec::Vec<u8>,
-    #[prost(bytes, tag = "3")]
-    pub proof_close: std::vec::Vec<u8>,
+    pub packet: ::core::option::Option<Packet>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof_unreceived: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "3")]
+    pub proof_close: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "4")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(uint64, tag = "5")]
     pub next_sequence_recv: u64,
     #[prost(string, tag = "6")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgTimeoutOnCloseResponse defines the Msg/TimeoutOnClose response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -356,15 +357,15 @@ pub struct MsgTimeoutOnCloseResponse {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgAcknowledgement {
     #[prost(message, optional, tag = "1")]
-    pub packet: ::std::option::Option<Packet>,
-    #[prost(bytes, tag = "2")]
-    pub acknowledgement: std::vec::Vec<u8>,
-    #[prost(bytes, tag = "3")]
-    pub proof_acked: std::vec::Vec<u8>,
+    pub packet: ::core::option::Option<Packet>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub acknowledgement: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "3")]
+    pub proof_acked: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "4")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
     #[prost(string, tag = "5")]
-    pub signer: std::string::String,
+    pub signer: ::prost::alloc::string::String,
 }
 /// MsgAcknowledgementResponse defines the Msg/Acknowledgement response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -374,10 +375,10 @@ pub struct MsgAcknowledgementResponse {}
 pub struct QueryChannelRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
 }
 /// QueryChannelResponse is the response type for the Query/Channel RPC method.
 /// Besides the Channel end, it includes a proof and the height from which the
@@ -386,20 +387,20 @@ pub struct QueryChannelRequest {
 pub struct QueryChannelResponse {
     /// channel associated with the request identifiers
     #[prost(message, optional, tag = "1")]
-    pub channel: ::std::option::Option<Channel>,
+    pub channel: ::core::option::Option<Channel>,
     /// merkle proof of existence
-    #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryChannelsRequest is the request type for the Query/Channels RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryChannelsRequest {
     /// pagination request
     #[prost(message, optional, tag = "1")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
 }
@@ -408,15 +409,15 @@ pub struct QueryChannelsRequest {
 pub struct QueryChannelsResponse {
     /// list of stored channels of the chain.
     #[prost(message, repeated, tag = "1")]
-    pub channels: ::std::vec::Vec<IdentifiedChannel>,
+    pub channels: ::prost::alloc::vec::Vec<IdentifiedChannel>,
     /// pagination response
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
     /// query block height
     #[prost(message, optional, tag = "3")]
-    pub height: ::std::option::Option<super::super::client::v1::Height>,
+    pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryConnectionChannelsRequest is the request type for the
 /// Query/QueryConnectionChannels RPC method
@@ -424,10 +425,10 @@ pub struct QueryChannelsResponse {
 pub struct QueryConnectionChannelsRequest {
     /// connection unique identifier
     #[prost(string, tag = "1")]
-    pub connection: std::string::String,
+    pub connection: ::prost::alloc::string::String,
     /// pagination request
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
 }
@@ -437,15 +438,15 @@ pub struct QueryConnectionChannelsRequest {
 pub struct QueryConnectionChannelsResponse {
     /// list of channels associated with a connection.
     #[prost(message, repeated, tag = "1")]
-    pub channels: ::std::vec::Vec<IdentifiedChannel>,
+    pub channels: ::prost::alloc::vec::Vec<IdentifiedChannel>,
     /// pagination response
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
     /// query block height
     #[prost(message, optional, tag = "3")]
-    pub height: ::std::option::Option<super::super::client::v1::Height>,
+    pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryChannelClientStateRequest is the request type for the Query/ClientState
 /// RPC method
@@ -453,10 +454,10 @@ pub struct QueryConnectionChannelsResponse {
 pub struct QueryChannelClientStateRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
 }
 /// QueryChannelClientStateResponse is the Response type for the
 /// Query/QueryChannelClientState RPC method
@@ -465,13 +466,13 @@ pub struct QueryChannelClientStateResponse {
     /// client state associated with the channel
     #[prost(message, optional, tag = "1")]
     pub identified_client_state:
-        ::std::option::Option<super::super::client::v1::IdentifiedClientState>,
+        ::core::option::Option<super::super::client::v1::IdentifiedClientState>,
     /// merkle proof of existence
-    #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryChannelConsensusStateRequest is the request type for the
 /// Query/ConsensusState RPC method
@@ -479,10 +480,10 @@ pub struct QueryChannelClientStateResponse {
 pub struct QueryChannelConsensusStateRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// revision number of the consensus state
     #[prost(uint64, tag = "3")]
     pub revision_number: u64,
@@ -496,16 +497,16 @@ pub struct QueryChannelConsensusStateRequest {
 pub struct QueryChannelConsensusStateResponse {
     /// consensus state associated with the channel
     #[prost(message, optional, tag = "1")]
-    pub consensus_state: ::std::option::Option<::prost_types::Any>,
+    pub consensus_state: ::core::option::Option<::prost_types::Any>,
     /// client ID associated with the consensus state
     #[prost(string, tag = "2")]
-    pub client_id: std::string::String,
+    pub client_id: ::prost::alloc::string::String,
     /// merkle proof of existence
-    #[prost(bytes, tag = "3")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "3")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "4")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryPacketCommitmentRequest is the request type for the
 /// Query/PacketCommitment RPC method
@@ -513,10 +514,10 @@ pub struct QueryChannelConsensusStateResponse {
 pub struct QueryPacketCommitmentRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// packet sequence
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
@@ -527,14 +528,14 @@ pub struct QueryPacketCommitmentRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketCommitmentResponse {
     /// packet associated with the request fields
-    #[prost(bytes, tag = "1")]
-    pub commitment: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "1")]
+    pub commitment: ::prost::alloc::vec::Vec<u8>,
     /// merkle proof of existence
-    #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryPacketCommitmentsRequest is the request type for the
 /// Query/QueryPacketCommitments RPC method
@@ -542,13 +543,13 @@ pub struct QueryPacketCommitmentResponse {
 pub struct QueryPacketCommitmentsRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// pagination request
     #[prost(message, optional, tag = "3")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
 }
@@ -557,15 +558,15 @@ pub struct QueryPacketCommitmentsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketCommitmentsResponse {
     #[prost(message, repeated, tag = "1")]
-    pub commitments: ::std::vec::Vec<PacketState>,
+    pub commitments: ::prost::alloc::vec::Vec<PacketState>,
     /// pagination response
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
     /// query block height
     #[prost(message, optional, tag = "3")]
-    pub height: ::std::option::Option<super::super::client::v1::Height>,
+    pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryPacketReceiptRequest is the request type for the
 /// Query/PacketReceipt RPC method
@@ -573,10 +574,10 @@ pub struct QueryPacketCommitmentsResponse {
 pub struct QueryPacketReceiptRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// packet sequence
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
@@ -590,11 +591,11 @@ pub struct QueryPacketReceiptResponse {
     #[prost(bool, tag = "2")]
     pub received: bool,
     /// merkle proof of existence
-    #[prost(bytes, tag = "3")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "3")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "4")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryPacketAcknowledgementRequest is the request type for the
 /// Query/PacketAcknowledgement RPC method
@@ -602,10 +603,10 @@ pub struct QueryPacketReceiptResponse {
 pub struct QueryPacketAcknowledgementRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// packet sequence
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
@@ -616,14 +617,14 @@ pub struct QueryPacketAcknowledgementRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketAcknowledgementResponse {
     /// packet associated with the request fields
-    #[prost(bytes, tag = "1")]
-    pub acknowledgement: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "1")]
+    pub acknowledgement: ::prost::alloc::vec::Vec<u8>,
     /// merkle proof of existence
-    #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryPacketAcknowledgementsRequest is the request type for the
 /// Query/QueryPacketCommitments RPC method
@@ -631,13 +632,13 @@ pub struct QueryPacketAcknowledgementResponse {
 pub struct QueryPacketAcknowledgementsRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// pagination request
     #[prost(message, optional, tag = "3")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
 }
@@ -646,15 +647,15 @@ pub struct QueryPacketAcknowledgementsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPacketAcknowledgementsResponse {
     #[prost(message, repeated, tag = "1")]
-    pub acknowledgements: ::std::vec::Vec<PacketState>,
+    pub acknowledgements: ::prost::alloc::vec::Vec<PacketState>,
     /// pagination response
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<
+    pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
     /// query block height
     #[prost(message, optional, tag = "3")]
-    pub height: ::std::option::Option<super::super::client::v1::Height>,
+    pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryUnreceivedPacketsRequest is the request type for the
 /// Query/UnreceivedPackets RPC method
@@ -662,13 +663,13 @@ pub struct QueryPacketAcknowledgementsResponse {
 pub struct QueryUnreceivedPacketsRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// list of packet sequences
     #[prost(uint64, repeated, tag = "3")]
-    pub packet_commitment_sequences: ::std::vec::Vec<u64>,
+    pub packet_commitment_sequences: ::prost::alloc::vec::Vec<u64>,
 }
 /// QueryUnreceivedPacketsResponse is the response type for the
 /// Query/UnreceivedPacketCommitments RPC method
@@ -676,10 +677,10 @@ pub struct QueryUnreceivedPacketsRequest {
 pub struct QueryUnreceivedPacketsResponse {
     /// list of unreceived packet sequences
     #[prost(uint64, repeated, tag = "1")]
-    pub sequences: ::std::vec::Vec<u64>,
+    pub sequences: ::prost::alloc::vec::Vec<u64>,
     /// query block height
     #[prost(message, optional, tag = "2")]
-    pub height: ::std::option::Option<super::super::client::v1::Height>,
+    pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryUnreceivedAcks is the request type for the
 /// Query/UnreceivedAcks RPC method
@@ -687,13 +688,13 @@ pub struct QueryUnreceivedPacketsResponse {
 pub struct QueryUnreceivedAcksRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
     /// list of acknowledgement sequences
     #[prost(uint64, repeated, tag = "3")]
-    pub packet_ack_sequences: ::std::vec::Vec<u64>,
+    pub packet_ack_sequences: ::prost::alloc::vec::Vec<u64>,
 }
 /// QueryUnreceivedAcksResponse is the response type for the
 /// Query/UnreceivedAcks RPC method
@@ -701,10 +702,10 @@ pub struct QueryUnreceivedAcksRequest {
 pub struct QueryUnreceivedAcksResponse {
     /// list of unreceived acknowledgement sequences
     #[prost(uint64, repeated, tag = "1")]
-    pub sequences: ::std::vec::Vec<u64>,
+    pub sequences: ::prost::alloc::vec::Vec<u64>,
     /// query block height
     #[prost(message, optional, tag = "2")]
-    pub height: ::std::option::Option<super::super::client::v1::Height>,
+    pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
 /// QueryNextSequenceReceiveRequest is the request type for the
 /// Query/QueryNextSequenceReceiveRequest RPC method
@@ -712,10 +713,10 @@ pub struct QueryUnreceivedAcksResponse {
 pub struct QueryNextSequenceReceiveRequest {
     /// port unique identifier
     #[prost(string, tag = "1")]
-    pub port_id: std::string::String,
+    pub port_id: ::prost::alloc::string::String,
     /// channel unique identifier
     #[prost(string, tag = "2")]
-    pub channel_id: std::string::String,
+    pub channel_id: ::prost::alloc::string::String,
 }
 /// QuerySequenceResponse is the request type for the
 /// Query/QueryNextSequenceReceiveResponse RPC method
@@ -725,9 +726,9 @@ pub struct QueryNextSequenceReceiveResponse {
     #[prost(uint64, tag = "1")]
     pub next_sequence_receive: u64,
     /// merkle proof of existence
-    #[prost(bytes, tag = "2")]
-    pub proof: std::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
-    pub proof_height: ::std::option::Option<super::super::client::v1::Height>,
+    pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
