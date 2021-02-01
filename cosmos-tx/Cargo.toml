@@ -18,5 +18,5 @@ k256 = { version = "0.7", features = ["ecdsa", "sha256"] }
 prost = "0.7"
 prost-types = "0.7"
 rust_decimal = "1.9"
-tendermint = "0.17"
+tendermint = "0.18"
 thiserror = "1"
