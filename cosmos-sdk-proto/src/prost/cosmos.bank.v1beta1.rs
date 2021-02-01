@@ -2,7 +2,7 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     #[prost(message, repeated, tag = "1")]
-    pub send_enabled: ::std::vec::Vec<SendEnabled>,
+    pub send_enabled: ::prost::alloc::vec::Vec<SendEnabled>,
     #[prost(bool, tag = "2")]
     pub default_send_enabled: bool,
 }
@@ -11,7 +11,7 @@ pub struct Params {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SendEnabled {
     #[prost(string, tag = "1")]
-    pub denom: std::string::String,
+    pub denom: ::prost::alloc::string::String,
     #[prost(bool, tag = "2")]
     pub enabled: bool,
 }
@@ -19,24 +19,24 @@ pub struct SendEnabled {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Input {
     #[prost(string, tag = "1")]
-    pub address: std::string::String,
+    pub address: ::prost::alloc::string::String,
     #[prost(message, repeated, tag = "2")]
-    pub coins: ::std::vec::Vec<super::super::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// Output models transaction outputs.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Output {
     #[prost(string, tag = "1")]
-    pub address: std::string::String,
+    pub address: ::prost::alloc::string::String,
     #[prost(message, repeated, tag = "2")]
-    pub coins: ::std::vec::Vec<super::super::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// Supply represents a struct that passively keeps track of the total supply
 /// amounts in the network.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Supply {
     #[prost(message, repeated, tag = "1")]
-    pub total: ::std::vec::Vec<super::super::base::v1beta1::Coin>,
+    pub total: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// DenomUnit represents a struct that describes a given
 /// denomination unit of the basic token.
@@ -44,7 +44,7 @@ pub struct Supply {
 pub struct DenomUnit {
     /// denom represents the string name of the given denom unit (e.g uatom).
     #[prost(string, tag = "1")]
-    pub denom: std::string::String,
+    pub denom: ::prost::alloc::string::String,
     /// exponent represents power of 10 exponent that one must
     /// raise the base_denom to in order to equal the given DenomUnit's denom
     /// 1 denom = 1^exponent base_denom
@@ -54,51 +54,51 @@ pub struct DenomUnit {
     pub exponent: u32,
     /// aliases is a list of string aliases for the given denom
     #[prost(string, repeated, tag = "3")]
-    pub aliases: ::std::vec::Vec<std::string::String>,
+    pub aliases: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Metadata represents a struct that describes
 /// a basic token.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Metadata {
     #[prost(string, tag = "1")]
-    pub description: std::string::String,
+    pub description: ::prost::alloc::string::String,
     /// denom_units represents the list of DenomUnit's for a given coin
     #[prost(message, repeated, tag = "2")]
-    pub denom_units: ::std::vec::Vec<DenomUnit>,
+    pub denom_units: ::prost::alloc::vec::Vec<DenomUnit>,
     /// base represents the base denom (should be the DenomUnit with exponent = 0).
     #[prost(string, tag = "3")]
-    pub base: std::string::String,
+    pub base: ::prost::alloc::string::String,
     /// display indicates the suggested denom that should be
     /// displayed in clients.
     #[prost(string, tag = "4")]
-    pub display: std::string::String,
+    pub display: ::prost::alloc::string::String,
 }
 /// QueryBalanceRequest is the request type for the Query/Balance RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceRequest {
     /// address is the address to query balances for.
     #[prost(string, tag = "1")]
-    pub address: std::string::String,
+    pub address: ::prost::alloc::string::String,
     /// denom is the coin denom to query balances for.
     #[prost(string, tag = "2")]
-    pub denom: std::string::String,
+    pub denom: ::prost::alloc::string::String,
 }
 /// QueryBalanceResponse is the response type for the Query/Balance RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceResponse {
     /// balance is the balance of the coin.
     #[prost(message, optional, tag = "1")]
-    pub balance: ::std::option::Option<super::super::base::v1beta1::Coin>,
+    pub balance: ::core::option::Option<super::super::base::v1beta1::Coin>,
 }
 /// QueryBalanceRequest is the request type for the Query/AllBalances RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllBalancesRequest {
     /// address is the address to query balances for.
     #[prost(string, tag = "1")]
-    pub address: std::string::String,
+    pub address: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<super::super::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryAllBalancesResponse is the response type for the Query/AllBalances RPC
 /// method.
@@ -106,10 +106,10 @@ pub struct QueryAllBalancesRequest {
 pub struct QueryAllBalancesResponse {
     /// balances is the balances of all the coins.
     #[prost(message, repeated, tag = "1")]
-    pub balances: ::std::vec::Vec<super::super::base::v1beta1::Coin>,
+    pub balances: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::std::option::Option<super::super::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryTotalSupplyRequest is the request type for the Query/TotalSupply RPC
 /// method.
@@ -121,21 +121,21 @@ pub struct QueryTotalSupplyRequest {}
 pub struct QueryTotalSupplyResponse {
     /// supply is the supply of the coins
     #[prost(message, repeated, tag = "1")]
-    pub supply: ::std::vec::Vec<super::super::base::v1beta1::Coin>,
+    pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// QuerySupplyOfRequest is the request type for the Query/SupplyOf RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyOfRequest {
     /// denom is the coin denom to query balances for.
     #[prost(string, tag = "1")]
-    pub denom: std::string::String,
+    pub denom: ::prost::alloc::string::String,
 }
 /// QuerySupplyOfResponse is the response type for the Query/SupplyOf RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyOfResponse {
     /// amount is the supply of the coin.
     #[prost(message, optional, tag = "1")]
-    pub amount: ::std::option::Option<super::super::base::v1beta1::Coin>,
+    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
 }
 /// QueryParamsRequest defines the request type for querying x/bank parameters.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -144,7 +144,7 @@ pub struct QueryParamsRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
-    pub params: ::std::option::Option<Params>,
+    pub params: ::core::option::Option<Params>,
 }
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]

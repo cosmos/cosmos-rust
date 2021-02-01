@@ -4,9 +4,9 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BaseAccount {
     #[prost(string, tag = "1")]
-    pub address: std::string::String,
+    pub address: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub pub_key: ::std::option::Option<::prost_types::Any>,
+    pub pub_key: ::core::option::Option<::prost_types::Any>,
     #[prost(uint64, tag = "3")]
     pub account_number: u64,
     #[prost(uint64, tag = "4")]
@@ -16,11 +16,11 @@ pub struct BaseAccount {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleAccount {
     #[prost(message, optional, tag = "1")]
-    pub base_account: ::std::option::Option<BaseAccount>,
+    pub base_account: ::core::option::Option<BaseAccount>,
     #[prost(string, tag = "2")]
-    pub name: std::string::String,
+    pub name: ::prost::alloc::string::String,
     #[prost(string, repeated, tag = "3")]
-    pub permissions: ::std::vec::Vec<std::string::String>,
+    pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Params defines the parameters for the auth module.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -41,14 +41,14 @@ pub struct Params {
 pub struct QueryAccountRequest {
     /// address defines the address to query for.
     #[prost(string, tag = "1")]
-    pub address: std::string::String,
+    pub address: ::prost::alloc::string::String,
 }
 /// QueryAccountResponse is the response type for the Query/Account RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountResponse {
     /// account defines the account of the corresponding address.
     #[prost(message, optional, tag = "1")]
-    pub account: ::std::option::Option<::prost_types::Any>,
+    pub account: ::core::option::Option<::prost_types::Any>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -58,7 +58,7 @@ pub struct QueryParamsRequest {}
 pub struct QueryParamsResponse {
     /// params defines the parameters of the module.
     #[prost(message, optional, tag = "1")]
-    pub params: ::std::option::Option<Params>,
+    pub params: ::core::option::Option<Params>,
 }
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
