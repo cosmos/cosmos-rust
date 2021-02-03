@@ -15,7 +15,7 @@ Transaction builder and signer for [Cosmos]-based blockchains.
 Requires Rust **1.48** or newer.
 
 [//]: # "badges"
-[crate-image]: https://img.shields.io/crates/v/cosmos-tx.svg
+[crate-image]: https://img.shields.io/crates/v/cosmos-tx.svg?logo=rust
 [crate-link]: https://crates.io/crates/cosmos-tx
 [docs-image]: https://docs.rs/cosmos-tx/badge.svg
 [docs-link]: https://docs.rs/cosmos-tx/

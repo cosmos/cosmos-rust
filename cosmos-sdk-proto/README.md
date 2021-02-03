@@ -23,7 +23,7 @@ Pull requests to expand coverage are welcome.
 Requires Rust **1.48** or newer.
 
 [//]: # "badges"
-[crate-image]: https://img.shields.io/crates/v/cosmos-sdk-proto.svg
+[crate-image]: https://img.shields.io/crates/v/cosmos-sdk-proto.svg?logo=rust
 [crate-link]: https://crates.io/crates/cosmos-sdk-proto
 [docs-image]: https://docs.rs/cosmos-sdk-proto/badge.svg
 [docs-link]: https://docs.rs/cosmos-sdk-proto/
