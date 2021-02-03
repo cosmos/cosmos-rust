@@ -2,6 +2,13 @@
 
 This is a place for commonly shared rust resources related to the Cosmos ecosystem.
 
+## Crates
+
+| Name                 | Description                 | crates.io | docs.rs | CI Build |
+|----------------------|-----------------------------|-----------|---------|----------|
+| [`cosmos‑sdk‑proto`] | Proto and gRPC definitions  | ![crates.io](https://img.shields.io/crates/v/cosmos-sdk-proto.svg?logo=rust) | ![docs.rs](https://docs.rs/cosmos-sdk-proto/badge.svg) | ![CI](https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-proto/badge.svg) |
+| [`cosmos‑tx`]        | Transaction signing support | ![crates.io](https://img.shields.io/crates/v/cosmos-tx.svg?logo=rust) | ![docs.rs](https://docs.rs/cosmos-tx/badge.svg) | ![CI](https://github.com/cosmos/cosmos-rust/workflows/cosmos-tx/badge.svg) |
+
 ## Merge Policy
 
 The goal of this repository is to create a place for upstream consensus in the Cosmos Rust community. Different applications will have different requirements from libraries, this repo should strive to contain only code that is useful and actively used by more than one organization.
@@ -28,3 +35,8 @@ all other crates, simply make the required edits in [main.rs](proto-build/main.r
 ## Minimum Supported Rust Version
 
 Rust **1.48**
+
+[//]: # "crates"
+
+[`cosmos‑sdk‑proto`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-proto
+[`cosmos‑tx`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-tx
