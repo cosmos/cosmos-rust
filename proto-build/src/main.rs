@@ -14,7 +14,7 @@ use std::{
 use walkdir::WalkDir;
 
 /// The Cosmos commit or tag to be cloned and used to build the proto files
-const COSMOS_REV: &str = "v0.40.0";
+const COSMOS_REV: &str = "v0.42.3";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -99,6 +99,7 @@ fn compile_protos(out_dir: &Path) {
         format!("{}/proto/cosmos/tx", sdk_dir.display()),
         format!("{}/proto/cosmos/bank", sdk_dir.display()),
         format!("{}/proto/cosmos/base", sdk_dir.display()),
+        format!("{}/proto/cosmos/base/tendermint", sdk_dir.display()),
         format!("{}/proto/cosmos/staking", sdk_dir.display()),
     ];
 
@@ -157,6 +158,7 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
 
     let proto_services_path = [
         sdk_dir.join("proto/cosmos/auth/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/base/tendermint/v1beta1/query.proto"),
         sdk_dir.join("proto/cosmos/staking/v1beta1/query.proto"),
         sdk_dir.join("proto/cosmos/bank/v1beta1/query.proto"),
         sdk_dir.join("proto/cosmos/tx/v1beta1/service.proto"),

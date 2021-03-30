@@ -146,6 +146,39 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
 }
+/// QueryDenomsMetadataRequest is the request type for the Query/DenomsMetadata RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomsMetadataRequest {
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "1")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
+/// QueryDenomsMetadataResponse is the response type for the Query/DenomsMetadata RPC
+/// method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomsMetadataResponse {
+    /// metadata provides the client information for all the registered tokens.
+    #[prost(message, repeated, tag = "1")]
+    pub metadatas: ::prost::alloc::vec::Vec<Metadata>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
+}
+/// QueryDenomMetadataRequest is the request type for the Query/DenomMetadata RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomMetadataRequest {
+    /// denom is the coin denom to query the metadata for.
+    #[prost(string, tag = "1")]
+    pub denom: ::prost::alloc::string::String,
+}
+/// QueryDenomMetadataResponse is the response type for the Query/DenomMetadata RPC
+/// method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomMetadataResponse {
+    /// metadata describes and provides all the client information for the requested token.
+    #[prost(message, optional, tag = "1")]
+    pub metadata: ::core::option::Option<Metadata>,
+}
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 #[doc = r" Generated client implementations."]
@@ -257,6 +290,38 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/Params");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " DenomsMetadata queries the client metadata of a given coin denomination."]
+        pub async fn denom_metadata(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryDenomMetadataRequest>,
+        ) -> Result<tonic::Response<super::QueryDenomMetadataResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/DenomMetadata");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " DenomsMetadata queries the client metadata for all registered coin denominations."]
+        pub async fn denoms_metadata(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryDenomsMetadataRequest>,
+        ) -> Result<tonic::Response<super::QueryDenomsMetadataResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/DenomsMetadata");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }

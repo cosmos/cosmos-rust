@@ -13,32 +13,42 @@ pub struct HistoricalInfo {
 /// a validator.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommissionRates {
+    /// rate is the commission rate charged to delegators, as a fraction.
     #[prost(string, tag = "1")]
     pub rate: ::prost::alloc::string::String,
+    /// max_rate defines the maximum commission rate which validator can ever charge, as a fraction.
     #[prost(string, tag = "2")]
     pub max_rate: ::prost::alloc::string::String,
+    /// max_change_rate defines the maximum daily increase of the validator commission, as a fraction.
     #[prost(string, tag = "3")]
     pub max_change_rate: ::prost::alloc::string::String,
 }
 /// Commission defines commission parameters for a given validator.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Commission {
+    /// commission_rates defines the initial commission rates to be used for creating a validator.
     #[prost(message, optional, tag = "1")]
     pub commission_rates: ::core::option::Option<CommissionRates>,
+    /// update_time is the last time the commission rate was changed.
     #[prost(message, optional, tag = "2")]
     pub update_time: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// Description defines a validator description.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Description {
+    /// moniker defines a human-readable name for the validator.
     #[prost(string, tag = "1")]
     pub moniker: ::prost::alloc::string::String,
+    /// identity defines an optional identity signature (ex. UPort or Keybase).
     #[prost(string, tag = "2")]
     pub identity: ::prost::alloc::string::String,
+    /// website defines an optional website link.
     #[prost(string, tag = "3")]
     pub website: ::prost::alloc::string::String,
+    /// security_contact defines an optional email for security contact.
     #[prost(string, tag = "4")]
     pub security_contact: ::prost::alloc::string::String,
+    /// details define other optional details.
     #[prost(string, tag = "5")]
     pub details: ::prost::alloc::string::String,
 }
@@ -52,26 +62,37 @@ pub struct Description {
 /// multiplied by exchange rate.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Validator {
+    /// operator_address defines the address of the validator's operator; bech encoded in JSON.
     #[prost(string, tag = "1")]
     pub operator_address: ::prost::alloc::string::String,
+    /// consensus_pubkey is the consensus public key of the validator, as a Protobuf Any.
     #[prost(message, optional, tag = "2")]
     pub consensus_pubkey: ::core::option::Option<::prost_types::Any>,
+    /// jailed defined whether the validator has been jailed from bonded status or not.
     #[prost(bool, tag = "3")]
     pub jailed: bool,
+    /// status is the validator status (bonded/unbonding/unbonded).
     #[prost(enumeration = "BondStatus", tag = "4")]
     pub status: i32,
+    /// tokens define the delegated tokens (incl. self-delegation).
     #[prost(string, tag = "5")]
     pub tokens: ::prost::alloc::string::String,
+    /// delegator_shares defines total shares issued to a validator's delegators.
     #[prost(string, tag = "6")]
     pub delegator_shares: ::prost::alloc::string::String,
+    /// description defines the description terms for the validator.
     #[prost(message, optional, tag = "7")]
     pub description: ::core::option::Option<Description>,
+    /// unbonding_height defines, if unbonding, the height at which this validator has begun unbonding.
     #[prost(int64, tag = "8")]
     pub unbonding_height: i64,
+    /// unbonding_time defines, if unbonding, the min time for the validator to complete unbonding.
     #[prost(message, optional, tag = "9")]
     pub unbonding_time: ::core::option::Option<::prost_types::Timestamp>,
+    /// commission defines the commission parameters.
     #[prost(message, optional, tag = "10")]
     pub commission: ::core::option::Option<Commission>,
+    /// min_self_delegation is the validator's self declared minimum self delegation.
     #[prost(string, tag = "11")]
     pub min_self_delegation: ::prost::alloc::string::String,
 }
@@ -121,10 +142,13 @@ pub struct DvvTriplets {
 /// validator.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Delegation {
+    /// delegator_address is the bech32-encoded address of the delegator.
     #[prost(string, tag = "1")]
     pub delegator_address: ::prost::alloc::string::String,
+    /// validator_address is the bech32-encoded address of the validator.
     #[prost(string, tag = "2")]
     pub validator_address: ::prost::alloc::string::String,
+    /// shares define the delegation shares received.
     #[prost(string, tag = "3")]
     pub shares: ::prost::alloc::string::String,
 }
@@ -132,10 +156,14 @@ pub struct Delegation {
 /// for a single validator in an time-ordered list.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UnbondingDelegation {
+    /// delegator_address is the bech32-encoded address of the delegator.
     #[prost(string, tag = "1")]
     pub delegator_address: ::prost::alloc::string::String,
+    /// validator_address is the bech32-encoded address of the validator.
     #[prost(string, tag = "2")]
     pub validator_address: ::prost::alloc::string::String,
+    /// entries are the unbonding delegation entries.
+    ///
     /// unbonding delegation entries
     #[prost(message, repeated, tag = "3")]
     pub entries: ::prost::alloc::vec::Vec<UnbondingDelegationEntry>,
@@ -143,24 +171,32 @@ pub struct UnbondingDelegation {
 /// UnbondingDelegationEntry defines an unbonding object with relevant metadata.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UnbondingDelegationEntry {
+    /// creation_height is the height which the unbonding took place.
     #[prost(int64, tag = "1")]
     pub creation_height: i64,
+    /// completion_time is the unix time for unbonding completion.
     #[prost(message, optional, tag = "2")]
     pub completion_time: ::core::option::Option<::prost_types::Timestamp>,
+    /// initial_balance defines the tokens initially scheduled to receive at completion.
     #[prost(string, tag = "3")]
     pub initial_balance: ::prost::alloc::string::String,
+    /// balance defines the tokens to receive at completion.
     #[prost(string, tag = "4")]
     pub balance: ::prost::alloc::string::String,
 }
 /// RedelegationEntry defines a redelegation object with relevant metadata.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RedelegationEntry {
+    /// creation_height  defines the height which the redelegation took place.
     #[prost(int64, tag = "1")]
     pub creation_height: i64,
+    /// completion_time defines the unix time for redelegation completion.
     #[prost(message, optional, tag = "2")]
     pub completion_time: ::core::option::Option<::prost_types::Timestamp>,
+    /// initial_balance defines the initial balance when redelegation started.
     #[prost(string, tag = "3")]
     pub initial_balance: ::prost::alloc::string::String,
+    /// shares_dst is the amount of destination-validator shares created by redelegation.
     #[prost(string, tag = "4")]
     pub shares_dst: ::prost::alloc::string::String,
 }
@@ -168,12 +204,17 @@ pub struct RedelegationEntry {
 /// from a particular source validator to a particular destination validator.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Redelegation {
+    /// delegator_address is the bech32-encoded address of the delegator.
     #[prost(string, tag = "1")]
     pub delegator_address: ::prost::alloc::string::String,
+    /// validator_src_address is the validator redelegation source operator address.
     #[prost(string, tag = "2")]
     pub validator_src_address: ::prost::alloc::string::String,
+    /// validator_dst_address is the validator redelegation destination operator address.
     #[prost(string, tag = "3")]
     pub validator_dst_address: ::prost::alloc::string::String,
+    /// entries are the redelegation entries.
+    ///
     /// redelegation entries
     #[prost(message, repeated, tag = "4")]
     pub entries: ::prost::alloc::vec::Vec<RedelegationEntry>,
@@ -181,14 +222,19 @@ pub struct Redelegation {
 /// Params defines the parameters for the staking module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
+    /// unbonding_time is the time duration of unbonding.
     #[prost(message, optional, tag = "1")]
     pub unbonding_time: ::core::option::Option<::prost_types::Duration>,
+    /// max_validators is the maximum number of validators.
     #[prost(uint32, tag = "2")]
     pub max_validators: u32,
+    /// max_entries is the max entries for either unbonding delegation or redelegation (per pair/trio).
     #[prost(uint32, tag = "3")]
     pub max_entries: u32,
+    /// historical_entries is the number of historical entries to persist.
     #[prost(uint32, tag = "4")]
     pub historical_entries: u32,
+    /// bond_denom defines the bondable coin denomination.
     #[prost(string, tag = "5")]
     pub bond_denom: ::prost::alloc::string::String,
 }
