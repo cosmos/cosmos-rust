@@ -21,11 +21,10 @@ jobs:
         run: |
           message=$(cargo run --quiet -- --github)
           echo "::set-output name=commit_message::${message}"
-
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3.5.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: ${{ steps.assign.outputs.commit_message }}
-          title: ${{ steps.assign.outputs.commit_message }}
+          commit-message: ${{ steps.build.outputs.commit_message }}
+          title: ${{ steps.build.outputs.commit_message }}
           branch: rebuild-protos
