@@ -115,6 +115,13 @@ pub mod cosmos {
             include!("prost/cosmos.tx.v1beta1.rs");
         }
     }
+
+    /// Balances.
+    pub mod bank {
+        pub mod v1beta1 {
+            include!("prost/cosmos.bank.v1beta1.rs");
+        }
+    }
 }
 
 /// IBC protobuf definitions.
