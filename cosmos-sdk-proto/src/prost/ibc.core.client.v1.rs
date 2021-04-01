@@ -73,121 +73,6 @@ pub struct Params {
     #[prost(string, repeated, tag = "1")]
     pub allowed_clients: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
-/// QueryClientStateRequest is the request type for the Query/ClientState RPC
-/// method
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryClientStateRequest {
-    /// client state unique identifier
-    #[prost(string, tag = "1")]
-    pub client_id: ::prost::alloc::string::String,
-}
-/// QueryClientStateResponse is the response type for the Query/ClientState RPC
-/// method. Besides the client state, it includes a proof and the height from
-/// which the proof was retrieved.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryClientStateResponse {
-    /// client state associated with the request identifier
-    #[prost(message, optional, tag = "1")]
-    pub client_state: ::core::option::Option<::prost_types::Any>,
-    /// merkle proof of existence
-    #[prost(bytes = "vec", tag = "2")]
-    pub proof: ::prost::alloc::vec::Vec<u8>,
-    /// height at which the proof was retrieved
-    #[prost(message, optional, tag = "3")]
-    pub proof_height: ::core::option::Option<Height>,
-}
-/// QueryClientStatesRequest is the request type for the Query/ClientStates RPC
-/// method
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryClientStatesRequest {
-    /// pagination request
-    #[prost(message, optional, tag = "1")]
-    pub pagination: ::core::option::Option<
-        super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
-}
-/// QueryClientStatesResponse is the response type for the Query/ClientStates RPC
-/// method.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryClientStatesResponse {
-    /// list of stored ClientStates of the chain.
-    #[prost(message, repeated, tag = "1")]
-    pub client_states: ::prost::alloc::vec::Vec<IdentifiedClientState>,
-    /// pagination response
-    #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
-}
-/// QueryConsensusStateRequest is the request type for the Query/ConsensusState
-/// RPC method. Besides the consensus state, it includes a proof and the height
-/// from which the proof was retrieved.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryConsensusStateRequest {
-    /// client identifier
-    #[prost(string, tag = "1")]
-    pub client_id: ::prost::alloc::string::String,
-    /// consensus state revision number
-    #[prost(uint64, tag = "2")]
-    pub revision_number: u64,
-    /// consensus state revision height
-    #[prost(uint64, tag = "3")]
-    pub revision_height: u64,
-    /// latest_height overrrides the height field and queries the latest stored
-    /// ConsensusState
-    #[prost(bool, tag = "4")]
-    pub latest_height: bool,
-}
-/// QueryConsensusStateResponse is the response type for the Query/ConsensusState
-/// RPC method
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryConsensusStateResponse {
-    /// consensus state associated with the client identifier at the given height
-    #[prost(message, optional, tag = "1")]
-    pub consensus_state: ::core::option::Option<::prost_types::Any>,
-    /// merkle proof of existence
-    #[prost(bytes = "vec", tag = "2")]
-    pub proof: ::prost::alloc::vec::Vec<u8>,
-    /// height at which the proof was retrieved
-    #[prost(message, optional, tag = "3")]
-    pub proof_height: ::core::option::Option<Height>,
-}
-/// QueryConsensusStatesRequest is the request type for the Query/ConsensusStates
-/// RPC method.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryConsensusStatesRequest {
-    /// client identifier
-    #[prost(string, tag = "1")]
-    pub client_id: ::prost::alloc::string::String,
-    /// pagination request
-    #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
-}
-/// QueryConsensusStatesResponse is the response type for the
-/// Query/ConsensusStates RPC method
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryConsensusStatesResponse {
-    /// consensus states associated with the identifier
-    #[prost(message, repeated, tag = "1")]
-    pub consensus_states: ::prost::alloc::vec::Vec<ConsensusStateWithHeight>,
-    /// pagination response
-    #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
-}
-/// QueryClientParamsRequest is the request type for the Query/ClientParams RPC method.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryClientParamsRequest {}
-/// QueryClientParamsResponse is the response type for the Query/ClientParams RPC method.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryClientParamsResponse {
-    /// params defines the parameters of the module.
-    #[prost(message, optional, tag = "1")]
-    pub params: ::core::option::Option<Params>,
-}
 /// GenesisState defines the ibc client submodule's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
@@ -304,3 +189,118 @@ pub struct MsgSubmitMisbehaviour {
 /// MsgSubmitMisbehaviourResponse defines the Msg/SubmitMisbehaviour response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitMisbehaviourResponse {}
+/// QueryClientStateRequest is the request type for the Query/ClientState RPC
+/// method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryClientStateRequest {
+    /// client state unique identifier
+    #[prost(string, tag = "1")]
+    pub client_id: ::prost::alloc::string::String,
+}
+/// QueryClientStateResponse is the response type for the Query/ClientState RPC
+/// method. Besides the client state, it includes a proof and the height from
+/// which the proof was retrieved.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryClientStateResponse {
+    /// client state associated with the request identifier
+    #[prost(message, optional, tag = "1")]
+    pub client_state: ::core::option::Option<::prost_types::Any>,
+    /// merkle proof of existence
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
+    /// height at which the proof was retrieved
+    #[prost(message, optional, tag = "3")]
+    pub proof_height: ::core::option::Option<Height>,
+}
+/// QueryClientStatesRequest is the request type for the Query/ClientStates RPC
+/// method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryClientStatesRequest {
+    /// pagination request
+    #[prost(message, optional, tag = "1")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
+    >,
+}
+/// QueryClientStatesResponse is the response type for the Query/ClientStates RPC
+/// method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryClientStatesResponse {
+    /// list of stored ClientStates of the chain.
+    #[prost(message, repeated, tag = "1")]
+    pub client_states: ::prost::alloc::vec::Vec<IdentifiedClientState>,
+    /// pagination response
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
+    >,
+}
+/// QueryConsensusStateRequest is the request type for the Query/ConsensusState
+/// RPC method. Besides the consensus state, it includes a proof and the height
+/// from which the proof was retrieved.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStateRequest {
+    /// client identifier
+    #[prost(string, tag = "1")]
+    pub client_id: ::prost::alloc::string::String,
+    /// consensus state revision number
+    #[prost(uint64, tag = "2")]
+    pub revision_number: u64,
+    /// consensus state revision height
+    #[prost(uint64, tag = "3")]
+    pub revision_height: u64,
+    /// latest_height overrrides the height field and queries the latest stored
+    /// ConsensusState
+    #[prost(bool, tag = "4")]
+    pub latest_height: bool,
+}
+/// QueryConsensusStateResponse is the response type for the Query/ConsensusState
+/// RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStateResponse {
+    /// consensus state associated with the client identifier at the given height
+    #[prost(message, optional, tag = "1")]
+    pub consensus_state: ::core::option::Option<::prost_types::Any>,
+    /// merkle proof of existence
+    #[prost(bytes = "vec", tag = "2")]
+    pub proof: ::prost::alloc::vec::Vec<u8>,
+    /// height at which the proof was retrieved
+    #[prost(message, optional, tag = "3")]
+    pub proof_height: ::core::option::Option<Height>,
+}
+/// QueryConsensusStatesRequest is the request type for the Query/ConsensusStates
+/// RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStatesRequest {
+    /// client identifier
+    #[prost(string, tag = "1")]
+    pub client_id: ::prost::alloc::string::String,
+    /// pagination request
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
+    >,
+}
+/// QueryConsensusStatesResponse is the response type for the
+/// Query/ConsensusStates RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStatesResponse {
+    /// consensus states associated with the identifier
+    #[prost(message, repeated, tag = "1")]
+    pub consensus_states: ::prost::alloc::vec::Vec<ConsensusStateWithHeight>,
+    /// pagination response
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
+    >,
+}
+/// QueryClientParamsRequest is the request type for the Query/ClientParams RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryClientParamsRequest {}
+/// QueryClientParamsResponse is the response type for the Query/ClientParams RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryClientParamsResponse {
+    /// params defines the parameters of the module.
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+}
