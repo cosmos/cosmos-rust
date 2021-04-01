@@ -7,12 +7,12 @@
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
-pub mod builder;
-pub mod decimal;
-pub mod error;
-pub mod msg;
+mod builder;
+mod decimal;
+mod error;
+mod msg;
 
-pub use crate::{builder::Builder, decimal::Decimal, error::Error};
+pub use crate::{builder::Builder, decimal::Decimal, error::Error, msg::Msg};
 pub use k256::ecdsa::{Signature, VerifyingKey};
 
 /// Transaction signer for ECDSA/secp256k1 signatures
