@@ -5,19 +5,13 @@
 
 use regex::Regex;
 use std::{
-    env,
     ffi::OsStr,
     fs::{self, create_dir_all, remove_dir_all},
     io,
     path::{Path, PathBuf},
     process,
-    sync::atomic::{self, AtomicBool},
 };
 use walkdir::WalkDir;
-
-/// Suppress log messages
-// TODO(tarcieri): use a logger for this
-static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos commit or tag to be cloned and used to build the proto files
 const COSMOS_REV: &str = "v0.42.3";
@@ -48,24 +42,7 @@ const GRPC_CLIENT_ATTRIBUTES: &[&str] = &[
     TONIC_CLIENT_ATTRIBUTE,
 ];
 
-/// Log info to the console (if `QUIET` is disabled)
-// TODO(tarcieri): use a logger for this
-macro_rules! info {
-    ($msg:expr) => {
-        if !is_quiet() {
-            println!("[info] {}", $msg)
-        }
-    };
-    ($fmt:expr, $($arg:tt)+) => {
-        info!(&format!($fmt, $($arg)+))
-    };
-}
-
 fn main() {
-    if is_github() {
-        set_quiet();
-    }
-
     let tmp_build_dir: PathBuf = TMP_BUILD_DIR.parse().unwrap();
     let proto_dir: PathBuf = COSMOS_SDK_PROTO_DIR.parse().unwrap();
 
@@ -79,40 +56,12 @@ fn main() {
     output_sdk_version(&tmp_build_dir);
     compile_protos(&tmp_build_dir);
     compile_proto_services(&tmp_build_dir);
-    copy_generated_files(&tmp_build_dir, &proto_dir);
-
-    if is_github() {
-        println!(
-            "Rebuild protos with proto-build (cosmos-sdk rev: {})",
-            COSMOS_REV
-        );
-    }
-}
-
-fn is_quiet() -> bool {
-    QUIET.load(atomic::Ordering::Relaxed)
-}
-
-fn set_quiet() {
-    QUIET.store(true, atomic::Ordering::Relaxed);
-}
-
-/// Parse `--github` flag passed to `proto-build` on the eponymous GitHub Actions job.
-/// Disables `info`-level log messages, instead outputting only a commit message.
-fn is_github() -> bool {
-    env::args().any(|arg| arg == "--github")
+    copy_generated_files(&tmp_build_dir, &proto_dir)
 }
 
 fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
-    let stdout = if is_quiet() {
-        process::Stdio::null()
-    } else {
-        process::Stdio::inherit()
-    };
-
     let exit_status = process::Command::new("git")
         .args(args)
-        .stdout(stdout)
         .status()
         .expect("git exit status missing");
 
@@ -122,7 +71,7 @@ fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
 }
 
 fn update_submodule() {
-    info!("Updating cosmos/cosmos-sdk submodule...");
+    println!("[info] Updating cosmos/cosmos-sdk submodule...");
     run_git(&["submodule", "update", "--init"]);
     run_git(&["-C", COSMOS_SDK_DIR, "fetch"]);
     run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_REV]);
@@ -136,8 +85,8 @@ fn output_sdk_version(out_dir: &Path) {
 fn compile_protos(out_dir: &Path) {
     let sdk_dir = Path::new(COSMOS_SDK_DIR);
 
-    info!(
-        "Compiling .proto files to Rust into '{}'...",
+    println!(
+        "[info] Compiling .proto files to Rust into '{}'...",
         out_dir.display()
     );
 
@@ -223,7 +172,7 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
         .collect::<Vec<_>>();
 
     // Compile all proto client for GRPC services
-    info!("Compiling proto clients for GRPC services!");
+    println!("[info ] Compiling proto clients for GRPC services!");
     tonic_build::configure()
         .build_client(true)
         .build_server(false)
@@ -232,11 +181,14 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
         .compile(&services, &includes)
         .unwrap();
 
-    info!("=> Done!");
+    println!("[info ] => Done!");
 }
 
 fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
-    info!("Copying generated files into '{}'...", to_dir.display());
+    println!(
+        "[info ] Copying generated files into '{}'...",
+        to_dir.display()
+    );
 
     // Remove old compiled files
     remove_dir_all(&to_dir).unwrap_or_default();
