@@ -27,10 +27,10 @@ pub mod cosmos {
         }
     }
 
-    /// Proof-of-Stake layer for public blockchains.
-    pub mod staking {
+    /// Balances.
+    pub mod bank {
         pub mod v1beta1 {
-            include!("prost/cosmos.staking.v1beta1.rs");
+            include!("prost/cosmos.bank.v1beta1.rs");
         }
     }
 
@@ -92,6 +92,13 @@ pub mod cosmos {
         }
     }
 
+    /// Crisis handling
+    pub mod crisis {
+        pub mod v1beta1 {
+            include!("prost/cosmos.crisis.v1beta1.rs");
+        }
+    }
+
     /// Cryptographic primitives.
     pub mod crypto {
         /// Multi-signature support.
@@ -99,6 +106,62 @@ pub mod cosmos {
             pub mod v1beta1 {
                 include!("prost/cosmos.crypto.multisig.v1beta1.rs");
             }
+        }
+    }
+
+    /// Messages and services handling token distribution
+    pub mod distribution {
+        pub mod v1beta1 {
+            include!("prost/cosmos.distribution.v1beta1.rs");
+        }
+    }
+
+    /// Messages and services handling evidence
+    pub mod evidence {
+        pub mod v1beta1 {
+            include!("prost/cosmos.evidence.v1beta1.rs");
+        }
+    }
+
+    /// Messages and services handling gentx's
+    pub mod genutil {
+        pub mod v1beta1 {
+            include!("prost/cosmos.genutil.v1beta1.rs");
+        }
+    }
+
+    /// Messages and services handling governance
+    pub mod gov {
+        pub mod v1beta1 {
+            include!("prost/cosmos.gov.v1beta1.rs");
+        }
+    }
+
+    /// Messages and services handling minting
+    pub mod mint {
+        pub mod v1beta1 {
+            include!("prost/cosmos.mint.v1beta1.rs");
+        }
+    }
+
+    /// Messages and services handling chain parameters
+    pub mod params {
+        pub mod v1beta1 {
+            include!("prost/cosmos.params.v1beta1.rs");
+        }
+    }
+
+    /// Handling slashing parameters and unjailing
+    pub mod slashing {
+        pub mod v1beta1 {
+            include!("prost/cosmos.slashing.v1beta1.rs");
+        }
+    }
+
+    /// Proof-of-Stake layer for public blockchains.
+    pub mod staking {
+        pub mod v1beta1 {
+            include!("prost/cosmos.staking.v1beta1.rs");
         }
     }
 
@@ -116,10 +179,17 @@ pub mod cosmos {
         }
     }
 
-    /// Balances.
-    pub mod bank {
+    /// Services for the upgrade module.
+    pub mod upgrade {
         pub mod v1beta1 {
-            include!("prost/cosmos.bank.v1beta1.rs");
+            include!("prost/cosmos.upgrade.v1beta1.rs");
+        }
+    }
+
+    /// Services and tx's for the vesting module.
+    pub mod vesting {
+        pub mod v1beta1 {
+            include!("prost/cosmos.vesting.v1beta1.rs");
         }
     }
 }
