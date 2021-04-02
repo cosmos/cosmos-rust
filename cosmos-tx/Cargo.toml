@@ -11,7 +11,7 @@ categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]
 keywords   = ["blockchain", "cosmos", "tendermint", "transaction"]
 
 [dependencies]
-cosmos-sdk-proto = { version = "0.3", default-features = false, path = "../cosmos-sdk-proto" }
+cosmos-sdk-proto = {version = "0.4", default-features = false, path = "../cosmos-sdk-proto" }
 ecdsa = { version = "0.10", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.7", features = ["ecdsa", "sha256"] }
