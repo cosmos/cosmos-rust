@@ -6,11 +6,10 @@
 // Licensed under the Apache 2.0 license
 
 use super::msg::Msg;
-use crate::{Signature, VerifyingKey};
+use crate::SigningKey;
 use cosmos_sdk_proto::cosmos::tx::v1beta1::{
     mode_info, AuthInfo, Fee, ModeInfo, SignDoc, SignerInfo, TxBody, TxRaw,
 };
-use ecdsa::signature::Signer;
 use eyre::Result;
 use tendermint::{block, chain};
 
@@ -43,19 +42,15 @@ impl Builder {
     }
 
     /// Build and sign a transaction containing the given messages
-    pub fn sign_tx<S>(
+    pub fn sign_tx(
         &self,
-        signer: &S,
+        signing_key: &SigningKey,
         sequence: u64,
         messages: &[Msg],
         fee: Fee,
         memo: impl Into<String>,
         timeout_height: block::Height,
-    ) -> Result<Vec<u8>>
-    where
-        S: Signer<Signature>,
-        VerifyingKey: for<'a> From<&'a S>,
-    {
+    ) -> Result<Vec<u8>> {
         // Create TxBody
         let body = TxBody {
             messages: messages.iter().map(|msg| msg.0.clone()).collect(),
@@ -69,14 +64,14 @@ impl Builder {
         let mut body_buf = Vec::new();
         prost::Message::encode(&body, &mut body_buf).unwrap();
 
-        let pk = VerifyingKey::from(signer);
+        let pk = signing_key.public_key();
         let mut pk_buf = Vec::new();
-        prost::Message::encode(&pk.to_bytes().to_vec(), &mut pk_buf).unwrap();
+        prost::Message::encode(&pk.as_bytes().to_vec(), &mut pk_buf).unwrap();
 
         // TODO(tarcieri): extract proper key type
         let pk_any = prost_types::Any {
             type_url: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-            value: Vec::from(&pk.to_bytes()[..]),
+            value: Vec::from(&pk.as_bytes()[..]),
         };
 
         let single = mode_info::Single { mode: 1 };
@@ -112,7 +107,7 @@ impl Builder {
         prost::Message::encode(&sign_doc, &mut signdoc_buf)?;
 
         // Sign the signdoc
-        let signed = signer.sign(&signdoc_buf);
+        let signed = signing_key.sign(&signdoc_buf)?;
 
         let tx_raw = TxRaw {
             body_bytes: body_buf,

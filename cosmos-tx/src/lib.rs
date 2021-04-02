@@ -11,9 +11,10 @@ mod builder;
 mod decimal;
 mod error;
 mod msg;
+mod signing_key;
 
-pub use crate::{builder::Builder, decimal::Decimal, error::Error, msg::Msg};
+pub use crate::{
+    builder::Builder, decimal::Decimal, error::Error, msg::Msg, signing_key::SigningKey,
+};
 pub use k256::ecdsa::{Signature, VerifyingKey};
-
-/// Transaction signer for ECDSA/secp256k1 signatures
-pub type Signer = dyn ecdsa::signature::Signer<Signature>;
+pub use tendermint::PublicKey;
