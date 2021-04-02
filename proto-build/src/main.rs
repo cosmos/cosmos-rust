@@ -146,12 +146,25 @@ fn compile_protos(out_dir: &Path) {
     // Paths
     let proto_paths = [
         format!("{}/../proto/definitions/mock", root),
-        format!("{}/proto/ibc", sdk_dir.display()),
-        format!("{}/proto/cosmos/tx", sdk_dir.display()),
+        format!("{}/proto/cosmos/auth", sdk_dir.display()),
         format!("{}/proto/cosmos/bank", sdk_dir.display()),
         format!("{}/proto/cosmos/base", sdk_dir.display()),
         format!("{}/proto/cosmos/base/tendermint", sdk_dir.display()),
+        format!("{}/proto/cosmos/capability", sdk_dir.display()),
+        format!("{}/proto/cosmos/crisis", sdk_dir.display()),
+        format!("{}/proto/cosmos/crypto", sdk_dir.display()),
+        format!("{}/proto/cosmos/distribution", sdk_dir.display()),
+        format!("{}/proto/cosmos/evidence", sdk_dir.display()),
+        format!("{}/proto/cosmos/genutil", sdk_dir.display()),
+        format!("{}/proto/cosmos/gov", sdk_dir.display()),
+        format!("{}/proto/cosmos/mint", sdk_dir.display()),
+        format!("{}/proto/cosmos/params", sdk_dir.display()),
+        format!("{}/proto/cosmos/slashing", sdk_dir.display()),
         format!("{}/proto/cosmos/staking", sdk_dir.display()),
+        format!("{}/proto/cosmos/tx", sdk_dir.display()),
+        format!("{}/proto/cosmos/upgrade", sdk_dir.display()),
+        format!("{}/proto/cosmos/vesting", sdk_dir.display()),
+        format!("{}/proto/ibc", sdk_dir.display()),
     ];
 
     let proto_includes_paths = [
@@ -209,11 +222,26 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
 
     let proto_services_path = [
         sdk_dir.join("proto/cosmos/auth/v1beta1/query.proto"),
-        sdk_dir.join("proto/cosmos/base/tendermint/v1beta1/query.proto"),
-        sdk_dir.join("proto/cosmos/staking/v1beta1/query.proto"),
         sdk_dir.join("proto/cosmos/bank/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/bank/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/base/tendermint/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/crisis/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/distribution/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/distribution/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/evidence/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/evidence/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/gov/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/gov/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/mint/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/params/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/slashing/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/slashing/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/staking/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/staking/v1beta1/tx.proto"),
         sdk_dir.join("proto/cosmos/tx/v1beta1/service.proto"),
         sdk_dir.join("proto/cosmos/tx/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/upgrade/v1beta1/query.proto"),
+        sdk_dir.join("proto/cosmos/vesting/v1beta1/tx.proto"),
     ];
 
     // List available paths for dependencies
