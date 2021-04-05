@@ -3,6 +3,8 @@ name: Rebuild Protos
 on:
   push:
     branches: main
+    paths:
+      - "proto-build/**"
 
 jobs:
   proto-build:
