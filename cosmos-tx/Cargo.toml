@@ -17,7 +17,18 @@ eyre = "0.6"
 k256 = { version = "0.7", features = ["ecdsa", "sha256"] }
 prost = "0.7"
 prost-types = "0.7"
-rand_core = "0.5"
-rust_decimal = "1.9"
-tendermint = { version = "0.19", features = ["secp256k1"] }
+rand_core = { version = "0.5", features = ["std"] }
+subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
+tendermint = { version = "0.19", default-features = false, features = ["secp256k1"] }
+tendermint-rpc = { version = "0.19", optional = true, features = ["http-client"] }
 thiserror = "1"
+
+[dev-dependencies]
+tokio = "1"
+
+[features]
+rpc = ["tendermint-rpc"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

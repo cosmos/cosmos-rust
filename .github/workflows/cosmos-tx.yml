@@ -53,3 +53,4 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - run: cargo test --release
+      - run: cargo test --release --all-features

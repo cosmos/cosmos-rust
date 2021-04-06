@@ -1,21 +1,21 @@
 //! Transaction signing key
 
 use crate::{PublicKey, Signature};
-use core::convert::TryFrom;
-use ecdsa::elliptic_curve::sec1::ToEncodedPoint;
 use eyre::Result;
-use rand_core::{CryptoRng, RngCore};
+use k256::ecdsa::VerifyingKey;
+use rand_core::OsRng;
+use std::convert::TryFrom;
 
-/// Transaction signing key.
+/// Transaction signing key (ECDSA/secp256k1)
 pub struct SigningKey {
     inner: Box<dyn Secp256k1Signer>,
 }
 
 impl SigningKey {
     /// Generate a random signing key.
-    pub fn random(rng: impl CryptoRng + RngCore) -> Self {
+    pub fn random() -> Self {
         Self {
-            inner: Box::new(k256::ecdsa::SigningKey::random(rng)),
+            inner: Box::new(k256::ecdsa::SigningKey::random(&mut OsRng)),
         }
     }
 
@@ -32,9 +32,9 @@ impl SigningKey {
         Ok(self.inner.try_sign(msg)?)
     }
 
-    /// Get the Tendermint public key for this [`SigningKey`]
+    /// Get the [`PublicKey`] for this [`SigningKey`].
     pub fn public_key(&self) -> PublicKey {
-        self.inner.public_key()
+        self.inner.verifying_key().into()
     }
 }
 
@@ -54,8 +54,8 @@ impl TryFrom<&[u8]> for SigningKey {
 
 /// ECDSA/secp256k1 signer
 pub trait Secp256k1Signer: ecdsa::signature::Signer<Signature> {
-    /// Get the Tendermint public key for this signer
-    fn public_key(&self) -> PublicKey;
+    /// Get the ECDSA verifying key for this signer
+    fn verifying_key(&self) -> VerifyingKey;
 }
 
 impl<T> Secp256k1Signer for T
@@ -63,9 +63,7 @@ where
     T: ecdsa::signature::Signer<Signature>,
     k256::ecdsa::VerifyingKey: for<'a> From<&'a T>,
 {
-    fn public_key(&self) -> PublicKey {
-        k256::ecdsa::VerifyingKey::from(self)
-            .to_encoded_point(true)
-            .into()
+    fn verifying_key(&self) -> VerifyingKey {
+        self.into()
     }
 }
