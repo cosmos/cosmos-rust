@@ -19,5 +19,5 @@ prost = "0.7"
 prost-types = "0.7"
 rand_core = "0.5"
 rust_decimal = "1.9"
-tendermint = { version = "0.18", features = ["secp256k1"] }
+tendermint = { version = "0.19", features = ["secp256k1"] }
 thiserror = "1"
