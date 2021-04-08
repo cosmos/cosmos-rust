@@ -103,9 +103,16 @@ pub mod cosmos {
     pub mod crypto {
         /// Multi-signature support.
         pub mod multisig {
+            include!("prost/cosmos.crypto.multisig.rs");
             pub mod v1beta1 {
                 include!("prost/cosmos.crypto.multisig.v1beta1.rs");
             }
+        }
+        pub mod ed25519 {
+            include!("prost/cosmos.crypto.ed25519.rs");
+        }
+        pub mod secp256k1 {
+            include!("prost/cosmos.crypto.secp256k1.rs");
         }
     }
 
