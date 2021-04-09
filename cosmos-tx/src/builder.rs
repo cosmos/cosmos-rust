@@ -5,13 +5,14 @@
 // Copyright © 2020 Informal Systems Inc.
 // Licensed under the Apache 2.0 license
 
-use super::msg::Msg;
-use crate::SigningKey;
-use cosmos_sdk_proto::cosmos::tx::v1beta1::{
-    mode_info, AuthInfo, Fee, ModeInfo, SignDoc, SignerInfo, TxBody, TxRaw,
+use crate::{
+    prost_ext::MessageExt,
+    tx::{self, Fee},
+    SigningKey,
 };
+use cosmos_sdk_proto::cosmos::tx::v1beta1::{mode_info, AuthInfo, ModeInfo, SignDoc, SignerInfo};
 use eyre::Result;
-use tendermint::{block, chain};
+use tendermint::chain;
 
 /// Protocol Buffer-encoded transaction builder
 pub struct Builder {
@@ -24,9 +25,9 @@ pub struct Builder {
 
 impl Builder {
     /// Create a new transaction builder
-    pub fn new(chain_id: impl Into<chain::Id>, account_number: u64) -> Self {
+    pub fn new(chain_id: chain::Id, account_number: u64) -> Self {
         Self {
-            chain_id: chain_id.into(),
+            chain_id,
             account_number,
         }
     }
@@ -44,36 +45,12 @@ impl Builder {
     /// Build and sign a transaction containing the given messages
     pub fn sign_tx(
         &self,
+        body: tx::Body,
         signing_key: &SigningKey,
         sequence: u64,
-        messages: &[Msg],
         fee: Fee,
-        memo: impl Into<String>,
-        timeout_height: block::Height,
-    ) -> Result<Vec<u8>> {
-        // Create TxBody
-        let body = TxBody {
-            messages: messages.iter().map(|msg| msg.0.clone()).collect(),
-            memo: memo.into(),
-            timeout_height: timeout_height.into(),
-            extension_options: Default::default(),
-            non_critical_extension_options: Default::default(),
-        };
-
-        // A protobuf serialization of a TxBody
-        let mut body_buf = Vec::new();
-        prost::Message::encode(&body, &mut body_buf).unwrap();
-
-        let pk = signing_key.public_key();
-        let mut pk_buf = Vec::new();
-        prost::Message::encode(&pk.as_bytes().to_vec(), &mut pk_buf).unwrap();
-
-        // TODO(tarcieri): extract proper key type
-        let pk_any = prost_types::Any {
-            type_url: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-            value: Vec::from(&pk.as_bytes()[..]),
-        };
-
+    ) -> Result<tx::Raw> {
+        let public_key = signing_key.public_key();
         let single = mode_info::Single { mode: 1 };
 
         let mode = Some(ModeInfo {
@@ -81,43 +58,34 @@ impl Builder {
         });
 
         let signer_info = SignerInfo {
-            public_key: Some(pk_any),
+            public_key: Some(public_key.to_any()?),
             mode_info: mode,
             sequence,
         };
 
         let auth_info = AuthInfo {
             signer_infos: vec![signer_info],
-            fee: Some(fee),
+            fee: Some(fee.into()),
         };
 
-        // Protobuf serialization of `AuthInfo`
-        let mut auth_buf = Vec::new();
-        prost::Message::encode(&auth_info, &mut auth_buf)?;
+        let body_bytes = body.into_bytes()?;
+        let auth_info_bytes = auth_info.to_bytes()?;
 
         let sign_doc = SignDoc {
-            body_bytes: body_buf.clone(),
-            auth_info_bytes: auth_buf.clone(),
+            body_bytes: body_bytes.clone(),
+            auth_info_bytes: auth_info_bytes.clone(),
             chain_id: self.chain_id.to_string(),
             account_number: self.account_number,
         };
 
-        // Protobuf serialization of `SignDoc`
-        let mut signdoc_buf = Vec::new();
-        prost::Message::encode(&sign_doc, &mut signdoc_buf)?;
+        let sign_doc_bytes = sign_doc.to_bytes()?;
+        let signed = signing_key.sign(&sign_doc_bytes)?;
 
-        // Sign the signdoc
-        let signed = signing_key.sign(&signdoc_buf)?;
-
-        let tx_raw = TxRaw {
-            body_bytes: body_buf,
-            auth_info_bytes: auth_buf,
+        Ok(cosmos_sdk_proto::cosmos::tx::v1beta1::TxRaw {
+            body_bytes,
+            auth_info_bytes,
             signatures: vec![signed.as_ref().to_vec()],
-        };
-
-        let mut txraw_buf = Vec::new();
-        prost::Message::encode(&tx_raw, &mut txraw_buf)?;
-
-        Ok(txraw_buf)
+        }
+        .into())
     }
 }
