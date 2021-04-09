@@ -12,6 +12,7 @@ use cosmos_tx::{
     Builder, Coin, SigningKey,
 };
 use std::{ffi::OsStr, panic, process, str, time::Duration};
+use tokio::time;
 
 /// Name of the Docker image (on Docker Hub) to use
 const DOCKER_IMAGE: &str = "jackzampolin/gaiatest";
@@ -86,31 +87,7 @@ fn msg_send() {
             let rpc_address = format!("http://localhost:{}", RPC_PORT);
             let rpc_client = rpc::HttpClient::new(rpc_address.as_str()).unwrap();
 
-            rpc_client
-                .wait_until_healthy(Duration::from_secs(5))
-                .await
-                .unwrap();
-
-            // Workaround for what appears to be a Tendermint race condition.
-            // There is a short period after the RPC health check succeeds
-            // and the `/genesis` endpoint returns valid data where
-            // transactions fail due to an internal SDK panic in the
-            // "undefined" code space:
-            //
-            //     TxResult {
-            //         code: Err(111222), data: None, log: Log("panic"), info: Info(""),
-            //         gas_wanted: Gas(0), gas_used: Gas(0), events: [],
-            //         codespace: Codespace("undefined")
-            //     }
-            //
-            // This should ideally get fixed upstream, however there is
-            // presently no tracking issue for this bug.
-            //
-            // If we see it pop up locally or in CI, perhaps we could find
-            // some way of polling readiness via RPC, or retrying when this
-            // specific error is encountered.
-            // TODO(tarcieri): open upstream issue and remove this hack when fixed
-            tokio::time::sleep(Duration::from_secs(2)).await;
+            wait_for_first_block(&rpc_client).await;
 
             let tx_commit_response = tx.broadcast_commit(&rpc_client).await.unwrap();
 
@@ -133,6 +110,29 @@ fn init_tokio_runtime() -> tokio::runtime::Runtime {
         .enable_all()
         .build()
         .unwrap()
+}
+
+/// Wait for the node to produce the first block
+async fn wait_for_first_block(rpc_client: &rpc::HttpClient) {
+    rpc_client
+        .wait_until_healthy(Duration::from_secs(5))
+        .await
+        .unwrap();
+
+    let mut attempts_remaining = 25;
+
+    while let Err(e) = rpc_client.latest_block().await {
+        if e.code() != rpc::error::Code::ParseError {
+            panic!("unexpected error waiting for first block: {}", e);
+        }
+
+        if attempts_remaining == 0 {
+            panic!("timeout waiting for first block");
+        }
+
+        attempts_remaining -= 1;
+        time::sleep(Duration::from_millis(200)).await;
+    }
 }
 
 /// Invoke `docker run` with the given arguments, calling the provided function
