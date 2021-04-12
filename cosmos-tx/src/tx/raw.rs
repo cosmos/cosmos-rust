@@ -1,7 +1,6 @@
 //! Raw transaction.
 
-use crate::{prost_ext::MessageExt, Result};
-use cosmos_sdk_proto::cosmos;
+use crate::{prost_ext::MessageExt, proto, Result};
 
 #[cfg(feature = "rpc")]
 use crate::rpc;
@@ -12,7 +11,7 @@ pub type TxCommitResponse = rpc::endpoint::broadcast::tx_commit::Response;
 
 /// Raw transaction
 #[derive(Clone, Debug)]
-pub struct Raw(cosmos::tx::v1beta1::TxRaw);
+pub struct Raw(proto::cosmos::tx::v1beta1::TxRaw);
 
 impl Raw {
     /// Deserialize raw transaction from serialized protobuf.
@@ -36,14 +35,14 @@ impl Raw {
     }
 }
 
-impl From<cosmos::tx::v1beta1::TxRaw> for Raw {
-    fn from(tx: cosmos::tx::v1beta1::TxRaw) -> Self {
+impl From<proto::cosmos::tx::v1beta1::TxRaw> for Raw {
+    fn from(tx: proto::cosmos::tx::v1beta1::TxRaw) -> Self {
         Raw(tx)
     }
 }
 
-impl From<Raw> for cosmos::tx::v1beta1::TxRaw {
-    fn from(tx: Raw) -> cosmos::tx::v1beta1::TxRaw {
+impl From<Raw> for proto::cosmos::tx::v1beta1::TxRaw {
+    fn from(tx: Raw) -> proto::cosmos::tx::v1beta1::TxRaw {
         tx.0
     }
 }

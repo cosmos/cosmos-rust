@@ -1,7 +1,6 @@
 //! Base functionality.
 
-use crate::{Decimal, Error, Result};
-use cosmos_sdk_proto::cosmos;
+use crate::{proto, Decimal, Error, Result};
 use std::{
     convert::{TryFrom, TryInto},
     fmt,
@@ -107,18 +106,18 @@ pub struct Coin {
     pub amount: Decimal,
 }
 
-impl TryFrom<cosmos::base::v1beta1::Coin> for Coin {
+impl TryFrom<proto::cosmos::base::v1beta1::Coin> for Coin {
     type Error = eyre::Report;
 
-    fn try_from(proto: cosmos::base::v1beta1::Coin) -> Result<Coin> {
+    fn try_from(proto: proto::cosmos::base::v1beta1::Coin) -> Result<Coin> {
         Coin::try_from(&proto)
     }
 }
 
-impl TryFrom<&cosmos::base::v1beta1::Coin> for Coin {
+impl TryFrom<&proto::cosmos::base::v1beta1::Coin> for Coin {
     type Error = eyre::Report;
 
-    fn try_from(proto: &cosmos::base::v1beta1::Coin) -> Result<Coin> {
+    fn try_from(proto: &proto::cosmos::base::v1beta1::Coin) -> Result<Coin> {
         Ok(Coin {
             denom: proto.denom.parse()?,
             amount: proto.amount.parse()?,
@@ -126,15 +125,15 @@ impl TryFrom<&cosmos::base::v1beta1::Coin> for Coin {
     }
 }
 
-impl From<Coin> for cosmos::base::v1beta1::Coin {
-    fn from(coin: Coin) -> cosmos::base::v1beta1::Coin {
-        cosmos::base::v1beta1::Coin::from(&coin)
+impl From<Coin> for proto::cosmos::base::v1beta1::Coin {
+    fn from(coin: Coin) -> proto::cosmos::base::v1beta1::Coin {
+        proto::cosmos::base::v1beta1::Coin::from(&coin)
     }
 }
 
-impl From<&Coin> for cosmos::base::v1beta1::Coin {
-    fn from(coin: &Coin) -> cosmos::base::v1beta1::Coin {
-        cosmos::base::v1beta1::Coin {
+impl From<&Coin> for proto::cosmos::base::v1beta1::Coin {
+    fn from(coin: &Coin) -> proto::cosmos::base::v1beta1::Coin {
+        proto::cosmos::base::v1beta1::Coin {
             denom: coin.denom.to_string(),
             amount: coin.amount.to_string(),
         }

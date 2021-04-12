@@ -1,11 +1,10 @@
 //! Transaction messages
 
-use crate::{prost_ext::MessageExt, Error, Result};
-use cosmos_sdk_proto::cosmos;
+use crate::{prost_ext::MessageExt, proto, Error, Result};
 use prost_types::Any;
 
 /// Transaction messages
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Msg(pub(crate) Any);
 
 impl Msg {
@@ -17,6 +16,8 @@ impl Msg {
         })
     }
 }
+
+impl Eq for Msg {}
 
 impl From<Any> for Msg {
     fn from(any: Any) -> Msg {
@@ -71,6 +72,6 @@ where
     }
 }
 
-impl MsgProto for cosmos::bank::v1beta1::MsgSend {
+impl MsgProto for proto::cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }

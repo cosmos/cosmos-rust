@@ -32,6 +32,13 @@ pub enum Error {
         name: String,
     },
 
+    /// Protobuf is missing a field.
+    #[error("missing proto field: {name:?}")]
+    MissingField {
+        /// Name of the missing field
+        name: &'static str,
+    },
+
     /// Unexpected message type.
     #[error("unexpected Msg type: {found:?}, expected {expected:?}")]
     MsgType {

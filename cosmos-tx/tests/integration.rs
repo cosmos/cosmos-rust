@@ -6,12 +6,13 @@
 
 use cosmos_tx::{
     bank::MsgSend,
+    crypto::secp256k1,
     rpc,
     rpc::Client,
-    tx::{self, Fee, MsgType},
-    Builder, Coin, SigningKey,
+    tx::{self, Fee, MsgType, Tx},
+    Builder, Coin,
 };
-use std::{ffi::OsStr, panic, process, str, time::Duration};
+use std::{convert::TryFrom, ffi::OsStr, panic, process, str, time::Duration};
 use tokio::time;
 
 /// Name of the Docker image (on Docker Hub) to use
@@ -37,13 +38,13 @@ const MEMO: &str = "test memo";
 
 #[test]
 fn msg_send() {
-    let sender_private_key = SigningKey::random();
+    let sender_private_key = secp256k1::SigningKey::random();
     let sender_account_id = sender_private_key
         .public_key()
         .account_id(ACCOUNT_PREFIX)
         .unwrap();
 
-    let recipient_private_key = SigningKey::random();
+    let recipient_private_key = secp256k1::SigningKey::random();
     let recipient_account_id = recipient_private_key
         .public_key()
         .account_id(ACCOUNT_PREFIX)
@@ -68,9 +69,8 @@ fn msg_send() {
     let fee = Fee::from_amount_and_gas(amount, gas);
     let timeout_height = 9001u16;
     let tx_body = tx::Body::new(vec![msg_send], MEMO, timeout_height);
-
-    let tx = Builder::new(chain_id, ACCOUNT_NUMBER)
-        .sign_tx(tx_body, &sender_private_key, sequence_number, fee)
+    let tx_raw = Builder::new(chain_id, ACCOUNT_NUMBER)
+        .sign_tx(tx_body.clone(), &sender_private_key, sequence_number, fee)
         .unwrap();
 
     let docker_args = [
@@ -82,14 +82,14 @@ fn msg_send() {
         &sender_account_id.to_string(),
     ];
 
-    docker_run(&docker_args, || {
+    let tx_response = docker_run(&docker_args, || {
         init_tokio_runtime().block_on(async {
             let rpc_address = format!("http://localhost:{}", RPC_PORT);
             let rpc_client = rpc::HttpClient::new(rpc_address.as_str()).unwrap();
 
             wait_for_first_block(&rpc_client).await;
 
-            let tx_commit_response = tx.broadcast_commit(&rpc_client).await.unwrap();
+            let tx_commit_response = tx_raw.broadcast_commit(&rpc_client).await.unwrap();
 
             if tx_commit_response.check_tx.code.is_err() {
                 panic!("check_tx failed: {:?}", tx_commit_response.check_tx);
@@ -99,9 +99,26 @@ fn msg_send() {
                 panic!("deliver_tx failed: {:?}", tx_commit_response.deliver_tx);
             }
 
-            // TODO(tarcieri): look up transaction by hash and test transaction parsing
-        });
+            // TODO(tarcieri): avoid race here between when API reports TX available
+            time::sleep(Duration::from_secs(1)).await;
+
+            // Look up the transaction by its hash
+            let tx_query = rpc::query::Query::from(rpc::query::EventType::Tx)
+                .and_eq("tx.hash", tx_commit_response.hash.to_string());
+
+            rpc_client
+                .tx_search(tx_query, false, 1, 1, rpc::Order::Ascending)
+                .await
+                .unwrap()
+        })
     });
+
+    assert_eq!(tx_response.total_count, 1);
+
+    let tx = Tx::try_from(tx_response.txs[0].tx.as_bytes()).unwrap();
+    assert_eq!(&tx_body, &tx.body);
+
+    // TODO(tarcieri): use AuthInfo when signing and compare `auth_info`
 }
 
 /// Initialize Tokio runtime
@@ -141,11 +158,11 @@ async fn wait_for_first_block(rpc_client: &rpc::HttpClient) {
 /// that the container reliably shuts down.
 ///
 /// Prints log output from the container in the event an error occurred.
-fn docker_run<A, S, F>(args: A, f: F)
+fn docker_run<A, S, F, R>(args: A, f: F) -> R
 where
     A: IntoIterator<Item = S>,
     S: AsRef<OsStr>,
-    F: FnOnce() -> () + panic::UnwindSafe,
+    F: FnOnce() -> R + panic::UnwindSafe,
 {
     let container_id = exec_docker_command("run", args);
     let result = panic::catch_unwind(f);
@@ -159,8 +176,9 @@ where
 
     exec_docker_command("kill", &[&container_id]);
 
-    if let Err(err) = result {
-        panic::resume_unwind(err);
+    match result {
+        Ok(res) => res,
+        Err(err) => panic::resume_unwind(err),
     }
 }
 

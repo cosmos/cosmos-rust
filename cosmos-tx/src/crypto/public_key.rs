@@ -2,10 +2,10 @@
 
 // TODO(tarcieri): upstream this to `tendermint-rs`?
 
-use crate::{prost_ext::MessageExt, AccountId, Error, Result};
-use cosmos_sdk_proto::cosmos;
+use crate::{prost_ext::MessageExt, proto, AccountId, Error, Result};
 use ecdsa::elliptic_curve::sec1::ToEncodedPoint;
 use eyre::WrapErr;
+use prost::Message;
 use prost_types::Any;
 use std::convert::{TryFrom, TryInto};
 
@@ -36,7 +36,7 @@ impl PublicKey {
     pub fn to_any(&self) -> Result<Any> {
         match self.0 {
             tendermint::PublicKey::Ed25519(_) => {
-                let proto = cosmos::crypto::secp256k1::PubKey {
+                let proto = proto::cosmos::crypto::secp256k1::PubKey {
                     key: self.to_bytes(),
                 };
 
@@ -46,7 +46,7 @@ impl PublicKey {
                 })
             }
             tendermint::PublicKey::Secp256k1(_) => {
-                let proto = cosmos::crypto::secp256k1::PubKey {
+                let proto = proto::cosmos::crypto::secp256k1::PubKey {
                     key: self.to_bytes(),
                 };
 
@@ -77,17 +77,36 @@ impl From<&k256::ecdsa::VerifyingKey> for PublicKey {
     }
 }
 
+impl TryFrom<Any> for PublicKey {
+    type Error = eyre::Report;
+
+    fn try_from(any: Any) -> Result<PublicKey> {
+        PublicKey::try_from(&any)
+    }
+}
+
 impl TryFrom<&Any> for PublicKey {
     type Error = eyre::Report;
 
     fn try_from(any: &Any) -> Result<PublicKey> {
         match any.type_url.as_str() {
-            SECP256K1_TYPE_URL => tendermint::PublicKey::from_raw_secp256k1(&any.value)
-                .map(Into::into)
-                .ok_or_else(|| Error::Crypto.into()),
+            SECP256K1_TYPE_URL => {
+                let proto = proto::cosmos::crypto::secp256k1::PubKey::decode(&*any.value)?;
+                tendermint::PublicKey::from_raw_secp256k1(&proto.key)
+                    .map(Into::into)
+                    .ok_or_else(|| Error::Crypto.into())
+            }
             other => Err(Error::Crypto)
                 .wrap_err_with(|| format!("invalid type URL for public key: {}", other)),
         }
+    }
+}
+
+impl From<PublicKey> for Any {
+    fn from(public_key: PublicKey) -> Any {
+        // This is largely a workaround for `tendermint::PublicKey` being
+        // marked `non_exhaustive`.
+        public_key.to_any().expect("unsupported algorithm")
     }
 }
 

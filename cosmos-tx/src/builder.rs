@@ -6,11 +6,11 @@
 // Licensed under the Apache 2.0 license
 
 use crate::{
+    crypto::secp256k1,
     prost_ext::MessageExt,
+    proto::cosmos::tx::v1beta1::{mode_info, AuthInfo, ModeInfo, SignDoc, SignerInfo},
     tx::{self, Fee},
-    SigningKey,
 };
-use cosmos_sdk_proto::cosmos::tx::v1beta1::{mode_info, AuthInfo, ModeInfo, SignDoc, SignerInfo};
 use eyre::Result;
 use tendermint::chain;
 
@@ -46,7 +46,7 @@ impl Builder {
     pub fn sign_tx(
         &self,
         body: tx::Body,
-        signing_key: &SigningKey,
+        signing_key: &secp256k1::SigningKey,
         sequence: u64,
         fee: Fee,
     ) -> Result<tx::Raw> {
@@ -81,7 +81,7 @@ impl Builder {
         let sign_doc_bytes = sign_doc.to_bytes()?;
         let signed = signing_key.sign(&sign_doc_bytes)?;
 
-        Ok(cosmos_sdk_proto::cosmos::tx::v1beta1::TxRaw {
+        Ok(crate::proto::cosmos::tx::v1beta1::TxRaw {
             body_bytes,
             auth_info_bytes,
             signatures: vec![signed.as_ref().to_vec()],

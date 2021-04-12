@@ -1,8 +1,7 @@
 //! Transaction bodies.
 
 use super::Msg;
-use crate::{prost_ext::MessageExt, Result};
-use cosmos_sdk_proto::cosmos;
+use crate::{prost_ext::MessageExt, proto, Result};
 use prost_types::Any;
 use std::convert::{TryFrom, TryInto};
 use tendermint::block;
@@ -10,7 +9,7 @@ use tendermint::block;
 /// [`Body`] of a transaction that all signers sign over.
 ///
 /// This type is known as `TxBody` in the Golang cosmos-sdk.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Body {
     /// `messages` is a list of messages to be executed. The required signers of
     /// those messages define the number and order of elements in `AuthInfo`'s
@@ -60,7 +59,7 @@ impl Body {
     }
 
     /// Convert the body to a Protocol Buffers representation.
-    pub fn into_proto(self) -> cosmos::tx::v1beta1::TxBody {
+    pub fn into_proto(self) -> proto::cosmos::tx::v1beta1::TxBody {
         self.into()
     }
 
@@ -70,9 +69,9 @@ impl Body {
     }
 }
 
-impl From<Body> for cosmos::tx::v1beta1::TxBody {
-    fn from(body: Body) -> cosmos::tx::v1beta1::TxBody {
-        cosmos::tx::v1beta1::TxBody {
+impl From<Body> for proto::cosmos::tx::v1beta1::TxBody {
+    fn from(body: Body) -> proto::cosmos::tx::v1beta1::TxBody {
+        proto::cosmos::tx::v1beta1::TxBody {
             messages: body.messages.into_iter().map(Into::into).collect(),
             memo: body.memo,
             timeout_height: body.timeout_height.into(),
@@ -82,10 +81,10 @@ impl From<Body> for cosmos::tx::v1beta1::TxBody {
     }
 }
 
-impl TryFrom<cosmos::tx::v1beta1::TxBody> for Body {
+impl TryFrom<proto::cosmos::tx::v1beta1::TxBody> for Body {
     type Error = eyre::Report;
 
-    fn try_from(proto: cosmos::tx::v1beta1::TxBody) -> Result<Body> {
+    fn try_from(proto: proto::cosmos::tx::v1beta1::TxBody) -> Result<Body> {
         Ok(Body {
             messages: proto.messages.into_iter().map(Into::into).collect(),
             memo: proto.memo,

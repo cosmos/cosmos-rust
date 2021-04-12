@@ -1,6 +1,6 @@
 //! Transaction signing key
 
-use crate::{PublicKey, Signature};
+use crate::crypto::{secp256k1::Signature, PublicKey};
 use eyre::Result;
 use k256::ecdsa::VerifyingKey;
 use rand_core::OsRng;

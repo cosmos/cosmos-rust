@@ -1,0 +1,50 @@
+//! Auth info.
+
+use super::{Fee, SignerInfo};
+use crate::{proto, Error, Result};
+use std::convert::{TryFrom, TryInto};
+
+/// [`AuthInfo`] describes the fee and signer modes that are used to sign a transaction.
+#[derive(Clone, Debug)]
+pub struct AuthInfo {
+    /// Defines the signing modes for the required signers.
+    ///
+    /// The number and order of elements must match the required signers from transaction
+    /// [`Body`][`super::Body`]’s messages. The first element is the primary signer and the one
+    /// which pays the [`Fee`].
+    pub signer_infos: Vec<SignerInfo>,
+
+    /// [`Fee`] and gas limit for the transaction.
+    ///
+    /// The first signer is the primary signer and the one which pays the fee.
+    /// The fee can be calculated based on the cost of evaluating the body and doing signature
+    /// verification of the signers. This can be estimated via simulation.
+    pub fee: Fee,
+}
+
+impl TryFrom<proto::cosmos::tx::v1beta1::AuthInfo> for AuthInfo {
+    type Error = eyre::Report;
+
+    fn try_from(proto: proto::cosmos::tx::v1beta1::AuthInfo) -> Result<AuthInfo> {
+        Ok(AuthInfo {
+            signer_infos: proto
+                .signer_infos
+                .into_iter()
+                .map(TryFrom::try_from)
+                .collect::<Result<_, _>>()?,
+            fee: proto
+                .fee
+                .ok_or(Error::MissingField { name: "fee" })?
+                .try_into()?,
+        })
+    }
+}
+
+impl From<AuthInfo> for proto::cosmos::tx::v1beta1::AuthInfo {
+    fn from(auth_info: AuthInfo) -> proto::cosmos::tx::v1beta1::AuthInfo {
+        proto::cosmos::tx::v1beta1::AuthInfo {
+            signer_infos: auth_info.signer_infos.into_iter().map(Into::into).collect(),
+            fee: Some(auth_info.fee.into()),
+        }
+    }
+}
