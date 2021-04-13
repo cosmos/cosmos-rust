@@ -21,7 +21,7 @@ pub use self::{
     signer_info::SignerInfo,
 };
 pub use crate::proto::cosmos::tx::signing::v1beta1::SignMode;
-pub use tendermint::abci::Gas;
+pub use tendermint::abci::{transaction::Hash, Gas};
 
 use crate::{crypto::secp256k1, proto, Error, Result};
 use prost::Message;

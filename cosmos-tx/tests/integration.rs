@@ -82,7 +82,7 @@ fn msg_send() {
         &sender_account_id.to_string(),
     ];
 
-    let tx_response = docker_run(&docker_args, || {
+    docker_run(&docker_args, || {
         init_tokio_runtime().block_on(async {
             let rpc_address = format!("http://localhost:{}", RPC_PORT);
             let rpc_client = rpc::HttpClient::new(rpc_address.as_str()).unwrap();
@@ -99,25 +99,11 @@ fn msg_send() {
                 panic!("deliver_tx failed: {:?}", tx_commit_response.deliver_tx);
             }
 
-            // TODO(tarcieri): avoid race here between when API reports TX available
-            time::sleep(Duration::from_secs(1)).await;
-
-            // Look up the transaction by its hash
-            let tx_query = rpc::query::Query::from(rpc::query::EventType::Tx)
-                .and_eq("tx.hash", tx_commit_response.hash.to_string());
-
-            rpc_client
-                .tx_search(tx_query, false, 1, 1, rpc::Order::Ascending)
-                .await
-                .unwrap()
+            let tx = poll_for_tx(&rpc_client, &tx_commit_response.hash).await;
+            assert_eq!(&tx_body, &tx.body);
+            assert_eq!(&auth_info, &tx.auth_info);
         })
     });
-
-    assert_eq!(tx_response.total_count, 1);
-
-    let tx = Tx::try_from(tx_response.txs[0].tx.as_bytes()).unwrap();
-    assert_eq!(&tx_body, &tx.body);
-    assert_eq!(&auth_info, &tx.auth_info);
 }
 
 /// Initialize Tokio runtime
@@ -149,6 +135,28 @@ async fn wait_for_first_block(rpc_client: &rpc::HttpClient) {
         attempts_remaining -= 1;
         time::sleep(Duration::from_millis(200)).await;
     }
+}
+
+/// Wait for a transaction with the given hash to appear in the blockchain
+async fn poll_for_tx(rpc_client: &rpc::HttpClient, tx_hash: &tx::Hash) -> Tx {
+    // Look up the transaction by its hash
+    let tx_query =
+        rpc::query::Query::from(rpc::query::EventType::Tx).and_eq("tx.hash", tx_hash.to_string());
+
+    let attempts = 5;
+
+    for _ in 0..attempts {
+        let tx_response = rpc_client
+            .tx_search(tx_query.clone(), false, 1, 1, rpc::Order::Ascending)
+            .await
+            .unwrap();
+
+        if tx_response.total_count == 1 {
+            return Tx::try_from(tx_response.txs[0].tx.as_bytes()).unwrap();
+        }
+    }
+
+    panic!("couldn't find transaction after {} attempts!", attempts);
 }
 
 /// Invoke `docker run` with the given arguments, calling the provided function
