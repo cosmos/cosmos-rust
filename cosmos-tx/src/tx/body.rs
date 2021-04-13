@@ -63,7 +63,7 @@ impl Body {
         self.into()
     }
 
-    /// Serialize this type as an encoded Protocol Buffers.
+    /// Encode this type using Protocol Buffers.
     pub fn into_bytes(self) -> Result<Vec<u8>> {
         self.into_proto().to_bytes()
     }

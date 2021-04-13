@@ -1,6 +1,6 @@
 //! Signer info.
 
-use super::ModeInfo;
+use super::{AuthInfo, Fee, ModeInfo, SequenceNumber, SignMode};
 use crate::{crypto::PublicKey, proto, Error, Result};
 use std::convert::{TryFrom, TryInto};
 
@@ -22,7 +22,28 @@ pub struct SignerInfo {
     /// given address.
     ///
     /// It is used to prevent replay attacks.
-    pub sequence: u64,
+    pub sequence: SequenceNumber,
+}
+
+impl SignerInfo {
+    /// Create [`SignerInfo`] for a single direct signer.
+    pub fn single_direct(public_key: Option<PublicKey>, sequence: SequenceNumber) -> SignerInfo {
+        SignerInfo {
+            public_key,
+            mode_info: ModeInfo::single(SignMode::Direct),
+            sequence,
+        }
+    }
+
+    /// Get the [`AuthInfo`] for this signer with the given fee.
+    ///
+    /// This is primarily useful for cases involving a single signer.
+    pub fn auth_info(self, fee: Fee) -> AuthInfo {
+        AuthInfo {
+            signer_infos: vec![self],
+            fee,
+        }
+    }
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::SignerInfo> for SignerInfo {

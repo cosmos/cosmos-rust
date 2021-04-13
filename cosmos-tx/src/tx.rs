@@ -7,6 +7,7 @@ mod body;
 mod fee;
 mod msg;
 mod raw;
+mod sign_doc;
 mod signer_info;
 
 pub use self::{
@@ -16,6 +17,7 @@ pub use self::{
     mode_info::ModeInfo,
     msg::{Msg, MsgProto, MsgType},
     raw::Raw,
+    sign_doc::SignDoc,
     signer_info::SignerInfo,
 };
 pub use crate::proto::cosmos::tx::signing::v1beta1::SignMode;
@@ -24,6 +26,12 @@ pub use tendermint::abci::Gas;
 use crate::{crypto::secp256k1, proto, Error, Result};
 use prost::Message;
 use std::convert::{TryFrom, TryInto};
+
+/// Account number.
+pub type AccountNumber = u64;
+
+/// Sequence number.
+pub type SequenceNumber = u64;
 
 /// [`Tx`] is the standard type used for broadcasting transactions.
 #[derive(Clone, Debug)]

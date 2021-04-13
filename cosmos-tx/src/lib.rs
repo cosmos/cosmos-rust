@@ -13,14 +13,12 @@ pub mod crypto;
 pub mod tx;
 
 mod base;
-mod builder;
 mod decimal;
 mod error;
 mod prost_ext;
 
 pub use crate::{
     base::{AccountId, Coin, Denom},
-    builder::Builder,
     decimal::Decimal,
     error::{Error, Result},
     tx::Tx,

@@ -14,6 +14,13 @@ pub enum ModeInfo {
     Multi(Multi),
 }
 
+impl ModeInfo {
+    /// Create [`ModeInfo`] for a single signer using the given mode.
+    pub fn single(sign_mode: SignMode) -> ModeInfo {
+        ModeInfo::Single(sign_mode.into())
+    }
+}
+
 impl TryFrom<proto::cosmos::tx::v1beta1::ModeInfo> for ModeInfo {
     type Error = eyre::Report;
 

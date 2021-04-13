@@ -9,8 +9,8 @@ use cosmos_tx::{
     crypto::secp256k1,
     rpc,
     rpc::Client,
-    tx::{self, Fee, MsgType, Tx},
-    Builder, Coin,
+    tx::{self, AccountNumber, Fee, MsgType, SignDoc, SignerInfo, Tx},
+    Coin,
 };
 use std::{convert::TryFrom, ffi::OsStr, panic, process, str, time::Duration};
 use tokio::time;
@@ -25,7 +25,7 @@ const CHAIN_ID: &str = "cosmos-tx-test";
 const RPC_PORT: u16 = 26657;
 
 /// Expected account number
-const ACCOUNT_NUMBER: u64 = 1;
+const ACCOUNT_NUMBER: AccountNumber = 1;
 
 /// Bech32 prefix for an account
 const ACCOUNT_PREFIX: &str = "cosmos";
@@ -39,10 +39,8 @@ const MEMO: &str = "test memo";
 #[test]
 fn msg_send() {
     let sender_private_key = secp256k1::SigningKey::random();
-    let sender_account_id = sender_private_key
-        .public_key()
-        .account_id(ACCOUNT_PREFIX)
-        .unwrap();
+    let sender_public_key = sender_private_key.public_key();
+    let sender_account_id = sender_public_key.account_id(ACCOUNT_PREFIX).unwrap();
 
     let recipient_private_key = secp256k1::SigningKey::random();
     let recipient_account_id = recipient_private_key
@@ -68,10 +66,12 @@ fn msg_send() {
     let gas = 100_000;
     let fee = Fee::from_amount_and_gas(amount, gas);
     let timeout_height = 9001u16;
+
     let tx_body = tx::Body::new(vec![msg_send], MEMO, timeout_height);
-    let tx_raw = Builder::new(chain_id, ACCOUNT_NUMBER)
-        .sign_tx(tx_body.clone(), &sender_private_key, sequence_number, fee)
-        .unwrap();
+    let auth_info =
+        SignerInfo::single_direct(Some(sender_public_key), sequence_number).auth_info(fee);
+    let sign_doc = SignDoc::new(&tx_body, &auth_info, &chain_id, ACCOUNT_NUMBER).unwrap();
+    let tx_raw = sign_doc.sign(&sender_private_key).unwrap();
 
     let docker_args = [
         "-d",
@@ -117,8 +117,7 @@ fn msg_send() {
 
     let tx = Tx::try_from(tx_response.txs[0].tx.as_bytes()).unwrap();
     assert_eq!(&tx_body, &tx.body);
-
-    // TODO(tarcieri): use AuthInfo when signing and compare `auth_info`
+    assert_eq!(&auth_info, &tx.auth_info);
 }
 
 /// Initialize Tokio runtime

@@ -1,11 +1,11 @@
 //! Auth info.
 
 use super::{Fee, SignerInfo};
-use crate::{proto, Error, Result};
+use crate::{prost_ext::MessageExt, proto, Error, Result};
 use std::convert::{TryFrom, TryInto};
 
 /// [`AuthInfo`] describes the fee and signer modes that are used to sign a transaction.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct AuthInfo {
     /// Defines the signing modes for the required signers.
     ///
@@ -20,6 +20,18 @@ pub struct AuthInfo {
     /// The fee can be calculated based on the cost of evaluating the body and doing signature
     /// verification of the signers. This can be estimated via simulation.
     pub fee: Fee,
+}
+
+impl AuthInfo {
+    /// Convert to a Protocol Buffers representation.
+    pub fn into_proto(self) -> proto::cosmos::tx::v1beta1::AuthInfo {
+        self.into()
+    }
+
+    /// Encode this type using Protocol Buffers.
+    pub fn into_bytes(self) -> Result<Vec<u8>> {
+        self.into_proto().to_bytes()
+    }
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::AuthInfo> for AuthInfo {
