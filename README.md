@@ -6,8 +6,8 @@ This is a place for commonly shared rust resources related to the Cosmos ecosyst
 
 | Name                 | Description                 | crates.io | docs.rs | CI Build |
 |----------------------|-----------------------------|-----------|---------|----------|
+| [`cosmos‑sdk`]       | Cosmos SDK for Rust         | ![crates.io](https://img.shields.io/crates/v/cosmos-sdk.svg?logo=rust) | ![docs.rs](https://docs.rs/cosmos-sdk-rs/badge.svg) | ![CI](https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-rs/badge.svg) |
 | [`cosmos‑sdk‑proto`] | Proto and gRPC definitions  | ![crates.io](https://img.shields.io/crates/v/cosmos-sdk-proto.svg?logo=rust) | ![docs.rs](https://docs.rs/cosmos-sdk-proto/badge.svg) | ![CI](https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-proto/badge.svg) |
-| [`cosmos‑tx`]        | Transaction signing support | ![crates.io](https://img.shields.io/crates/v/cosmos-tx.svg?logo=rust) | ![docs.rs](https://docs.rs/cosmos-tx/badge.svg) | ![CI](https://github.com/cosmos/cosmos-rust/workflows/cosmos-tx/badge.svg) |
 
 ## Merge Policy
 
@@ -38,5 +38,5 @@ Rust **1.48**
 
 [//]: # "crates"
 
+[`cosmos‑sdk`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-rs
 [`cosmos‑sdk‑proto`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-proto
-[`cosmos‑tx`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-tx

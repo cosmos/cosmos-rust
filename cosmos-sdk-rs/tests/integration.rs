@@ -4,7 +4,7 @@
 
 #![cfg(feature = "rpc")]
 
-use cosmos_tx::{
+use cosmos_sdk::{
     bank::MsgSend,
     crypto::secp256k1,
     rpc,
@@ -19,7 +19,7 @@ use tokio::time;
 const DOCKER_IMAGE: &str = "jackzampolin/gaiatest";
 
 /// Chain ID to use for tests
-const CHAIN_ID: &str = "cosmos-tx-test";
+const CHAIN_ID: &str = "cosmos-sdk-test";
 
 /// RPC port
 const RPC_PORT: u16 = 26657;
