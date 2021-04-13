@@ -9,26 +9,22 @@
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
 pub mod bank;
+pub mod crypto;
 pub mod tx;
 
 mod base;
-mod builder;
 mod decimal;
 mod error;
 mod prost_ext;
-mod public_key;
-mod signing_key;
 
 pub use crate::{
     base::{AccountId, Coin, Denom},
-    builder::Builder,
     decimal::Decimal,
     error::{Error, Result},
-    public_key::PublicKey,
-    signing_key::SigningKey,
+    tx::Tx,
 };
 
-pub use k256::ecdsa::Signature;
+pub use cosmos_sdk_proto as proto;
 pub use tendermint;
 
 #[cfg(feature = "rpc")]

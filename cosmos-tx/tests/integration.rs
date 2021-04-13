@@ -6,12 +6,13 @@
 
 use cosmos_tx::{
     bank::MsgSend,
+    crypto::secp256k1,
     rpc,
     rpc::Client,
-    tx::{self, Fee, MsgType},
-    Builder, Coin, SigningKey,
+    tx::{self, AccountNumber, Fee, MsgType, SignDoc, SignerInfo, Tx},
+    Coin,
 };
-use std::{ffi::OsStr, panic, process, str, time::Duration};
+use std::{convert::TryFrom, ffi::OsStr, panic, process, str, time::Duration};
 use tokio::time;
 
 /// Name of the Docker image (on Docker Hub) to use
@@ -24,7 +25,7 @@ const CHAIN_ID: &str = "cosmos-tx-test";
 const RPC_PORT: u16 = 26657;
 
 /// Expected account number
-const ACCOUNT_NUMBER: u64 = 1;
+const ACCOUNT_NUMBER: AccountNumber = 1;
 
 /// Bech32 prefix for an account
 const ACCOUNT_PREFIX: &str = "cosmos";
@@ -37,13 +38,11 @@ const MEMO: &str = "test memo";
 
 #[test]
 fn msg_send() {
-    let sender_private_key = SigningKey::random();
-    let sender_account_id = sender_private_key
-        .public_key()
-        .account_id(ACCOUNT_PREFIX)
-        .unwrap();
+    let sender_private_key = secp256k1::SigningKey::random();
+    let sender_public_key = sender_private_key.public_key();
+    let sender_account_id = sender_public_key.account_id(ACCOUNT_PREFIX).unwrap();
 
-    let recipient_private_key = SigningKey::random();
+    let recipient_private_key = secp256k1::SigningKey::random();
     let recipient_account_id = recipient_private_key
         .public_key()
         .account_id(ACCOUNT_PREFIX)
@@ -67,11 +66,12 @@ fn msg_send() {
     let gas = 100_000;
     let fee = Fee::from_amount_and_gas(amount, gas);
     let timeout_height = 9001u16;
-    let tx_body = tx::Body::new(vec![msg_send], MEMO, timeout_height);
 
-    let tx = Builder::new(chain_id, ACCOUNT_NUMBER)
-        .sign_tx(tx_body, &sender_private_key, sequence_number, fee)
-        .unwrap();
+    let tx_body = tx::Body::new(vec![msg_send], MEMO, timeout_height);
+    let auth_info =
+        SignerInfo::single_direct(Some(sender_public_key), sequence_number).auth_info(fee);
+    let sign_doc = SignDoc::new(&tx_body, &auth_info, &chain_id, ACCOUNT_NUMBER).unwrap();
+    let tx_raw = sign_doc.sign(&sender_private_key).unwrap();
 
     let docker_args = [
         "-d",
@@ -89,7 +89,7 @@ fn msg_send() {
 
             wait_for_first_block(&rpc_client).await;
 
-            let tx_commit_response = tx.broadcast_commit(&rpc_client).await.unwrap();
+            let tx_commit_response = tx_raw.broadcast_commit(&rpc_client).await.unwrap();
 
             if tx_commit_response.check_tx.code.is_err() {
                 panic!("check_tx failed: {:?}", tx_commit_response.check_tx);
@@ -99,8 +99,10 @@ fn msg_send() {
                 panic!("deliver_tx failed: {:?}", tx_commit_response.deliver_tx);
             }
 
-            // TODO(tarcieri): look up transaction by hash and test transaction parsing
-        });
+            let tx = poll_for_tx(&rpc_client, &tx_commit_response.hash).await;
+            assert_eq!(&tx_body, &tx.body);
+            assert_eq!(&auth_info, &tx.auth_info);
+        })
     });
 }
 
@@ -135,17 +137,39 @@ async fn wait_for_first_block(rpc_client: &rpc::HttpClient) {
     }
 }
 
+/// Wait for a transaction with the given hash to appear in the blockchain
+async fn poll_for_tx(rpc_client: &rpc::HttpClient, tx_hash: &tx::Hash) -> Tx {
+    // Look up the transaction by its hash
+    let tx_query =
+        rpc::query::Query::from(rpc::query::EventType::Tx).and_eq("tx.hash", tx_hash.to_string());
+
+    let attempts = 5;
+
+    for _ in 0..attempts {
+        let tx_response = rpc_client
+            .tx_search(tx_query.clone(), false, 1, 1, rpc::Order::Ascending)
+            .await
+            .unwrap();
+
+        if tx_response.total_count == 1 {
+            return Tx::try_from(tx_response.txs[0].tx.as_bytes()).unwrap();
+        }
+    }
+
+    panic!("couldn't find transaction after {} attempts!", attempts);
+}
+
 /// Invoke `docker run` with the given arguments, calling the provided function
 /// after the container has booted and terminating the container after the
 /// provided function completes, catching panics and propagating them to ensure
 /// that the container reliably shuts down.
 ///
 /// Prints log output from the container in the event an error occurred.
-fn docker_run<A, S, F>(args: A, f: F)
+fn docker_run<A, S, F, R>(args: A, f: F) -> R
 where
     A: IntoIterator<Item = S>,
     S: AsRef<OsStr>,
-    F: FnOnce() -> () + panic::UnwindSafe,
+    F: FnOnce() -> R + panic::UnwindSafe,
 {
     let container_id = exec_docker_command("run", args);
     let result = panic::catch_unwind(f);
@@ -159,8 +183,9 @@ where
 
     exec_docker_command("kill", &[&container_id]);
 
-    if let Err(err) = result {
-        panic::resume_unwind(err);
+    match result {
+        Ok(res) => res,
+        Err(err) => panic::resume_unwind(err),
     }
 }
 

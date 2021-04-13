@@ -1,8 +1,7 @@
 //! Transaction fees
 
 use super::Gas;
-use crate::{AccountId, Coin, Result};
-use cosmos_sdk_proto::cosmos;
+use crate::{proto, AccountId, Coin, Result};
 use std::convert::TryFrom;
 
 /// Fee includes the amount of coins paid in fees and the maximum gas to be
@@ -50,18 +49,18 @@ impl Fee {
     }
 }
 
-impl TryFrom<cosmos::tx::v1beta1::Fee> for Fee {
+impl TryFrom<proto::cosmos::tx::v1beta1::Fee> for Fee {
     type Error = eyre::Report;
 
-    fn try_from(proto: cosmos::tx::v1beta1::Fee) -> Result<Fee> {
+    fn try_from(proto: proto::cosmos::tx::v1beta1::Fee) -> Result<Fee> {
         Fee::try_from(&proto)
     }
 }
 
-impl TryFrom<&cosmos::tx::v1beta1::Fee> for Fee {
+impl TryFrom<&proto::cosmos::tx::v1beta1::Fee> for Fee {
     type Error = eyre::Report;
 
-    fn try_from(proto: &cosmos::tx::v1beta1::Fee) -> Result<Fee> {
+    fn try_from(proto: &proto::cosmos::tx::v1beta1::Fee) -> Result<Fee> {
         let amount = proto
             .amount
             .iter()
@@ -88,15 +87,15 @@ impl TryFrom<&cosmos::tx::v1beta1::Fee> for Fee {
     }
 }
 
-impl From<Fee> for cosmos::tx::v1beta1::Fee {
-    fn from(fee: Fee) -> cosmos::tx::v1beta1::Fee {
-        cosmos::tx::v1beta1::Fee::from(&fee)
+impl From<Fee> for proto::cosmos::tx::v1beta1::Fee {
+    fn from(fee: Fee) -> proto::cosmos::tx::v1beta1::Fee {
+        proto::cosmos::tx::v1beta1::Fee::from(&fee)
     }
 }
 
-impl From<&Fee> for cosmos::tx::v1beta1::Fee {
-    fn from(fee: &Fee) -> cosmos::tx::v1beta1::Fee {
-        cosmos::tx::v1beta1::Fee {
+impl From<&Fee> for proto::cosmos::tx::v1beta1::Fee {
+    fn from(fee: &Fee) -> proto::cosmos::tx::v1beta1::Fee {
+        proto::cosmos::tx::v1beta1::Fee {
             amount: fee.amount.iter().map(Into::into).collect(),
             gas_limit: fee.gas_limit.value(),
             payer: fee
