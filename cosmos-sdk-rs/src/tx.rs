@@ -129,6 +129,9 @@ use crate::{crypto::secp256k1, proto, Error, Result};
 use prost::Message;
 use std::convert::{TryFrom, TryInto};
 
+#[cfg(feature = "rpc")]
+use crate::rpc;
+
 /// Account number.
 pub type AccountNumber = u64;
 
@@ -154,6 +157,27 @@ impl Tx {
     /// Parse a [`Tx`] from serialized bytes.
     pub fn from_bytes(bytes: &[u8]) -> Result<Tx> {
         Tx::try_from(bytes)
+    }
+
+    /// Use RPC to find a transaction by its hash.
+    #[cfg(feature = "rpc")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "rpc")))]
+    pub async fn find_by_hash<C>(rpc_client: &C, tx_hash: &Hash) -> Result<Tx>
+    where
+        C: rpc::Client + Send + Sync,
+    {
+        let query = rpc::query::Query::from(rpc::query::EventType::Tx)
+            .and_eq("tx.hash", tx_hash.to_string());
+
+        let response = rpc_client
+            .tx_search(query, false, 1, 1, rpc::Order::Ascending)
+            .await?;
+
+        if response.total_count == 1 {
+            Tx::from_bytes(response.txs[0].tx.as_bytes())
+        } else {
+            Err(Error::TxNotFound { hash: *tx_hash }.into())
+        }
     }
 }
 

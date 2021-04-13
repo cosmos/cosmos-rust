@@ -22,6 +22,10 @@ pub mod bank;
 pub mod crypto;
 pub mod tx;
 
+#[cfg(feature = "dev")]
+#[cfg_attr(docsrs, doc(cfg(feature = "dev")))]
+pub mod dev;
+
 mod base;
 mod decimal;
 mod error;
@@ -38,4 +42,5 @@ pub use cosmos_sdk_proto as proto;
 pub use tendermint;
 
 #[cfg(feature = "rpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "rpc")))]
 pub use tendermint_rpc as rpc;

@@ -22,11 +22,10 @@ subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
 tendermint = { version = "0.19", default-features = false, features = ["secp256k1"] }
 tendermint-rpc = { version = "0.19", optional = true, features = ["http-client"] }
 thiserror = "1"
-
-[dev-dependencies]
-tokio = "1"
+tokio = { version = "1", optional = true }
 
 [features]
+dev = ["rpc", "tokio"]
 rpc = ["tendermint-rpc"]
 
 [package.metadata.docs.rs]
