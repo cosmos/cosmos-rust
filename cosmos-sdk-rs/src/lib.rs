@@ -1,4 +1,14 @@
-//! Transaction builder and signer for Cosmos-based blockchains
+//! # Cosmos SDK for Rust
+//!
+//! Framework for building [Cosmos] blockchain applications in Rust, modeled off
+//! of the [Cosmos SDK for Golang].
+//!
+//! ## Features
+//!
+//! - [Transactions][`tx`]: build, sign, and/or parse Cosmos SDK transactions
+//!
+//! [Cosmos]: https://cosmos.network/
+//! [Cosmos SDK for Golang]: https://github.com/cosmos/cosmos-sdk
 
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc(
