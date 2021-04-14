@@ -2,10 +2,11 @@
 
 pub use eyre::{Report, Result};
 
+use crate::tx;
 use thiserror::Error;
 
 /// Kinds of errors.
-#[derive(Clone, Debug, Error, Eq, PartialEq)]
+#[derive(Clone, Debug, Error, PartialEq)]
 pub enum Error {
     /// Invalid account.
     #[error("invalid account ID: {id:?}")]
@@ -48,4 +49,13 @@ pub enum Error {
         /// Actual type URL found in the [`prost_types::Any`] message.
         found: String,
     },
+
+    /// Transaction not found.
+    #[error("transaction not found: {hash:?}")]
+    TxNotFound {
+        /// Transaction hash that wasn't found.
+        hash: tx::Hash,
+    },
 }
+
+impl Eq for Error {}
