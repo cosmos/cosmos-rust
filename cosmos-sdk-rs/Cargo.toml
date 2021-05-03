@@ -12,7 +12,7 @@ keywords   = ["blockchain", "cosmos", "tendermint", "transaction"]
 
 [dependencies]
 cosmos-sdk-proto = {version = "0.5", default-features = false, path = "../cosmos-sdk-proto" }
-ecdsa = { version = "0.10", features = ["std"] }
+ecdsa = { version = "0.11", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.7", features = ["ecdsa", "sha256"] }
 prost = "0.7"
