@@ -7,6 +7,7 @@ use crate::{
     tx::{Msg, MsgType},
     AccountId, Coin, Result,
 };
+use std::convert::{TryFrom, TryInto};
 
 /// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
