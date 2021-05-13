@@ -2,9 +2,11 @@
 //!
 //! <https://docs.cosmos.network/master/modules/staking/>
 
-use cosmos_sdk::tx::{Msg, MsgProto, MsgType};
-use cosmos_sdk::{proto, AccountId, Coin, Result};
-use std::convert::{TryFrom, TryInto};
+use crate::{
+    proto,
+    tx::{Msg, MsgType},
+    AccountId, Coin, Result,
+};
 
 /// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -69,6 +71,6 @@ impl From<&MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
     }
 }
 
-impl MsgProto for proto::cosmos::staking::v1beta1::MsgDelegate {
-    const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgDelegate";
-}
+// impl MsgProto for proto::cosmos::staking::v1beta1::MsgDelegate {
+//     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgDelegate";
+// }
