@@ -166,10 +166,10 @@ pub struct MsgBeginRedelegate {
     pub delegator_address: AccountId,
 
     /// Source validator's address.
-    pub src_validator_address: AccountId,
+    pub validator_src_address: AccountId,
 
     /// Destination validator's address.
-    pub dst_validator_address: AccountId,
+    pub validator_dst_address: AccountId,
 
     /// Amount to UnDelegate
     pub amount: Option<Coin>,
@@ -207,8 +207,8 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginR
         };
         Ok(MsgBeginRedelegate {
             delegator_address: proto.delegator_address.parse()?,
-            src_validator_address: proto.src_validator_address.parse()?,
-            dst_validator_address: proto.dst_validator_address.parse()?,
+            validator_src_address: proto.validator_src_address.parse()?,
+            validator_dst_address: proto.validator_dst_address.parse()?,
             amount,
         })
     }
@@ -232,8 +232,8 @@ impl From<&MsgBeginRedelegate> for proto::cosmos::staking::v1beta1::MsgBeginRede
         };
         proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
             delegator_address: msg.delegator_address.to_string(),
-            src_validator_address: msg.src_validator_address.to_string(),
-            dst_validator_address: msg.dst_validator_address.to_string(),
+            validator_src_address: msg.validator_src_address.to_string(),
+            validator_dst_address: msg.validator_dst_address.to_string(),
             amount: proto_amount,
         }
     }
