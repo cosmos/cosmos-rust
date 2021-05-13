@@ -9,17 +9,17 @@ use crate::{
 };
 use std::convert::{TryFrom, TryInto};
 
-/// MsgSend represents a message to send coins from one account to another.
+/// MsgDelegate represents a message to delegate coins to a validator.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct MsgDelegate {
-    /// Sender's address.
+    /// Delegator's address.
     pub delegator_address: AccountId,
 
-    /// Recipient's address.
+    /// Validator's address.
     pub validator_address: AccountId,
 
     /// Amount to send
-    pub amount: Vec<Coin>,
+    pub amount: Option<Coin>,
 }
 
 impl MsgType for MsgDelegate {
@@ -47,11 +47,7 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
         Ok(MsgDelegate {
             delegator_address: proto.delegator_address.parse()?,
             validator_address: proto.validator_address.parse()?,
-            amount: proto
-                .amount
-                .iter()
-                .map(TryFrom::try_from)
-                .collect::<Result<_, _>>()?,
+            amount: proto.amount.parse()?,
         })
     }
 }
@@ -67,7 +63,7 @@ impl From<&MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
         proto::cosmos::staking::v1beta1::MsgDelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_address: msg.validator_address.to_string(),
-            amount: msg.amount.iter().map(Into::into).collect(),
+            amount: msg.amount.to_string(),
         }
     }
 }
