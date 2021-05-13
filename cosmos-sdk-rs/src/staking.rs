@@ -158,3 +158,83 @@ impl From<&MsgUndelegate> for proto::cosmos::staking::v1beta1::MsgUndelegate {
         }
     }
 }
+
+/// MsgBeginRedelegate represents a message to redelegate coins from one validator to another.
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgBeginRedelegate {
+    /// Delegator's address.
+    pub delegator_address: AccountId,
+
+    /// Source validator's address.
+    pub src_validator_address: AccountId,
+
+    /// Destination validator's address.
+    pub dst_validator_address: AccountId,
+
+    /// Amount to UnDelegate
+    pub amount: Option<Coin>,
+}
+
+impl MsgType for MsgBeginRedelegate {
+    fn from_msg(msg: &Msg) -> Result<Self> {
+        proto::cosmos::staking::v1beta1::MsgBeginRedelegate::from_msg(msg).and_then(TryInto::try_into)
+    }
+
+    fn to_msg(&self) -> Result<Msg> {
+        proto::cosmos::staking::v1beta1::MsgBeginRedelegate::from(self).to_msg()
+    }
+}
+
+impl TryFrom<proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRedelegate {
+    type Error = eyre::Report;
+
+    fn try_from(proto: proto::cosmos::staking::v1beta1::MsgBeginRedelegate) -> Result<MsgBeginRedelegate> {
+        MsgBeginRedelegate::try_from(&proto)
+    }
+}
+
+impl TryFrom<&proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRedelegate {
+    type Error = eyre::Report;
+
+    fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgBeginRedelegate) -> Result<MsgBeginRedelegate> {
+        let amount = if let Some(amount) = &proto.amount {
+            Some(Coin {
+                denom: amount.denom.parse()?,
+                amount: amount.amount.parse()?,
+            })
+        } else {
+            None
+        };
+        Ok(MsgBeginRedelegate {
+            delegator_address: proto.delegator_address.parse()?,
+            src_validator_address: proto.src_validator_address.parse()?,
+            dst_validator_address: proto.dst_validator_address.parse()?,
+            amount,
+        })
+    }
+}
+
+impl From<MsgBeginRedelegate> for proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
+    fn from(coin: MsgBeginRedelegate) -> proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
+        proto::cosmos::staking::v1beta1::MsgBeginRedelegate::from(&coin)
+    }
+}
+
+impl From<&MsgBeginRedelegate> for proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
+    fn from(msg: &MsgBeginRedelegate) -> proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
+        let proto_amount = if let Some(amount) = &msg.amount {
+            Some(proto::cosmos::base::v1beta1::Coin {
+                denom: amount.denom.to_string(),
+                amount: amount.amount.to_string(),
+            })
+        } else {
+            None
+        };
+        proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
+            delegator_address: msg.delegator_address.to_string(),
+            src_validator_address: msg.src_validator_address.to_string(),
+            dst_validator_address: msg.dst_validator_address.to_string(),
+            amount: proto_amount,
+        }
+    }
+}
