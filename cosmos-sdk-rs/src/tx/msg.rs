@@ -76,6 +76,6 @@ impl MsgProto for proto::cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }
 
-impl MsgProto for proto::cosmos::bank::v1beta1::MsgDelegate {
+impl MsgProto for proto::cosmos::staking::v1beta1::MsgDelegate {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgDelegate";
 }
