@@ -42,8 +42,8 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
 
     fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgDelegate) -> Result<MsgDelegate> {
         Ok(MsgDelegate {
-            delegator_address: proto.from_address.parse()?,
-            validator_address: proto.to_address.parse()?,
+            delegator_address: proto.delegator_address.parse()?,
+            validator_address: proto.validator_address.parse()?,
             amount: proto
                 .amount
                 .iter()
