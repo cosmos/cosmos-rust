@@ -47,7 +47,7 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
         Ok(MsgDelegate {
             delegator_address: proto.delegator_address.parse()?,
             validator_address: proto.validator_address.parse()?,
-            amount: proto.amount.parse()?,
+            amount: proto.amount.try_into()?,
         })
     }
 }
@@ -63,7 +63,7 @@ impl From<&MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
         proto::cosmos::staking::v1beta1::MsgDelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_address: msg.validator_address.to_string(),
-            amount: msg.amount.to_string(),
+            amount: msg.amount.into(),
         }
     }
 }
