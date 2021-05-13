@@ -44,10 +44,18 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
     type Error = eyre::Report;
 
     fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgDelegate) -> Result<MsgDelegate> {
+        let amount = if let Some(amount) = &proto.amount {
+            Some(Coin {
+                denom: amount.denom.parse()?,
+                amount: amount.amount.parse()?,
+            })
+        } else {
+            None
+        };
         Ok(MsgDelegate {
             delegator_address: proto.delegator_address.parse()?,
             validator_address: proto.validator_address.parse()?,
-            amount: None, // proto.amount.try_into()?,
+            amount,
         })
     }
 }
