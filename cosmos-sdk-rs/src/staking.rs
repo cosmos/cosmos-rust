@@ -63,7 +63,7 @@ impl From<&MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
         proto::cosmos::staking::v1beta1::MsgDelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_address: msg.validator_address.to_string(),
-            amount: msg.amount.into(),
+            amount: None, // msg.amount.into(),
         }
     }
 }
