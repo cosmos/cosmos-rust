@@ -31,7 +31,11 @@ impl AccountId {
                 hrp_length: prefix.len(),
             })
         } else {
-            Err(Error::AccountId { id }.into())
+            Err(Error::AccountId {
+                id,
+                detail: "expected prefix to be lowercase alphabetical characters only".to_owned(),
+            }
+            .into())
         }
     }
 
@@ -71,7 +75,10 @@ impl FromStr for AccountId {
     type Err = eyre::Report;
 
     fn from_str(s: &str) -> Result<Self> {
-        let (hrp, bytes) = bech32::decode(s)?;
+        let (hrp, bytes) = bech32::decode(s).map_err(|e| Error::AccountId {
+            id: s.to_owned(),
+            detail: format!("failed to decode bech32: {}", e.to_string()),
+        })?;
 
         if bytes.len() == tendermint::account::LENGTH {
             Ok(Self {
@@ -79,7 +86,15 @@ impl FromStr for AccountId {
                 hrp_length: hrp.len(),
             })
         } else {
-            Err(Error::AccountId { id: s.to_owned() }.into())
+            Err(Error::AccountId {
+                id: s.to_owned(),
+                detail: format!(
+                    "account ID should be at least {} bytes long, but was {} bytes long",
+                    tendermint::account::LENGTH,
+                    bytes.len()
+                ),
+            }
+            .into())
         }
     }
 }

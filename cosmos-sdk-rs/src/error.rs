@@ -9,10 +9,12 @@ use thiserror::Error;
 #[derive(Clone, Debug, Error, PartialEq)]
 pub enum Error {
     /// Invalid account.
-    #[error("invalid account ID: {id:?}")]
+    #[error("invalid account ID: {id:?} ({detail:?})")]
     AccountId {
         /// Malformed account ID
         id: String,
+        /// Specific detail as to why this account ID is malformed.
+        detail: String,
     },
 
     /// Cryptographic errors.
