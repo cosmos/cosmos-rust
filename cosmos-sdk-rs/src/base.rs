@@ -1,6 +1,7 @@
 //! Base functionality.
 
 use crate::{proto, Decimal, Error, Result};
+use eyre::WrapErr;
 use std::{
     convert::{TryFrom, TryInto},
     fmt,
@@ -31,7 +32,8 @@ impl AccountId {
                 hrp_length: prefix.len(),
             })
         } else {
-            Err(Error::AccountId { id }.into())
+            Err::<Self, eyre::Report>(Error::AccountId { id }.into())
+                .wrap_err("expected prefix to be lowercase alphabetical characters only")
         }
     }
 
@@ -71,7 +73,7 @@ impl FromStr for AccountId {
     type Err = eyre::Report;
 
     fn from_str(s: &str) -> Result<Self> {
-        let (hrp, bytes) = bech32::decode(s)?;
+        let (hrp, bytes) = bech32::decode(s).wrap_err("failed to decode bech32")?;
 
         if bytes.len() == tendermint::account::LENGTH {
             Ok(Self {
@@ -79,7 +81,15 @@ impl FromStr for AccountId {
                 hrp_length: hrp.len(),
             })
         } else {
-            Err(Error::AccountId { id: s.to_owned() }.into())
+            Err::<Self, eyre::Report>(Error::AccountId { id: s.to_owned() }.into()).wrap_err_with(
+                || {
+                    format!(
+                        "account ID should be at least {} bytes long, but was {} bytes long",
+                        tendermint::account::LENGTH,
+                        bytes.len()
+                    )
+                },
+            )
         }
     }
 }
