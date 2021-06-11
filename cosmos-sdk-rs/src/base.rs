@@ -32,7 +32,7 @@ impl AccountId {
                 hrp_length: prefix.len(),
             })
         } else {
-            Err::<Self, eyre::Report>(Error::AccountId { id }.into())
+            Err(Error::AccountId { id })
                 .wrap_err("expected prefix to be lowercase alphabetical characters only")
         }
     }
@@ -81,15 +81,13 @@ impl FromStr for AccountId {
                 hrp_length: hrp.len(),
             })
         } else {
-            Err::<Self, eyre::Report>(Error::AccountId { id: s.to_owned() }.into()).wrap_err_with(
-                || {
-                    format!(
-                        "account ID should be at least {} bytes long, but was {} bytes long",
-                        tendermint::account::LENGTH,
-                        bytes.len()
-                    )
-                },
-            )
+            Err(Error::AccountId { id: s.to_owned() }).wrap_err_with(|| {
+                format!(
+                    "account ID should be at least {} bytes long, but was {} bytes long",
+                    tendermint::account::LENGTH,
+                    bytes.len()
+                )
+            })
         }
     }
 }
