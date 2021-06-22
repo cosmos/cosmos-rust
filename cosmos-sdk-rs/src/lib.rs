@@ -28,6 +28,7 @@
 
 pub mod bank;
 pub mod crypto;
+pub mod staking;
 pub mod tx;
 
 #[cfg(feature = "dev")]
