@@ -177,7 +177,8 @@ pub struct MsgBeginRedelegate {
 
 impl MsgType for MsgBeginRedelegate {
     fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::staking::v1beta1::MsgBeginRedelegate::from_msg(msg).and_then(TryInto::try_into)
+        proto::cosmos::staking::v1beta1::MsgBeginRedelegate::from_msg(msg)
+            .and_then(TryInto::try_into)
     }
 
     fn to_msg(&self) -> Result<Msg> {
@@ -188,7 +189,9 @@ impl MsgType for MsgBeginRedelegate {
 impl TryFrom<proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRedelegate {
     type Error = eyre::Report;
 
-    fn try_from(proto: proto::cosmos::staking::v1beta1::MsgBeginRedelegate) -> Result<MsgBeginRedelegate> {
+    fn try_from(
+        proto: proto::cosmos::staking::v1beta1::MsgBeginRedelegate,
+    ) -> Result<MsgBeginRedelegate> {
         MsgBeginRedelegate::try_from(&proto)
     }
 }
@@ -196,7 +199,9 @@ impl TryFrom<proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRe
 impl TryFrom<&proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRedelegate {
     type Error = eyre::Report;
 
-    fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgBeginRedelegate) -> Result<MsgBeginRedelegate> {
+    fn try_from(
+        proto: &proto::cosmos::staking::v1beta1::MsgBeginRedelegate,
+    ) -> Result<MsgBeginRedelegate> {
         let amount = if let Some(amount) = &proto.amount {
             Some(Coin {
                 denom: amount.denom.parse()?,

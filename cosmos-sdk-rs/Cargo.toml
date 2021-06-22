@@ -11,18 +11,21 @@ categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]
 keywords   = ["blockchain", "cosmos", "tendermint", "transaction"]
 
 [dependencies]
-cosmos-sdk-proto = {version = "0.5", default-features = false, path = "../cosmos-sdk-proto" }
-ecdsa = { version = "0.10", features = ["std"] }
+cosmos-sdk-proto = { version = "0.5", default-features = false, path = "../cosmos-sdk-proto" }
+ecdsa = { version = "0.12", features = ["std"] }
 eyre = "0.6"
-k256 = { version = "0.7", features = ["ecdsa", "sha256"] }
+k256 = { version = "0.9", features = ["ecdsa", "sha256"] }
 prost = "0.7"
 prost-types = "0.7"
-rand_core = { version = "0.5", features = ["std"] }
+rand_core = { version = "0.6", features = ["std"] }
 subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
-tendermint = { version = "0.19", default-features = false, features = ["secp256k1"] }
-tendermint-rpc = { version = "0.19", optional = true, features = ["http-client"] }
+tendermint = { version = "0.20", default-features = false, features = ["secp256k1"] }
+tendermint-rpc = { version = "0.20", optional = true, features = ["http-client"] }
 thiserror = "1"
 tokio = { version = "1", optional = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.2", features = ["js"] }
 
 [features]
 dev = ["rpc", "tokio"]
