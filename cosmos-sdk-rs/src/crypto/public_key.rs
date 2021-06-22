@@ -1,9 +1,6 @@
 //! Public keys
 
-// TODO(tarcieri): upstream this to `tendermint-rs`?
-
 use crate::{prost_ext::MessageExt, proto, AccountId, Error, Result};
-use ecdsa::elliptic_curve::sec1::ToEncodedPoint;
 use eyre::WrapErr;
 use prost::Message;
 use prost_types::Any;
@@ -21,7 +18,6 @@ pub struct PublicKey(tendermint::PublicKey);
 
 impl PublicKey {
     /// Get the [`AccountId`] for this [`PublicKey`] (if applicable).
-    // TODO(tarcieri): upstream our `AccountId` type to tendermint-rs?
     pub fn account_id(&self, prefix: &str) -> Result<AccountId> {
         match &self.0 {
             tendermint::PublicKey::Secp256k1(encoded_point) => {
@@ -61,19 +57,19 @@ impl PublicKey {
 
     /// Serialize this [`PublicKey`] as a byte vector.
     pub fn to_bytes(&self) -> Vec<u8> {
-        self.0.as_bytes().to_vec()
+        self.0.to_bytes()
     }
 }
 
 impl From<k256::ecdsa::VerifyingKey> for PublicKey {
     fn from(vk: k256::ecdsa::VerifyingKey) -> PublicKey {
-        PublicKey::from(&vk)
+        PublicKey(vk.into())
     }
 }
 
 impl From<&k256::ecdsa::VerifyingKey> for PublicKey {
     fn from(vk: &k256::ecdsa::VerifyingKey) -> PublicKey {
-        PublicKey(vk.to_encoded_point(true).into())
+        PublicKey::from(*vk)
     }
 }
 
