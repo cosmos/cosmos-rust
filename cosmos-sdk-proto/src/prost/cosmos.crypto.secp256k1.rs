@@ -5,12 +5,12 @@
 /// This prefix is followed with the x-coordinate.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PubKey {
-    #[prost(bytes = "vec", tag = "1")]
+    #[prost(bytes="vec", tag="1")]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
 /// PrivKey defines a secp256k1 private key.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PrivKey {
-    #[prost(bytes = "vec", tag = "1")]
+    #[prost(bytes="vec", tag="1")]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
