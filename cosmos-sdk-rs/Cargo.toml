@@ -20,14 +20,18 @@ prost-types = "0.7"
 rand_core = { version = "0.6", features = ["std"] }
 subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
 tendermint = { version = "0.20", default-features = false, features = ["secp256k1"] }
-tendermint-rpc = { version = "0.20", optional = true, features = ["http-client"] }
 thiserror = "1"
+
+# optional dependencies
+bip32 = { version = "0.2", optional = true }
+tendermint-rpc = { version = "0.20", optional = true, features = ["http-client"] }
 tokio = { version = "1", optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.2", features = ["js"] }
 
 [features]
+default = ["bip32"]
 dev = ["rpc", "tokio"]
 rpc = ["tendermint-rpc"]
 

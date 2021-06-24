@@ -50,6 +50,10 @@ pub use crate::{
 pub use cosmos_sdk_proto as proto;
 pub use tendermint;
 
+#[cfg(feature = "bip32")]
+#[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
+pub use bip32;
+
 #[cfg(feature = "rpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "rpc")))]
 pub use tendermint_rpc as rpc;
