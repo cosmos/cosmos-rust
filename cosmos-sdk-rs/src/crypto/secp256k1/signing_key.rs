@@ -6,25 +6,53 @@ use k256::ecdsa::VerifyingKey;
 use rand_core::OsRng;
 use std::convert::TryFrom;
 
-/// Transaction signing key (ECDSA/secp256k1)
+/// ECDSA/secp256k1 signing key (i.e. private key)
+///
+/// This is a wrapper type which supports any pluggable ECDSA/secp256k1 signer
+/// implementation which impls the [`EcdsaSigner`] trait.
+///
+/// By default it uses [`k256::ecdsa::SigningKey`] as the signer implementation,
+/// however it can be instantiated from any compatible signer (e.g. HSM, KMS,
+/// etc) by using [`SigningKey::new`].
+///
+/// Supported alternative signer implementations:
+/// - [`yubihsm::ecdsa::secp256k1::Signer`]: YubiHSM-backed ECDSA/secp256k1 signer
+///
+/// [`yubihsm::ecdsa::secp256k1::Signer`]: https://docs.rs/yubihsm/latest/yubihsm/ecdsa/secp256k1/type.Signer.html
 pub struct SigningKey {
-    inner: Box<dyn Secp256k1Signer>,
+    inner: Box<dyn EcdsaSigner>,
 }
 
 impl SigningKey {
-    /// Generate a random signing key.
-    pub fn random() -> Self {
-        Self {
-            inner: Box::new(k256::ecdsa::SigningKey::random(&mut OsRng)),
-        }
+    /// Initialize from a provided signer object.
+    ///
+    /// Use [`SigningKey::from_bytes`] to initialize from a raw private key.
+    pub fn new(signer: Box<dyn EcdsaSigner>) -> Self {
+        Self { inner: signer }
     }
 
     /// Initialize from a raw scalar value (big endian).
     pub fn from_bytes(bytes: &[u8]) -> Result<Self> {
         let signing_key = k256::ecdsa::SigningKey::from_bytes(bytes)?;
-        Ok(Self {
-            inner: Box::new(signing_key),
-        })
+        Ok(Self::new(Box::new(signing_key)))
+    }
+
+    /// Generate a random signing key.
+    pub fn random() -> Self {
+        Self::new(Box::new(k256::ecdsa::SigningKey::random(&mut OsRng)))
+    }
+
+    /// Derive a signing key from a [`bip32::DerivationPath`].
+    ///
+    /// Note that [`bip32::DerivationPath`] impls [`std::str::FromStr`] and
+    /// therefore you can use `parse()` to parse it from a string.
+    #[cfg(feature = "bip32")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
+    pub fn derive_from_path<S>(
+        seed: impl AsRef<[u8]>,
+        path: &bip32::DerivationPath,
+    ) -> bip32::Result<Self> {
+        bip32::XPrv::derive_from_path(seed, path).map(Into::into)
     }
 
     /// Sign the given message, returning a signature.
@@ -38,9 +66,9 @@ impl SigningKey {
     }
 }
 
-impl From<Box<dyn Secp256k1Signer>> for SigningKey {
-    fn from(signer: Box<dyn Secp256k1Signer>) -> Self {
-        Self { inner: signer }
+impl From<Box<dyn EcdsaSigner>> for SigningKey {
+    fn from(signer: Box<dyn EcdsaSigner>) -> Self {
+        Self::new(signer)
     }
 }
 
@@ -52,13 +80,38 @@ impl TryFrom<&[u8]> for SigningKey {
     }
 }
 
-/// ECDSA/secp256k1 signer
-pub trait Secp256k1Signer: ecdsa::signature::Signer<Signature> {
-    /// Get the ECDSA verifying key for this signer
+#[cfg(feature = "bip32")]
+#[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
+impl From<bip32::XPrv> for SigningKey {
+    fn from(xprv: bip32::XPrv) -> SigningKey {
+        SigningKey::from(&xprv)
+    }
+}
+
+#[cfg(feature = "bip32")]
+#[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
+impl From<&bip32::XPrv> for SigningKey {
+    fn from(xprv: &bip32::XPrv) -> SigningKey {
+        Self {
+            inner: Box::new(xprv.private_key().clone()),
+        }
+    }
+}
+
+/// ECDSA/secp256k1 signer trait.
+///
+/// This is a trait which enables plugging any backing signing implementation
+/// which produces a compatible [`Signature`] and [`VerifyingKey`].
+///
+/// Note that this trait is bounded on [`ecdsa::signature::Signer`], which is
+/// what is actually used to produce a signature for a given message.
+pub trait EcdsaSigner: ecdsa::signature::Signer<Signature> {
+    /// Get the ECDSA/secp256k1 [`VerifyingKey`] (i.e. public key) which
+    /// which corresponds to this signer's private key.
     fn verifying_key(&self) -> VerifyingKey;
 }
 
-impl<T> Secp256k1Signer for T
+impl<T> EcdsaSigner for T
 where
     T: ecdsa::signature::Signer<Signature>,
     k256::ecdsa::VerifyingKey: for<'a> From<&'a T>,
