@@ -201,6 +201,17 @@ pub mod cosmos {
     }
 }
 
+#[cfg(feature = "cosmwasm")]
+/// CosmWasm protobuf definitions.
+pub mod cosmwasm {
+    /// Messages and services handling CosmWasm.
+    pub mod wasm {
+        pub mod v1beta1 {
+            include!("prost/cosmwasm.wasm.v1beta1.rs");
+        }
+    }
+}
+
 /// IBC protobuf definitions.
 pub mod ibc {
     /// IBC applications.
