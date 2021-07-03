@@ -19,7 +19,7 @@ prost = "0.7"
 prost-types = "0.7"
 
 # Optional dependencies
-tonic = { version = "0.4", optional = true }
+tonic = { version = "0.4.3", optional = true, default-features = false, features = ["codegen", "prost"] }
 
 [dependencies.tendermint-proto]
 version = "0.20"

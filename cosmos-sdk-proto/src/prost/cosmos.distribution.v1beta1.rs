@@ -290,17 +290,6 @@ pub mod query_client {
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl QueryClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
     impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
@@ -543,17 +532,6 @@ pub mod msg_client {
     #[doc = " Msg defines the distribution Msg service."]
     pub struct MsgClient<T> {
         inner: tonic::client::Grpc<T>,
-    }
-    impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
     }
     impl<T> MsgClient<T>
     where
