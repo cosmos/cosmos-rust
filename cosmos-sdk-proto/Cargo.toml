@@ -16,7 +16,7 @@ keywords   = ["blockchain", "cosmos", "tendermint", "proto"]
 
 [dependencies]
 prost = "0.7"
-prost-types = "0.7"
+prost-types = "0.8"
 
 # Optional dependencies
 tonic = { version = "0.4", optional = true }
