@@ -15,7 +15,7 @@ categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
 keywords   = ["blockchain", "cosmos", "tendermint", "proto"]
 
 [dependencies]
-prost = "0.7"
+prost = "0.8"
 prost-types = "0.7"
 
 # Optional dependencies
