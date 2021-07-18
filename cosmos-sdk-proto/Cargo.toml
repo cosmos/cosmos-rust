@@ -27,6 +27,7 @@ version = "0.20"
 [features]
 default = ["grpc"]
 grpc = ["tonic"]
+cosmwasm = []
 
 [package.metadata.docs.rs]
 all-features = true

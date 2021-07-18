@@ -56,6 +56,15 @@ pub enum Error {
         /// Transaction hash that wasn't found.
         hash: tx::Hash,
     },
+
+    #[error("invalid proto enum value: {name:?}, value: {found_value:?}")]
+    InvalidEnumValue {
+        /// Name of the enum field
+        name: &'static str,
+
+        /// Actual value of the field found
+        found_value: i32,
+    },
 }
 
 impl Eq for Error {}

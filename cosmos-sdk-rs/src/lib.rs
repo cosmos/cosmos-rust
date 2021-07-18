@@ -31,6 +31,9 @@ pub mod crypto;
 pub mod staking;
 pub mod tx;
 
+#[cfg(feature = "cosmwasm")]
+pub mod cosmwasm;
+
 #[cfg(feature = "dev")]
 #[cfg_attr(docsrs, doc(cfg(feature = "dev")))]
 pub mod dev;
