@@ -22,7 +22,7 @@ prost-types = "0.7"
 tonic = { version = "0.4", optional = true }
 
 [dependencies.tendermint-proto]
-version = "0.20"
+version = "0.21"
 
 [features]
 default = ["grpc"]
