@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.6.0 (2021-08-02)
+
+### Added
+
+- Basic `cosmwasm` support ([#96])
+
+### Changed
+
+- Bump `tendermint-proto` requirement from 0.20 to 0.21 ([#106])
+
+[#96]: https://github.com/cosmos/cosmos-rust/pull/96
+[#106]: https://github.com/cosmos/cosmos-rust/pull/106
+
 ## 0.5.0 (2021-04-10)
 
 ### Changed
