@@ -76,6 +76,22 @@ impl MsgProto for proto::cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }
 
+impl MsgProto for proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress {
+    const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress";
+}
+
+impl MsgProto for proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward {
+    const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward";
+}
+
+impl MsgProto for proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission {
+    const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission";
+}
+
+impl MsgProto for proto::cosmos::distribution::v1beta1::MsgFundCommunityPool {
+    const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.MsgFundCommunityPool";
+}
+
 impl MsgProto for proto::cosmos::staking::v1beta1::MsgDelegate {
     const TYPE_URL: &'static str = "/cosmos.staking.v1beta1.MsgDelegate";
 }
