@@ -174,14 +174,9 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract> for MsgInst
         } else {
             Some(proto.label)
         };
-        let admin = if proto.admin.is_empty() {
-            None
-        } else {
-            Some(proto.admin.parse())
-        };
         Ok(MsgInstantiateContract {
             sender: proto.sender.parse()?,
-            admin: admin.transpose()?,
+            admin: proto.admin.map(|admin| admin.parse()).transpose()?,
             code_id: proto.code_id,
             label,
             init_msg: proto.init_msg,
