@@ -137,7 +137,7 @@ pub struct MsgInstantiateContract {
     pub sender: AccountId,
 
     /// Admin is an optional address that can execute migrations
-    pub admin: AccountId,
+    pub admin: Option<AccountId>,
 
     /// CodeID is the reference to the stored WASM code
     pub code_id: u64,
@@ -174,9 +174,14 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract> for MsgInst
         } else {
             Some(proto.label)
         };
+        let admin = if proto.admin.is_empty() {
+            None
+        } else {
+            Some(proto.admin.parse())
+        };
         Ok(MsgInstantiateContract {
             sender: proto.sender.parse()?,
-            admin: proto.admin.parse()?,
+            admin: admin.transpose()?,
             code_id: proto.code_id,
             label,
             init_msg: proto.init_msg,
@@ -193,7 +198,7 @@ impl From<MsgInstantiateContract> for proto::cosmwasm::wasm::v1beta1::MsgInstant
     fn from(msg: MsgInstantiateContract) -> proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract {
         proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract {
             sender: msg.sender.to_string(),
-            admin: msg.admin.to_string(),
+            admin: msg.admin.map(|admin| admin.to_string()).unwrap_or_default(),
             code_id: msg.code_id,
             label: msg.label.unwrap_or_default(),
             init_msg: msg.init_msg,
