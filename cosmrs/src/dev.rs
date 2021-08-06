@@ -3,10 +3,7 @@
 //! This module contains support for integration testing against a
 //! Cosmos SDK-compatible full node (gaia) running inside of Docker.
 
-use crate::{
-    rpc::{self, Client},
-    tx::{self, Tx},
-};
+use crate::rpc::{self, Client};
 use std::{ffi::OsStr, panic, process, str, time::Duration};
 use tokio::time;
 
@@ -96,18 +93,4 @@ pub async fn poll_for_first_block(rpc_client: &rpc::HttpClient) {
         attempts_remaining -= 1;
         time::sleep(Duration::from_millis(200)).await;
     }
-}
-
-/// Wait for a transaction with the given hash to appear in the blockchain
-pub async fn poll_for_tx(rpc_client: &rpc::HttpClient, tx_hash: &tx::Hash) -> Tx {
-    let attempts = 5;
-
-    for _ in 0..attempts {
-        // TODO(tarcieri): handle not found errors
-        if let Ok(tx) = Tx::find_by_hash(rpc_client, tx_hash).await {
-            return tx;
-        }
-    }
-
-    panic!("couldn't find transaction after {} attempts!", attempts);
 }

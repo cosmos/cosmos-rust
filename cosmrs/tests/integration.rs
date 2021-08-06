@@ -8,7 +8,7 @@ use cosmrs::{
     bank::MsgSend,
     crypto::secp256k1,
     dev, rpc,
-    tx::{self, AccountNumber, Fee, MsgType, SignDoc, SignerInfo},
+    tx::{self, AccountNumber, Fee, MsgType, SignDoc, SignerInfo, Tx},
     Coin,
 };
 use std::{panic, str};
@@ -93,7 +93,9 @@ fn msg_send() {
                 panic!("deliver_tx failed: {:?}", tx_commit_response.deliver_tx);
             }
 
-            let tx = dev::poll_for_tx(&rpc_client, &tx_commit_response.hash).await;
+            let tx = Tx::find_by_hash(&rpc_client, tx_commit_response.hash)
+                .await
+                .unwrap();
             assert_eq!(&tx_body, &tx.body);
             assert_eq!(&auth_info, &tx.auth_info);
         })
