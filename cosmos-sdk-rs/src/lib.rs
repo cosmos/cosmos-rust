@@ -13,6 +13,8 @@
 //!
 //! ## Features
 //!
+//! - [CosmWasm][`cosmwasm`]: messages used by smart contracts written using CosmWasm
+//! - [Staking][`staking`]: support for staking with validators
 //! - [Transactions][`tx`]: build, sign, and/or parse Cosmos SDK transactions
 //!
 //! [Cosmos]: https://cosmos.network/
@@ -21,7 +23,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png",
-    html_root_url = "https://docs.rs/cosmos-sdk/0.2.0"
+    html_root_url = "https://docs.rs/cosmos-sdk/0.3.0"
 )]
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]

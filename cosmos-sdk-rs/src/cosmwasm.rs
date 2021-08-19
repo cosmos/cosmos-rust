@@ -1,6 +1,7 @@
 //! CosmWasm messages
 //!
-//! <https://github.com/CosmWasm/wasmd/tree/master/docs/>
+//! - Tutorial: <https://docs.cosmwasm.com/>
+//! - Protocol Docs: <https://github.com/CosmWasm/wasmd/blob/master/docs/proto/proto.md>
 
 pub use crate::proto::cosmwasm::wasm::v1beta1::AccessType;
 use crate::{
