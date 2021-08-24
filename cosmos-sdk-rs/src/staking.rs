@@ -68,14 +68,13 @@ impl From<MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
 
 impl From<&MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
     fn from(msg: &MsgDelegate) -> proto::cosmos::staking::v1beta1::MsgDelegate {
-        let proto_amount = if let Some(amount) = &msg.amount {
-            Some(proto::cosmos::base::v1beta1::Coin {
+        let proto_amount = msg
+            .amount
+            .as_ref()
+            .map(|amount| proto::cosmos::base::v1beta1::Coin {
                 denom: amount.denom.to_string(),
                 amount: amount.amount.to_string(),
-            })
-        } else {
-            None
-        };
+            });
         proto::cosmos::staking::v1beta1::MsgDelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_address: msg.validator_address.to_string(),
@@ -143,14 +142,13 @@ impl From<MsgUndelegate> for proto::cosmos::staking::v1beta1::MsgUndelegate {
 
 impl From<&MsgUndelegate> for proto::cosmos::staking::v1beta1::MsgUndelegate {
     fn from(msg: &MsgUndelegate) -> proto::cosmos::staking::v1beta1::MsgUndelegate {
-        let proto_amount = if let Some(amount) = &msg.amount {
-            Some(proto::cosmos::base::v1beta1::Coin {
+        let proto_amount = msg
+            .amount
+            .as_ref()
+            .map(|amount| proto::cosmos::base::v1beta1::Coin {
                 denom: amount.denom.to_string(),
                 amount: amount.amount.to_string(),
-            })
-        } else {
-            None
-        };
+            });
         proto::cosmos::staking::v1beta1::MsgUndelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_address: msg.validator_address.to_string(),
@@ -227,14 +225,13 @@ impl From<MsgBeginRedelegate> for proto::cosmos::staking::v1beta1::MsgBeginRedel
 
 impl From<&MsgBeginRedelegate> for proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
     fn from(msg: &MsgBeginRedelegate) -> proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
-        let proto_amount = if let Some(amount) = &msg.amount {
-            Some(proto::cosmos::base::v1beta1::Coin {
+        let proto_amount = msg
+            .amount
+            .as_ref()
+            .map(|amount| proto::cosmos::base::v1beta1::Coin {
                 denom: amount.denom.to_string(),
                 amount: amount.amount.to_string(),
-            })
-        } else {
-            None
-        };
+            });
         proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_src_address: msg.validator_src_address.to_string(),
