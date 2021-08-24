@@ -350,6 +350,7 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
         sdk_dir.join("proto/cosmos/tx/v1beta1/tx.proto"),
         sdk_dir.join("proto/cosmos/upgrade/v1beta1/query.proto"),
         sdk_dir.join("proto/cosmos/vesting/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmos/vesting/v1beta1/vesting.proto"),
     ];
 
     // List available paths for dependencies
