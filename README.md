@@ -34,7 +34,7 @@ all other crates, simply make the required edits in [main.rs](proto-build/main.r
 
 ## Minimum Supported Rust Version
 
-Rust **1.48**
+Rust **1.54**
 
 [//]: # "crates"
 
