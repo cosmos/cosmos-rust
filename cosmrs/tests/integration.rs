@@ -4,7 +4,7 @@
 
 #![cfg(feature = "dev")]
 
-use cosmos_sdk::{
+use cosmrs::{
     bank::MsgSend,
     crypto::secp256k1,
     dev, rpc,
@@ -14,7 +14,7 @@ use cosmos_sdk::{
 use std::{panic, str};
 
 /// Chain ID to use for tests
-const CHAIN_ID: &str = "cosmos-sdk-test";
+const CHAIN_ID: &str = "cosmrs-test";
 
 /// RPC port
 const RPC_PORT: u16 = 26657;

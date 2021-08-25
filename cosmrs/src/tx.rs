@@ -23,7 +23,7 @@
 //!
 //! ```
 //! # fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-//! use cosmos_sdk::{
+//! use cosmrs::{
 //!     bank::MsgSend,
 //!     crypto::secp256k1,
 //!     tx::{self, Fee, MsgType, SignDoc, SignerInfo, Tx},
@@ -94,7 +94,7 @@
 //! // Parsing transactions //
 //! //////////////////////////
 //!
-//! // Parse the serialized bytes from above into a `cosmos_sdk::Tx`
+//! // Parse the serialized bytes from above into a `cosmrs::Tx`
 //! let tx_parsed = Tx::from_bytes(&tx_bytes)?;
 //! assert_eq!(tx_parsed.body, tx_body);
 //! assert_eq!(tx_parsed.auth_info, auth_info);
