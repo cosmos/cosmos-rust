@@ -1,10 +1,10 @@
 [package]
-name = "cosmos_sdk"
-version = "0.3.0" # Also update html_root_url in lib.rs when bumping this
+name = "cosmrs"
+version = "0.0.0" # Also update html_root_url in lib.rs when bumping this
 authors = ["Tony Arcieri <tony@iqlusion.io>"]
 edition = "2018"
 license = "Apache-2.0"
-repository = "https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-rs"
+repository = "https://github.com/cosmos/cosmos-rust/tree/main/cosmrs"
 description = "Transaction builder and signer for Cosmos-based blockchains"
 readme     = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]

@@ -1,4 +1,4 @@
-name: cosmos-sdk-rs
+name: cosmrs
 
 on:
   push:
@@ -6,12 +6,12 @@ on:
   pull_request:
     paths:
       - "cosmos-sdk-proto/**"
-      - "cosmos-sdk-rs/**"
+      - "cosmrs/**"
       - "Cargo.*"
 
 defaults:
   run:
-    working-directory: cosmos-sdk-rs
+    working-directory: cosmrs
 
 env:
   CARGO_TERM_COLOR: always

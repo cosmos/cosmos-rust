@@ -1,4 +1,4 @@
-# Cosmos SDK for Rust
+# CosmRS: Cosmos SDK for Rust
 
 [![Crate][crate-image]][crate-link]
 [![Docs][docs-image]][docs-link]
@@ -16,12 +16,12 @@ of the [Cosmos SDK for Golang].
 This crate is supported on Rust **1.54** or newer.
 
 [//]: # "badges"
-[crate-image]: https://img.shields.io/crates/v/cosmos_sdk.svg?logo=rust
-[crate-link]: https://crates.io/crates/cosmos_sdk
-[docs-image]: https://docs.rs/cosmos_sdk/badge.svg
-[docs-link]: https://docs.rs/cosmos_sdk/
-[build-image]: https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-rs/badge.svg
-[build-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/cosmos-sdk-rs.yml
+[crate-image]: https://img.shields.io/crates/v/cosmrs.svg?logo=rust
+[crate-link]: https://crates.io/crates/cosmrs
+[docs-image]: https://docs.rs/cosmrs/badge.svg
+[docs-link]: https://docs.rs/cosmrs/
+[build-image]: https://github.com/cosmos/cosmos-rust/workflows/cosmrs/badge.svg
+[build-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/cosmrs.yml
 [license-image]: https://img.shields.io/badge/license-Apache2.0-blue.svg
 [license-link]: https://github.com/cosmos/cosmos-rust/blob/master/LICENSE
 [rustc-image]: https://img.shields.io/badge/rustc-1.54+-blue.svg

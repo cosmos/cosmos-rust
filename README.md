@@ -6,8 +6,8 @@ This is a place for commonly shared rust resources related to the Cosmos ecosyst
 
 | Name                 | Description                 | crates.io | docs.rs | CI Build |
 |----------------------|-----------------------------|-----------|---------|----------|
-| [`cosmos‑sdk`]       | Cosmos SDK for Rust         | [![crates.io][cosmos-sdk-crate-img]][cosmos-sdk-crate-link] | [![docs.rs][cosmos-sdk-docs-img]][cosmos-sdk-docs-link] | [![CI][cosmos-sdk-ci-img]][cosmos-sdk-ci-link] |
-| [`cosmos‑sdk‑proto`] | Proto and gRPC definitions  | [![crates.io][cosmos-sdk-proto-crate-img]][cosmos-sdk-crate-link] | ![docs.rs][cosmos-sdk-proto-docs-img] | [![CI][cosmos-sdk-proto-ci-img]][cosmos-sdk-proto-ci-link] |
+| [`cosmrs`]           | Cosmos SDK for Rust         | [![crates.io][cosmrs-crate-img]][cosmrs-crate-link] | [![docs.rs][cosmrs-docs-img]][cosmrs-docs-link] | [![CI][cosmrs-ci-img]][cosmrs-ci-link] |
+| [`cosmos‑sdk‑proto`] | Proto and gRPC definitions  | [![crates.io][cosmos-sdk-proto-crate-img]][cosmrs-crate-link] | ![docs.rs][cosmos-sdk-proto-docs-img] | [![CI][cosmos-sdk-proto-ci-img]][cosmos-sdk-proto-ci-link] |
 
 ## Merge Policy
 
@@ -38,20 +38,20 @@ Rust **1.54**
 
 [//]: # "crates"
 
-[`cosmos‑sdk`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-rs
+[`cosmrs`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmrs
 [`cosmos‑sdk‑proto`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-proto
 
 [//]: # "badges"
 
-[cosmos-sdk-crate-img]: https://img.shields.io/crates/v/cosmos_sdk.svg?logo=rust
-[cosmos-sdk-crate-link]: https://crates.io/crates/cosmos_sdk
-[cosmos-sdk-docs-img]: https://docs.rs/cosmos_sdk/badge.svg
-[cosmos-sdk-docs-link]: https://docs.rs/cosmos_sdk/
-[cosmos-sdk-ci-img]: https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-rs/badge.svg
-[cosmos-sdk-ci-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/cosmos-sdk-rs.yml
+[cosmrs-crate-img]: https://img.shields.io/crates/v/cosmrs.svg?logo=rust
+[cosmrs-crate-link]: https://crates.io/crates/cosmrs
+[cosmrs-docs-img]: https://docs.rs/cosmrs/badge.svg
+[cosmrs-docs-link]: https://docs.rs/cosmrs/
+[cosmrs-ci-img]: https://github.com/cosmos/cosmos-rust/workflows/cosmrs/badge.svg
+[cosmrs-ci-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/cosmrs.yml
 
 [cosmos-sdk-proto-crate-img]: https://img.shields.io/crates/v/cosmos-sdk-proto.svg?logo=rust
-[cosmos-sdk-crate-link]: https://crates.io/crates/cosmos-sdk-proto
+[cosmrs-crate-link]: https://crates.io/crates/cosmos-sdk-proto
 [cosmos-sdk-proto-docs-img]: https://docs.rs/cosmos-sdk-proto/badge.svg
 [cosmos-sdk-proto-docs-link]: https://docs.rs/cosmos-sdk-proto/
 [cosmos-sdk-proto-ci-img]: https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-proto/badge.svg
