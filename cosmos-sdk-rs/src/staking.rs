@@ -5,7 +5,7 @@
 use crate::{
     proto,
     tx::{Msg, MsgType},
-    AccountId, Coin, Result,
+    AccountId, Coin, Error, Result,
 };
 use std::convert::{TryFrom, TryInto};
 
@@ -19,7 +19,7 @@ pub struct MsgDelegate {
     pub validator_address: AccountId,
 
     /// Amount to send
-    pub amount: Option<Coin>,
+    pub amount: Coin,
 }
 
 impl MsgType for MsgDelegate {
@@ -44,18 +44,18 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
     type Error = eyre::Report;
 
     fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgDelegate) -> Result<MsgDelegate> {
-        let amount = if let Some(amount) = &proto.amount {
-            Some(Coin {
-                denom: amount.denom.parse()?,
-                amount: amount.amount.parse()?,
-            })
-        } else {
-            None
-        };
+        let amount = proto
+            .amount
+            .as_ref()
+            .ok_or(Error::MissingField { name: "amount" })?;
+
         Ok(MsgDelegate {
             delegator_address: proto.delegator_address.parse()?,
             validator_address: proto.validator_address.parse()?,
-            amount,
+            amount: Coin {
+                denom: amount.denom.parse()?,
+                amount: amount.amount.parse()?,
+            },
         })
     }
 }
@@ -68,17 +68,15 @@ impl From<MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
 
 impl From<&MsgDelegate> for proto::cosmos::staking::v1beta1::MsgDelegate {
     fn from(msg: &MsgDelegate) -> proto::cosmos::staking::v1beta1::MsgDelegate {
-        let proto_amount = msg
-            .amount
-            .as_ref()
-            .map(|amount| proto::cosmos::base::v1beta1::Coin {
-                denom: amount.denom.to_string(),
-                amount: amount.amount.to_string(),
-            });
+        let amount = proto::cosmos::base::v1beta1::Coin {
+            denom: msg.amount.denom.to_string(),
+            amount: msg.amount.amount.to_string(),
+        };
+
         proto::cosmos::staking::v1beta1::MsgDelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_address: msg.validator_address.to_string(),
-            amount: proto_amount,
+            amount: Some(amount),
         }
     }
 }
