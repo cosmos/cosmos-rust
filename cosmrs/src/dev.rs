@@ -85,8 +85,8 @@ pub async fn poll_for_first_block(rpc_client: &rpc::HttpClient) {
     let mut attempts_remaining = 25;
 
     while let Err(e) = rpc_client.latest_block().await {
-        if e.code() != rpc::error::Code::ParseError {
-            panic!("unexpected error waiting for first block: {}", e);
+        if !matches!(e.detail(), rpc::error::ErrorDetail::Serde(_)) {
+            panic!("unexpected error waiting for first block: {:?}", e);
         }
 
         if attempts_remaining == 0 {
