@@ -23,7 +23,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png",
-    html_root_url = "https://docs.rs/cosmrs/0.1.0"
+    html_root_url = "https://docs.rs/cosmrs/0.2.0"
 )]
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
