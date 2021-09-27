@@ -99,7 +99,7 @@ pub async fn poll_for_first_block(rpc_client: &rpc::HttpClient) {
 }
 
 /// Wait for a transaction with the given hash to appear in the blockchain
-pub async fn poll_for_tx(rpc_client: &rpc::HttpClient, tx_hash: &tx::Hash) -> Tx {
+pub async fn poll_for_tx(rpc_client: &rpc::HttpClient, tx_hash: tx::Hash) -> Tx {
     let attempts = 5;
 
     for _ in 0..attempts {

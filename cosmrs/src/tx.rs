@@ -162,22 +162,12 @@ impl Tx {
     /// Use RPC to find a transaction by its hash.
     #[cfg(feature = "rpc")]
     #[cfg_attr(docsrs, doc(cfg(feature = "rpc")))]
-    pub async fn find_by_hash<C>(rpc_client: &C, tx_hash: &Hash) -> Result<Tx>
+    pub async fn find_by_hash<C>(rpc_client: &C, tx_hash: Hash) -> Result<Tx>
     where
         C: rpc::Client + Send + Sync,
     {
-        let query = rpc::query::Query::from(rpc::query::EventType::Tx)
-            .and_eq("tx.hash", tx_hash.to_string());
-
-        let response = rpc_client
-            .tx_search(query, false, 1, 1, rpc::Order::Ascending)
-            .await?;
-
-        if response.total_count == 1 {
-            Tx::from_bytes(response.txs[0].tx.as_bytes())
-        } else {
-            Err(Error::TxNotFound { hash: *tx_hash }.into())
-        }
+        let response = rpc_client.tx(tx_hash, false).await?;
+        Tx::from_bytes(response.tx.as_bytes())
     }
 }
 

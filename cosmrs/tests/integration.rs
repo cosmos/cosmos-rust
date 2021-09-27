@@ -93,7 +93,7 @@ fn msg_send() {
                 panic!("deliver_tx failed: {:?}", tx_commit_response.deliver_tx);
             }
 
-            let tx = dev::poll_for_tx(&rpc_client, &tx_commit_response.hash).await;
+            let tx = dev::poll_for_tx(&rpc_client, tx_commit_response.hash).await;
             assert_eq!(&tx_body, &tx.body);
             assert_eq!(&auth_info, &tx.auth_info);
         })
