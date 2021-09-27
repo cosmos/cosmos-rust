@@ -10,7 +10,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png",
-    html_root_url = "https://docs.rs/cosmos-sdk-proto/0.6.3"
+    html_root_url = "https://docs.rs/cosmos-sdk-proto/0.7.0"
 )]
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
@@ -201,8 +201,9 @@ pub mod cosmos {
     }
 }
 
-#[cfg(feature = "cosmwasm")]
 /// CosmWasm protobuf definitions.
+#[cfg(feature = "cosmwasm")]
+#[cfg_attr(docsrs, doc(cfg(feature = "cosmwasm")))]
 pub mod cosmwasm {
     /// Messages and services handling CosmWasm.
     pub mod wasm {
