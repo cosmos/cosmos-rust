@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 0.7.0 (2021-09-27)
 ### Changed
-- Update `tendermint` crate to v0.22 ([#128])
+- Update `tendermint-proto` crate to v0.22 ([#128])
 - Bump `COSMOS_REV` to v0.44.0 ([#130])
 
 [#128]: https://github.com/cosmos/cosmos-rust/pull/128
