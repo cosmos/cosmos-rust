@@ -2,6 +2,7 @@
 
 use crate::{proto, Decimal, Error, Result};
 use eyre::WrapErr;
+use serde::{de, de::Error as _, ser, Deserialize, Serialize};
 use std::{
     convert::{TryFrom, TryInto},
     fmt,
@@ -101,6 +102,20 @@ impl From<AccountId> for tendermint::account::Id {
 impl From<&AccountId> for tendermint::account::Id {
     fn from(id: &AccountId) -> tendermint::account::Id {
         tendermint::account::Id::new(id.to_bytes())
+    }
+}
+
+impl<'de> Deserialize<'de> for AccountId {
+    fn deserialize<D: de::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        String::deserialize(deserializer)?
+            .parse()
+            .map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for AccountId {
+    fn serialize<S: ser::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        self.bech32.serialize(serializer)
     }
 }
 
