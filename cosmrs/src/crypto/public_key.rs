@@ -4,7 +4,12 @@ use crate::{prost_ext::MessageExt, proto, AccountId, Error, Result};
 use eyre::WrapErr;
 use prost::Message;
 use prost_types::Any;
-use std::convert::{TryFrom, TryInto};
+use serde::{de, de::Error as _, ser, Deserialize, Serialize};
+use std::{
+    convert::{TryFrom, TryInto},
+    str::FromStr,
+};
+use subtle_encoding::base64;
 
 /// Protobuf [`Any`] type URL for Ed25519 public keys
 const ED25519_TYPE_URL: &str = "/cosmos.crypto.ed25519.PubKey";
@@ -17,6 +22,16 @@ const SECP256K1_TYPE_URL: &str = "/cosmos.crypto.secp256k1.PubKey";
 pub struct PublicKey(tendermint::PublicKey);
 
 impl PublicKey {
+    /// Parse public key from Cosmos JSON format.
+    pub fn from_json(s: &str) -> Result<Self> {
+        Ok(serde_json::from_str::<PublicKey>(s)?)
+    }
+
+    /// Serialize public key as Cosmos JSON.
+    pub fn to_json(&self) -> String {
+        serde_json::to_string(&self).expect("JSON serialization error")
+    }
+
     /// Get the [`AccountId`] for this [`PublicKey`] (if applicable).
     pub fn account_id(&self, prefix: &str) -> Result<AccountId> {
         match &self.0 {
@@ -28,31 +43,34 @@ impl PublicKey {
         }
     }
 
+    /// Get the type URL for this [`PublicKey`].
+    pub fn type_url(&self) -> &'static str {
+        match &self.0 {
+            tendermint::PublicKey::Ed25519(_) => ED25519_TYPE_URL,
+            tendermint::PublicKey::Secp256k1(_) => SECP256K1_TYPE_URL,
+            // `tendermint::PublicKey` is `non_exhaustive`
+            _ => unreachable!("unknown pubic key type"),
+        }
+    }
+
     /// Convert this [`PublicKey`] to a Protobuf [`Any`] type.
     pub fn to_any(&self) -> Result<Any> {
-        match self.0 {
-            tendermint::PublicKey::Ed25519(_) => {
-                let proto = proto::cosmos::crypto::secp256k1::PubKey {
-                    key: self.to_bytes(),
-                };
-
-                Ok(Any {
-                    type_url: ED25519_TYPE_URL.to_owned(),
-                    value: proto.to_bytes()?,
-                })
+        let value = match self.0 {
+            tendermint::PublicKey::Ed25519(_) => proto::cosmos::crypto::secp256k1::PubKey {
+                key: self.to_bytes(),
             }
-            tendermint::PublicKey::Secp256k1(_) => {
-                let proto = proto::cosmos::crypto::secp256k1::PubKey {
-                    key: self.to_bytes(),
-                };
-
-                Ok(Any {
-                    type_url: SECP256K1_TYPE_URL.to_owned(),
-                    value: proto.to_bytes()?,
-                })
+            .to_bytes(),
+            tendermint::PublicKey::Secp256k1(_) => proto::cosmos::crypto::secp256k1::PubKey {
+                key: self.to_bytes(),
             }
+            .to_bytes(),
             _ => Err(Error::Crypto.into()),
-        }
+        }?;
+
+        Ok(Any {
+            type_url: self.type_url().to_owned(),
+            value,
+        })
     }
 
     /// Serialize this [`PublicKey`] as a byte vector.
@@ -85,16 +103,22 @@ impl TryFrom<&Any> for PublicKey {
     type Error = eyre::Report;
 
     fn try_from(any: &Any) -> Result<PublicKey> {
-        match any.type_url.as_str() {
+        let tm_key = match any.type_url.as_str() {
+            ED25519_TYPE_URL => {
+                let proto = proto::cosmos::crypto::ed25519::PubKey::decode(&*any.value)?;
+                tendermint::PublicKey::from_raw_ed25519(&proto.key)
+            }
             SECP256K1_TYPE_URL => {
                 let proto = proto::cosmos::crypto::secp256k1::PubKey::decode(&*any.value)?;
                 tendermint::PublicKey::from_raw_secp256k1(&proto.key)
-                    .map(Into::into)
-                    .ok_or_else(|| Error::Crypto.into())
             }
-            other => Err(Error::Crypto)
-                .wrap_err_with(|| format!("invalid type URL for public key: {}", other)),
-        }
+            other => {
+                return Err(Error::Crypto)
+                    .wrap_err_with(|| format!("invalid type URL for public key: {}", other))
+            }
+        };
+
+        tm_key.map(Into::into).ok_or_else(|| Error::Crypto.into())
     }
 }
 
@@ -115,5 +139,108 @@ impl From<tendermint::PublicKey> for PublicKey {
 impl From<PublicKey> for tendermint::PublicKey {
     fn from(pk: PublicKey) -> tendermint::PublicKey {
         pk.0
+    }
+}
+
+impl FromStr for PublicKey {
+    type Err = eyre::Report;
+
+    fn from_str(s: &str) -> Result<Self> {
+        Self::from_json(s)
+    }
+}
+
+impl ToString for PublicKey {
+    fn to_string(&self) -> String {
+        self.to_json()
+    }
+}
+
+impl<'de> Deserialize<'de> for PublicKey {
+    fn deserialize<D: de::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        PublicKeyJson::deserialize(deserializer)?
+            .try_into()
+            .map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for PublicKey {
+    fn serialize<S: ser::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        PublicKeyJson::from(self).serialize(serializer)
+    }
+}
+
+/// Serde encoding type for JSON public keys.
+///
+/// Uses Protobuf JSON encoding conventions.
+#[derive(Deserialize, Serialize)]
+struct PublicKeyJson {
+    /// `@type` field e.g. `/cosmos.crypto.ed25519.PubKey`.
+    #[serde(rename = "@type")]
+    type_url: String,
+
+    /// Key data: standard Base64 encoded with padding.
+    key: String,
+}
+
+impl From<PublicKey> for PublicKeyJson {
+    fn from(public_key: PublicKey) -> PublicKeyJson {
+        PublicKeyJson::from(&public_key)
+    }
+}
+
+impl From<&PublicKey> for PublicKeyJson {
+    fn from(public_key: &PublicKey) -> PublicKeyJson {
+        let type_url = public_key.type_url().to_owned();
+        let key = String::from_utf8(base64::encode(&public_key.to_bytes())).expect("UTF-8 error");
+        PublicKeyJson { type_url, key }
+    }
+}
+
+impl TryFrom<PublicKeyJson> for PublicKey {
+    type Error = eyre::Report;
+
+    fn try_from(json: PublicKeyJson) -> Result<PublicKey> {
+        PublicKey::try_from(&json)
+    }
+}
+
+impl TryFrom<&PublicKeyJson> for PublicKey {
+    type Error = eyre::Report;
+
+    fn try_from(json: &PublicKeyJson) -> Result<PublicKey> {
+        let pk_bytes = base64::decode(&json.key)?;
+
+        let tm_key = match json.type_url.as_str() {
+            ED25519_TYPE_URL => tendermint::PublicKey::from_raw_ed25519(&pk_bytes),
+            SECP256K1_TYPE_URL => tendermint::PublicKey::from_raw_secp256k1(&pk_bytes),
+            other => {
+                return Err(Error::Crypto)
+                    .wrap_err_with(|| format!("invalid public key @type: {}", other))
+            }
+        };
+
+        tm_key.map(Into::into).ok_or_else(|| Error::Crypto.into())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::PublicKey;
+
+    const EXAMPLE_JSON: &str = "{\"@type\":\"/cosmos.crypto.ed25519.PubKey\",\"key\":\"sEEsVGkXvyewKLWMJbHVDRkBoerW0IIwmj1rHkabtHU=\"}";
+
+    #[test]
+    fn json_round_trip() {
+        let example_key = EXAMPLE_JSON.parse::<PublicKey>().unwrap();
+        assert_eq!(example_key.type_url(), "/cosmos.crypto.ed25519.PubKey");
+        assert_eq!(
+            example_key.to_bytes().as_slice(),
+            &[
+                176, 65, 44, 84, 105, 23, 191, 39, 176, 40, 181, 140, 37, 177, 213, 13, 25, 1, 161,
+                234, 214, 208, 130, 48, 154, 61, 107, 30, 70, 155, 180, 117
+            ]
+        );
+        assert_eq!(EXAMPLE_JSON, example_key.to_string());
     }
 }
