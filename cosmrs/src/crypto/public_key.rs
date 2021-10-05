@@ -4,7 +4,7 @@ use crate::{prost_ext::MessageExt, proto, AccountId, Error, Result};
 use eyre::WrapErr;
 use prost::Message;
 use prost_types::Any;
-use serde::{de, de::Error as _, ser, Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
 use std::{
     convert::{TryFrom, TryInto},
     str::FromStr,
@@ -18,7 +18,8 @@ const ED25519_TYPE_URL: &str = "/cosmos.crypto.ed25519.PubKey";
 const SECP256K1_TYPE_URL: &str = "/cosmos.crypto.secp256k1.PubKey";
 
 /// Public keys
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
+#[serde(try_from = "PublicKeyJson", into = "PublicKeyJson")]
 pub struct PublicKey(tendermint::PublicKey);
 
 impl PublicKey {
@@ -153,20 +154,6 @@ impl FromStr for PublicKey {
 impl ToString for PublicKey {
     fn to_string(&self) -> String {
         self.to_json()
-    }
-}
-
-impl<'de> Deserialize<'de> for PublicKey {
-    fn deserialize<D: de::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        PublicKeyJson::deserialize(deserializer)?
-            .try_into()
-            .map_err(D::Error::custom)
-    }
-}
-
-impl Serialize for PublicKey {
-    fn serialize<S: ser::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        PublicKeyJson::from(self).serialize(serializer)
     }
 }
 
