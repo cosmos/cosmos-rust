@@ -20,7 +20,7 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos commit or tag to be cloned and used to build the proto files
-const COSMOS_REV: &str = "v0.44.0";
+const COSMOS_REV: &str = "v0.44.1";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
 const WASMD_REV: &str = "v0.17.0";

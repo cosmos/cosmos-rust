@@ -4,20 +4,23 @@
 pub struct ValidatorSigningInfo {
     #[prost(string, tag = "1")]
     pub address: ::prost::alloc::string::String,
-    /// height at which validator was first a candidate OR was unjailed
+    /// Height at which validator was first a candidate OR was unjailed
     #[prost(int64, tag = "2")]
     pub start_height: i64,
-    /// index offset into signed block bit array
+    /// Index which is incremented each time the validator was a bonded
+    /// in a block and may have signed a precommit or not. This in conjunction with the
+    /// `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
     #[prost(int64, tag = "3")]
     pub index_offset: i64,
-    /// timestamp validator cannot be unjailed until
+    /// Timestamp until which the validator is jailed due to liveness downtime.
     #[prost(message, optional, tag = "4")]
     pub jailed_until: ::core::option::Option<::prost_types::Timestamp>,
-    /// whether or not a validator has been tombstoned (killed out of validator
-    /// set)
+    /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
+    /// once the validator commits an equivocation or for any other configured misbehiavor.
     #[prost(bool, tag = "5")]
     pub tombstoned: bool,
-    /// missed blocks counter (to avoid scanning the array every time)
+    /// A counter kept to avoid unnecessary array reads.
+    /// Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
     #[prost(int64, tag = "6")]
     pub missed_blocks_counter: i64,
 }
