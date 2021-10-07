@@ -1111,27 +1111,27 @@ pub struct StakeAuthorization {
     #[prost(enumeration = "AuthorizationType", tag = "4")]
     pub authorization_type: i32,
     /// validators is the oneof that represents either allow_list or deny_list
-    #[prost(oneof = "stake_authorization::Validators", tags = "2, 3")]
-    pub validators: ::core::option::Option<stake_authorization::Validators>,
+    #[prost(oneof = "stake_authorization::IsStakeAuthorizationValidators", tags = "2, 3")]
+    pub validators: ::core::option::Option<stake_authorization::IsStakeAuthorizationValidators>,
 }
 /// Nested message and enum types in `StakeAuthorization`.
 pub mod stake_authorization {
     /// Validators defines list of validator addresses.
     #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Validators {
+    pub struct StakeAuthorizationValidators {
         #[prost(string, repeated, tag = "1")]
         pub address: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
     /// validators is the oneof that represents either allow_list or deny_list
     #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Validators {
+    pub enum IsStakeAuthorizationValidators {
         /// allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
         /// account.
         #[prost(message, tag = "2")]
-        AllowList(Validators),
+        AllowList(StakeAuthorizationValidators),
         /// deny_list specifies list of validator addresses to whom grantee can not delegate tokens.
         #[prost(message, tag = "3")]
-        DenyList(Validators),
+        DenyList(StakeAuthorizationValidators),
     }
 }
 /// AuthorizationType defines the type of staking module authorization type
