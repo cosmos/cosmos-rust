@@ -1,5 +1,5 @@
 //! Build CosmosSDK/Tendermint/IBC proto files. This build script clones the CosmosSDK version
-//! specified in the COSMOS_REV constant and then uses that to build the required
+//! specified in the COSMOS_SDK_REV constant and then uses that to build the required
 //! proto files for further compilation. This is based on the proto-compiler code
 //! in github.com/informalsystems/ibc-rs
 
@@ -19,8 +19,11 @@ use walkdir::WalkDir;
 // TODO(tarcieri): use a logger for this
 static QUIET: AtomicBool = AtomicBool::new(false);
 
-/// The Cosmos commit or tag to be cloned and used to build the proto files
-const COSMOS_REV: &str = "v0.44.0";
+/// The Cosmos SDK commit or tag to be cloned and used to build the proto files
+const COSMOS_SDK_REV: &str = "v0.44.1";
+
+/// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
+const IBC_REV: &str = "v1.2.0";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
 const WASMD_REV: &str = "v0.17.0";
@@ -28,10 +31,12 @@ const WASMD_REV: &str = "v0.17.0";
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
 
-/// The directory generated proto files go into in this repo
+/// The directory generated cosmos-sdk proto files go into in this repo
 const COSMOS_SDK_PROTO_DIR: &str = "../cosmos-sdk-proto/src/prost/";
-/// Directory where the submodule is located
+/// Directory where the cosmos-sdk submodule is located
 const COSMOS_SDK_DIR: &str = "../cosmos-sdk-go";
+/// Directory where the cosmos/ibc-go submodule is located
+const IBC_DIR: &str = "../ibc-go";
 /// Directory where the submodule is located
 const WASMD_DIR: &str = "../wasmd";
 /// A temporary directory for proto building
@@ -82,8 +87,10 @@ fn main() {
 
     update_submodules();
     output_sdk_version(&tmp_build_dir);
+    output_ibc_version(&tmp_build_dir);
     output_wasmd_version(&tmp_build_dir);
     compile_protos(&tmp_build_dir);
+    compile_ibc_protos_and_services(&tmp_build_dir);
     compile_wasmd_protos(&tmp_build_dir);
     compile_proto_services(&tmp_build_dir);
     compile_wasmd_proto_services(&tmp_build_dir);
@@ -91,8 +98,8 @@ fn main() {
 
     if is_github() {
         println!(
-            "Rebuild protos with proto-build (cosmos-sdk rev: {} wasmd rev: {}))",
-            COSMOS_REV, WASMD_REV
+            "Rebuild protos with proto-build (cosmos-sdk rev: {} ibc-go rev: {} wasmd rev: {}))",
+            COSMOS_SDK_REV, IBC_REV, WASMD_REV
         );
     }
 }
@@ -133,7 +140,12 @@ fn update_submodules() {
     info!("Updating cosmos/cosmos-sdk submodule...");
     run_git(&["submodule", "update", "--init"]);
     run_git(&["-C", COSMOS_SDK_DIR, "fetch"]);
-    run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_REV]);
+    run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_SDK_REV]);
+
+    info!("Updating cosmos/ibc-go submodule...");
+    run_git(&["submodule", "update", "--init"]);
+    run_git(&["-C", IBC_DIR, "fetch"]);
+    run_git(&["-C", IBC_DIR, "reset", "--hard", IBC_REV]);
 
     info!("Updating wasmd submodule...");
     run_git(&["submodule", "update", "--init"]);
@@ -143,7 +155,12 @@ fn update_submodules() {
 
 fn output_sdk_version(out_dir: &Path) {
     let path = out_dir.join("COSMOS_SDK_COMMIT");
-    fs::write(path, COSMOS_REV).unwrap();
+    fs::write(path, COSMOS_SDK_REV).unwrap();
+}
+
+fn output_ibc_version(out_dir: &Path) {
+    let path = out_dir.join("IBC_COMMIT");
+    fs::write(path, IBC_REV).unwrap();
 }
 
 fn output_wasmd_version(out_dir: &Path) {
@@ -169,23 +186,9 @@ fn compile_wasmd_protos(out_dir: &Path) {
         format!("{}/proto", sdk_dir.display()),
         format!("{}/third_party/proto", sdk_dir.display()),
     ];
-
     // List available proto files
     let mut protos: Vec<PathBuf> = vec![];
-    for proto_path in &proto_paths {
-        protos.append(
-            &mut WalkDir::new(proto_path)
-                .into_iter()
-                .filter_map(|e| e.ok())
-                .filter(|e| {
-                    e.file_type().is_file()
-                        && e.path().extension().is_some()
-                        && e.path().extension().unwrap() == "proto"
-                })
-                .map(|e| e.into_path())
-                .collect(),
-        );
-    }
+    collect_protos(&proto_paths, &mut protos);
 
     // List available paths for dependencies
     let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
@@ -232,7 +235,6 @@ fn compile_protos(out_dir: &Path) {
         format!("{}/proto/cosmos/tx", sdk_dir.display()),
         format!("{}/proto/cosmos/upgrade", sdk_dir.display()),
         format!("{}/proto/cosmos/vesting", sdk_dir.display()),
-        format!("{}/proto/ibc", sdk_dir.display()),
     ];
 
     let proto_includes_paths = [
@@ -243,20 +245,7 @@ fn compile_protos(out_dir: &Path) {
 
     // List available proto files
     let mut protos: Vec<PathBuf> = vec![];
-    for proto_path in &proto_paths {
-        protos.append(
-            &mut WalkDir::new(proto_path)
-                .into_iter()
-                .filter_map(|e| e.ok())
-                .filter(|e| {
-                    e.file_type().is_file()
-                        && e.path().extension().is_some()
-                        && e.path().extension().unwrap() == "proto"
-                })
-                .map(|e| e.into_path())
-                .collect(),
-        );
-    }
+    collect_protos(&proto_paths, &mut protos);
 
     // List available paths for dependencies
     let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
@@ -370,6 +359,75 @@ fn compile_proto_services(out_dir: impl AsRef<Path>) {
         .unwrap();
 
     info!("=> Done!");
+}
+
+fn compile_ibc_protos_and_services(out_dir: &Path) {
+    info!(
+        "Compiling .proto files to Rust into '{}'...",
+        out_dir.display()
+    );
+
+    let root = env!("CARGO_MANIFEST_DIR");
+    let ibc_dir = Path::new(IBC_DIR);
+
+    let proto_includes_paths = [
+        format!("{}/../proto", root),
+        format!("{}/proto", ibc_dir.display()),
+        format!("{}/third_party/proto", ibc_dir.display()),
+    ];
+
+    let proto_paths = [
+        format!("{}/../proto/definitions/mock", root),
+        format!("{}/proto/ibc/applications/transfer", ibc_dir.display()),
+        format!("{}/proto/ibc/core/channel", ibc_dir.display()),
+        format!("{}/proto/ibc/core/client", ibc_dir.display()),
+        format!("{}/proto/ibc/core/commitment", ibc_dir.display()),
+        format!("{}/proto/ibc/core/connection", ibc_dir.display()),
+        format!("{}/proto/ibc/core/port", ibc_dir.display()),
+        format!("{}/proto/ibc/core/types", ibc_dir.display()),
+        format!("{}/proto/ibc/lightclients/localhost", ibc_dir.display()),
+        format!("{}/proto/ibc/lightclients/solomachine", ibc_dir.display()),
+        format!("{}/proto/ibc/lightclients/tendermint", ibc_dir.display()),
+    ];
+    // List available proto files
+    let mut protos: Vec<PathBuf> = vec![];
+    collect_protos(&proto_paths, &mut protos);
+
+    let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
+
+    // Compile all of the proto files, along with the grpc service clients
+    info!("Compiling proto definitions and clients for GRPC services!");
+    tonic_build::configure()
+        .build_client(true)
+        .build_server(false)
+        .format(true)
+        .out_dir(out_dir)
+        .extern_path(".tendermint", "::tendermint_proto")
+        .compile(&protos, &includes)
+        .unwrap();
+
+    info!("=> Done!");
+}
+
+/// collect_protos walks every path in `proto_paths` and recursively locates all .proto
+/// files in each path's subdirectories, adding the full path of each file to `protos`
+///
+/// Any errors encountered will cause failure for the path provided to WalkDir::new()
+fn collect_protos(proto_paths: &[String], protos: &mut Vec<PathBuf>) {
+    for proto_path in proto_paths {
+        protos.append(
+            &mut WalkDir::new(proto_path)
+                .into_iter()
+                .filter_map(|e| e.ok())
+                .filter(|e| {
+                    e.file_type().is_file()
+                        && e.path().extension().is_some()
+                        && e.path().extension().unwrap() == "proto"
+                })
+                .map(|e| e.into_path())
+                .collect(),
+        );
+    }
 }
 
 fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
