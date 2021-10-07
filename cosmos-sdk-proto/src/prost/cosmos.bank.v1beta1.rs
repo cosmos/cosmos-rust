@@ -33,6 +33,7 @@ pub struct Output {
 }
 /// Supply represents a struct that passively keeps track of the total supply
 /// amounts in the network.
+/// This message is deprecated now that supply is indexed by denom.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Supply {
     #[prost(message, repeated, tag = "1")]
@@ -72,6 +73,13 @@ pub struct Metadata {
     /// displayed in clients.
     #[prost(string, tag = "4")]
     pub display: ::prost::alloc::string::String,
+    /// name defines the name of the token (eg: Cosmos Atom)
+    #[prost(string, tag = "5")]
+    pub name: ::prost::alloc::string::String,
+    /// symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
+    /// be the same as the display.
+    #[prost(string, tag = "6")]
+    pub symbol: ::prost::alloc::string::String,
 }
 /// QueryBalanceRequest is the request type for the Query/Balance RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -114,7 +122,11 @@ pub struct QueryAllBalancesResponse {
 /// QueryTotalSupplyRequest is the request type for the Query/TotalSupply RPC
 /// method.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryTotalSupplyRequest {}
+pub struct QueryTotalSupplyRequest {
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "1")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
 /// QueryTotalSupplyResponse is the response type for the Query/TotalSupply RPC
 /// method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -122,6 +134,9 @@ pub struct QueryTotalSupplyResponse {
     /// supply is the supply of the coins
     #[prost(message, repeated, tag = "1")]
     pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QuerySupplyOfRequest is the request type for the Query/SupplyOf RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]

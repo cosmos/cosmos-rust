@@ -1,3 +1,11 @@
+/// WeightedVoteOption defines a unit of vote for vote split.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct WeightedVoteOption {
+    #[prost(enumeration = "VoteOption", tag = "1")]
+    pub option: i32,
+    #[prost(string, tag = "2")]
+    pub weight: ::prost::alloc::string::String,
+}
 /// TextProposal defines a standard text proposal whose changes need to be
 /// manually updated in case of approval.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -60,8 +68,14 @@ pub struct Vote {
     pub proposal_id: u64,
     #[prost(string, tag = "2")]
     pub voter: ::prost::alloc::string::String,
+    /// Deprecated: Prefer to use `options` instead. This field is set in queries
+    /// if and only if `len(options) == 1` and that option has weight 1. In all
+    /// other cases, this field will default to VOTE_OPTION_UNSPECIFIED.
+    #[deprecated]
     #[prost(enumeration = "VoteOption", tag = "3")]
     pub option: i32,
+    #[prost(message, repeated, tag = "4")]
+    pub options: ::prost::alloc::vec::Vec<WeightedVoteOption>,
 }
 /// DepositParams defines the params for deposits on governance proposals.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -481,6 +495,19 @@ pub struct MsgVote {
 /// MsgVoteResponse defines the Msg/Vote response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteResponse {}
+/// MsgVoteWeighted defines a message to cast a vote.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgVoteWeighted {
+    #[prost(uint64, tag = "1")]
+    pub proposal_id: u64,
+    #[prost(string, tag = "2")]
+    pub voter: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub options: ::prost::alloc::vec::Vec<WeightedVoteOption>,
+}
+/// MsgVoteWeightedResponse defines the Msg/VoteWeighted response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgVoteWeightedResponse {}
 /// MsgDeposit defines a message to submit a deposit to an existing proposal.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDeposit {
@@ -559,6 +586,21 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1beta1.Msg/Vote");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " VoteWeighted defines a method to add a weighted vote on a specific proposal."]
+        pub async fn vote_weighted(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgVoteWeighted>,
+        ) -> Result<tonic::Response<super::MsgVoteWeightedResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1beta1.Msg/VoteWeighted");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Deposit defines a method to add deposit on a specific proposal."]
