@@ -58,9 +58,9 @@ pub struct GetBlockByHeightRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockByHeightResponse {
     #[prost(message, optional, tag = "1")]
-    pub block_id: ::core::option::Option<tendermint_proto::types::BlockId>,
+    pub block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
     #[prost(message, optional, tag = "2")]
-    pub block: ::core::option::Option<tendermint_proto::types::Block>,
+    pub block: ::core::option::Option<::tendermint_proto::types::Block>,
 }
 /// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -69,9 +69,9 @@ pub struct GetLatestBlockRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestBlockResponse {
     #[prost(message, optional, tag = "1")]
-    pub block_id: ::core::option::Option<tendermint_proto::types::BlockId>,
+    pub block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
     #[prost(message, optional, tag = "2")]
-    pub block: ::core::option::Option<tendermint_proto::types::Block>,
+    pub block: ::core::option::Option<::tendermint_proto::types::Block>,
 }
 /// GetSyncingRequest is the request type for the Query/GetSyncing RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -89,8 +89,7 @@ pub struct GetNodeInfoRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetNodeInfoResponse {
     #[prost(message, optional, tag = "1")]
-    pub default_node_info:
-        ::core::option::Option<tendermint_proto::p2p::DefaultNodeInfo>,
+    pub default_node_info: ::core::option::Option<::tendermint_proto::p2p::DefaultNodeInfo>,
     #[prost(message, optional, tag = "2")]
     pub application_version: ::core::option::Option<VersionInfo>,
 }

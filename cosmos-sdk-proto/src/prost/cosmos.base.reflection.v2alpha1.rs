@@ -220,3 +220,159 @@ pub struct QueryMethodDescriptor {
     #[prost(string, tag = "2")]
     pub full_query_path: ::prost::alloc::string::String,
 }
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+#[doc = r" Generated client implementations."]
+pub mod reflection_service_client {
+    #![allow(unused_variables, dead_code, missing_docs)]
+    use tonic::codegen::*;
+    #[doc = " ReflectionService defines a service for application reflection."]
+    pub struct ReflectionServiceClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl ReflectionServiceClient<tonic::transport::Channel> {
+        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> ReflectionServiceClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::ResponseBody: Body + HttpBody + Send + 'static,
+        T::Error: Into<StdError>,
+        <T::ResponseBody as HttpBody>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
+            let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
+            Self { inner }
+        }
+        #[doc = " GetAuthnDescriptor returns information on how to authenticate transactions in the application"]
+        #[doc = " NOTE: this RPC is still experimental and might be subject to breaking changes or removal in"]
+        #[doc = " future releases of the cosmos-sdk."]
+        pub async fn get_authn_descriptor(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetAuthnDescriptorRequest>,
+        ) -> Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.base.reflection.v2alpha1.ReflectionService/GetAuthnDescriptor",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " GetChainDescriptor returns the description of the chain"]
+        pub async fn get_chain_descriptor(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetChainDescriptorRequest>,
+        ) -> Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.base.reflection.v2alpha1.ReflectionService/GetChainDescriptor",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " GetCodecDescriptor returns the descriptor of the codec of the application"]
+        pub async fn get_codec_descriptor(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetCodecDescriptorRequest>,
+        ) -> Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.base.reflection.v2alpha1.ReflectionService/GetCodecDescriptor",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " GetConfigurationDescriptor returns the descriptor for the sdk.Config of the application"]
+        pub async fn get_configuration_descriptor(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetConfigurationDescriptorRequest>,
+        ) -> Result<tonic::Response<super::GetConfigurationDescriptorResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.base.reflection.v2alpha1.ReflectionService/GetConfigurationDescriptor",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " GetQueryServicesDescriptor returns the available gRPC queryable services of the application"]
+        pub async fn get_query_services_descriptor(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetQueryServicesDescriptorRequest>,
+        ) -> Result<tonic::Response<super::GetQueryServicesDescriptorResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.base.reflection.v2alpha1.ReflectionService/GetQueryServicesDescriptor",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " GetTxDescriptor returns information on the used transaction object and available msgs that can be used"]
+        pub async fn get_tx_descriptor(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetTxDescriptorRequest>,
+        ) -> Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.base.reflection.v2alpha1.ReflectionService/GetTxDescriptor",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+    impl<T: Clone> Clone for ReflectionServiceClient<T> {
+        fn clone(&self) -> Self {
+            Self {
+                inner: self.inner.clone(),
+            }
+        }
+    }
+    impl<T> std::fmt::Debug for ReflectionServiceClient<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "ReflectionServiceClient {{ ... }}")
+        }
+    }
+}
