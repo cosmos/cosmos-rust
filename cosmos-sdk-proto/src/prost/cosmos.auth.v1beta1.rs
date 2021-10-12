@@ -36,6 +36,33 @@ pub struct Params {
     #[prost(uint64, tag = "5")]
     pub sig_verify_cost_secp256k1: u64,
 }
+/// GenesisState defines the auth module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// params defines all the paramaters of the module.
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+    /// accounts are the accounts present at genesis.
+    #[prost(message, repeated, tag = "2")]
+    pub accounts: ::prost::alloc::vec::Vec<::prost_types::Any>,
+}
+/// QueryAccountsRequest is the request type for the Query/Accounts RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryAccountsRequest {
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "1")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
+/// QueryAccountsResponse is the response type for the Query/Accounts RPC method.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryAccountsResponse {
+    /// accounts are the existing accounts
+    #[prost(message, repeated, tag = "1")]
+    pub accounts: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
+}
 /// QueryAccountRequest is the request type for the Query/Account RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountRequest {
@@ -95,6 +122,21 @@ pub mod query_client {
         pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
             let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
             Self { inner }
+        }
+        #[doc = " Accounts returns all the existing accounts"]
+        pub async fn accounts(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryAccountsRequest>,
+        ) -> Result<tonic::Response<super::QueryAccountsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.auth.v1beta1.Query/Accounts");
+            self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Account returns account details based on address."]
         pub async fn account(

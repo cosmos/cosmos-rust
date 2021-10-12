@@ -33,6 +33,7 @@ pub struct Output {
 }
 /// Supply represents a struct that passively keeps track of the total supply
 /// amounts in the network.
+/// This message is deprecated now that supply is indexed by denom.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Supply {
     #[prost(message, repeated, tag = "1")]
@@ -72,6 +73,152 @@ pub struct Metadata {
     /// displayed in clients.
     #[prost(string, tag = "4")]
     pub display: ::prost::alloc::string::String,
+    /// name defines the name of the token (eg: Cosmos Atom)
+    #[prost(string, tag = "5")]
+    pub name: ::prost::alloc::string::String,
+    /// symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
+    /// be the same as the display.
+    #[prost(string, tag = "6")]
+    pub symbol: ::prost::alloc::string::String,
+}
+/// MsgSend represents a message to send coins from one account to another.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSend {
+    #[prost(string, tag = "1")]
+    pub from_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub to_address: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// MsgSendResponse defines the Msg/Send response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSendResponse {}
+/// MsgMultiSend represents an arbitrary multi-in, multi-out send message.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgMultiSend {
+    #[prost(message, repeated, tag = "1")]
+    pub inputs: ::prost::alloc::vec::Vec<Input>,
+    #[prost(message, repeated, tag = "2")]
+    pub outputs: ::prost::alloc::vec::Vec<Output>,
+}
+/// MsgMultiSendResponse defines the Msg/MultiSend response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgMultiSendResponse {}
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+#[doc = r" Generated client implementations."]
+pub mod msg_client {
+    #![allow(unused_variables, dead_code, missing_docs)]
+    use tonic::codegen::*;
+    #[doc = " Msg defines the bank Msg service."]
+    pub struct MsgClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl MsgClient<tonic::transport::Channel> {
+        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> MsgClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::ResponseBody: Body + HttpBody + Send + 'static,
+        T::Error: Into<StdError>,
+        <T::ResponseBody as HttpBody>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
+            let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
+            Self { inner }
+        }
+        #[doc = " Send defines a method for sending coins from one account to another account."]
+        pub async fn send(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgSend>,
+        ) -> Result<tonic::Response<super::MsgSendResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/Send");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " MultiSend defines a method for sending coins from some accounts to other accounts."]
+        pub async fn multi_send(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgMultiSend>,
+        ) -> Result<tonic::Response<super::MsgMultiSendResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/MultiSend");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+    impl<T: Clone> Clone for MsgClient<T> {
+        fn clone(&self) -> Self {
+            Self {
+                inner: self.inner.clone(),
+            }
+        }
+    }
+    impl<T> std::fmt::Debug for MsgClient<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "MsgClient {{ ... }}")
+        }
+    }
+}
+/// SendAuthorization allows the grantee to spend up to spend_limit coins from
+/// the granter's account.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SendAuthorization {
+    #[prost(message, repeated, tag = "1")]
+    pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// GenesisState defines the bank module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// params defines all the paramaters of the module.
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+    /// balances is an array containing the balances of all the accounts.
+    #[prost(message, repeated, tag = "2")]
+    pub balances: ::prost::alloc::vec::Vec<Balance>,
+    /// supply represents the total supply. If it is left empty, then supply will be calculated based on the provided
+    /// balances. Otherwise, it will be used to validate that the sum of the balances equals this amount.
+    #[prost(message, repeated, tag = "3")]
+    pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// denom_metadata defines the metadata of the differents coins.
+    #[prost(message, repeated, tag = "4")]
+    pub denom_metadata: ::prost::alloc::vec::Vec<Metadata>,
+}
+/// Balance defines an account address and balance pair used in the bank module's
+/// genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Balance {
+    /// address is the address of the balance holder.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// coins defines the different coins this balance holds.
+    #[prost(message, repeated, tag = "2")]
+    pub coins: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// QueryBalanceRequest is the request type for the Query/Balance RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -114,7 +261,11 @@ pub struct QueryAllBalancesResponse {
 /// QueryTotalSupplyRequest is the request type for the Query/TotalSupply RPC
 /// method.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryTotalSupplyRequest {}
+pub struct QueryTotalSupplyRequest {
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "1")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
 /// QueryTotalSupplyResponse is the response type for the Query/TotalSupply RPC
 /// method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -122,6 +273,9 @@ pub struct QueryTotalSupplyResponse {
     /// supply is the supply of the coins
     #[prost(message, repeated, tag = "1")]
     pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QuerySupplyOfRequest is the request type for the Query/SupplyOf RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -335,110 +489,6 @@ pub mod query_client {
     impl<T> std::fmt::Debug for QueryClient<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "QueryClient {{ ... }}")
-        }
-    }
-}
-/// MsgSend represents a message to send coins from one account to another.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSend {
-    #[prost(string, tag = "1")]
-    pub from_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub to_address: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag = "3")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-}
-/// MsgSendResponse defines the Msg/Send response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSendResponse {}
-/// MsgMultiSend represents an arbitrary multi-in, multi-out send message.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgMultiSend {
-    #[prost(message, repeated, tag = "1")]
-    pub inputs: ::prost::alloc::vec::Vec<Input>,
-    #[prost(message, repeated, tag = "2")]
-    pub outputs: ::prost::alloc::vec::Vec<Output>,
-}
-/// MsgMultiSendResponse defines the Msg/MultiSend response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgMultiSendResponse {}
-#[cfg(feature = "grpc")]
-#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-#[doc = r" Generated client implementations."]
-pub mod msg_client {
-    #![allow(unused_variables, dead_code, missing_docs)]
-    use tonic::codegen::*;
-    #[doc = " Msg defines the bank Msg service."]
-    pub struct MsgClient<T> {
-        inner: tonic::client::Grpc<T>,
-    }
-    impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
-    impl<T> MsgClient<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + HttpBody + Send + 'static,
-        T::Error: Into<StdError>,
-        <T::ResponseBody as HttpBody>::Error: Into<StdError> + Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
-            let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
-            Self { inner }
-        }
-        #[doc = " Send defines a method for sending coins from one account to another account."]
-        pub async fn send(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgSend>,
-        ) -> Result<tonic::Response<super::MsgSendResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/Send");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " MultiSend defines a method for sending coins from some accounts to other accounts."]
-        pub async fn multi_send(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgMultiSend>,
-        ) -> Result<tonic::Response<super::MsgMultiSendResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/MultiSend");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-    }
-    impl<T: Clone> Clone for MsgClient<T> {
-        fn clone(&self) -> Self {
-            Self {
-                inner: self.inner.clone(),
-            }
-        }
-    }
-    impl<T> std::fmt::Debug for MsgClient<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "MsgClient {{ ... }}")
         }
     }
 }

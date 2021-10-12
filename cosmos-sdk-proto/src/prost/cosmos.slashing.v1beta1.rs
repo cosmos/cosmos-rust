@@ -4,20 +4,23 @@
 pub struct ValidatorSigningInfo {
     #[prost(string, tag = "1")]
     pub address: ::prost::alloc::string::String,
-    /// height at which validator was first a candidate OR was unjailed
+    /// Height at which validator was first a candidate OR was unjailed
     #[prost(int64, tag = "2")]
     pub start_height: i64,
-    /// index offset into signed block bit array
+    /// Index which is incremented each time the validator was a bonded
+    /// in a block and may have signed a precommit or not. This in conjunction with the
+    /// `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
     #[prost(int64, tag = "3")]
     pub index_offset: i64,
-    /// timestamp validator cannot be unjailed until
+    /// Timestamp until which the validator is jailed due to liveness downtime.
     #[prost(message, optional, tag = "4")]
     pub jailed_until: ::core::option::Option<::prost_types::Timestamp>,
-    /// whether or not a validator has been tombstoned (killed out of validator
-    /// set)
+    /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
+    /// once the validator commits an equivocation or for any other configured misbehiavor.
     #[prost(bool, tag = "5")]
     pub tombstoned: bool,
-    /// missed blocks counter (to avoid scanning the array every time)
+    /// A counter kept to avoid unnecessary array reads.
+    /// Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
     #[prost(int64, tag = "6")]
     pub missed_blocks_counter: i64,
 }
@@ -250,4 +253,50 @@ pub mod msg_client {
             write!(f, "MsgClient {{ ... }}")
         }
     }
+}
+/// GenesisState defines the slashing module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// params defines all the paramaters of related to deposit.
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+    /// signing_infos represents a map between validator addresses and their
+    /// signing infos.
+    #[prost(message, repeated, tag = "2")]
+    pub signing_infos: ::prost::alloc::vec::Vec<SigningInfo>,
+    /// missed_blocks represents a map between validator addresses and their
+    /// missed blocks.
+    #[prost(message, repeated, tag = "3")]
+    pub missed_blocks: ::prost::alloc::vec::Vec<ValidatorMissedBlocks>,
+}
+/// SigningInfo stores validator signing info of corresponding address.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SigningInfo {
+    /// address is the validator address.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// validator_signing_info represents the signing info of this validator.
+    #[prost(message, optional, tag = "2")]
+    pub validator_signing_info: ::core::option::Option<ValidatorSigningInfo>,
+}
+/// ValidatorMissedBlocks contains array of missed blocks of corresponding
+/// address.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorMissedBlocks {
+    /// address is the validator address.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// missed_blocks is an array of missed blocks by the validator.
+    #[prost(message, repeated, tag = "2")]
+    pub missed_blocks: ::prost::alloc::vec::Vec<MissedBlock>,
+}
+/// MissedBlock contains height and missed status as boolean.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MissedBlock {
+    /// index is the height at which the block was missed.
+    #[prost(int64, tag = "1")]
+    pub index: i64,
+    /// missed is the missed status.
+    #[prost(bool, tag = "2")]
+    pub missed: bool,
 }

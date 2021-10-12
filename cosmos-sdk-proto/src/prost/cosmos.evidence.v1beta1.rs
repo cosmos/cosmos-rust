@@ -1,3 +1,23 @@
+/// Equivocation implements the Evidence interface and defines evidence of double
+/// signing misbehavior.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Equivocation {
+    #[prost(int64, tag = "1")]
+    pub height: i64,
+    #[prost(message, optional, tag = "2")]
+    pub time: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(int64, tag = "3")]
+    pub power: i64,
+    #[prost(string, tag = "4")]
+    pub consensus_address: ::prost::alloc::string::String,
+}
+/// GenesisState defines the evidence module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// evidence defines all the evidence at genesis.
+    #[prost(message, repeated, tag = "1")]
+    pub evidence: ::prost::alloc::vec::Vec<::prost_types::Any>,
+}
 /// QueryEvidenceRequest is the request type for the Query/Evidence RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryEvidenceRequest {

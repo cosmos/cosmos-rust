@@ -1,35 +1,43 @@
-/// GenesisState defines the crisis module's genesis state.
+/// QueryAppVersionRequest is the request type for the Query/AppVersion RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    /// constant_fee is the fee used to verify the invariant in the crisis
-    /// module.
-    #[prost(message, optional, tag = "3")]
-    pub constant_fee: ::core::option::Option<super::super::base::v1beta1::Coin>,
-}
-/// MsgVerifyInvariant represents a message to verify a particular invariance.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgVerifyInvariant {
+pub struct QueryAppVersionRequest {
+    /// port unique identifier
     #[prost(string, tag = "1")]
-    pub sender: ::prost::alloc::string::String,
+    pub port_id: ::prost::alloc::string::String,
+    /// connection unique identifier
     #[prost(string, tag = "2")]
-    pub invariant_module_name: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub invariant_route: ::prost::alloc::string::String,
+    pub connection_id: ::prost::alloc::string::String,
+    /// whether the channel is ordered or unordered
+    #[prost(enumeration = "super::super::channel::v1::Order", tag = "3")]
+    pub ordering: i32,
+    /// counterparty channel end
+    #[prost(message, optional, tag = "4")]
+    pub counterparty: ::core::option::Option<super::super::channel::v1::Counterparty>,
+    /// proposed version
+    #[prost(string, tag = "5")]
+    pub proposed_version: ::prost::alloc::string::String,
 }
-/// MsgVerifyInvariantResponse defines the Msg/VerifyInvariant response type.
+/// QueryAppVersionResponse is the response type for the Query/AppVersion RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgVerifyInvariantResponse {}
+pub struct QueryAppVersionResponse {
+    /// port id associated with the request identifiers
+    #[prost(string, tag = "1")]
+    pub port_id: ::prost::alloc::string::String,
+    /// supported app version
+    #[prost(string, tag = "2")]
+    pub version: ::prost::alloc::string::String,
+}
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 #[doc = r" Generated client implementations."]
-pub mod msg_client {
+pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs)]
     use tonic::codegen::*;
-    #[doc = " Msg defines the bank Msg service."]
-    pub struct MsgClient<T> {
+    #[doc = " Query defines the gRPC querier service"]
+    pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MsgClient<tonic::transport::Channel> {
+    impl QueryClient<tonic::transport::Channel> {
         #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -40,7 +48,7 @@ pub mod msg_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MsgClient<T>
+    impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::ResponseBody: Body + HttpBody + Send + 'static,
@@ -55,11 +63,11 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
             Self { inner }
         }
-        #[doc = " VerifyInvariant defines a method to verify a particular invariance."]
-        pub async fn verify_invariant(
+        #[doc = " AppVersion queries an IBC Port and determines the appropriate application version to be used"]
+        pub async fn app_version(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgVerifyInvariant>,
-        ) -> Result<tonic::Response<super::MsgVerifyInvariantResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::QueryAppVersionRequest>,
+        ) -> Result<tonic::Response<super::QueryAppVersionResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -67,21 +75,20 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.crisis.v1beta1.Msg/VerifyInvariant");
+            let path = http::uri::PathAndQuery::from_static("/ibc.core.port.v1.Query/AppVersion");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
-    impl<T: Clone> Clone for MsgClient<T> {
+    impl<T: Clone> Clone for QueryClient<T> {
         fn clone(&self) -> Self {
             Self {
                 inner: self.inner.clone(),
             }
         }
     }
-    impl<T> std::fmt::Debug for MsgClient<T> {
+    impl<T> std::fmt::Debug for QueryClient<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "MsgClient {{ ... }}")
+            write!(f, "QueryClient {{ ... }}")
         }
     }
 }

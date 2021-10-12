@@ -136,3 +136,11 @@ pub struct PeriodicVestingAccount {
     #[prost(message, repeated, tag = "3")]
     pub vesting_periods: ::prost::alloc::vec::Vec<Period>,
 }
+/// PermanentLockedAccount implements the VestingAccount interface. It does
+/// not ever release coins, locking them indefinitely. Coins in this account can
+/// still be used for delegating and for governance votes even while locked.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PermanentLockedAccount {
+    #[prost(message, optional, tag = "1")]
+    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
+}
