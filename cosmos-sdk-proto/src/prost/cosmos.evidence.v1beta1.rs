@@ -11,6 +11,89 @@ pub struct Equivocation {
     #[prost(string, tag = "4")]
     pub consensus_address: ::prost::alloc::string::String,
 }
+/// MsgSubmitEvidence represents a message that supports submitting arbitrary
+/// Evidence of misbehavior such as equivocation or counterfactual signing.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSubmitEvidence {
+    #[prost(string, tag = "1")]
+    pub submitter: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "2")]
+    pub evidence: ::core::option::Option<::prost_types::Any>,
+}
+/// MsgSubmitEvidenceResponse defines the Msg/SubmitEvidence response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSubmitEvidenceResponse {
+    /// hash defines the hash of the evidence.
+    #[prost(bytes = "vec", tag = "4")]
+    pub hash: ::prost::alloc::vec::Vec<u8>,
+}
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+#[doc = r" Generated client implementations."]
+pub mod msg_client {
+    #![allow(unused_variables, dead_code, missing_docs)]
+    use tonic::codegen::*;
+    #[doc = " Msg defines the evidence Msg service."]
+    pub struct MsgClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl MsgClient<tonic::transport::Channel> {
+        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> MsgClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::ResponseBody: Body + HttpBody + Send + 'static,
+        T::Error: Into<StdError>,
+        <T::ResponseBody as HttpBody>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
+            let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
+            Self { inner }
+        }
+        #[doc = " SubmitEvidence submits an arbitrary Evidence of misbehavior such as equivocation or"]
+        #[doc = " counterfactual signing."]
+        pub async fn submit_evidence(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgSubmitEvidence>,
+        ) -> Result<tonic::Response<super::MsgSubmitEvidenceResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.evidence.v1beta1.Msg/SubmitEvidence");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+    impl<T: Clone> Clone for MsgClient<T> {
+        fn clone(&self) -> Self {
+            Self {
+                inner: self.inner.clone(),
+            }
+        }
+    }
+    impl<T> std::fmt::Debug for MsgClient<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "MsgClient {{ ... }}")
+        }
+    }
+}
 /// GenesisState defines the evidence module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
@@ -130,89 +213,6 @@ pub mod query_client {
     impl<T> std::fmt::Debug for QueryClient<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "QueryClient {{ ... }}")
-        }
-    }
-}
-/// MsgSubmitEvidence represents a message that supports submitting arbitrary
-/// Evidence of misbehavior such as equivocation or counterfactual signing.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSubmitEvidence {
-    #[prost(string, tag = "1")]
-    pub submitter: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "2")]
-    pub evidence: ::core::option::Option<::prost_types::Any>,
-}
-/// MsgSubmitEvidenceResponse defines the Msg/SubmitEvidence response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSubmitEvidenceResponse {
-    /// hash defines the hash of the evidence.
-    #[prost(bytes = "vec", tag = "4")]
-    pub hash: ::prost::alloc::vec::Vec<u8>,
-}
-#[cfg(feature = "grpc")]
-#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-#[doc = r" Generated client implementations."]
-pub mod msg_client {
-    #![allow(unused_variables, dead_code, missing_docs)]
-    use tonic::codegen::*;
-    #[doc = " Msg defines the evidence Msg service."]
-    pub struct MsgClient<T> {
-        inner: tonic::client::Grpc<T>,
-    }
-    impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
-    impl<T> MsgClient<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + HttpBody + Send + 'static,
-        T::Error: Into<StdError>,
-        <T::ResponseBody as HttpBody>::Error: Into<StdError> + Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
-            let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
-            Self { inner }
-        }
-        #[doc = " SubmitEvidence submits an arbitrary Evidence of misbehavior such as equivocation or"]
-        #[doc = " counterfactual signing."]
-        pub async fn submit_evidence(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgSubmitEvidence>,
-        ) -> Result<tonic::Response<super::MsgSubmitEvidenceResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.evidence.v1beta1.Msg/SubmitEvidence");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-    }
-    impl<T: Clone> Clone for MsgClient<T> {
-        fn clone(&self) -> Self {
-            Self {
-                inner: self.inner.clone(),
-            }
-        }
-    }
-    impl<T> std::fmt::Debug for MsgClient<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "MsgClient {{ ... }}")
         }
     }
 }
