@@ -16,7 +16,7 @@ keywords   = ["blockchain", "cosmos", "tendermint", "proto"]
 
 [dependencies]
 prost = "0.7"
-prost-types = "0.7"
+prost-types = "0.9"
 tendermint-proto = "0.22"
 
 # Optional dependencies
