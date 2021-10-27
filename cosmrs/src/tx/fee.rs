@@ -1,8 +1,7 @@
 //! Transaction fees
 
 use super::Gas;
-use crate::{proto, AccountId, Coin, Result};
-use std::convert::TryFrom;
+use crate::{proto, AccountId, Coin, ErrorReport, Result};
 
 /// Fee includes the amount of coins paid in fees and the maximum gas to be
 /// used by the transaction.
@@ -50,7 +49,7 @@ impl Fee {
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::Fee> for Fee {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::Fee) -> Result<Fee> {
         Fee::try_from(&proto)
@@ -58,7 +57,7 @@ impl TryFrom<proto::cosmos::tx::v1beta1::Fee> for Fee {
 }
 
 impl TryFrom<&proto::cosmos::tx::v1beta1::Fee> for Fee {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmos::tx::v1beta1::Fee) -> Result<Fee> {
         let amount = proto

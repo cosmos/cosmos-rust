@@ -1,13 +1,9 @@
 //! Base functionality.
 
-use crate::{proto, Decimal, Error, Result};
+use crate::{proto, Decimal, Error, ErrorReport, Result};
 use eyre::WrapErr;
 use serde::{de, de::Error as _, ser, Deserialize, Serialize};
-use std::{
-    convert::{TryFrom, TryInto},
-    fmt,
-    str::FromStr,
-};
+use std::{fmt, str::FromStr};
 use subtle_encoding::bech32;
 
 /// Account identifiers
@@ -71,7 +67,7 @@ impl fmt::Display for AccountId {
 }
 
 impl FromStr for AccountId {
-    type Err = eyre::Report;
+    type Err = ErrorReport;
 
     fn from_str(s: &str) -> Result<Self> {
         let (hrp, bytes) = bech32::decode(s).wrap_err("failed to decode bech32")?;
@@ -130,7 +126,7 @@ pub struct Coin {
 }
 
 impl TryFrom<proto::cosmos::base::v1beta1::Coin> for Coin {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::base::v1beta1::Coin) -> Result<Coin> {
         Coin::try_from(&proto)
@@ -138,7 +134,7 @@ impl TryFrom<proto::cosmos::base::v1beta1::Coin> for Coin {
 }
 
 impl TryFrom<&proto::cosmos::base::v1beta1::Coin> for Coin {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmos::base::v1beta1::Coin) -> Result<Coin> {
         Ok(Coin {
@@ -180,7 +176,7 @@ impl fmt::Display for Denom {
 }
 
 impl FromStr for Denom {
-    type Err = eyre::Report;
+    type Err = ErrorReport;
 
     fn from_str(s: &str) -> Result<Self> {
         // TODO(tarcieri): ensure this is the proper validation for a denom name

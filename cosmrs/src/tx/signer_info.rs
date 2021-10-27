@@ -1,8 +1,7 @@
 //! Signer info.
 
 use super::{AuthInfo, Fee, ModeInfo, SequenceNumber, SignMode};
-use crate::{crypto::PublicKey, proto, Error, Result};
-use std::convert::{TryFrom, TryInto};
+use crate::{crypto::PublicKey, proto, Error, ErrorReport, Result};
 
 /// [`SignerInfo`] describes the public key and signing mode of a single top-level signer.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -47,7 +46,7 @@ impl SignerInfo {
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::SignerInfo> for SignerInfo {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::SignerInfo) -> Result<SignerInfo> {
         Ok(SignerInfo {

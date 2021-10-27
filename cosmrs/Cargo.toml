@@ -2,13 +2,14 @@
 name = "cosmrs"
 version = "0.3.0-pre" # Also update html_root_url in lib.rs when bumping this
 authors = ["Tony Arcieri <tony@iqlusion.io>"]
-edition = "2018"
 license = "Apache-2.0"
 repository = "https://github.com/cosmos/cosmos-rust/tree/main/cosmrs"
 description = "Transaction builder and signer for Cosmos-based blockchains"
-readme     = "README.md"
+readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]
-keywords   = ["blockchain", "cosmos", "tendermint", "transaction"]
+keywords = ["blockchain", "cosmos", "tendermint", "transaction"]
+edition = "2021"
+rust-version = "1.56"
 
 [dependencies]
 cosmos-sdk-proto = { version = "=0.8.0-pre", default-features = false, path = "../cosmos-sdk-proto" }

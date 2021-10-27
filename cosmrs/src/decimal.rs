@@ -2,7 +2,7 @@
 //!
 //! [1]: https://pkg.go.dev/github.com/cosmos/cosmos-sdk/types#Dec
 
-use crate::Result;
+use crate::{ErrorReport, Result};
 use std::{
     fmt,
     ops::{Add, AddAssign},
@@ -16,7 +16,7 @@ use std::{
 pub struct Decimal(u64);
 
 impl FromStr for Decimal {
-    type Err = eyre::Report;
+    type Err = ErrorReport;
 
     fn from_str(s: &str) -> Result<Self> {
         Ok(s.parse().map(Self)?)

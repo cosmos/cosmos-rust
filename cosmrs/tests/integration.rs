@@ -8,7 +8,7 @@ use cosmrs::{
     bank::MsgSend,
     crypto::secp256k1,
     dev, rpc,
-    tx::{self, AccountNumber, Fee, MsgType, SignDoc, SignerInfo},
+    tx::{self, AccountNumber, Fee, Msg, SignDoc, SignerInfo},
     Coin,
 };
 use std::{panic, str};
@@ -53,7 +53,7 @@ fn msg_send() {
         to_address: recipient_account_id,
         amount: vec![amount.clone()],
     }
-    .to_msg()
+    .to_any()
     .unwrap();
 
     let chain_id = CHAIN_ID.parse().unwrap();

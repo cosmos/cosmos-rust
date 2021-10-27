@@ -4,12 +4,7 @@
 //! - Protocol Docs: <https://github.com/CosmWasm/wasmd/blob/master/docs/proto/proto.md>
 
 pub use crate::proto::cosmwasm::wasm::v1beta1::AccessType;
-use crate::{
-    proto,
-    tx::{Msg, MsgType},
-    AccountId, Coin, Error, Result,
-};
-use std::convert::{TryFrom, TryInto};
+use crate::{proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result};
 
 /// AccessConfig access control type.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -22,7 +17,7 @@ pub struct AccessConfig {
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1beta1::AccessConfig> for AccessConfig {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmwasm::wasm::v1beta1::AccessConfig) -> Result<AccessConfig> {
         AccessConfig::try_from(&proto)
@@ -30,7 +25,7 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::AccessConfig> for AccessConfig {
 }
 
 impl TryFrom<&proto::cosmwasm::wasm::v1beta1::AccessConfig> for AccessConfig {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmwasm::wasm::v1beta1::AccessConfig) -> Result<AccessConfig> {
         Ok(AccessConfig {
@@ -79,18 +74,12 @@ pub struct MsgStoreCode {
     pub instantiate_permission: Option<AccessConfig>,
 }
 
-impl MsgType for MsgStoreCode {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmwasm::wasm::v1beta1::MsgStoreCode::from_msg(msg).and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmwasm::wasm::v1beta1::MsgStoreCode::from(self.clone()).to_msg()
-    }
+impl Msg for MsgStoreCode {
+    type Proto = proto::cosmwasm::wasm::v1beta1::MsgStoreCode;
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgStoreCode> for MsgStoreCode {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmwasm::wasm::v1beta1::MsgStoreCode) -> Result<MsgStoreCode> {
         let source = if proto.source.is_empty() {
@@ -153,19 +142,12 @@ pub struct MsgInstantiateContract {
     pub funds: Vec<Coin>,
 }
 
-impl MsgType for MsgInstantiateContract {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract::from(self.clone()).to_msg()
-    }
+impl Msg for MsgInstantiateContract {
+    type Proto = proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract;
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract> for MsgInstantiateContract {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract,
@@ -224,19 +206,12 @@ pub struct MsgExecuteContract {
     pub funds: Vec<Coin>,
 }
 
-impl MsgType for MsgExecuteContract {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmwasm::wasm::v1beta1::MsgExecuteContract::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmwasm::wasm::v1beta1::MsgExecuteContract::from(self.clone()).to_msg()
-    }
+impl Msg for MsgExecuteContract {
+    type Proto = proto::cosmwasm::wasm::v1beta1::MsgExecuteContract;
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgExecuteContract> for MsgExecuteContract {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmwasm::wasm::v1beta1::MsgExecuteContract,
@@ -281,19 +256,12 @@ pub struct MsgMigrateContract {
     pub migrate_msg: Vec<u8>,
 }
 
-impl MsgType for MsgMigrateContract {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmwasm::wasm::v1beta1::MsgMigrateContract::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmwasm::wasm::v1beta1::MsgMigrateContract::from(self.clone()).to_msg()
-    }
+impl Msg for MsgMigrateContract {
+    type Proto = proto::cosmwasm::wasm::v1beta1::MsgMigrateContract;
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgMigrateContract> for MsgMigrateContract {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmwasm::wasm::v1beta1::MsgMigrateContract,
@@ -331,18 +299,12 @@ pub struct MsgUpdateAdmin {
     pub contract: AccountId,
 }
 
-impl MsgType for MsgUpdateAdmin {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin::from_msg(msg).and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin::from(self).to_msg()
-    }
+impl Msg for MsgUpdateAdmin {
+    type Proto = proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin;
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin> for MsgUpdateAdmin {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin) -> Result<MsgUpdateAdmin> {
         MsgUpdateAdmin::try_from(&proto)
@@ -350,7 +312,7 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin> for MsgUpdateAdmin 
 }
 
 impl TryFrom<&proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin> for MsgUpdateAdmin {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin) -> Result<MsgUpdateAdmin> {
         Ok(MsgUpdateAdmin {
@@ -387,18 +349,12 @@ pub struct MsgClearAdmin {
     pub contract: AccountId,
 }
 
-impl MsgType for MsgClearAdmin {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmwasm::wasm::v1beta1::MsgClearAdmin::from_msg(msg).and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmwasm::wasm::v1beta1::MsgClearAdmin::from(self).to_msg()
-    }
+impl Msg for MsgClearAdmin {
+    type Proto = proto::cosmwasm::wasm::v1beta1::MsgClearAdmin;
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgClearAdmin> for MsgClearAdmin {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmwasm::wasm::v1beta1::MsgClearAdmin) -> Result<MsgClearAdmin> {
         MsgClearAdmin::try_from(&proto)
@@ -406,7 +362,7 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgClearAdmin> for MsgClearAdmin {
 }
 
 impl TryFrom<&proto::cosmwasm::wasm::v1beta1::MsgClearAdmin> for MsgClearAdmin {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmwasm::wasm::v1beta1::MsgClearAdmin) -> Result<MsgClearAdmin> {
         Ok(MsgClearAdmin {

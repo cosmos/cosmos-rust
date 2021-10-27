@@ -1,14 +1,11 @@
 //! Public keys
 
-use crate::{prost_ext::MessageExt, proto, AccountId, Error, Result};
+use crate::{prost_ext::MessageExt, proto, AccountId, Error, ErrorReport, Result};
 use eyre::WrapErr;
 use prost::Message;
 use prost_types::Any;
 use serde::{Deserialize, Serialize};
-use std::{
-    convert::{TryFrom, TryInto},
-    str::FromStr,
-};
+use std::str::FromStr;
 use subtle_encoding::base64;
 
 /// Protobuf [`Any`] type URL for Ed25519 public keys
@@ -93,7 +90,7 @@ impl From<&k256::ecdsa::VerifyingKey> for PublicKey {
 }
 
 impl TryFrom<Any> for PublicKey {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(any: Any) -> Result<PublicKey> {
         PublicKey::try_from(&any)
@@ -101,7 +98,7 @@ impl TryFrom<Any> for PublicKey {
 }
 
 impl TryFrom<&Any> for PublicKey {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(any: &Any) -> Result<PublicKey> {
         let tm_key = match any.type_url.as_str() {
@@ -144,7 +141,7 @@ impl From<PublicKey> for tendermint::PublicKey {
 }
 
 impl FromStr for PublicKey {
-    type Err = eyre::Report;
+    type Err = ErrorReport;
 
     fn from_str(s: &str) -> Result<Self> {
         Self::from_json(s)
@@ -185,7 +182,7 @@ impl From<&PublicKey> for PublicKeyJson {
 }
 
 impl TryFrom<PublicKeyJson> for PublicKey {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(json: PublicKeyJson) -> Result<PublicKey> {
         PublicKey::try_from(&json)
@@ -193,7 +190,7 @@ impl TryFrom<PublicKeyJson> for PublicKey {
 }
 
 impl TryFrom<&PublicKeyJson> for PublicKey {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(json: &PublicKeyJson) -> Result<PublicKey> {
         let pk_bytes = base64::decode(&json.key)?;

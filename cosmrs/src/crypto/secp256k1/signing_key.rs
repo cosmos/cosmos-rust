@@ -1,10 +1,11 @@
 //! Transaction signing key
 
-use crate::crypto::{secp256k1::Signature, PublicKey};
-use eyre::Result;
+use crate::{
+    crypto::{secp256k1::Signature, PublicKey},
+    ErrorReport, Result,
+};
 use k256::ecdsa::VerifyingKey;
 use rand_core::OsRng;
-use std::convert::TryFrom;
 
 /// ECDSA/secp256k1 signing key (i.e. private key)
 ///
@@ -73,7 +74,7 @@ impl From<Box<dyn EcdsaSigner>> for SigningKey {
 }
 
 impl TryFrom<&[u8]> for SigningKey {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(bytes: &[u8]) -> Result<Self> {
         Self::from_bytes(bytes)

@@ -26,7 +26,7 @@
 //! use cosmrs::{
 //!     bank::MsgSend,
 //!     crypto::secp256k1,
-//!     tx::{self, Fee, MsgType, SignDoc, SignerInfo, Tx},
+//!     tx::{self, Fee, Msg, SignDoc, SignerInfo, Tx},
 //!     AccountId, Coin
 //! };
 //!
@@ -68,7 +68,7 @@
 //! let memo = "example memo";
 //!
 //! // Create transaction body from the MsgSend, memo, and timeout height.
-//! let tx_body = tx::Body::new(vec![msg_send.to_msg()?], memo, timeout_height);
+//! let tx_body = tx::Body::new(vec![msg_send.to_any()?], memo, timeout_height);
 //!
 //! // Create signer info from public key and sequence number.
 //! // This uses a standard "direct" signature from a single signer.
@@ -117,17 +117,16 @@ pub use self::{
     body::Body,
     fee::Fee,
     mode_info::ModeInfo,
-    msg::{Msg, MsgProto, MsgType},
+    msg::{Msg, MsgProto},
     raw::Raw,
     sign_doc::SignDoc,
     signer_info::SignerInfo,
 };
-pub use crate::proto::cosmos::tx::signing::v1beta1::SignMode;
+pub use crate::{proto::cosmos::tx::signing::v1beta1::SignMode, ErrorReport};
 pub use tendermint::abci::{transaction::Hash, Gas};
 
 use crate::{crypto::secp256k1, proto, Error, Result};
 use prost::Message;
-use std::convert::{TryFrom, TryInto};
 
 #[cfg(feature = "rpc")]
 use crate::rpc;
@@ -172,14 +171,14 @@ impl Tx {
 }
 
 impl TryFrom<&[u8]> for Tx {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(bytes: &[u8]) -> Result<Tx> {
         proto::cosmos::tx::v1beta1::Tx::decode(bytes)?.try_into()
     }
 }
 impl TryFrom<proto::cosmos::tx::v1beta1::Tx> for Tx {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::Tx) -> Result<Tx> {
         Ok(Tx {

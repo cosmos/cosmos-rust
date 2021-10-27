@@ -1,8 +1,7 @@
 //! Auth info.
 
 use super::{Fee, SignerInfo};
-use crate::{prost_ext::MessageExt, proto, Error, Result};
-use std::convert::{TryFrom, TryInto};
+use crate::{prost_ext::MessageExt, proto, Error, ErrorReport, Result};
 
 /// [`AuthInfo`] describes the fee and signer modes that are used to sign a transaction.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -35,7 +34,7 @@ impl AuthInfo {
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::AuthInfo> for AuthInfo {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::AuthInfo) -> Result<AuthInfo> {
         Ok(AuthInfo {

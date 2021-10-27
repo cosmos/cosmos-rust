@@ -2,12 +2,7 @@
 //!
 //! <https://docs.cosmos.network/master/modules/bank/>
 
-use crate::{
-    proto,
-    tx::{Msg, MsgType},
-    AccountId, Coin, Result,
-};
-use std::convert::{TryFrom, TryInto};
+use crate::{proto, tx::Msg, AccountId, Coin, ErrorReport, Result};
 
 /// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -22,18 +17,12 @@ pub struct MsgSend {
     pub amount: Vec<Coin>,
 }
 
-impl MsgType for MsgSend {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::bank::v1beta1::MsgSend::from_msg(msg).and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::bank::v1beta1::MsgSend::from(self).to_msg()
-    }
+impl Msg for MsgSend {
+    type Proto = proto::cosmos::bank::v1beta1::MsgSend;
 }
 
 impl TryFrom<proto::cosmos::bank::v1beta1::MsgSend> for MsgSend {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::bank::v1beta1::MsgSend) -> Result<MsgSend> {
         MsgSend::try_from(&proto)
@@ -41,7 +30,7 @@ impl TryFrom<proto::cosmos::bank::v1beta1::MsgSend> for MsgSend {
 }
 
 impl TryFrom<&proto::cosmos::bank::v1beta1::MsgSend> for MsgSend {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmos::bank::v1beta1::MsgSend) -> Result<MsgSend> {
         Ok(MsgSend {
