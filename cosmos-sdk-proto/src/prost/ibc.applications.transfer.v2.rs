@@ -1,6 +1,6 @@
 /// FungibleTokenPacketData defines a struct for the packet payload
 /// See FungibleTokenPacketData spec:
-/// https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer#data-structures
+/// <https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer#data-structures>
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FungibleTokenPacketData {
     /// the token denomination to be transferred

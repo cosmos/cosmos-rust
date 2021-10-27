@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.7.1" # Also update html_root_url in lib.rs when bumping this
+version = "0.8.0-pre" # Also update html_root_url in lib.rs when bumping this
 authors = [
     "Justin Kilpatrick <justin@althea.net>",
     "Greg Szabo <greg@informal.systems>",
@@ -15,12 +15,12 @@ categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
 keywords   = ["blockchain", "cosmos", "tendermint", "proto"]
 
 [dependencies]
-prost = "0.7"
-prost-types = "0.7"
-tendermint-proto = "0.22"
+prost = "0.9"
+prost-types = "0.9"
+tendermint-proto = "0.23"
 
 # Optional dependencies
-tonic = { version = "0.4", optional = true }
+tonic = { version = "0.6", optional = true }
 
 [features]
 default = ["grpc"]

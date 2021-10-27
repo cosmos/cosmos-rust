@@ -1,3 +1,185 @@
+/// MsgSetWithdrawAddress sets the withdraw address for
+/// a delegator (or validator self-delegation).
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSetWithdrawAddress {
+    #[prost(string, tag = "1")]
+    pub delegator_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub withdraw_address: ::prost::alloc::string::String,
+}
+/// MsgSetWithdrawAddressResponse defines the Msg/SetWithdrawAddress response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSetWithdrawAddressResponse {}
+/// MsgWithdrawDelegatorReward represents delegation withdrawal to a delegator
+/// from a single validator.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgWithdrawDelegatorReward {
+    #[prost(string, tag = "1")]
+    pub delegator_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub validator_address: ::prost::alloc::string::String,
+}
+/// MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgWithdrawDelegatorRewardResponse {}
+/// MsgWithdrawValidatorCommission withdraws the full commission to the validator
+/// address.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgWithdrawValidatorCommission {
+    #[prost(string, tag = "1")]
+    pub validator_address: ::prost::alloc::string::String,
+}
+/// MsgWithdrawValidatorCommissionResponse defines the Msg/WithdrawValidatorCommission response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgWithdrawValidatorCommissionResponse {}
+/// MsgFundCommunityPool allows an account to directly
+/// fund the community pool.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgFundCommunityPool {
+    #[prost(message, repeated, tag = "1")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    #[prost(string, tag = "2")]
+    pub depositor: ::prost::alloc::string::String,
+}
+/// MsgFundCommunityPoolResponse defines the Msg/FundCommunityPool response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgFundCommunityPoolResponse {}
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+#[doc = r" Generated client implementations."]
+pub mod msg_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    #[doc = " Msg defines the distribution Msg service."]
+    #[derive(Debug, Clone)]
+    pub struct MsgClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl MsgClient<tonic::transport::Channel> {
+        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> MsgClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::ResponseBody: Body + Send + 'static,
+        T::Error: Into<StdError>,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
+        {
+            MsgClient::new(InterceptedService::new(inner, interceptor))
+        }
+        #[doc = r" Compress requests with `gzip`."]
+        #[doc = r""]
+        #[doc = r" This requires the server to support it otherwise it might respond with an"]
+        #[doc = r" error."]
+        pub fn send_gzip(mut self) -> Self {
+            self.inner = self.inner.send_gzip();
+            self
+        }
+        #[doc = r" Enable decompressing responses with `gzip`."]
+        pub fn accept_gzip(mut self) -> Self {
+            self.inner = self.inner.accept_gzip();
+            self
+        }
+        #[doc = " SetWithdrawAddress defines a method to change the withdraw address"]
+        #[doc = " for a delegator (or validator self-delegation)."]
+        pub async fn set_withdraw_address(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgSetWithdrawAddress>,
+        ) -> Result<tonic::Response<super::MsgSetWithdrawAddressResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.distribution.v1beta1.Msg/SetWithdrawAddress",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " WithdrawDelegatorReward defines a method to withdraw rewards of delegator"]
+        #[doc = " from a single validator."]
+        pub async fn withdraw_delegator_reward(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgWithdrawDelegatorReward>,
+        ) -> Result<tonic::Response<super::MsgWithdrawDelegatorRewardResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.distribution.v1beta1.Msg/WithdrawDelegatorReward",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " WithdrawValidatorCommission defines a method to withdraw the"]
+        #[doc = " full commission to the validator address."]
+        pub async fn withdraw_validator_commission(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgWithdrawValidatorCommission>,
+        ) -> Result<tonic::Response<super::MsgWithdrawValidatorCommissionResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.distribution.v1beta1.Msg/WithdrawValidatorCommission",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " FundCommunityPool defines a method to allow an account to directly"]
+        #[doc = " fund the community pool."]
+        pub async fn fund_community_pool(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgFundCommunityPool>,
+        ) -> Result<tonic::Response<super::MsgFundCommunityPoolResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.distribution.v1beta1.Msg/FundCommunityPool",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+}
 /// Params defines the set of params for the distribution module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
@@ -128,127 +310,6 @@ pub struct CommunityPoolSpendProposalWithDeposit {
     pub amount: ::prost::alloc::string::String,
     #[prost(string, tag = "5")]
     pub deposit: ::prost::alloc::string::String,
-}
-/// DelegatorWithdrawInfo is the address for where distributions rewards are
-/// withdrawn to by default this struct is only used at genesis to feed in
-/// default withdraw addresses.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DelegatorWithdrawInfo {
-    /// delegator_address is the address of the delegator.
-    #[prost(string, tag = "1")]
-    pub delegator_address: ::prost::alloc::string::String,
-    /// withdraw_address is the address to withdraw the delegation rewards to.
-    #[prost(string, tag = "2")]
-    pub withdraw_address: ::prost::alloc::string::String,
-}
-/// ValidatorOutstandingRewardsRecord is used for import/export via genesis json.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorOutstandingRewardsRecord {
-    /// validator_address is the address of the validator.
-    #[prost(string, tag = "1")]
-    pub validator_address: ::prost::alloc::string::String,
-    /// outstanding_rewards represents the oustanding rewards of a validator.
-    #[prost(message, repeated, tag = "2")]
-    pub outstanding_rewards: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
-}
-/// ValidatorAccumulatedCommissionRecord is used for import / export via genesis
-/// json.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorAccumulatedCommissionRecord {
-    /// validator_address is the address of the validator.
-    #[prost(string, tag = "1")]
-    pub validator_address: ::prost::alloc::string::String,
-    /// accumulated is the accumulated commission of a validator.
-    #[prost(message, optional, tag = "2")]
-    pub accumulated: ::core::option::Option<ValidatorAccumulatedCommission>,
-}
-/// ValidatorHistoricalRewardsRecord is used for import / export via genesis
-/// json.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorHistoricalRewardsRecord {
-    /// validator_address is the address of the validator.
-    #[prost(string, tag = "1")]
-    pub validator_address: ::prost::alloc::string::String,
-    /// period defines the period the historical rewards apply to.
-    #[prost(uint64, tag = "2")]
-    pub period: u64,
-    /// rewards defines the historical rewards of a validator.
-    #[prost(message, optional, tag = "3")]
-    pub rewards: ::core::option::Option<ValidatorHistoricalRewards>,
-}
-/// ValidatorCurrentRewardsRecord is used for import / export via genesis json.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorCurrentRewardsRecord {
-    /// validator_address is the address of the validator.
-    #[prost(string, tag = "1")]
-    pub validator_address: ::prost::alloc::string::String,
-    /// rewards defines the current rewards of a validator.
-    #[prost(message, optional, tag = "2")]
-    pub rewards: ::core::option::Option<ValidatorCurrentRewards>,
-}
-/// DelegatorStartingInfoRecord used for import / export via genesis json.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DelegatorStartingInfoRecord {
-    /// delegator_address is the address of the delegator.
-    #[prost(string, tag = "1")]
-    pub delegator_address: ::prost::alloc::string::String,
-    /// validator_address is the address of the validator.
-    #[prost(string, tag = "2")]
-    pub validator_address: ::prost::alloc::string::String,
-    /// starting_info defines the starting info of a delegator.
-    #[prost(message, optional, tag = "3")]
-    pub starting_info: ::core::option::Option<DelegatorStartingInfo>,
-}
-/// ValidatorSlashEventRecord is used for import / export via genesis json.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorSlashEventRecord {
-    /// validator_address is the address of the validator.
-    #[prost(string, tag = "1")]
-    pub validator_address: ::prost::alloc::string::String,
-    /// height defines the block height at which the slash event occured.
-    #[prost(uint64, tag = "2")]
-    pub height: u64,
-    /// period is the period of the slash event.
-    #[prost(uint64, tag = "3")]
-    pub period: u64,
-    /// validator_slash_event describes the slash event.
-    #[prost(message, optional, tag = "4")]
-    pub validator_slash_event: ::core::option::Option<ValidatorSlashEvent>,
-}
-/// GenesisState defines the distribution module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    /// params defines all the paramaters of the module.
-    #[prost(message, optional, tag = "1")]
-    pub params: ::core::option::Option<Params>,
-    /// fee_pool defines the fee pool at genesis.
-    #[prost(message, optional, tag = "2")]
-    pub fee_pool: ::core::option::Option<FeePool>,
-    /// fee_pool defines the delegator withdraw infos at genesis.
-    #[prost(message, repeated, tag = "3")]
-    pub delegator_withdraw_infos: ::prost::alloc::vec::Vec<DelegatorWithdrawInfo>,
-    /// fee_pool defines the previous proposer at genesis.
-    #[prost(string, tag = "4")]
-    pub previous_proposer: ::prost::alloc::string::String,
-    /// fee_pool defines the outstanding rewards of all validators at genesis.
-    #[prost(message, repeated, tag = "5")]
-    pub outstanding_rewards: ::prost::alloc::vec::Vec<ValidatorOutstandingRewardsRecord>,
-    /// fee_pool defines the accumulated commisions of all validators at genesis.
-    #[prost(message, repeated, tag = "6")]
-    pub validator_accumulated_commissions:
-        ::prost::alloc::vec::Vec<ValidatorAccumulatedCommissionRecord>,
-    /// fee_pool defines the historical rewards of all validators at genesis.
-    #[prost(message, repeated, tag = "7")]
-    pub validator_historical_rewards: ::prost::alloc::vec::Vec<ValidatorHistoricalRewardsRecord>,
-    /// fee_pool defines the current rewards of all validators at genesis.
-    #[prost(message, repeated, tag = "8")]
-    pub validator_current_rewards: ::prost::alloc::vec::Vec<ValidatorCurrentRewardsRecord>,
-    /// fee_pool defines the delegator starting infos at genesis.
-    #[prost(message, repeated, tag = "9")]
-    pub delegator_starting_infos: ::prost::alloc::vec::Vec<DelegatorStartingInfoRecord>,
-    /// fee_pool defines the validator slash events at genesis.
-    #[prost(message, repeated, tag = "10")]
-    pub validator_slash_events: ::prost::alloc::vec::Vec<ValidatorSlashEventRecord>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -405,9 +466,10 @@ pub struct QueryCommunityPoolResponse {
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 #[doc = r" Generated client implementations."]
 pub mod query_client {
-    #![allow(unused_variables, dead_code, missing_docs)]
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
     #[doc = " Query defines the gRPC querier service for distribution module."]
+    #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
@@ -425,17 +487,43 @@ pub mod query_client {
     impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + HttpBody + Send + 'static,
+        T::ResponseBody: Body + Send + 'static,
         T::Error: Into<StdError>,
-        <T::ResponseBody as HttpBody>::Error: Into<StdError> + Send,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
-        pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
-            let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
-            Self { inner }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> QueryClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
+        {
+            QueryClient::new(InterceptedService::new(inner, interceptor))
+        }
+        #[doc = r" Compress requests with `gzip`."]
+        #[doc = r""]
+        #[doc = r" This requires the server to support it otherwise it might respond with an"]
+        #[doc = r" error."]
+        pub fn send_gzip(mut self) -> Self {
+            self.inner = self.inner.send_gzip();
+            self
+        }
+        #[doc = r" Enable decompressing responses with `gzip`."]
+        pub fn accept_gzip(mut self) -> Self {
+            self.inner = self.inner.accept_gzip();
+            self
         }
         #[doc = " Params queries params of the distribution module."]
         pub async fn params(
@@ -596,186 +684,125 @@ pub mod query_client {
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
-    impl<T: Clone> Clone for QueryClient<T> {
-        fn clone(&self) -> Self {
-            Self {
-                inner: self.inner.clone(),
-            }
-        }
-    }
-    impl<T> std::fmt::Debug for QueryClient<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "QueryClient {{ ... }}")
-        }
-    }
 }
-/// MsgSetWithdrawAddress sets the withdraw address for
-/// a delegator (or validator self-delegation).
+/// DelegatorWithdrawInfo is the address for where distributions rewards are
+/// withdrawn to by default this struct is only used at genesis to feed in
+/// default withdraw addresses.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSetWithdrawAddress {
+pub struct DelegatorWithdrawInfo {
+    /// delegator_address is the address of the delegator.
     #[prost(string, tag = "1")]
     pub delegator_address: ::prost::alloc::string::String,
+    /// withdraw_address is the address to withdraw the delegation rewards to.
     #[prost(string, tag = "2")]
     pub withdraw_address: ::prost::alloc::string::String,
 }
-/// MsgSetWithdrawAddressResponse defines the Msg/SetWithdrawAddress response type.
+/// ValidatorOutstandingRewardsRecord is used for import/export via genesis json.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSetWithdrawAddressResponse {}
-/// MsgWithdrawDelegatorReward represents delegation withdrawal to a delegator
-/// from a single validator.
+pub struct ValidatorOutstandingRewardsRecord {
+    /// validator_address is the address of the validator.
+    #[prost(string, tag = "1")]
+    pub validator_address: ::prost::alloc::string::String,
+    /// outstanding_rewards represents the oustanding rewards of a validator.
+    #[prost(message, repeated, tag = "2")]
+    pub outstanding_rewards: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
+}
+/// ValidatorAccumulatedCommissionRecord is used for import / export via genesis
+/// json.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgWithdrawDelegatorReward {
+pub struct ValidatorAccumulatedCommissionRecord {
+    /// validator_address is the address of the validator.
+    #[prost(string, tag = "1")]
+    pub validator_address: ::prost::alloc::string::String,
+    /// accumulated is the accumulated commission of a validator.
+    #[prost(message, optional, tag = "2")]
+    pub accumulated: ::core::option::Option<ValidatorAccumulatedCommission>,
+}
+/// ValidatorHistoricalRewardsRecord is used for import / export via genesis
+/// json.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorHistoricalRewardsRecord {
+    /// validator_address is the address of the validator.
+    #[prost(string, tag = "1")]
+    pub validator_address: ::prost::alloc::string::String,
+    /// period defines the period the historical rewards apply to.
+    #[prost(uint64, tag = "2")]
+    pub period: u64,
+    /// rewards defines the historical rewards of a validator.
+    #[prost(message, optional, tag = "3")]
+    pub rewards: ::core::option::Option<ValidatorHistoricalRewards>,
+}
+/// ValidatorCurrentRewardsRecord is used for import / export via genesis json.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorCurrentRewardsRecord {
+    /// validator_address is the address of the validator.
+    #[prost(string, tag = "1")]
+    pub validator_address: ::prost::alloc::string::String,
+    /// rewards defines the current rewards of a validator.
+    #[prost(message, optional, tag = "2")]
+    pub rewards: ::core::option::Option<ValidatorCurrentRewards>,
+}
+/// DelegatorStartingInfoRecord used for import / export via genesis json.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DelegatorStartingInfoRecord {
+    /// delegator_address is the address of the delegator.
     #[prost(string, tag = "1")]
     pub delegator_address: ::prost::alloc::string::String,
+    /// validator_address is the address of the validator.
     #[prost(string, tag = "2")]
     pub validator_address: ::prost::alloc::string::String,
+    /// starting_info defines the starting info of a delegator.
+    #[prost(message, optional, tag = "3")]
+    pub starting_info: ::core::option::Option<DelegatorStartingInfo>,
 }
-/// MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward response type.
+/// ValidatorSlashEventRecord is used for import / export via genesis json.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgWithdrawDelegatorRewardResponse {}
-/// MsgWithdrawValidatorCommission withdraws the full commission to the validator
-/// address.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgWithdrawValidatorCommission {
+pub struct ValidatorSlashEventRecord {
+    /// validator_address is the address of the validator.
     #[prost(string, tag = "1")]
     pub validator_address: ::prost::alloc::string::String,
+    /// height defines the block height at which the slash event occured.
+    #[prost(uint64, tag = "2")]
+    pub height: u64,
+    /// period is the period of the slash event.
+    #[prost(uint64, tag = "3")]
+    pub period: u64,
+    /// validator_slash_event describes the slash event.
+    #[prost(message, optional, tag = "4")]
+    pub validator_slash_event: ::core::option::Option<ValidatorSlashEvent>,
 }
-/// MsgWithdrawValidatorCommissionResponse defines the Msg/WithdrawValidatorCommission response type.
+/// GenesisState defines the distribution module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgWithdrawValidatorCommissionResponse {}
-/// MsgFundCommunityPool allows an account to directly
-/// fund the community pool.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgFundCommunityPool {
-    #[prost(message, repeated, tag = "1")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(string, tag = "2")]
-    pub depositor: ::prost::alloc::string::String,
-}
-/// MsgFundCommunityPoolResponse defines the Msg/FundCommunityPool response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgFundCommunityPoolResponse {}
-#[cfg(feature = "grpc")]
-#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-#[doc = r" Generated client implementations."]
-pub mod msg_client {
-    #![allow(unused_variables, dead_code, missing_docs)]
-    use tonic::codegen::*;
-    #[doc = " Msg defines the distribution Msg service."]
-    pub struct MsgClient<T> {
-        inner: tonic::client::Grpc<T>,
-    }
-    impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
-    impl<T> MsgClient<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + HttpBody + Send + 'static,
-        T::Error: Into<StdError>,
-        <T::ResponseBody as HttpBody>::Error: Into<StdError> + Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_interceptor(inner: T, interceptor: impl Into<tonic::Interceptor>) -> Self {
-            let inner = tonic::client::Grpc::with_interceptor(inner, interceptor);
-            Self { inner }
-        }
-        #[doc = " SetWithdrawAddress defines a method to change the withdraw address"]
-        #[doc = " for a delegator (or validator self-delegation)."]
-        pub async fn set_withdraw_address(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgSetWithdrawAddress>,
-        ) -> Result<tonic::Response<super::MsgSetWithdrawAddressResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.distribution.v1beta1.Msg/SetWithdrawAddress",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " WithdrawDelegatorReward defines a method to withdraw rewards of delegator"]
-        #[doc = " from a single validator."]
-        pub async fn withdraw_delegator_reward(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgWithdrawDelegatorReward>,
-        ) -> Result<tonic::Response<super::MsgWithdrawDelegatorRewardResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.distribution.v1beta1.Msg/WithdrawDelegatorReward",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " WithdrawValidatorCommission defines a method to withdraw the"]
-        #[doc = " full commission to the validator address."]
-        pub async fn withdraw_validator_commission(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgWithdrawValidatorCommission>,
-        ) -> Result<tonic::Response<super::MsgWithdrawValidatorCommissionResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.distribution.v1beta1.Msg/WithdrawValidatorCommission",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " FundCommunityPool defines a method to allow an account to directly"]
-        #[doc = " fund the community pool."]
-        pub async fn fund_community_pool(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgFundCommunityPool>,
-        ) -> Result<tonic::Response<super::MsgFundCommunityPoolResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.distribution.v1beta1.Msg/FundCommunityPool",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-    }
-    impl<T: Clone> Clone for MsgClient<T> {
-        fn clone(&self) -> Self {
-            Self {
-                inner: self.inner.clone(),
-            }
-        }
-    }
-    impl<T> std::fmt::Debug for MsgClient<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "MsgClient {{ ... }}")
-        }
-    }
+pub struct GenesisState {
+    /// params defines all the paramaters of the module.
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+    /// fee_pool defines the fee pool at genesis.
+    #[prost(message, optional, tag = "2")]
+    pub fee_pool: ::core::option::Option<FeePool>,
+    /// fee_pool defines the delegator withdraw infos at genesis.
+    #[prost(message, repeated, tag = "3")]
+    pub delegator_withdraw_infos: ::prost::alloc::vec::Vec<DelegatorWithdrawInfo>,
+    /// fee_pool defines the previous proposer at genesis.
+    #[prost(string, tag = "4")]
+    pub previous_proposer: ::prost::alloc::string::String,
+    /// fee_pool defines the outstanding rewards of all validators at genesis.
+    #[prost(message, repeated, tag = "5")]
+    pub outstanding_rewards: ::prost::alloc::vec::Vec<ValidatorOutstandingRewardsRecord>,
+    /// fee_pool defines the accumulated commisions of all validators at genesis.
+    #[prost(message, repeated, tag = "6")]
+    pub validator_accumulated_commissions:
+        ::prost::alloc::vec::Vec<ValidatorAccumulatedCommissionRecord>,
+    /// fee_pool defines the historical rewards of all validators at genesis.
+    #[prost(message, repeated, tag = "7")]
+    pub validator_historical_rewards: ::prost::alloc::vec::Vec<ValidatorHistoricalRewardsRecord>,
+    /// fee_pool defines the current rewards of all validators at genesis.
+    #[prost(message, repeated, tag = "8")]
+    pub validator_current_rewards: ::prost::alloc::vec::Vec<ValidatorCurrentRewardsRecord>,
+    /// fee_pool defines the delegator starting infos at genesis.
+    #[prost(message, repeated, tag = "9")]
+    pub delegator_starting_infos: ::prost::alloc::vec::Vec<DelegatorStartingInfoRecord>,
+    /// fee_pool defines the validator slash events at genesis.
+    #[prost(message, repeated, tag = "10")]
+    pub validator_slash_events: ::prost::alloc::vec::Vec<ValidatorSlashEventRecord>,
 }
