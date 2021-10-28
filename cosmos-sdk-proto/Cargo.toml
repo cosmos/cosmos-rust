@@ -6,13 +6,14 @@ authors = [
     "Greg Szabo <greg@informal.systems>",
     "Tony Arcieri <tony@iqlusion.io>"
 ]
-edition = "2018"
 license = "Apache-2.0"
 repository = "https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-proto"
 description = "Protobuf stuct defintions for interacting Cosmos SDK powered blockchains"
-readme     = "README.md"
+readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
-keywords   = ["blockchain", "cosmos", "tendermint", "proto"]
+keywords = ["blockchain", "cosmos", "tendermint", "proto"]
+edition = "2018"
+rust-version = "1.56"
 
 [dependencies]
 prost = "0.9"
