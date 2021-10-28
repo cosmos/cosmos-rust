@@ -75,7 +75,7 @@ impl TryFrom<&Any> for LegacyAminoMultisig {
 #[cfg(test)]
 mod tests {
     use super::LegacyAminoMultisig;
-    use crate::Any;
+    use crate::{crypto::PublicKey, Any};
     use hex_literal::hex;
 
     #[test]
@@ -88,13 +88,14 @@ mod tests {
         let pk = LegacyAminoMultisig::try_from(&any).unwrap();
         assert_eq!(pk.threshold, 3);
         assert_eq!(pk.public_keys.len(), 5);
+        assert_eq!(pk.public_keys[0].type_url(), PublicKey::SECP256K1_TYPE_URL);
         assert_eq!(
-            pk.public_keys[0].type_url(),
-            "/cosmos.crypto.secp256k1.PubKey"
-        );
-        assert_eq!(
-            pk.public_keys[0].to_bytes().as_slice(),
-            &hex!("0316eb99be27392e258ded83dc1378e507acf1bb726fa407167e709461b3a631cb")
+            pk.public_keys[0],
+            tendermint::PublicKey::from_raw_secp256k1(&hex!(
+                "0316eb99be27392e258ded83dc1378e507acf1bb726fa407167e709461b3a631cb"
+            ))
+            .unwrap()
+            .into()
         );
 
         // Ensure serialized key round trips
