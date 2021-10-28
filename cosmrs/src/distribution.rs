@@ -2,12 +2,7 @@
 //!
 //! <https://docs.cosmos.network/master/modules/distribution/>
 
-use crate::{
-    proto,
-    tx::{Msg, MsgType},
-    AccountId, Coin, Result,
-};
-use std::convert::{TryFrom, TryInto};
+use crate::{proto, tx::Msg, AccountId, Coin, ErrorReport, Result};
 
 /// MsgSetWithdrawAddress represents a message to set a withdraw address for staking rewards.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -19,21 +14,14 @@ pub struct MsgSetWithdrawAddress {
     pub withdraw_address: AccountId,
 }
 
-impl MsgType for MsgSetWithdrawAddress {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress::from(self).to_msg()
-    }
+impl Msg for MsgSetWithdrawAddress {
+    type Proto = proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress;
 }
 
 impl TryFrom<proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress>
     for MsgSetWithdrawAddress
 {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress,
@@ -45,7 +33,7 @@ impl TryFrom<proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress>
 impl TryFrom<&proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress>
     for MsgSetWithdrawAddress
 {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: &proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress,
@@ -86,21 +74,14 @@ pub struct MsgWithdrawDelegatorReward {
     pub validator_address: AccountId,
 }
 
-impl MsgType for MsgWithdrawDelegatorReward {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward::from(self).to_msg()
-    }
+impl Msg for MsgWithdrawDelegatorReward {
+    type Proto = proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward;
 }
 
 impl TryFrom<proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward>
     for MsgWithdrawDelegatorReward
 {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward,
@@ -112,7 +93,7 @@ impl TryFrom<proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward>
 impl TryFrom<&proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward>
     for MsgWithdrawDelegatorReward
 {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: &proto::cosmos::distribution::v1beta1::MsgWithdrawDelegatorReward,
@@ -154,21 +135,14 @@ pub struct MsgWithdrawValidatorCommission {
     pub validator_address: AccountId,
 }
 
-impl MsgType for MsgWithdrawValidatorCommission {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission::from(self).to_msg()
-    }
+impl Msg for MsgWithdrawValidatorCommission {
+    type Proto = proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission;
 }
 
 impl TryFrom<proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission>
     for MsgWithdrawValidatorCommission
 {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission,
@@ -180,7 +154,7 @@ impl TryFrom<proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommissio
 impl TryFrom<&proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission>
     for MsgWithdrawValidatorCommission
 {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: &proto::cosmos::distribution::v1beta1::MsgWithdrawValidatorCommission,
@@ -223,19 +197,12 @@ pub struct MsgFundCommunityPool {
     pub amount: Vec<Coin>,
 }
 
-impl MsgType for MsgFundCommunityPool {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::distribution::v1beta1::MsgFundCommunityPool::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::distribution::v1beta1::MsgFundCommunityPool::from(self).to_msg()
-    }
+impl Msg for MsgFundCommunityPool {
+    type Proto = proto::cosmos::distribution::v1beta1::MsgFundCommunityPool;
 }
 
 impl TryFrom<proto::cosmos::distribution::v1beta1::MsgFundCommunityPool> for MsgFundCommunityPool {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmos::distribution::v1beta1::MsgFundCommunityPool,
@@ -245,7 +212,7 @@ impl TryFrom<proto::cosmos::distribution::v1beta1::MsgFundCommunityPool> for Msg
 }
 
 impl TryFrom<&proto::cosmos::distribution::v1beta1::MsgFundCommunityPool> for MsgFundCommunityPool {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: &proto::cosmos::distribution::v1beta1::MsgFundCommunityPool,

@@ -1,74 +1,59 @@
 //! Transaction messages
 
-use crate::{prost_ext::MessageExt, proto, Error, Result};
-use prost_types::Any;
+use crate::{prost_ext::MessageExt, proto, Any, Error, ErrorReport, Result};
 
-/// Transaction messages
-#[derive(Clone, Debug, PartialEq)]
-pub struct Msg(pub(crate) Any);
+/// Message types.
+///
+/// Types which impl this trait map one-to-one with a corresponding Protocol
+/// Buffers type, but can assert additional invariants and/or additional
+/// functionality beyond the raw proto, as well as providing a more idiomatic
+/// Rust type to work with.
+pub trait Msg:
+    Clone + Sized + TryFrom<Self::Proto, Error = ErrorReport> + Into<Self::Proto>
+{
+    /// Protocol Buffers type
+    type Proto: MsgProto;
 
-impl Msg {
-    /// Create a new message type
-    pub fn new(type_url: impl Into<String>, value: impl Into<Vec<u8>>) -> Self {
-        Msg(Any {
-            type_url: type_url.into(),
-            value: value.into(),
-        })
+    /// Parse this message proto from [`Any`].
+    fn from_any(any: &Any) -> Result<Self> {
+        Self::Proto::from_any(any)?.try_into()
     }
-}
 
-impl Eq for Msg {}
-
-impl From<Any> for Msg {
-    fn from(any: Any) -> Msg {
-        Msg(any)
+    /// Serialize this message proto as [`Any`].
+    fn to_any(&self) -> Result<Any> {
+        self.clone().into_any()
     }
-}
 
-impl From<Msg> for Any {
-    fn from(msg: Msg) -> Any {
-        msg.0
+    /// Convert this message proto into [`Any`].
+    fn into_any(self) -> Result<Any> {
+        self.into().to_any()
     }
-}
-
-/// Message types that can be converted to/from a [`Msg`].
-pub trait MsgType {
-    /// Attempt to parse this value from a [`Msg`].
-    fn from_msg(msg: &Msg) -> Result<Self>
-    where
-        Self: Sized;
-
-    /// Serialize this value as a [`Msg`].
-    fn to_msg(&self) -> Result<Msg>;
 }
 
 /// Proto types which can be used as a [`Msg`].
-pub trait MsgProto: Default + MessageExt {
+pub trait MsgProto: Default + MessageExt + Sized {
     /// Type URL value
     const TYPE_URL: &'static str;
-}
 
-impl<T> MsgType for T
-where
-    T: MsgProto,
-{
-    fn from_msg(msg: &Msg) -> Result<Self>
-    where
-        Self: Sized,
-    {
-        if msg.0.type_url == Self::TYPE_URL {
-            Ok(Self::decode(&*msg.0.value)?)
+    /// Parse this message proto from [`Any`].
+    fn from_any(any: &Any) -> Result<Self> {
+        if any.type_url == Self::TYPE_URL {
+            Ok(Self::decode(&*any.value)?)
         } else {
             Err(Error::MsgType {
                 expected: Self::TYPE_URL,
-                found: msg.0.type_url.clone(),
+                found: any.type_url.clone(),
             }
             .into())
         }
     }
 
-    fn to_msg(&self) -> Result<Msg> {
-        self.to_bytes().map(|bytes| Msg::new(Self::TYPE_URL, bytes))
+    /// Serialize this message proto as [`Any`].
+    fn to_any(&self) -> Result<Any> {
+        self.to_bytes().map(|bytes| Any {
+            type_url: Self::TYPE_URL.to_owned(),
+            value: bytes,
+        })
     }
 }
 

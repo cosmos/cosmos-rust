@@ -1,8 +1,7 @@
 //! Mode info.
 
 use super::SignMode;
-use crate::{crypto::CompactBitArray, proto, Error, Result};
-use std::convert::{TryFrom, TryInto};
+use crate::{crypto::CompactBitArray, proto, Error, ErrorReport, Result};
 
 /// [`ModeInfo`] describes the signing mode of a single or nested multisig signer.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -22,7 +21,7 @@ impl ModeInfo {
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::ModeInfo> for ModeInfo {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::ModeInfo) -> Result<ModeInfo> {
         match proto.sum {
@@ -112,7 +111,7 @@ pub struct Multi {
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::mode_info::Multi> for Multi {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::mode_info::Multi) -> Result<Multi> {
         Ok(Multi {

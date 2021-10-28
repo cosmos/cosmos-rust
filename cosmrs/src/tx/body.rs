@@ -1,9 +1,7 @@
 //! Transaction bodies.
 
-use super::Msg;
-use crate::{prost_ext::MessageExt, proto, Result};
+use crate::{prost_ext::MessageExt, proto, ErrorReport, Result};
 use prost_types::Any;
-use std::convert::{TryFrom, TryInto};
 use tendermint::block;
 
 /// [`Body`] of a transaction that all signers sign over.
@@ -19,7 +17,7 @@ pub struct Body {
     /// By convention, the first required signer (usually from the first message)
     /// is referred to as the primary signer and pays the fee for the whole
     /// transaction.
-    pub messages: Vec<Msg>,
+    pub messages: Vec<Any>,
 
     /// `memo` is any arbitrary memo to be added to the transaction.
     pub memo: String,
@@ -47,7 +45,7 @@ impl Body {
         timeout_height: impl Into<block::Height>,
     ) -> Self
     where
-        I: IntoIterator<Item = Msg>,
+        I: IntoIterator<Item = Any>,
     {
         Body {
             messages: messages.into_iter().map(Into::into).collect(),
@@ -82,7 +80,7 @@ impl From<Body> for proto::cosmos::tx::v1beta1::TxBody {
 }
 
 impl TryFrom<proto::cosmos::tx::v1beta1::TxBody> for Body {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::TxBody) -> Result<Body> {
         Ok(Body {

@@ -2,12 +2,7 @@
 //!
 //! <https://docs.cosmos.network/master/modules/staking/>
 
-use crate::{
-    proto,
-    tx::{Msg, MsgType},
-    AccountId, Coin, Error, Result,
-};
-use std::convert::{TryFrom, TryInto};
+use crate::{proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result};
 
 /// MsgDelegate represents a message to delegate coins to a validator.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -22,18 +17,12 @@ pub struct MsgDelegate {
     pub amount: Coin,
 }
 
-impl MsgType for MsgDelegate {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::staking::v1beta1::MsgDelegate::from_msg(msg).and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::staking::v1beta1::MsgDelegate::from(self).to_msg()
-    }
+impl Msg for MsgDelegate {
+    type Proto = proto::cosmos::staking::v1beta1::MsgDelegate;
 }
 
 impl TryFrom<proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::staking::v1beta1::MsgDelegate) -> Result<MsgDelegate> {
         MsgDelegate::try_from(&proto)
@@ -41,7 +30,7 @@ impl TryFrom<proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
 }
 
 impl TryFrom<&proto::cosmos::staking::v1beta1::MsgDelegate> for MsgDelegate {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgDelegate) -> Result<MsgDelegate> {
         let amount = proto
@@ -94,18 +83,12 @@ pub struct MsgUndelegate {
     pub amount: Option<Coin>,
 }
 
-impl MsgType for MsgUndelegate {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::staking::v1beta1::MsgUndelegate::from_msg(msg).and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::staking::v1beta1::MsgUndelegate::from(self).to_msg()
-    }
+impl Msg for MsgUndelegate {
+    type Proto = proto::cosmos::staking::v1beta1::MsgUndelegate;
 }
 
 impl TryFrom<proto::cosmos::staking::v1beta1::MsgUndelegate> for MsgUndelegate {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::staking::v1beta1::MsgUndelegate) -> Result<MsgUndelegate> {
         MsgUndelegate::try_from(&proto)
@@ -113,7 +96,7 @@ impl TryFrom<proto::cosmos::staking::v1beta1::MsgUndelegate> for MsgUndelegate {
 }
 
 impl TryFrom<&proto::cosmos::staking::v1beta1::MsgUndelegate> for MsgUndelegate {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgUndelegate) -> Result<MsgUndelegate> {
         let amount = if let Some(amount) = &proto.amount {
@@ -171,19 +154,12 @@ pub struct MsgBeginRedelegate {
     pub amount: Option<Coin>,
 }
 
-impl MsgType for MsgBeginRedelegate {
-    fn from_msg(msg: &Msg) -> Result<Self> {
-        proto::cosmos::staking::v1beta1::MsgBeginRedelegate::from_msg(msg)
-            .and_then(TryInto::try_into)
-    }
-
-    fn to_msg(&self) -> Result<Msg> {
-        proto::cosmos::staking::v1beta1::MsgBeginRedelegate::from(self).to_msg()
-    }
+impl Msg for MsgBeginRedelegate {
+    type Proto = proto::cosmos::staking::v1beta1::MsgBeginRedelegate;
 }
 
 impl TryFrom<proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRedelegate {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: proto::cosmos::staking::v1beta1::MsgBeginRedelegate,
@@ -193,7 +169,7 @@ impl TryFrom<proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRe
 }
 
 impl TryFrom<&proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginRedelegate {
-    type Error = eyre::Report;
+    type Error = ErrorReport;
 
     fn try_from(
         proto: &proto::cosmos::staking::v1beta1::MsgBeginRedelegate,
