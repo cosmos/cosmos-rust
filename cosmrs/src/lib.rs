@@ -1,30 +1,9 @@
-//! # Cosmos SDK for Rust
-//!
-//! Framework for building [Cosmos] blockchain applications in Rust, modeled off
-//! of the [Cosmos SDK for Golang].
-//!
-//! ## About
-//!
-//! This library is presently designed to serve as a *client* for interacting
-//! with the Golang implementation of the Cosmos SDK.
-//!
-//! It does not implement server-side functionality (yet), such as hooks
-//! and message passing.
-//!
-//! ## Features
-//!
-//! - [CosmWasm][`cosmwasm`]: messages used by smart contracts written using CosmWasm
-//! - [Staking][`staking`]: support for staking with validators
-//! - [Transactions][`tx`]: build, sign, and/or parse Cosmos SDK transactions
-//!
-//! [Cosmos]: https://cosmos.network/
-//! [Cosmos SDK for Golang]: https://github.com/cosmos/cosmos-sdk
-
-#![cfg_attr(docsrs, feature(doc_cfg))]
+#![doc = include_str!("../README.md")]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png",
-    html_root_url = "https://docs.rs/cosmrs/0.2.1"
+    html_root_url = "https://docs.rs/cosmrs/0.3.0"
 )]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
