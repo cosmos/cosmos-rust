@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.8.0-pre" # Also update html_root_url in lib.rs when bumping this
+version = "0.8.0" # Also update html_root_url in lib.rs when bumping this
 authors = [
     "Justin Kilpatrick <justin@althea.net>",
     "Greg Szabo <greg@informal.systems>",
@@ -12,7 +12,7 @@ description = "Protobuf stuct defintions for interacting Cosmos SDK powered bloc
 readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
 keywords = ["blockchain", "cosmos", "tendermint", "proto"]
-edition = "2018"
+edition = "2021"
 rust-version = "1.56"
 
 [dependencies]

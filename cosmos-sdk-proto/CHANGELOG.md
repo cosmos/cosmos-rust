@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.0 (2021-10-28)
+### Changed
+- Update to cosmos-sdk v0.44.1 and ibc-go v1.2.0 ([#138])
+- Bump tendermint-rs crates to v0.23; MSRV 1.56 ([#144])
+- 2021 edition upgrade ([#148])
+
+[#138]: https://github.com/cosmos/cosmos-rust/pull/138
+[#144]: https://github.com/cosmos/cosmos-rust/pull/144
+[#148]: https://github.com/cosmos/cosmos-rust/pull/148
+
 ## 0.7.0 (2021-09-27)
 ### Changed
 - Update `tendermint-proto` crate to v0.22 ([#128])
