@@ -11,8 +11,8 @@ Rust crate for interacting with [Protobufs] defined by the [Cosmos SDK].
 The goal of this crate is to provide complete proto struct definitions for interacting
 with a Cosmos SDK blockchain.
 
-Currently this crate only provides a minority of the many total structs exported by
-proto files.
+Currently, this crate only provides a subset of the many total structs exported by
+Cosmos SDK proto files.
 
 Pull requests to expand coverage are welcome.
 
