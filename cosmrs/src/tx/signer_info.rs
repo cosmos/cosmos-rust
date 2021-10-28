@@ -75,21 +75,25 @@ impl From<SignerInfo> for proto::cosmos::tx::v1beta1::SignerInfo {
 }
 
 /// Signer's public key.
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum SignerPublicKey {
     /// Single singer.
     Single(PublicKey),
 
     /// Legacy Amino multisig.
     LegacyAminoMultisig(LegacyAminoMultisig),
+
+    /// Other key types beyond the ones provided above.
+    Any(Any),
 }
 
 impl SignerPublicKey {
     /// Get the type URL for this [`SignerPublicKey`].
-    pub fn type_url(&self) -> &'static str {
+    pub fn type_url(&self) -> &str {
         match self {
             Self::Single(pk) => pk.type_url(),
             Self::LegacyAminoMultisig(_) => LegacyAminoMultisig::TYPE_URL,
+            Self::Any(any) => &any.type_url,
         }
     }
 
@@ -110,6 +114,8 @@ impl SignerPublicKey {
     }
 }
 
+impl Eq for SignerPublicKey {}
+
 impl From<PublicKey> for SignerPublicKey {
     fn from(pk: PublicKey) -> SignerPublicKey {
         Self::Single(pk)
@@ -127,6 +133,7 @@ impl From<SignerPublicKey> for Any {
         match public_key {
             SignerPublicKey::Single(pk) => pk.into(),
             SignerPublicKey::LegacyAminoMultisig(pk) => pk.into(),
+            SignerPublicKey::Any(any) => any,
         }
     }
 }
@@ -134,29 +141,14 @@ impl From<SignerPublicKey> for Any {
 impl TryFrom<Any> for SignerPublicKey {
     type Error = ErrorReport;
 
-    fn try_from(any: Any) -> Result<SignerPublicKey> {
-        SignerPublicKey::try_from(&any)
-    }
-}
-
-impl TryFrom<&Any> for SignerPublicKey {
-    type Error = ErrorReport;
-
-    fn try_from(any: &Any) -> Result<Self> {
-        if let Ok(pk) = PublicKey::try_from(any) {
-            return Ok(pk.into());
+    fn try_from(any: Any) -> Result<Self> {
+        match any.type_url.as_str() {
+            PublicKey::ED25519_TYPE_URL | PublicKey::SECP256K1_TYPE_URL => {
+                PublicKey::try_from(any).map(Into::into)
+            }
+            LegacyAminoMultisig::TYPE_URL => LegacyAminoMultisig::try_from(any).map(Into::into),
+            _ => Ok(Self::Any(any)),
         }
-
-        if let Ok(pk) = LegacyAminoMultisig::try_from(any) {
-            return Ok(pk.into());
-        }
-
-        Err(Error::Crypto).wrap_err_with(|| {
-            format!(
-                "invalid type URL for SignerInfo public key: {}",
-                &any.type_url
-            )
-        })
     }
 }
 
