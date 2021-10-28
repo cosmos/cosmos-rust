@@ -1,7 +1,11 @@
 //! Signer info.
 
 use super::{AuthInfo, Fee, ModeInfo, SequenceNumber, SignMode};
-use crate::{crypto::PublicKey, proto, Error, ErrorReport, Result};
+use crate::{
+    crypto::{LegacyAminoMultisig, PublicKey},
+    proto, Any, Error, ErrorReport, Result,
+};
+use eyre::WrapErr;
 
 /// [`SignerInfo`] describes the public key and signing mode of a single top-level signer.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -10,7 +14,7 @@ pub struct SignerInfo {
     ///
     /// It is optional for accounts that already exist in state. If unset, the verifier can use the
     /// required signer address for this position and lookup the public key.
-    pub public_key: Option<PublicKey>,
+    pub public_key: Option<SignerPublicKey>,
 
     /// Signing mode.
     ///
@@ -28,7 +32,7 @@ impl SignerInfo {
     /// Create [`SignerInfo`] for a single direct signer.
     pub fn single_direct(public_key: Option<PublicKey>, sequence: SequenceNumber) -> SignerInfo {
         SignerInfo {
-            public_key,
+            public_key: public_key.map(Into::into),
             mode_info: ModeInfo::single(SignMode::Direct),
             sequence,
         }
@@ -66,6 +70,108 @@ impl From<SignerInfo> for proto::cosmos::tx::v1beta1::SignerInfo {
             public_key: signer_info.public_key.map(Into::into),
             mode_info: Some(signer_info.mode_info.into()),
             sequence: signer_info.sequence,
+        }
+    }
+}
+
+/// Signer's public key.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub enum SignerPublicKey {
+    /// Single singer.
+    Single(PublicKey),
+
+    /// Legacy Amino multisig.
+    LegacyAminoMultisig(LegacyAminoMultisig),
+}
+
+impl SignerPublicKey {
+    /// Get the type URL for this [`SignerPublicKey`].
+    pub fn type_url(&self) -> &'static str {
+        match self {
+            Self::Single(pk) => pk.type_url(),
+            Self::LegacyAminoMultisig(_) => LegacyAminoMultisig::TYPE_URL,
+        }
+    }
+
+    /// Get the [`PublicKey`] for a single signer, if applicable.
+    pub fn single(&self) -> Option<&PublicKey> {
+        match self {
+            Self::Single(pk) => Some(pk),
+            _ => None,
+        }
+    }
+
+    /// Get the [`LegacyAminoMultisig`] key info, if applicable.
+    pub fn legacy_amino_multisig(&self) -> Option<&LegacyAminoMultisig> {
+        match self {
+            Self::LegacyAminoMultisig(amino_multisig) => Some(amino_multisig),
+            _ => None,
+        }
+    }
+}
+
+impl From<PublicKey> for SignerPublicKey {
+    fn from(pk: PublicKey) -> SignerPublicKey {
+        Self::Single(pk)
+    }
+}
+
+impl From<LegacyAminoMultisig> for SignerPublicKey {
+    fn from(pk: LegacyAminoMultisig) -> SignerPublicKey {
+        Self::LegacyAminoMultisig(pk)
+    }
+}
+
+impl From<SignerPublicKey> for Any {
+    fn from(public_key: SignerPublicKey) -> Any {
+        match public_key {
+            SignerPublicKey::Single(pk) => pk.into(),
+            SignerPublicKey::LegacyAminoMultisig(pk) => pk.into(),
+        }
+    }
+}
+
+impl TryFrom<Any> for SignerPublicKey {
+    type Error = ErrorReport;
+
+    fn try_from(any: Any) -> Result<SignerPublicKey> {
+        SignerPublicKey::try_from(&any)
+    }
+}
+
+impl TryFrom<&Any> for SignerPublicKey {
+    type Error = ErrorReport;
+
+    fn try_from(any: &Any) -> Result<Self> {
+        if let Ok(pk) = PublicKey::try_from(any) {
+            return Ok(pk.into());
+        }
+
+        if let Ok(pk) = LegacyAminoMultisig::try_from(any) {
+            return Ok(pk.into());
+        }
+
+        Err(Error::Crypto).wrap_err_with(|| {
+            format!(
+                "invalid type URL for SignerInfo public key: {}",
+                &any.type_url
+            )
+        })
+    }
+}
+
+impl TryFrom<SignerPublicKey> for PublicKey {
+    type Error = ErrorReport;
+
+    fn try_from(public_key: SignerPublicKey) -> Result<PublicKey> {
+        match public_key {
+            SignerPublicKey::Single(pk) => Ok(pk),
+            _ => Err(Error::Crypto).wrap_err_with(|| {
+                format!(
+                    "expected `SignerPublicKey::Single`, got: {}",
+                    public_key.type_url()
+                )
+            }),
         }
     }
 }
