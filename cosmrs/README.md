@@ -1,4 +1,4 @@
-# CosmRS: Cosmos SDK for Rust
+# CosmRS: Cosmos Wallet and SDK for Rust
 
 [![Crate][crate-image]][crate-link]
 [![Docs][docs-image]][docs-link]
@@ -9,7 +9,24 @@
 Framework for building [Cosmos] blockchain applications in Rust, modeled off
 of the [Cosmos SDK for Golang].
 
-[Documentation][docs-link]
+## About
+
+This library is presently designed to serve as a *client* for interacting
+with the Golang implementation of the Cosmos SDK, providing things like wallet
+functionality such as transaction signing, and a builder/parser for Cosmos SDK
+formatted transaction messages.
+
+It does not implement server-side functionality (yet), such as hooks
+and message passing.
+
+## Features
+
+- [CosmWasm]: messages used by smart contracts written using CosmWasm
+- [Staking]: support for staking with validators
+- [Transactions]: build, sign, and/or parse Cosmos SDK transactions
+
+[Cosmos]: https://cosmos.network/
+[Cosmos SDK for Golang]: https://github.com/cosmos/cosmos-sdk
 
 ## Minimum Supported Rust Version
 
@@ -29,3 +46,6 @@ This crate is supported on Rust **1.56** or newer.
 [//]: # "general links"
 [Cosmos]: https://cosmos.network/
 [Cosmos SDK for Golang]: https://github.com/cosmos/cosmos-sdk
+[CosmWasm]: https://cosmwasm.com/
+[Staking]: https://docs.cosmos.network/master/modules/staking/
+[Transactions]: https://docs.cosmos.network/master/core/transactions.html
