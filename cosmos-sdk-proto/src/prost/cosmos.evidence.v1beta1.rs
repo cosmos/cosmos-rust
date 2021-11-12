@@ -25,17 +25,6 @@ pub mod msg_client {
     pub struct MsgClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
     impl<T> MsgClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
@@ -93,19 +82,6 @@ pub mod msg_client {
         }
     }
 }
-/// Equivocation implements the Evidence interface and defines evidence of double
-/// signing misbehavior.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Equivocation {
-    #[prost(int64, tag = "1")]
-    pub height: i64,
-    #[prost(message, optional, tag = "2")]
-    pub time: ::core::option::Option<::prost_types::Timestamp>,
-    #[prost(int64, tag = "3")]
-    pub power: i64,
-    #[prost(string, tag = "4")]
-    pub consensus_address: ::prost::alloc::string::String,
-}
 /// QueryEvidenceRequest is the request type for the Query/Evidence RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryEvidenceRequest {
@@ -149,17 +125,6 @@ pub mod query_client {
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
-    }
-    impl QueryClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
     }
     impl<T> QueryClient<T>
     where
@@ -242,4 +207,17 @@ pub struct GenesisState {
     /// evidence defines all the evidence at genesis.
     #[prost(message, repeated, tag = "1")]
     pub evidence: ::prost::alloc::vec::Vec<::prost_types::Any>,
+}
+/// Equivocation implements the Evidence interface and defines evidence of double
+/// signing misbehavior.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Equivocation {
+    #[prost(int64, tag = "1")]
+    pub height: i64,
+    #[prost(message, optional, tag = "2")]
+    pub time: ::core::option::Option<::prost_types::Timestamp>,
+    #[prost(int64, tag = "3")]
+    pub power: i64,
+    #[prost(string, tag = "4")]
+    pub consensus_address: ::prost::alloc::string::String,
 }

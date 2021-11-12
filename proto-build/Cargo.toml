@@ -9,8 +9,8 @@ publish = false
 [dependencies]
 prost = "0.9"
 prost-build = "0.9"
-tonic = "0.6"
-tonic-build = "0.6"
+tonic = { version = "0.6", default-features = false, features = ["codegen", "prost"] }
+tonic-build = { version = "0.6", default-features = false, features = ["rustfmt", "prost"] }
 regex = "1"
 tempdir = "0.3"
 walkdir = "2"
