@@ -7,3 +7,6 @@
 [submodule "ibc-go"]
 	path = ibc-go
 	url = https://github.com/cosmos/ibc-go
+[submodule "tendermint"]
+	path = tendermint
+	url = https://github.com/tendermint/tendermint/
