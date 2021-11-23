@@ -323,6 +323,11 @@ fn compile_tendermint_protos_and_services(out_dir: &Path) {
             tendermint_dir.display()
         ),
     ];
+    // these paths will be 'clobbered' that is generated with grpc definitions by the tonic build
+    // and then overwritten by the prost build when it generates files of the same name without
+    // the service definitions. These files are specifically exempted from clobbering by renaming
+    // and then restoring them.
+    let proto_grpc_noclobber_paths = ["tendermint.abci.rs", "tendermint.rpc.grpc.rs"];
 
     // List available proto files
     let mut protos: Vec<PathBuf> = vec![];
@@ -347,10 +352,17 @@ fn compile_tendermint_protos_and_services(out_dir: &Path) {
         .compile(&proto_grpc_paths, &includes)
         .unwrap();
 
-    info!("Compiling proto definitions!");
+    for i in proto_grpc_noclobber_paths {
+        fs::rename(out_dir.join(i), out_dir.join(format!("{}.noclobber", i))).unwrap();
+    }
+
     if let Err(e) = config.compile_protos(&protos, &includes) {
         eprintln!("[error] couldn't compile protos: {}", e);
         panic!("protoc failed!");
+    }
+
+    for i in proto_grpc_noclobber_paths {
+        fs::rename(out_dir.join(format!("{}.noclobber", i)), out_dir.join(i)).unwrap();
     }
 
     info!("=> Done!");
