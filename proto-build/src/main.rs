@@ -22,6 +22,9 @@ static QUIET: AtomicBool = AtomicBool::new(false);
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
 const COSMOS_SDK_REV: &str = "v0.44.1";
 
+/// The Tendermint commit or tag to be cloned and used to build the proto files
+const TENDERMINT_REV: &str = "v0.34.13";
+
 /// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
 const IBC_REV: &str = "v1.2.0";
 
@@ -35,6 +38,8 @@ const WASMD_REV: &str = "v0.17.0";
 const COSMOS_SDK_PROTO_DIR: &str = "../cosmos-sdk-proto/src/prost/";
 /// Directory where the cosmos-sdk submodule is located
 const COSMOS_SDK_DIR: &str = "../cosmos-sdk-go";
+/// Directory where the tendermint submodule is located
+const TENDERMINT_DIR: &str = "../tendermint";
 /// Directory where the cosmos/ibc-go submodule is located
 const IBC_DIR: &str = "../ibc-go";
 /// Directory where the submodule is located
@@ -46,7 +51,7 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 /// Protos belonging to these Protobuf packages will be excluded
 /// (i.e. because they are sourced from `tendermint-proto`)
-const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint"];
+const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google"];
 /// Regex for locating instances of `tendermint-proto` in prost/tonic build output
 const TENDERMINT_PROTO_REGEX: &str = "(super::)+tendermint";
 /// Attribute preceeding a Tonic client definition
@@ -87,18 +92,20 @@ fn main() {
 
     update_submodules();
     output_sdk_version(&tmp_build_dir);
+    output_tendermint_version(&tmp_build_dir);
     output_ibc_version(&tmp_build_dir);
     output_wasmd_version(&tmp_build_dir);
     compile_sdk_protos_and_services(&tmp_build_dir);
     compile_ibc_protos_and_services(&tmp_build_dir);
     compile_wasmd_protos(&tmp_build_dir);
     compile_wasmd_proto_services(&tmp_build_dir);
+    compile_tendermint_protos_and_services(&tmp_build_dir);
     copy_generated_files(&tmp_build_dir, &proto_dir);
 
     if is_github() {
         println!(
-            "Rebuild protos with proto-build (cosmos-sdk rev: {} ibc-go rev: {} wasmd rev: {}))",
-            COSMOS_SDK_REV, IBC_REV, WASMD_REV
+            "Rebuild protos with proto-build (cosmos-sdk rev: {} tendermint rev: {} ibc-go rev: {} wasmd rev: {}))",
+            COSMOS_SDK_REV, TENDERMINT_REV, IBC_REV, WASMD_REV
         );
     }
 }
@@ -136,18 +143,23 @@ fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
 }
 
 fn update_submodules() {
-    info!("Updating cosmos/cosmos-sdk submodule...");
+    // this is a repo wide command and only needs to
+    // be run once.
     run_git(&["submodule", "update", "--init"]);
+
+    info!("Updating cosmos/cosmos-sdk submodule...");
     run_git(&["-C", COSMOS_SDK_DIR, "fetch"]);
     run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_SDK_REV]);
 
+    info!("Updating tendermint submodule...");
+    run_git(&["-C", TENDERMINT_DIR, "fetch"]);
+    run_git(&["-C", TENDERMINT_DIR, "reset", "--hard", TENDERMINT_REV]);
+
     info!("Updating cosmos/ibc-go submodule...");
-    run_git(&["submodule", "update", "--init"]);
     run_git(&["-C", IBC_DIR, "fetch"]);
     run_git(&["-C", IBC_DIR, "reset", "--hard", IBC_REV]);
 
     info!("Updating wasmd submodule...");
-    run_git(&["submodule", "update", "--init"]);
     run_git(&["-C", WASMD_DIR, "fetch"]);
     run_git(&["-C", WASMD_DIR, "reset", "--hard", WASMD_REV]);
 }
@@ -155,6 +167,11 @@ fn update_submodules() {
 fn output_sdk_version(out_dir: &Path) {
     let path = out_dir.join("COSMOS_SDK_COMMIT");
     fs::write(path, COSMOS_SDK_REV).unwrap();
+}
+
+fn output_tendermint_version(out_dir: &Path) {
+    let path = out_dir.join("TENDERMINT_COMMIT");
+    fs::write(path, TENDERMINT_REV).unwrap();
 }
 
 fn output_ibc_version(out_dir: &Path) {
@@ -195,7 +212,7 @@ fn compile_wasmd_protos(out_dir: &Path) {
     // Compile all proto files
     let mut config = prost_build::Config::default();
     config.out_dir(out_dir);
-    config.extern_path(".tendermint", "::tendermint_proto");
+    config.extern_path(".tendermint", "crate::tendermint");
 
     if let Err(e) = config.compile_protos(&protos, &includes) {
         eprintln!("[error] couldn't compile protos: {}", e);
@@ -255,9 +272,86 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
         .build_server(false)
         .format(true)
         .out_dir(out_dir)
-        .extern_path(".tendermint", "::tendermint_proto")
+        .extern_path(".tendermint", "crate::tendermint")
         .compile(&protos, &includes)
         .unwrap();
+
+    info!("=> Done!");
+}
+
+fn compile_tendermint_protos_and_services(out_dir: &Path) {
+    info!(
+        "Compiling tendermint .proto files to Rust into '{}'...",
+        out_dir.display()
+    );
+
+    let tendermint_dir = Path::new(TENDERMINT_DIR);
+
+    let proto_includes_paths = [
+        format!("{}/proto", tendermint_dir.display()),
+        format!("{}/proto/tendermint", tendermint_dir.display()),
+        format!("{}/third_party/proto", tendermint_dir.display()),
+    ];
+
+    // paths for only proto generation, these can not be combined
+    // because the service generator writes to the same files and will
+    // not create struct definitions if there are no services
+    // folders here will have all protos in them compiled
+    let proto_paths = [
+        format!("{}/proto/tendermint/blocksync", tendermint_dir.display()),
+        format!("{}/proto/tendermint/consensus", tendermint_dir.display()),
+        format!("{}/proto/tendermint/crypto", tendermint_dir.display()),
+        format!("{}/proto/tendermint/mempool", tendermint_dir.display()),
+        format!("{}/proto/tendermint/p2p", tendermint_dir.display()),
+        format!("{}/proto/tendermint/privval", tendermint_dir.display()),
+        format!("{}/proto/tendermint/state", tendermint_dir.display()),
+        format!("{}/proto/tendermint/statesync", tendermint_dir.display()),
+        format!("{}/proto/tendermint/types", tendermint_dir.display()),
+        format!("{}/proto/tendermint/version", tendermint_dir.display()),
+        format!("{}/proto/tendermint/libs", tendermint_dir.display()),
+    ];
+
+    // paths for GRPC service generation, these are strict paths, no other
+    // files will be found
+    let proto_grpc_paths = [
+        format!(
+            "{}/proto/tendermint/abci/types.proto",
+            tendermint_dir.display()
+        ),
+        format!(
+            "{}/proto/tendermint/rpc/grpc/types.proto",
+            tendermint_dir.display()
+        ),
+    ];
+
+    // List available proto files
+    let mut protos: Vec<PathBuf> = vec![];
+    collect_protos(&proto_paths, &mut protos);
+
+    // List available paths for dependencies
+    let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
+
+    // List available paths for services
+    let proto_grpc_paths: Vec<PathBuf> = proto_grpc_paths.iter().map(PathBuf::from).collect();
+
+    let mut config = prost_build::Config::default();
+    config.out_dir(out_dir);
+
+    // Compile all of the proto files, along with grpc service clients
+    info!("Compiling proto definitions and clients for GRPC services!");
+    tonic_build::configure()
+        .build_client(true)
+        .build_server(false)
+        .format(true)
+        .out_dir(out_dir)
+        .compile(&proto_grpc_paths, &includes)
+        .unwrap();
+
+    info!("Compiling proto definitions!");
+    if let Err(e) = config.compile_protos(&protos, &includes) {
+        eprintln!("[error] couldn't compile protos: {}", e);
+        panic!("protoc failed!");
+    }
 
     info!("=> Done!");
 }
@@ -343,7 +437,7 @@ fn compile_ibc_protos_and_services(out_dir: &Path) {
         .build_server(false)
         .format(true)
         .out_dir(out_dir)
-        .extern_path(".tendermint", "::tendermint_proto")
+        .extern_path(".tendermint", "crate::tendermint")
         .compile(&protos, &includes)
         .unwrap();
 
@@ -415,11 +509,10 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
     let contents = fs::read_to_string(src)?;
 
     // `prost-build` output references types from `tendermint-proto` crate
-    // relative paths, which we need to munge into `tendermint_proto` in
-    // order to leverage types from the upstream crate.
+    // relative paths, which we need to munge into `crate::tendermint`
     let contents = Regex::new(TENDERMINT_PROTO_REGEX)
         .unwrap()
-        .replace_all(&contents, "tendermint_proto");
+        .replace_all(&contents, "crate::tendermint");
 
     // Patch each service definition with a feature attribute
     let patched_contents =
