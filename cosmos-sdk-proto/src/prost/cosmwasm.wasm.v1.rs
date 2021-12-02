@@ -31,13 +31,6 @@ pub struct CodeInfo {
     /// Creator address who initially stored the code
     #[prost(string, tag = "2")]
     pub creator: ::prost::alloc::string::String,
-    /// Source is a valid absolute HTTPS URI to the contract's source code,
-    /// optional
-    #[prost(string, tag = "3")]
-    pub source: ::prost::alloc::string::String,
-    /// Builder is a valid docker image name with tag, optional
-    #[prost(string, tag = "4")]
-    pub builder: ::prost::alloc::string::String,
     /// InstantiateConfig access control to apply on contract creation, optional
     #[prost(message, optional, tag = "5")]
     pub instantiate_config: ::core::option::Option<AccessConfig>,
@@ -273,10 +266,6 @@ pub struct CodeInfoResponse {
     pub creator: ::prost::alloc::string::String,
     #[prost(bytes = "vec", tag = "3")]
     pub data_hash: ::prost::alloc::vec::Vec<u8>,
-    #[prost(string, tag = "4")]
-    pub source: ::prost::alloc::string::String,
-    #[prost(string, tag = "5")]
-    pub builder: ::prost::alloc::string::String,
 }
 /// QueryCodeResponse is the response type for the Query/Code RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -299,6 +288,26 @@ pub struct QueryCodesRequest {
 pub struct QueryCodesResponse {
     #[prost(message, repeated, tag = "1")]
     pub code_infos: ::prost::alloc::vec::Vec<CodeInfoResponse>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryPinnedCodesRequest is the request type for the Query/PinnedCodes
+/// RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryPinnedCodesRequest {
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryPinnedCodesResponse is the response type for the
+/// Query/PinnedCodes RPC method
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryPinnedCodesResponse {
+    #[prost(uint64, repeated, packed = "false", tag = "1")]
+    pub code_ids: ::prost::alloc::vec::Vec<u64>,
     /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination:
@@ -379,8 +388,7 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Query/ContractInfo");
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractInfo");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " ContractHistory gets the contract code history"]
@@ -395,9 +403,8 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmwasm.wasm.v1beta1.Query/ContractHistory",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractHistory");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " ContractsByCode lists all smart contracts for a code id"]
@@ -412,9 +419,8 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmwasm.wasm.v1beta1.Query/ContractsByCode",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractsByCode");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " AllContractState gets all raw store data for a single contract"]
@@ -429,9 +435,8 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmwasm.wasm.v1beta1.Query/AllContractState",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/AllContractState");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " RawContractState gets single key from the raw store data of a contract"]
@@ -446,9 +451,8 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmwasm.wasm.v1beta1.Query/RawContractState",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/RawContractState");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " SmartContractState get smart query result from the contract"]
@@ -464,9 +468,8 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmwasm.wasm.v1beta1.Query/SmartContractState",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/SmartContractState");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Code gets the binary code and metadata for a singe wasm code"]
@@ -481,7 +484,7 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Query/Code");
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Code");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Codes gets the metadata for all stored wasm codes"]
@@ -496,7 +499,22 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Query/Codes");
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Codes");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " PinnedCodes gets the pinned code ids"]
+        pub async fn pinned_codes(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryPinnedCodesRequest>,
+        ) -> Result<tonic::Response<super::QueryPinnedCodesResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/PinnedCodes");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -510,13 +528,6 @@ pub struct MsgStoreCode {
     /// WASMByteCode can be raw or gzip compressed
     #[prost(bytes = "vec", tag = "2")]
     pub wasm_byte_code: ::prost::alloc::vec::Vec<u8>,
-    /// Source is a valid absolute HTTPS URI to the contract's source code,
-    /// optional
-    #[prost(string, tag = "3")]
-    pub source: ::prost::alloc::string::String,
-    /// Builder is a valid docker image name with tag, optional
-    #[prost(string, tag = "4")]
-    pub builder: ::prost::alloc::string::String,
     /// InstantiatePermission access control to apply on contract creation,
     /// optional
     #[prost(message, optional, tag = "5")]
@@ -545,9 +556,9 @@ pub struct MsgInstantiateContract {
     /// Label is optional metadata to be stored with a contract instance.
     #[prost(string, tag = "4")]
     pub label: ::prost::alloc::string::String,
-    /// InitMsg json encoded message to be passed to the contract on instantiation
+    /// Msg json encoded message to be passed to the contract on instantiation
     #[prost(bytes = "vec", tag = "5")]
-    pub init_msg: ::prost::alloc::vec::Vec<u8>,
+    pub msg: ::prost::alloc::vec::Vec<u8>,
     /// Funds coins that are transferred to the contract on instantiation
     #[prost(message, repeated, tag = "6")]
     pub funds: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
@@ -597,9 +608,9 @@ pub struct MsgMigrateContract {
     /// CodeID references the new WASM code
     #[prost(uint64, tag = "3")]
     pub code_id: u64,
-    /// MigrateMsg json encoded message to be passed to the contract on migration
+    /// Msg json encoded message to be passed to the contract on migration
     #[prost(bytes = "vec", tag = "4")]
-    pub migrate_msg: ::prost::alloc::vec::Vec<u8>,
+    pub msg: ::prost::alloc::vec::Vec<u8>,
 }
 /// MsgMigrateContractResponse returns contract migration result data.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -710,7 +721,7 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Msg/StoreCode");
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/StoreCode");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = "  Instantiate creates a new smart contract instance for the given code id."]
@@ -725,9 +736,8 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmwasm.wasm.v1beta1.Msg/InstantiateContract",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/InstantiateContract");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Execute submits the given message data to a smart contract"]
@@ -743,7 +753,7 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Msg/ExecuteContract");
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/ExecuteContract");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " Migrate runs a code upgrade/ downgrade for a smart contract"]
@@ -759,7 +769,7 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Msg/MigrateContract");
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/MigrateContract");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " UpdateAdmin sets a new   admin for a smart contract"]
@@ -774,8 +784,7 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Msg/UpdateAdmin");
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/UpdateAdmin");
             self.inner.unary(request.into_request(), path, codec).await
         }
         #[doc = " ClearAdmin removes any admin stored for a smart contract"]
@@ -790,8 +799,7 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1beta1.Msg/ClearAdmin");
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/ClearAdmin");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }

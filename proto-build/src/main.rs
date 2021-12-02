@@ -26,7 +26,7 @@ const COSMOS_SDK_REV: &str = "v0.44.1";
 const IBC_REV: &str = "v1.2.0";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
-const WASMD_REV: &str = "v0.17.0";
+const WASMD_REV: &str = "v0.21.0";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -279,8 +279,8 @@ fn compile_wasmd_proto_services(out_dir: impl AsRef<Path>) {
         .collect::<Vec<_>>();
 
     let proto_services_path = [
-        sdk_dir.join("proto/cosmwasm/wasm/v1beta1/query.proto"),
-        sdk_dir.join("proto/cosmwasm/wasm/v1beta1/tx.proto"),
+        sdk_dir.join("proto/cosmwasm/wasm/v1/query.proto"),
+        sdk_dir.join("proto/cosmwasm/wasm/v1/tx.proto"),
     ];
 
     // List available paths for dependencies
