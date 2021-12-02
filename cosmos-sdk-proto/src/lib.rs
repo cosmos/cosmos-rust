@@ -201,8 +201,8 @@ pub mod cosmos {
 pub mod cosmwasm {
     /// Messages and services handling CosmWasm.
     pub mod wasm {
-        pub mod v1beta1 {
-            include!("prost/cosmwasm.wasm.v1beta1.rs");
+        pub mod v1 {
+            include!("prost/cosmwasm.wasm.v1.rs");
         }
     }
 }

@@ -3,7 +3,7 @@
 //! - Tutorial: <https://docs.cosmwasm.com/>
 //! - Protocol Docs: <https://github.com/CosmWasm/wasmd/blob/master/docs/proto/proto.md>
 
-pub use crate::proto::cosmwasm::wasm::v1beta1::AccessType;
+pub use crate::proto::cosmwasm::wasm::v1::AccessType;
 use crate::{proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result};
 
 /// AccessConfig access control type.
@@ -16,18 +16,18 @@ pub struct AccessConfig {
     pub address: AccountId,
 }
 
-impl TryFrom<proto::cosmwasm::wasm::v1beta1::AccessConfig> for AccessConfig {
+impl TryFrom<proto::cosmwasm::wasm::v1::AccessConfig> for AccessConfig {
     type Error = ErrorReport;
 
-    fn try_from(proto: proto::cosmwasm::wasm::v1beta1::AccessConfig) -> Result<AccessConfig> {
+    fn try_from(proto: proto::cosmwasm::wasm::v1::AccessConfig) -> Result<AccessConfig> {
         AccessConfig::try_from(&proto)
     }
 }
 
-impl TryFrom<&proto::cosmwasm::wasm::v1beta1::AccessConfig> for AccessConfig {
+impl TryFrom<&proto::cosmwasm::wasm::v1::AccessConfig> for AccessConfig {
     type Error = ErrorReport;
 
-    fn try_from(proto: &proto::cosmwasm::wasm::v1beta1::AccessConfig) -> Result<AccessConfig> {
+    fn try_from(proto: &proto::cosmwasm::wasm::v1::AccessConfig) -> Result<AccessConfig> {
         Ok(AccessConfig {
             permission: AccessType::from_i32(proto.permission).ok_or(Error::InvalidEnumValue {
                 name: "permission",
@@ -38,15 +38,15 @@ impl TryFrom<&proto::cosmwasm::wasm::v1beta1::AccessConfig> for AccessConfig {
     }
 }
 
-impl From<AccessConfig> for proto::cosmwasm::wasm::v1beta1::AccessConfig {
-    fn from(config: AccessConfig) -> proto::cosmwasm::wasm::v1beta1::AccessConfig {
-        proto::cosmwasm::wasm::v1beta1::AccessConfig::from(&config)
+impl From<AccessConfig> for proto::cosmwasm::wasm::v1::AccessConfig {
+    fn from(config: AccessConfig) -> proto::cosmwasm::wasm::v1::AccessConfig {
+        proto::cosmwasm::wasm::v1::AccessConfig::from(&config)
     }
 }
 
-impl From<&AccessConfig> for proto::cosmwasm::wasm::v1beta1::AccessConfig {
-    fn from(config: &AccessConfig) -> proto::cosmwasm::wasm::v1beta1::AccessConfig {
-        proto::cosmwasm::wasm::v1beta1::AccessConfig {
+impl From<&AccessConfig> for proto::cosmwasm::wasm::v1::AccessConfig {
+    fn from(config: &AccessConfig) -> proto::cosmwasm::wasm::v1::AccessConfig {
+        proto::cosmwasm::wasm::v1::AccessConfig {
             permission: config.permission as i32,
             address: config.address.to_string(),
         }
@@ -75,13 +75,13 @@ pub struct MsgStoreCode {
 }
 
 impl Msg for MsgStoreCode {
-    type Proto = proto::cosmwasm::wasm::v1beta1::MsgStoreCode;
+    type Proto = proto::cosmwasm::wasm::v1::MsgStoreCode;
 }
 
-impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgStoreCode> for MsgStoreCode {
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgStoreCode> for MsgStoreCode {
     type Error = ErrorReport;
 
-    fn try_from(proto: proto::cosmwasm::wasm::v1beta1::MsgStoreCode) -> Result<MsgStoreCode> {
+    fn try_from(proto: proto::cosmwasm::wasm::v1::MsgStoreCode) -> Result<MsgStoreCode> {
         let source = if proto.source.is_empty() {
             None
         } else {
@@ -107,9 +107,9 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgStoreCode> for MsgStoreCode {
     }
 }
 
-impl From<MsgStoreCode> for proto::cosmwasm::wasm::v1beta1::MsgStoreCode {
-    fn from(msg: MsgStoreCode) -> proto::cosmwasm::wasm::v1beta1::MsgStoreCode {
-        proto::cosmwasm::wasm::v1beta1::MsgStoreCode {
+impl From<MsgStoreCode> for proto::cosmwasm::wasm::v1::MsgStoreCode {
+    fn from(msg: MsgStoreCode) -> proto::cosmwasm::wasm::v1::MsgStoreCode {
+        proto::cosmwasm::wasm::v1::MsgStoreCode {
             sender: msg.sender.to_string(),
             wasm_byte_code: msg.wasm_byte_code,
             source: msg.source.unwrap_or_default(),
@@ -143,14 +143,14 @@ pub struct MsgInstantiateContract {
 }
 
 impl Msg for MsgInstantiateContract {
-    type Proto = proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract;
+    type Proto = proto::cosmwasm::wasm::v1::MsgInstantiateContract;
 }
 
-impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract> for MsgInstantiateContract {
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgInstantiateContract> for MsgInstantiateContract {
     type Error = ErrorReport;
 
     fn try_from(
-        proto: proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract,
+        proto: proto::cosmwasm::wasm::v1::MsgInstantiateContract,
     ) -> Result<MsgInstantiateContract> {
         let label = if proto.label.is_empty() {
             None
@@ -177,9 +177,9 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract> for MsgInst
     }
 }
 
-impl From<MsgInstantiateContract> for proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract {
-    fn from(msg: MsgInstantiateContract) -> proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract {
-        proto::cosmwasm::wasm::v1beta1::MsgInstantiateContract {
+impl From<MsgInstantiateContract> for proto::cosmwasm::wasm::v1::MsgInstantiateContract {
+    fn from(msg: MsgInstantiateContract) -> proto::cosmwasm::wasm::v1::MsgInstantiateContract {
+        proto::cosmwasm::wasm::v1::MsgInstantiateContract {
             sender: msg.sender.to_string(),
             admin: msg.admin.map(|admin| admin.to_string()).unwrap_or_default(),
             code_id: msg.code_id,
@@ -207,14 +207,14 @@ pub struct MsgExecuteContract {
 }
 
 impl Msg for MsgExecuteContract {
-    type Proto = proto::cosmwasm::wasm::v1beta1::MsgExecuteContract;
+    type Proto = proto::cosmwasm::wasm::v1::MsgExecuteContract;
 }
 
-impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgExecuteContract> for MsgExecuteContract {
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgExecuteContract> for MsgExecuteContract {
     type Error = ErrorReport;
 
     fn try_from(
-        proto: proto::cosmwasm::wasm::v1beta1::MsgExecuteContract,
+        proto: proto::cosmwasm::wasm::v1::MsgExecuteContract,
     ) -> Result<MsgExecuteContract> {
         Ok(MsgExecuteContract {
             sender: proto.sender.parse()?,
@@ -229,9 +229,9 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgExecuteContract> for MsgExecuteC
     }
 }
 
-impl From<MsgExecuteContract> for proto::cosmwasm::wasm::v1beta1::MsgExecuteContract {
-    fn from(msg: MsgExecuteContract) -> proto::cosmwasm::wasm::v1beta1::MsgExecuteContract {
-        proto::cosmwasm::wasm::v1beta1::MsgExecuteContract {
+impl From<MsgExecuteContract> for proto::cosmwasm::wasm::v1::MsgExecuteContract {
+    fn from(msg: MsgExecuteContract) -> proto::cosmwasm::wasm::v1::MsgExecuteContract {
+        proto::cosmwasm::wasm::v1::MsgExecuteContract {
             sender: msg.sender.to_string(),
             contract: msg.contract.to_string(),
             msg: msg.msg,
@@ -257,14 +257,14 @@ pub struct MsgMigrateContract {
 }
 
 impl Msg for MsgMigrateContract {
-    type Proto = proto::cosmwasm::wasm::v1beta1::MsgMigrateContract;
+    type Proto = proto::cosmwasm::wasm::v1::MsgMigrateContract;
 }
 
-impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgMigrateContract> for MsgMigrateContract {
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgMigrateContract> for MsgMigrateContract {
     type Error = ErrorReport;
 
     fn try_from(
-        proto: proto::cosmwasm::wasm::v1beta1::MsgMigrateContract,
+        proto: proto::cosmwasm::wasm::v1::MsgMigrateContract,
     ) -> Result<MsgMigrateContract> {
         Ok(MsgMigrateContract {
             sender: proto.sender.parse()?,
@@ -275,9 +275,9 @@ impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgMigrateContract> for MsgMigrateC
     }
 }
 
-impl From<MsgMigrateContract> for proto::cosmwasm::wasm::v1beta1::MsgMigrateContract {
-    fn from(msg: MsgMigrateContract) -> proto::cosmwasm::wasm::v1beta1::MsgMigrateContract {
-        proto::cosmwasm::wasm::v1beta1::MsgMigrateContract {
+impl From<MsgMigrateContract> for proto::cosmwasm::wasm::v1::MsgMigrateContract {
+    fn from(msg: MsgMigrateContract) -> proto::cosmwasm::wasm::v1::MsgMigrateContract {
+        proto::cosmwasm::wasm::v1::MsgMigrateContract {
             sender: msg.sender.to_string(),
             contract: msg.contract.to_string(),
             code_id: msg.code_id,
@@ -300,21 +300,21 @@ pub struct MsgUpdateAdmin {
 }
 
 impl Msg for MsgUpdateAdmin {
-    type Proto = proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin;
+    type Proto = proto::cosmwasm::wasm::v1::MsgUpdateAdmin;
 }
 
-impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin> for MsgUpdateAdmin {
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgUpdateAdmin> for MsgUpdateAdmin {
     type Error = ErrorReport;
 
-    fn try_from(proto: proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin) -> Result<MsgUpdateAdmin> {
+    fn try_from(proto: proto::cosmwasm::wasm::v1::MsgUpdateAdmin) -> Result<MsgUpdateAdmin> {
         MsgUpdateAdmin::try_from(&proto)
     }
 }
 
-impl TryFrom<&proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin> for MsgUpdateAdmin {
+impl TryFrom<&proto::cosmwasm::wasm::v1::MsgUpdateAdmin> for MsgUpdateAdmin {
     type Error = ErrorReport;
 
-    fn try_from(proto: &proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin) -> Result<MsgUpdateAdmin> {
+    fn try_from(proto: &proto::cosmwasm::wasm::v1::MsgUpdateAdmin) -> Result<MsgUpdateAdmin> {
         Ok(MsgUpdateAdmin {
             sender: proto.sender.parse()?,
             new_admin: proto.new_admin.parse()?,
@@ -323,15 +323,15 @@ impl TryFrom<&proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin> for MsgUpdateAdmin
     }
 }
 
-impl From<MsgUpdateAdmin> for proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin {
-    fn from(msg: MsgUpdateAdmin) -> proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin {
-        proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin::from(&msg)
+impl From<MsgUpdateAdmin> for proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
+    fn from(msg: MsgUpdateAdmin) -> proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
+        proto::cosmwasm::wasm::v1::MsgUpdateAdmin::from(&msg)
     }
 }
 
-impl From<&MsgUpdateAdmin> for proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin {
-    fn from(msg: &MsgUpdateAdmin) -> proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin {
-        proto::cosmwasm::wasm::v1beta1::MsgUpdateAdmin {
+impl From<&MsgUpdateAdmin> for proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
+    fn from(msg: &MsgUpdateAdmin) -> proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
+        proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
             sender: msg.sender.to_string(),
             new_admin: msg.new_admin.to_string(),
             contract: msg.contract.to_string(),
@@ -350,21 +350,21 @@ pub struct MsgClearAdmin {
 }
 
 impl Msg for MsgClearAdmin {
-    type Proto = proto::cosmwasm::wasm::v1beta1::MsgClearAdmin;
+    type Proto = proto::cosmwasm::wasm::v1::MsgClearAdmin;
 }
 
-impl TryFrom<proto::cosmwasm::wasm::v1beta1::MsgClearAdmin> for MsgClearAdmin {
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgClearAdmin> for MsgClearAdmin {
     type Error = ErrorReport;
 
-    fn try_from(proto: proto::cosmwasm::wasm::v1beta1::MsgClearAdmin) -> Result<MsgClearAdmin> {
+    fn try_from(proto: proto::cosmwasm::wasm::v1::MsgClearAdmin) -> Result<MsgClearAdmin> {
         MsgClearAdmin::try_from(&proto)
     }
 }
 
-impl TryFrom<&proto::cosmwasm::wasm::v1beta1::MsgClearAdmin> for MsgClearAdmin {
+impl TryFrom<&proto::cosmwasm::wasm::v1::MsgClearAdmin> for MsgClearAdmin {
     type Error = ErrorReport;
 
-    fn try_from(proto: &proto::cosmwasm::wasm::v1beta1::MsgClearAdmin) -> Result<MsgClearAdmin> {
+    fn try_from(proto: &proto::cosmwasm::wasm::v1::MsgClearAdmin) -> Result<MsgClearAdmin> {
         Ok(MsgClearAdmin {
             sender: proto.sender.parse()?,
             contract: proto.contract.parse()?,
@@ -372,15 +372,15 @@ impl TryFrom<&proto::cosmwasm::wasm::v1beta1::MsgClearAdmin> for MsgClearAdmin {
     }
 }
 
-impl From<MsgClearAdmin> for proto::cosmwasm::wasm::v1beta1::MsgClearAdmin {
-    fn from(msg: MsgClearAdmin) -> proto::cosmwasm::wasm::v1beta1::MsgClearAdmin {
-        proto::cosmwasm::wasm::v1beta1::MsgClearAdmin::from(&msg)
+impl From<MsgClearAdmin> for proto::cosmwasm::wasm::v1::MsgClearAdmin {
+    fn from(msg: MsgClearAdmin) -> proto::cosmwasm::wasm::v1::MsgClearAdmin {
+        proto::cosmwasm::wasm::v1::MsgClearAdmin::from(&msg)
     }
 }
 
-impl From<&MsgClearAdmin> for proto::cosmwasm::wasm::v1beta1::MsgClearAdmin {
-    fn from(msg: &MsgClearAdmin) -> proto::cosmwasm::wasm::v1beta1::MsgClearAdmin {
-        proto::cosmwasm::wasm::v1beta1::MsgClearAdmin {
+impl From<&MsgClearAdmin> for proto::cosmwasm::wasm::v1::MsgClearAdmin {
+    fn from(msg: &MsgClearAdmin) -> proto::cosmwasm::wasm::v1::MsgClearAdmin {
+        proto::cosmwasm::wasm::v1::MsgClearAdmin {
             sender: msg.sender.to_string(),
             contract: msg.contract.to_string(),
         }
