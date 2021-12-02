@@ -91,30 +91,30 @@ impl MsgProto for proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
 
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgStoreCode {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1beta1.MsgStoreCode";
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCode";
 }
 
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgInstantiateContract {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1beta1.MsgInstantiateContract";
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgInstantiateContract";
 }
 
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgExecuteContract {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1beta1.MsgExecuteContract";
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgExecuteContract";
 }
 
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgMigrateContract {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1beta1.MsgMigrateContract";
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgMigrateContract";
 }
 
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1beta1.MsgUpdateAdmin";
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgUpdateAdmin";
 }
 
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgClearAdmin {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1beta1.MsgClearAdmin";
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdmin";
 }
