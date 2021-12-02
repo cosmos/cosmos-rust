@@ -62,13 +62,6 @@ pub struct MsgStoreCode {
     /// WASMByteCode can be raw or gzip compressed
     pub wasm_byte_code: Vec<u8>,
 
-    /// Source is a valid absolute HTTPS URI to the contract's source code,
-    /// optional
-    pub source: Option<String>,
-
-    /// Builder is a valid docker image name with tag, optional
-    pub builder: Option<String>,
-
     /// InstantiatePermission access control to apply on contract creation,
     /// optional
     pub instantiate_permission: Option<AccessConfig>,
@@ -82,23 +75,9 @@ impl TryFrom<proto::cosmwasm::wasm::v1::MsgStoreCode> for MsgStoreCode {
     type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmwasm::wasm::v1::MsgStoreCode) -> Result<MsgStoreCode> {
-        let source = if proto.source.is_empty() {
-            None
-        } else {
-            Some(proto.source)
-        };
-
-        let builder = if proto.builder.is_empty() {
-            None
-        } else {
-            Some(proto.builder)
-        };
-
         Ok(MsgStoreCode {
             sender: proto.sender.parse()?,
             wasm_byte_code: proto.wasm_byte_code,
-            source,
-            builder,
             instantiate_permission: proto
                 .instantiate_permission
                 .map(TryFrom::try_from)
@@ -112,8 +91,6 @@ impl From<MsgStoreCode> for proto::cosmwasm::wasm::v1::MsgStoreCode {
         proto::cosmwasm::wasm::v1::MsgStoreCode {
             sender: msg.sender.to_string(),
             wasm_byte_code: msg.wasm_byte_code,
-            source: msg.source.unwrap_or_default(),
-            builder: msg.builder.unwrap_or_default(),
             instantiate_permission: msg.instantiate_permission.map(Into::into),
         }
     }
@@ -135,8 +112,8 @@ pub struct MsgInstantiateContract {
     /// Label is optional metadata to be stored with a contract instance.
     pub label: Option<String>,
 
-    /// InitMsg json encoded message to be passed to the contract on instantiation
-    pub init_msg: Vec<u8>,
+    /// Msg json encoded message to be passed to the contract on instantiation
+    pub msg: Vec<u8>,
 
     /// Funds coins that are transferred to the contract on instantiation
     pub funds: Vec<Coin>,
@@ -167,7 +144,7 @@ impl TryFrom<proto::cosmwasm::wasm::v1::MsgInstantiateContract> for MsgInstantia
             admin: admin.transpose()?,
             code_id: proto.code_id,
             label,
-            init_msg: proto.init_msg,
+            msg: proto.msg,
             funds: proto
                 .funds
                 .into_iter()
@@ -184,7 +161,7 @@ impl From<MsgInstantiateContract> for proto::cosmwasm::wasm::v1::MsgInstantiateC
             admin: msg.admin.map(|admin| admin.to_string()).unwrap_or_default(),
             code_id: msg.code_id,
             label: msg.label.unwrap_or_default(),
-            init_msg: msg.init_msg,
+            msg: msg.msg,
             funds: msg.funds.into_iter().map(Into::into).collect(),
         }
     }
@@ -252,8 +229,8 @@ pub struct MsgMigrateContract {
     /// CodeID references the new WASM code
     pub code_id: u64,
 
-    /// MigrateMsg json encoded message to be passed to the contract on migration
-    pub migrate_msg: Vec<u8>,
+    /// Msg json encoded message to be passed to the contract on migration
+    pub msg: Vec<u8>,
 }
 
 impl Msg for MsgMigrateContract {
@@ -270,7 +247,7 @@ impl TryFrom<proto::cosmwasm::wasm::v1::MsgMigrateContract> for MsgMigrateContra
             sender: proto.sender.parse()?,
             contract: proto.contract.parse()?,
             code_id: proto.code_id,
-            migrate_msg: proto.migrate_msg,
+            msg: proto.msg,
         })
     }
 }
@@ -281,7 +258,7 @@ impl From<MsgMigrateContract> for proto::cosmwasm::wasm::v1::MsgMigrateContract 
             sender: msg.sender.to_string(),
             contract: msg.contract.to_string(),
             code_id: msg.code_id,
-            migrate_msg: msg.migrate_msg,
+            msg: msg.msg,
         }
     }
 }
