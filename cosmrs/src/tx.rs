@@ -1,4 +1,4 @@
-//! Cosmos SDK transacstion support.
+//! Cosmos SDK transaction support.
 //!
 //! ## About
 //!
