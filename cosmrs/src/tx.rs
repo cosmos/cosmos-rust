@@ -125,7 +125,7 @@ pub use self::{
 pub use crate::{proto::cosmos::tx::signing::v1beta1::SignMode, ErrorReport};
 pub use tendermint::abci::{transaction::Hash, Gas};
 
-use crate::{crypto::secp256k1, proto, Error, Result};
+use crate::{proto, Error, Result};
 use prost::Message;
 
 #[cfg(feature = "rpc")]
@@ -136,6 +136,9 @@ pub type AccountNumber = u64;
 
 /// Sequence number.
 pub type SequenceNumber = u64;
+
+/// Serialized signature.
+pub type SignatureBytes = Vec<u8>;
 
 /// [`Tx`] is the standard type used for broadcasting transactions.
 #[derive(Clone, Debug)]
@@ -149,7 +152,10 @@ pub struct Tx {
 
     /// List of signatures that matches the length and order of [`AuthInfo`]’s `signer_info`s to
     /// allow connecting signature meta information like public key and signing mode by position.
-    pub signatures: Vec<secp256k1::Signature>,
+    ///
+    /// Signatures are provided as raw bytes so as to support current and future signature types.
+    /// [`AuthInfo`] should be introspected to determine the signature algorithm used.
+    pub signatures: Vec<SignatureBytes>,
 }
 
 impl Tx {
@@ -190,11 +196,7 @@ impl TryFrom<proto::cosmos::tx::v1beta1::Tx> for Tx {
                 .auth_info
                 .ok_or(Error::MissingField { name: "auth_info" })?
                 .try_into()?,
-            signatures: proto
-                .signatures
-                .iter()
-                .map(|sig| secp256k1::Signature::try_from(sig.as_slice()))
-                .collect::<Result<_, _>>()?,
+            signatures: proto.signatures,
         })
     }
 }
@@ -204,11 +206,7 @@ impl From<Tx> for proto::cosmos::tx::v1beta1::Tx {
         proto::cosmos::tx::v1beta1::Tx {
             body: Some(tx.body.into()),
             auth_info: Some(tx.auth_info.into()),
-            signatures: tx
-                .signatures
-                .iter()
-                .map(|sig| sig.as_ref().to_vec())
-                .collect(),
+            signatures: tx.signatures,
         }
     }
 }
