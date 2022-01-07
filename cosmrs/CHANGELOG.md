@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.4.0 (2022-01-07)
+### Changed
+- Bump `tendermint` to v0.23.3; `k256` to v0.10 ([#163])
+- Use `Vec<u8>` as the `Tx::signatures` type ([#164])
+
+[#163]: https://github.com/cosmos/cosmos-rust/pull/163
+[#164]: https://github.com/cosmos/cosmos-rust/pull/164
+
 ## 0.3.0 (2021-10-28)
 ### Added
 - Associated `Proto` type to `Msg` trait - formerly named `MsgType` ([#146])
