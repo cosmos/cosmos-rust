@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.4.0 (2022-01-07)
+## 0.4.1 (2022-01-10)
+### Changed
+- Bump `cosmos-sdk-proto` to v0.4.1 ([#165])
+
+[#165]: https://github.com/cosmos/cosmos-rust/pull/165
+
+## 0.4.0 (2022-01-07) [YANKED]
 ### Changed
 - Bump `tendermint` to v0.23.3; `k256` to v0.10 ([#163])
 - Use `Vec<u8>` as the `Tx::signatures` type ([#164])
