@@ -20,13 +20,13 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.44.1";
+const COSMOS_SDK_REV: &str = "v0.45.1";
 
 /// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
-const IBC_REV: &str = "v1.2.0";
+const IBC_REV: &str = "v2.0.3";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
-const WASMD_REV: &str = "v0.21.0";
+const WASMD_REV: &str = "v0.23.0";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -222,6 +222,7 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
     let proto_paths = [
         format!("{}/../proto/definitions/mock", root),
         format!("{}/proto/cosmos/auth", sdk_dir.display()),
+        format!("{}/proto/cosmos/authz", sdk_dir.display()),
         format!("{}/proto/cosmos/bank", sdk_dir.display()),
         format!("{}/proto/cosmos/base", sdk_dir.display()),
         format!("{}/proto/cosmos/base/tendermint", sdk_dir.display()),
@@ -230,6 +231,7 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
         format!("{}/proto/cosmos/crypto", sdk_dir.display()),
         format!("{}/proto/cosmos/distribution", sdk_dir.display()),
         format!("{}/proto/cosmos/evidence", sdk_dir.display()),
+        format!("{}/proto/cosmos/feegrant", sdk_dir.display()),
         format!("{}/proto/cosmos/genutil", sdk_dir.display()),
         format!("{}/proto/cosmos/gov", sdk_dir.display()),
         format!("{}/proto/cosmos/mint", sdk_dir.display()),

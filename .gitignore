@@ -1,2 +1,17 @@
+# OS
+.DS_Store
+*.swp
+*.swo
+*.swl
+*.swm
+*.swn
+*.pyc
+
 target/
 Cargo.lock
+
+# IDE
+.idea
+*.iml
+.dir-locals.el
+.vscode
