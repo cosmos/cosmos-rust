@@ -1099,8 +1099,11 @@ pub struct StakeAuthorization {
     #[prost(enumeration = "AuthorizationType", tag = "4")]
     pub authorization_type: i32,
     /// validators is the oneof that represents either allow_list or deny_list
-    #[prost(oneof = "stake_authorization::Validators", tags = "2, 3")]
-    pub validators: ::core::option::Option<stake_authorization::IsStakeAuthorizationValidators>.
+    #[prost(
+        oneof = "stake_authorization::IsStakeAuthorizationValidators",
+        tags = "2, 3"
+    )]
+    pub validators: ::core::option::Option<stake_authorization::IsStakeAuthorizationValidators>,
 }
 /// Nested message and enum types in `StakeAuthorization`.
 pub mod stake_authorization {
