@@ -1,3 +1,10 @@
+/// SendAuthorization allows the grantee to spend up to spend_limit coins from
+/// the granter's account.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SendAuthorization {
+    #[prost(message, repeated, tag = "1")]
+    pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
 /// Params defines the parameters for the bank module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
@@ -80,6 +87,34 @@ pub struct Metadata {
     /// be the same as the display.
     #[prost(string, tag = "6")]
     pub symbol: ::prost::alloc::string::String,
+}
+/// GenesisState defines the bank module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// params defines all the paramaters of the module.
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+    /// balances is an array containing the balances of all the accounts.
+    #[prost(message, repeated, tag = "2")]
+    pub balances: ::prost::alloc::vec::Vec<Balance>,
+    /// supply represents the total supply. If it is left empty, then supply will be calculated based on the provided
+    /// balances. Otherwise, it will be used to validate that the sum of the balances equals this amount.
+    #[prost(message, repeated, tag = "3")]
+    pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// denom_metadata defines the metadata of the differents coins.
+    #[prost(message, repeated, tag = "4")]
+    pub denom_metadata: ::prost::alloc::vec::Vec<Metadata>,
+}
+/// Balance defines an account address and balance pair used in the bank module's
+/// genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Balance {
+    /// address is the address of the balance holder.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// coins defines the different coins this balance holds.
+    #[prost(message, repeated, tag = "2")]
+    pub coins: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -483,39 +518,4 @@ pub mod query_client {
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
-}
-/// SendAuthorization allows the grantee to spend up to spend_limit coins from
-/// the granter's account.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SendAuthorization {
-    #[prost(message, repeated, tag = "1")]
-    pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-}
-/// GenesisState defines the bank module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    /// params defines all the paramaters of the module.
-    #[prost(message, optional, tag = "1")]
-    pub params: ::core::option::Option<Params>,
-    /// balances is an array containing the balances of all the accounts.
-    #[prost(message, repeated, tag = "2")]
-    pub balances: ::prost::alloc::vec::Vec<Balance>,
-    /// supply represents the total supply. If it is left empty, then supply will be calculated based on the provided
-    /// balances. Otherwise, it will be used to validate that the sum of the balances equals this amount.
-    #[prost(message, repeated, tag = "3")]
-    pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    /// denom_metadata defines the metadata of the differents coins.
-    #[prost(message, repeated, tag = "4")]
-    pub denom_metadata: ::prost::alloc::vec::Vec<Metadata>,
-}
-/// Balance defines an account address and balance pair used in the bank module's
-/// genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Balance {
-    /// address is the address of the balance holder.
-    #[prost(string, tag = "1")]
-    pub address: ::prost::alloc::string::String,
-    /// coins defines the different coins this balance holds.
-    #[prost(message, repeated, tag = "2")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }

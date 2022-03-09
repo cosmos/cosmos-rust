@@ -15,6 +15,24 @@ pub struct Grant {
     #[prost(message, optional, tag = "2")]
     pub expiration: ::core::option::Option<::prost_types::Timestamp>,
 }
+/// GenesisState defines the authz module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    #[prost(message, repeated, tag = "1")]
+    pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
+}
+/// GrantAuthorization defines the GenesisState/GrantAuthorization type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GrantAuthorization {
+    #[prost(string, tag = "1")]
+    pub granter: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub grantee: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub authorization: ::core::option::Option<::prost_types::Any>,
+    #[prost(message, optional, tag = "4")]
+    pub expiration: ::core::option::Option<::prost_types::Timestamp>,
+}
 /// MsgGrant is a request type for Grant method. It declares authorization to the grantee
 /// on behalf of the granter with the provided expiration time.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -175,6 +193,32 @@ pub mod msg_client {
         }
     }
 }
+/// EventGrant is emitted on Msg/Grant
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventGrant {
+    /// Msg type URL for which an autorization is granted
+    #[prost(string, tag = "2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag = "3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag = "4")]
+    pub grantee: ::prost::alloc::string::String,
+}
+/// EventRevoke is emitted on Msg/Revoke
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventRevoke {
+    /// Msg type URL for which an autorization is revoked
+    #[prost(string, tag = "2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag = "3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag = "4")]
+    pub grantee: ::prost::alloc::string::String,
+}
 /// QueryGrantsRequest is the request type for the Query/Grants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsRequest {
@@ -278,48 +322,4 @@ pub mod query_client {
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
-}
-/// EventGrant is emitted on Msg/Grant
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventGrant {
-    /// Msg type URL for which an autorization is granted
-    #[prost(string, tag = "2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag = "3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag = "4")]
-    pub grantee: ::prost::alloc::string::String,
-}
-/// EventRevoke is emitted on Msg/Revoke
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventRevoke {
-    /// Msg type URL for which an autorization is revoked
-    #[prost(string, tag = "2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag = "3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag = "4")]
-    pub grantee: ::prost::alloc::string::String,
-}
-/// GenesisState defines the authz module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    #[prost(message, repeated, tag = "1")]
-    pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
-}
-/// GrantAuthorization defines the GenesisState/GrantAuthorization type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GrantAuthorization {
-    #[prost(string, tag = "1")]
-    pub granter: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub grantee: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub authorization: ::core::option::Option<::prost_types::Any>,
-    #[prost(message, optional, tag = "4")]
-    pub expiration: ::core::option::Option<::prost_types::Timestamp>,
 }
