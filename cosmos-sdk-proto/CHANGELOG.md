@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.10.0 (2022-03-10)
+### Added
+- `authz` and `feegrant` protos ([#177])
+
+### Changed
+- Update SDK version => v0.45.1, IBC => v2.0.3, wasmd => v0.23.0 ([#177])
+- Bump `tendermint-proto` to v0.23.5 ([#178])
+
+[#177]: https://github.com/cosmos/cosmos-rust/pull/177
+[#178]: https://github.com/cosmos/cosmos-rust/pull/178
+
 ## 0.9.0 (2022-01-10)
 ### Changed
 - Update wasmd compatibility to 0.21 ([#158])
