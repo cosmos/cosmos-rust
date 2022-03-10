@@ -80,7 +80,7 @@ pub struct MsgUndelegate {
     pub validator_address: AccountId,
 
     /// Amount to UnDelegate
-    pub amount: Option<Coin>,
+    pub amount: Coin,
 }
 
 impl Msg for MsgUndelegate {
@@ -99,18 +99,18 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgUndelegate> for MsgUndelegate 
     type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmos::staking::v1beta1::MsgUndelegate) -> Result<MsgUndelegate> {
-        let amount = if let Some(amount) = &proto.amount {
-            Some(Coin {
-                denom: amount.denom.parse()?,
-                amount: amount.amount.parse()?,
-            })
-        } else {
-            None
-        };
+        let amount = proto
+            .amount
+            .as_ref()
+            .ok_or(Error::MissingField { name: "amount" })?;
+
         Ok(MsgUndelegate {
             delegator_address: proto.delegator_address.parse()?,
             validator_address: proto.validator_address.parse()?,
-            amount,
+            amount: Coin {
+                denom: amount.denom.parse()?,
+                amount: amount.amount.parse()?,
+            },
         })
     }
 }
@@ -123,17 +123,15 @@ impl From<MsgUndelegate> for proto::cosmos::staking::v1beta1::MsgUndelegate {
 
 impl From<&MsgUndelegate> for proto::cosmos::staking::v1beta1::MsgUndelegate {
     fn from(msg: &MsgUndelegate) -> proto::cosmos::staking::v1beta1::MsgUndelegate {
-        let proto_amount = msg
-            .amount
-            .as_ref()
-            .map(|amount| proto::cosmos::base::v1beta1::Coin {
-                denom: amount.denom.to_string(),
-                amount: amount.amount.to_string(),
-            });
+        let amount = proto::cosmos::base::v1beta1::Coin {
+            denom: msg.amount.denom.to_string(),
+            amount: msg.amount.amount.to_string(),
+        };
+
         proto::cosmos::staking::v1beta1::MsgUndelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_address: msg.validator_address.to_string(),
-            amount: proto_amount,
+            amount: Some(amount),
         }
     }
 }
@@ -151,7 +149,7 @@ pub struct MsgBeginRedelegate {
     pub validator_dst_address: AccountId,
 
     /// Amount to UnDelegate
-    pub amount: Option<Coin>,
+    pub amount: Coin,
 }
 
 impl Msg for MsgBeginRedelegate {
@@ -174,19 +172,19 @@ impl TryFrom<&proto::cosmos::staking::v1beta1::MsgBeginRedelegate> for MsgBeginR
     fn try_from(
         proto: &proto::cosmos::staking::v1beta1::MsgBeginRedelegate,
     ) -> Result<MsgBeginRedelegate> {
-        let amount = if let Some(amount) = &proto.amount {
-            Some(Coin {
-                denom: amount.denom.parse()?,
-                amount: amount.amount.parse()?,
-            })
-        } else {
-            None
-        };
+        let amount = proto
+            .amount
+            .as_ref()
+            .ok_or(Error::MissingField { name: "amount" })?;
+
         Ok(MsgBeginRedelegate {
             delegator_address: proto.delegator_address.parse()?,
             validator_src_address: proto.validator_src_address.parse()?,
             validator_dst_address: proto.validator_dst_address.parse()?,
-            amount,
+            amount: Coin {
+                denom: amount.denom.parse()?,
+                amount: amount.amount.parse()?,
+            },
         })
     }
 }
@@ -199,18 +197,16 @@ impl From<MsgBeginRedelegate> for proto::cosmos::staking::v1beta1::MsgBeginRedel
 
 impl From<&MsgBeginRedelegate> for proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
     fn from(msg: &MsgBeginRedelegate) -> proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
-        let proto_amount = msg
-            .amount
-            .as_ref()
-            .map(|amount| proto::cosmos::base::v1beta1::Coin {
-                denom: amount.denom.to_string(),
-                amount: amount.amount.to_string(),
-            });
+        let amount = proto::cosmos::base::v1beta1::Coin {
+            denom: msg.amount.denom.to_string(),
+            amount: msg.amount.amount.to_string(),
+        };
+
         proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
             delegator_address: msg.delegator_address.to_string(),
             validator_src_address: msg.validator_src_address.to_string(),
             validator_dst_address: msg.validator_dst_address.to_string(),
-            amount: proto_amount,
+            amount: Some(amount),
         }
     }
 }
