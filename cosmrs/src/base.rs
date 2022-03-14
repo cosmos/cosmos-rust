@@ -180,10 +180,26 @@ impl FromStr for Denom {
 
     fn from_str(s: &str) -> Result<Self> {
         // TODO(tarcieri): ensure this is the proper validation for a denom name
-        if s.chars().all(|c| matches!(c, 'a'..='z')) {
+        if s.chars()
+            .all(|c| matches!(c, 'A'..='Z' | 'a'..='z' | '0'..='9' | '/'))
+        {
             Ok(Denom(s.to_owned()))
         } else {
             Err(Error::Denom { name: s.to_owned() }.into())
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Denom;
+
+    #[test]
+    fn denom_from_str() {
+        assert!(
+            "ibc/9F53D255F5320A4BE124FF20C29D46406E126CE8A09B00CA8D3CFF7905119728"
+                .parse::<Denom>()
+                .is_ok()
+        );
     }
 }
