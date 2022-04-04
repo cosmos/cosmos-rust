@@ -7,7 +7,7 @@ publish = false
 
 
 [dependencies]
-prost = "0.9"
+prost = "0.10"
 prost-build = "0.9"
 tonic = "0.6"
 tonic-build = "0.6"
