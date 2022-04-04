@@ -222,6 +222,10 @@ pub mod ibc {
             pub mod v1 {
                 include!("prost/ibc.applications.transfer.v1.rs");
             }
+
+            pub mod v2 {
+                include!("prost/ibc.applications.transfer.v2.rs");
+            }
         }
     }
 
@@ -255,6 +259,13 @@ pub mod ibc {
             }
         }
 
+        /// IBC port.
+        pub mod port {
+            pub mod v1 {
+                include!("prost/ibc.core.port.v1.rs");
+            }
+        }
+
         /// IBC types.
         pub mod types {
             pub mod v1 {
@@ -273,6 +284,10 @@ pub mod ibc {
         pub mod solomachine {
             pub mod v1 {
                 include!("prost/ibc.lightclients.solomachine.v1.rs");
+            }
+
+            pub mod v2 {
+                include!("prost/ibc.lightclients.solomachine.v2.rs");
             }
         }
         pub mod tendermint {
