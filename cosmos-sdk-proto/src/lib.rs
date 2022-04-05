@@ -130,6 +130,13 @@ pub mod cosmos {
         }
     }
 
+    /// Allows accounts to grant fee allowances and to use fees from their accounts.
+    pub mod feegrant {
+        pub mod v1beta1 {
+            include!("prost/cosmos.feegrant.v1beta1.rs");
+        }
+    }
+
     /// Messages and services handling gentx's
     pub mod genutil {
         pub mod v1beta1 {
