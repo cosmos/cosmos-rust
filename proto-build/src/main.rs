@@ -20,10 +20,10 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.45.1";
+const COSMOS_SDK_REV: &str = "v0.45.2";
 
 /// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
-const IBC_REV: &str = "v2.0.3";
+const IBC_REV: &str = "v3.0.0";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
 const WASMD_REV: &str = "v0.23.0";
@@ -321,6 +321,10 @@ fn compile_ibc_protos_and_services(out_dir: &Path) {
 
     let proto_paths = [
         format!("{}/../proto/definitions/mock", root),
+        format!(
+            "{}/proto/ibc/applications/interchain_accounts",
+            ibc_dir.display()
+        ),
         format!("{}/proto/ibc/applications/transfer", ibc_dir.display()),
         format!("{}/proto/ibc/core/channel", ibc_dir.display()),
         format!("{}/proto/ibc/core/client", ibc_dir.display()),
