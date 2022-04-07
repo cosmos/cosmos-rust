@@ -1,3 +1,12 @@
+/// SendAuthorization allows the grantee to spend up to spend_limit coins from
+/// the granter's account.
+///
+/// Since: cosmos-sdk 0.43
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SendAuthorization {
+    #[prost(message, repeated, tag = "1")]
+    pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
 /// Params defines the parameters for the bank module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
@@ -74,128 +83,16 @@ pub struct Metadata {
     #[prost(string, tag = "4")]
     pub display: ::prost::alloc::string::String,
     /// name defines the name of the token (eg: Cosmos Atom)
+    ///
+    /// Since: cosmos-sdk 0.43
     #[prost(string, tag = "5")]
     pub name: ::prost::alloc::string::String,
     /// symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
     /// be the same as the display.
+    ///
+    /// Since: cosmos-sdk 0.43
     #[prost(string, tag = "6")]
     pub symbol: ::prost::alloc::string::String,
-}
-/// MsgSend represents a message to send coins from one account to another.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSend {
-    #[prost(string, tag = "1")]
-    pub from_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub to_address: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag = "3")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-}
-/// MsgSendResponse defines the Msg/Send response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgSendResponse {}
-/// MsgMultiSend represents an arbitrary multi-in, multi-out send message.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgMultiSend {
-    #[prost(message, repeated, tag = "1")]
-    pub inputs: ::prost::alloc::vec::Vec<Input>,
-    #[prost(message, repeated, tag = "2")]
-    pub outputs: ::prost::alloc::vec::Vec<Output>,
-}
-/// MsgMultiSendResponse defines the Msg/MultiSend response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgMultiSendResponse {}
-#[cfg(feature = "grpc")]
-#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-#[doc = r" Generated client implementations."]
-pub mod msg_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
-    #[doc = " Msg defines the bank Msg service."]
-    #[derive(Debug, Clone)]
-    pub struct MsgClient<T> {
-        inner: tonic::client::Grpc<T>,
-    }
-    impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
-    impl<T> MsgClient<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + Send + 'static,
-        T::Error: Into<StdError>,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
-        where
-            F: tonic::service::Interceptor,
-            T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-                Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
-                >,
-            >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
-        {
-            MsgClient::new(InterceptedService::new(inner, interceptor))
-        }
-        #[doc = r" Compress requests with `gzip`."]
-        #[doc = r""]
-        #[doc = r" This requires the server to support it otherwise it might respond with an"]
-        #[doc = r" error."]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
-            self
-        }
-        #[doc = r" Enable decompressing responses with `gzip`."]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
-            self
-        }
-        #[doc = " Send defines a method for sending coins from one account to another account."]
-        pub async fn send(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgSend>,
-        ) -> Result<tonic::Response<super::MsgSendResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/Send");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " MultiSend defines a method for sending coins from some accounts to other accounts."]
-        pub async fn multi_send(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgMultiSend>,
-        ) -> Result<tonic::Response<super::MsgMultiSendResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/MultiSend");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-    }
 }
 /// QueryBalanceRequest is the request type for the Query/Balance RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -235,11 +132,35 @@ pub struct QueryAllBalancesResponse {
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
+/// QuerySpendableBalancesRequest defines the gRPC request structure for querying
+/// an account's spendable balances.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySpendableBalancesRequest {
+    /// address is the address to query spendable balances for.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
+/// QuerySpendableBalancesResponse defines the gRPC response structure for querying
+/// an account's spendable balances.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySpendableBalancesResponse {
+    /// balances is the spendable balances of all the coins.
+    #[prost(message, repeated, tag = "1")]
+    pub balances: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
+}
 /// QueryTotalSupplyRequest is the request type for the Query/TotalSupply RPC
 /// method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTotalSupplyRequest {
     /// pagination defines an optional pagination for the request.
+    ///
+    /// Since: cosmos-sdk 0.43
     #[prost(message, optional, tag = "1")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
@@ -251,6 +172,8 @@ pub struct QueryTotalSupplyResponse {
     #[prost(message, repeated, tag = "1")]
     pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     /// pagination defines the pagination in the response.
+    ///
+    /// Since: cosmos-sdk 0.43
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
@@ -404,6 +327,24 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/AllBalances");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        #[doc = " SpendableBalances queries the spenable balance of all coins for a single"]
+        #[doc = " account."]
+        pub async fn spendable_balances(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QuerySpendableBalancesRequest>,
+        ) -> Result<tonic::Response<super::QuerySpendableBalancesResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.bank.v1beta1.Query/SpendableBalances",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
         #[doc = " TotalSupply queries the total supply of all coins."]
         pub async fn total_supply(
             &mut self,
@@ -484,12 +425,121 @@ pub mod query_client {
         }
     }
 }
-/// SendAuthorization allows the grantee to spend up to spend_limit coins from
-/// the granter's account.
+/// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SendAuthorization {
+pub struct MsgSend {
+    #[prost(string, tag = "1")]
+    pub from_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub to_address: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// MsgSendResponse defines the Msg/Send response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSendResponse {}
+/// MsgMultiSend represents an arbitrary multi-in, multi-out send message.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgMultiSend {
     #[prost(message, repeated, tag = "1")]
-    pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    pub inputs: ::prost::alloc::vec::Vec<Input>,
+    #[prost(message, repeated, tag = "2")]
+    pub outputs: ::prost::alloc::vec::Vec<Output>,
+}
+/// MsgMultiSendResponse defines the Msg/MultiSend response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgMultiSendResponse {}
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+#[doc = r" Generated client implementations."]
+pub mod msg_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    #[doc = " Msg defines the bank Msg service."]
+    #[derive(Debug, Clone)]
+    pub struct MsgClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl MsgClient<tonic::transport::Channel> {
+        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> MsgClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::ResponseBody: Body + Send + 'static,
+        T::Error: Into<StdError>,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
+        {
+            MsgClient::new(InterceptedService::new(inner, interceptor))
+        }
+        #[doc = r" Compress requests with `gzip`."]
+        #[doc = r""]
+        #[doc = r" This requires the server to support it otherwise it might respond with an"]
+        #[doc = r" error."]
+        pub fn send_gzip(mut self) -> Self {
+            self.inner = self.inner.send_gzip();
+            self
+        }
+        #[doc = r" Enable decompressing responses with `gzip`."]
+        pub fn accept_gzip(mut self) -> Self {
+            self.inner = self.inner.accept_gzip();
+            self
+        }
+        #[doc = " Send defines a method for sending coins from one account to another account."]
+        pub async fn send(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgSend>,
+        ) -> Result<tonic::Response<super::MsgSendResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/Send");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        #[doc = " MultiSend defines a method for sending coins from some accounts to other accounts."]
+        pub async fn multi_send(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgMultiSend>,
+        ) -> Result<tonic::Response<super::MsgMultiSendResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Msg/MultiSend");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
 }
 /// GenesisState defines the bank module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]

@@ -65,6 +65,10 @@ pub mod cosmos {
             pub mod v1beta1 {
                 include!("prost/cosmos.base.reflection.v1beta1.rs");
             }
+
+            pub mod v2alpha1 {
+                include!("prost/cosmos.base.reflection.v2alpha1.rs");
+            }
         }
 
         /// Snapshots containing Tendermint state sync info.
@@ -113,6 +117,9 @@ pub mod cosmos {
         }
         pub mod secp256k1 {
             include!("prost/cosmos.crypto.secp256k1.rs");
+        }
+        pub mod secp256r1 {
+            include!("prost/cosmos.crypto.secp256r1.rs");
         }
     }
 
@@ -224,6 +231,25 @@ pub mod cosmwasm {
 pub mod ibc {
     /// IBC applications.
     pub mod applications {
+        /// Interchain accounts support.
+        pub mod interchain_accounts {
+            pub mod controller {
+                pub mod v1 {
+                    include!("prost/ibc.applications.interchain_accounts.controller.v1.rs");
+                }
+            }
+
+            pub mod host {
+                pub mod v1 {
+                    include!("prost/ibc.applications.interchain_accounts.host.v1.rs");
+                }
+            }
+
+            pub mod v1 {
+                include!("prost/ibc.applications.interchain_accounts.v1.rs");
+            }
+        }
+
         /// Transfer support.
         pub mod transfer {
             pub mod v1 {
@@ -263,13 +289,6 @@ pub mod ibc {
         pub mod connection {
             pub mod v1 {
                 include!("prost/ibc.core.connection.v1.rs");
-            }
-        }
-
-        /// IBC port.
-        pub mod port {
-            pub mod v1 {
-                include!("prost/ibc.core.port.v1.rs");
             }
         }
 
