@@ -1,3 +1,29 @@
+/// EventGrant is emitted on Msg/Grant
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventGrant {
+    /// Msg type URL for which an autorization is granted
+    #[prost(string, tag = "2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag = "3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag = "4")]
+    pub grantee: ::prost::alloc::string::String,
+}
+/// EventRevoke is emitted on Msg/Revoke
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventRevoke {
+    /// Msg type URL for which an autorization is revoked
+    #[prost(string, tag = "2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag = "3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag = "4")]
+    pub grantee: ::prost::alloc::string::String,
+}
 /// GenericAuthorization gives the grantee unrestricted permissions to execute
 /// the provided method on behalf of the granter's account.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -373,30 +399,4 @@ pub mod msg_client {
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
     pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
-}
-/// EventGrant is emitted on Msg/Grant
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventGrant {
-    /// Msg type URL for which an autorization is granted
-    #[prost(string, tag = "2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag = "3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag = "4")]
-    pub grantee: ::prost::alloc::string::String,
-}
-/// EventRevoke is emitted on Msg/Revoke
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventRevoke {
-    /// Msg type URL for which an autorization is revoked
-    #[prost(string, tag = "2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag = "3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag = "4")]
-    pub grantee: ::prost::alloc::string::String,
 }
