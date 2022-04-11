@@ -12,28 +12,10 @@ use cosmrs::{
     bank::MsgSend,
     crypto::secp256k1,
     dev, rpc,
-    tx::{self, AccountNumber, Fee, Msg, SignDoc, SignerInfo},
+    tx::{self, Fee, Msg, SignDoc, SignerInfo},
     Coin,
 };
 use std::{panic, str};
-
-/// Chain ID to use for tests
-const CHAIN_ID: &str = "cosmrs-test";
-
-/// RPC port
-const RPC_PORT: u16 = 26657;
-
-/// Expected account number
-const ACCOUNT_NUMBER: AccountNumber = 1;
-
-/// Bech32 prefix for an account
-const ACCOUNT_PREFIX: &str = "cosmos";
-
-/// Denom name
-const DENOM: &str = "samoleans";
-
-/// Example memo
-const MEMO: &str = "test memo";
 
 /// `start` subcommand
 ///
@@ -44,8 +26,23 @@ const MEMO: &str = "test memo";
 /// <https://docs.rs/clap/>
 #[derive(Command, Debug, Parser)]
 pub struct StartLocalCmd {
-    /// To whom are we saying hello?
-    recipient: Vec<String>,
+    /// Chain ID to use for tests
+    chain_id: String,
+
+    /// RPC port
+    rpc_port: u16,
+
+    /// Expected account number
+    account_number: u64,
+
+    /// Bech32 prefix for an account
+    account_prefix: String,
+
+    /// Denom name
+    denom: String,
+
+    /// Example memo
+    memo: String,
 }
 
 impl Runnable for StartLocalCmd {
@@ -53,17 +50,17 @@ impl Runnable for StartLocalCmd {
     fn run(&self) {
         let sender_private_key = secp256k1::SigningKey::random();
         let sender_public_key = sender_private_key.public_key();
-        let sender_account_id = sender_public_key.account_id(ACCOUNT_PREFIX).unwrap();
+        let sender_account_id = sender_public_key.account_id(&self.account_prefix).unwrap();
 
         let recipient_private_key = secp256k1::SigningKey::random();
         let recipient_account_id = recipient_private_key
             .public_key()
-            .account_id(ACCOUNT_PREFIX)
+            .account_id(&self.account_prefix)
             .unwrap();
 
         let amount = Coin {
             amount: 1u8.into(),
-            denom: DENOM.parse().unwrap(),
+            denom: self.denom.parse().unwrap(),
         };
 
         let msg_send = MsgSend {
@@ -74,30 +71,30 @@ impl Runnable for StartLocalCmd {
         .to_any()
         .unwrap();
 
-        let chain_id = CHAIN_ID.parse().unwrap();
+        let chain_id = self.chain_id.parse().unwrap();
         let sequence_number = 0;
         let gas = 100_000;
         let fee = Fee::from_amount_and_gas(amount, gas);
         let timeout_height = 9001u16;
 
-        let tx_body = tx::Body::new(vec![msg_send], MEMO, timeout_height);
+        let tx_body = tx::Body::new(vec![msg_send], &self.memo, timeout_height);
         let auth_info =
             SignerInfo::single_direct(Some(sender_public_key), sequence_number).auth_info(fee);
-        let sign_doc = SignDoc::new(&tx_body, &auth_info, &chain_id, ACCOUNT_NUMBER).unwrap();
+        let sign_doc = SignDoc::new(&tx_body, &auth_info, &chain_id, self.account_number).unwrap();
         let tx_raw = sign_doc.sign(&sender_private_key).unwrap();
 
         let docker_args = [
             "-d",
             "-p",
-            &format!("{}:{}", RPC_PORT, RPC_PORT),
+            &format!("{}:{}", self.rpc_port, self.rpc_port),
             dev::GAIA_DOCKER_IMAGE,
-            CHAIN_ID,
+            &self.chain_id,
             &sender_account_id.to_string(),
         ];
 
         dev::docker_run(&docker_args, || {
             abscissa_tokio::run(&APP, async {
-                let rpc_address = format!("http://localhost:{}", RPC_PORT);
+                let rpc_address = format!("http://localhost:{}", self.rpc_port);
                 let rpc_client = rpc::HttpClient::new(rpc_address.as_str()).unwrap();
                 dev::poll_for_first_block(&rpc_client).await;
 
