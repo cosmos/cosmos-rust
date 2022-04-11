@@ -6,8 +6,7 @@ use crate::{prost_ext::MessageExt, proto, Result};
 use crate::rpc;
 
 /// Response from `/broadcast_tx_commit`
-#[cfg(feature = "rpc")]
-pub type TxCommitResponse = rpc::endpoint::broadcast::tx_commit::Response;
+pub type TxCommitResponse = tendermint_rpc::endpoint::broadcast::tx_commit::Response;
 
 /// Raw transaction
 #[derive(Clone, Debug)]
@@ -25,11 +24,9 @@ impl Raw {
     }
 
     /// Broadcast this transaction using the provided RPC client
-    #[cfg(feature = "rpc")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "rpc")))]
     pub async fn broadcast_commit<C>(&self, client: &C) -> Result<TxCommitResponse>
     where
-        C: rpc::Client + Send + Sync,
+        C: tendermint_rpc::Client + Send + Sync,
     {
         Ok(client.broadcast_tx_commit(self.to_bytes()?.into()).await?)
     }

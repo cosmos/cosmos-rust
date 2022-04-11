@@ -2,8 +2,6 @@
 //!
 //! Requires Docker.
 
-#![cfg(feature = "dev")]
-
 use cosmrs::{
     bank::MsgSend,
     crypto::secp256k1,
