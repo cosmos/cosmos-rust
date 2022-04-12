@@ -75,7 +75,7 @@ impl FromStr for AccountId {
     fn from_str(s: &str) -> Result<Self> {
         let (hrp, bytes) = bech32::decode(s).wrap_err("failed to decode bech32")?;
 
-        if bytes.len() <= MAX_ADDRESS_LENGTH {
+        if matches!(bytes.len(), 1..=MAX_ADDRESS_LENGTH) {
             Ok(Self {
                 bech32: s.to_owned(),
                 hrp_length: hrp.len(),
