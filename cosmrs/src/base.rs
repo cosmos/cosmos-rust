@@ -6,6 +6,9 @@ use serde::{de, de::Error as _, ser, Deserialize, Serialize};
 use std::{fmt, str::FromStr};
 use subtle_encoding::bech32;
 
+/// Maximum allowed length (in bytes) for an address.
+pub const MAX_ADDRESS_LENGTH: usize = 255;
+
 /// Account identifiers
 #[derive(Clone, Eq, PartialEq, PartialOrd, Ord)]
 pub struct AccountId {
@@ -72,7 +75,7 @@ impl FromStr for AccountId {
     fn from_str(s: &str) -> Result<Self> {
         let (hrp, bytes) = bech32::decode(s).wrap_err("failed to decode bech32")?;
 
-        if bytes.len() == tendermint::account::LENGTH {
+        if matches!(bytes.len(), 1..=MAX_ADDRESS_LENGTH) {
             Ok(Self {
                 bech32: s.to_owned(),
                 hrp_length: hrp.len(),
@@ -80,8 +83,8 @@ impl FromStr for AccountId {
         } else {
             Err(Error::AccountId { id: s.to_owned() }).wrap_err_with(|| {
                 format!(
-                    "account ID should be at least {} bytes long, but was {} bytes long",
-                    tendermint::account::LENGTH,
+                    "account ID should be at most {} bytes long, but was {} bytes long",
+                    MAX_ADDRESS_LENGTH,
                     bytes.len()
                 )
             })
