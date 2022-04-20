@@ -121,12 +121,13 @@ impl TryFrom<&Any> for PublicKey {
     }
 }
 
-impl TryFrom<cosmos_sdk_proto::cosmos::crypto::ed25519::PubKey> for PublicKey {
+impl TryFrom<proto::cosmos::crypto::ed25519::PubKey> for PublicKey {
     type Error = ErrorReport;
 
-    fn try_from(public_key: cosmos_sdk_proto::cosmos::crypto::ed25519::PubKey) -> Result<PublicKey> {
-        let tm_key = tendermint::public_key::PublicKey::from_raw_secp256k1(&public_key.key);
-        tm_key.map(Into::into).ok_or_else(|| Error::Crypto.into())
+    fn try_from(public_key: proto::cosmos::crypto::ed25519::PubKey) -> Result<PublicKey> {
+        tendermint::public_key::PublicKey::from_raw_ed25519(&public_key.key)
+            .map(Into::into)
+            .ok_or_else(|| Error::Crypto.into())
     }
 }
 
@@ -134,8 +135,9 @@ impl TryFrom<cosmos::crypto::secp256k1::PubKey> for PublicKey {
     type Error = ErrorReport;
 
     fn try_from(public_key: cosmos::crypto::secp256k1::PubKey) -> Result<PublicKey> {
-        let tm_key = tendermint::public_key::PublicKey::from_raw_secp256k1(&public_key.key);
-        tm_key.map(Into::into).ok_or_else(|| Error::Crypto.into())
+        tendermint::public_key::PublicKey::from_raw_secp256k1(&public_key.key)
+            .map(Into::into)
+            .ok_or_else(|| Error::Crypto.into())
     }
 }
 
@@ -238,7 +240,8 @@ mod tests {
         let example_key = EXAMPLE_JSON.parse::<PublicKey>().unwrap();
 
         // test try_from
-        let tm_key: tendermint::public_key::PublicKey = example_key.try_into().expect("try_into failure");
+        let tm_key: tendermint::public_key::PublicKey =
+            example_key.try_into().expect("try_into failure");
         let example_key = PublicKey::try_from(tm_key).expect("try_from failure");
 
         assert_eq!(example_key.type_url(), "/cosmos.crypto.ed25519.PubKey");
