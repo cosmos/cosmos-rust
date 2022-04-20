@@ -1,10 +1,10 @@
 //! Public keys
 
 use crate::{prost_ext::MessageExt, proto, AccountId, Error, ErrorReport, Result};
-use cosmos_sdk_proto::cosmos;
 use eyre::WrapErr;
 use prost::Message;
 use prost_types::Any;
+use proto::cosmos;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 use subtle_encoding::base64;
