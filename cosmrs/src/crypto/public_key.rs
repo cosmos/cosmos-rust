@@ -4,7 +4,6 @@ use crate::{prost_ext::MessageExt, proto, AccountId, Error, ErrorReport, Result}
 use eyre::WrapErr;
 use prost::Message;
 use prost_types::Any;
-use proto::cosmos;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 use subtle_encoding::base64;
@@ -109,10 +108,8 @@ impl TryFrom<&Any> for PublicKey {
             Self::SECP256K1_TYPE_URL => {
                 proto::cosmos::crypto::secp256k1::PubKey::decode(&*any.value)?.try_into()
             }
-            other => {
-                return Err(Error::Crypto)
-                    .wrap_err_with(|| format!("invalid type URL for public key: {}", other))
-            }
+            other => Err(Error::Crypto)
+                .wrap_err_with(|| format!("invalid type URL for public key: {}", other)),
         }
     }
 }
@@ -127,10 +124,10 @@ impl TryFrom<proto::cosmos::crypto::ed25519::PubKey> for PublicKey {
     }
 }
 
-impl TryFrom<cosmos::crypto::secp256k1::PubKey> for PublicKey {
+impl TryFrom<proto::cosmos::crypto::secp256k1::PubKey> for PublicKey {
     type Error = ErrorReport;
 
-    fn try_from(public_key: cosmos::crypto::secp256k1::PubKey) -> Result<PublicKey> {
+    fn try_from(public_key: proto::cosmos::crypto::secp256k1::PubKey) -> Result<PublicKey> {
         tendermint::public_key::PublicKey::from_raw_secp256k1(&public_key.key)
             .map(Into::into)
             .ok_or_else(|| Error::Crypto.into())
