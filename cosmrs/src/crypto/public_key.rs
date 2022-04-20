@@ -102,22 +102,18 @@ impl TryFrom<&Any> for PublicKey {
     type Error = ErrorReport;
 
     fn try_from(any: &Any) -> Result<PublicKey> {
-        let tm_key = match any.type_url.as_str() {
+        match any.type_url.as_str() {
             Self::ED25519_TYPE_URL => {
-                let proto = proto::cosmos::crypto::ed25519::PubKey::decode(&*any.value)?;
-                tendermint::PublicKey::from_raw_ed25519(&proto.key)
+                proto::cosmos::crypto::ed25519::PubKey::decode(&*any.value)?.try_into()
             }
             Self::SECP256K1_TYPE_URL => {
-                let proto = proto::cosmos::crypto::secp256k1::PubKey::decode(&*any.value)?;
-                tendermint::PublicKey::from_raw_secp256k1(&proto.key)
+                proto::cosmos::crypto::secp256k1::PubKey::decode(&*any.value)?.try_into()
             }
             other => {
                 return Err(Error::Crypto)
                     .wrap_err_with(|| format!("invalid type URL for public key: {}", other))
             }
-        };
-
-        tm_key.map(Into::into).ok_or_else(|| Error::Crypto.into())
+        }
     }
 }
 
