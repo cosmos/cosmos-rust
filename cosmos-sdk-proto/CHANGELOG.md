@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.11.0 (2022-04-21)
+### Added
+- Missing modules from `ibc-go` ([#187])
+
+### Changed
+- Upgrade SDK version => v0.45.2, IBC => v3.0.0 ([#199])
+- Bump tendermint-rs crates to v0.23.6 ([#205])
+
+### Fixed
+- Export `authz` module ([#186])
+- Export `feegrant` module ([#198])
+
+[#186]: https://github.com/cosmos/cosmos-rust/pull/186
+[#187]: https://github.com/cosmos/cosmos-rust/pull/187
+[#198]: https://github.com/cosmos/cosmos-rust/pull/198
+[#199]: https://github.com/cosmos/cosmos-rust/pull/199
+[#205]: https://github.com/cosmos/cosmos-rust/pull/205
+
 ## 0.10.0 (2022-03-10)
 ### Added
 - `authz` and `feegrant` protos ([#177])
