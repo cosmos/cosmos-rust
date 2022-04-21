@@ -22,18 +22,28 @@ pub struct AccountId {
 impl AccountId {
     /// Create an [`AccountId`] with the given human-readable prefix and
     /// public key hash.
-    pub fn new(prefix: &str, bytes: [u8; tendermint::account::LENGTH]) -> Result<Self> {
+    pub fn new(prefix: &str, bytes: &[u8]) -> Result<Self> {
         let id = bech32::encode(prefix, &bytes);
 
         // TODO(tarcieri): ensure this is the proper validation for an account prefix
-        if prefix.chars().all(|c| matches!(c, 'a'..='z')) {
+        if !prefix.chars().all(|c| matches!(c, 'a'..='z')) {
+            return Err(Error::AccountId { id })
+                .wrap_err("expected prefix to be lowercase alphabetical characters only");
+        }
+
+        if matches!(bytes.len(), 1..=MAX_ADDRESS_LENGTH) {
             Ok(Self {
                 bech32: id,
                 hrp_length: prefix.len(),
             })
         } else {
-            Err(Error::AccountId { id })
-                .wrap_err("expected prefix to be lowercase alphabetical characters only")
+            Err(Error::AccountId { id }).wrap_err_with(|| {
+                format!(
+                    "account ID should be at most {} bytes long, but was {} bytes long",
+                    MAX_ADDRESS_LENGTH,
+                    bytes.len()
+                )
+            })
         }
     }
 
@@ -43,11 +53,10 @@ impl AccountId {
     }
 
     /// Decode an account ID from Bech32 to an inner byte value.
-    pub fn to_bytes(&self) -> [u8; tendermint::account::LENGTH] {
+    pub fn to_bytes(&self) -> Vec<u8> {
         bech32::decode(&self.bech32)
-            .ok()
-            .and_then(|result| result.1.try_into().ok())
             .expect("malformed Bech32 AccountId")
+            .1
     }
 }
 
@@ -74,33 +83,33 @@ impl FromStr for AccountId {
 
     fn from_str(s: &str) -> Result<Self> {
         let (hrp, bytes) = bech32::decode(s).wrap_err("failed to decode bech32")?;
+        Self::new(&hrp, &bytes)
+    }
+}
 
-        if matches!(bytes.len(), 1..=MAX_ADDRESS_LENGTH) {
-            Ok(Self {
-                bech32: s.to_owned(),
-                hrp_length: hrp.len(),
+impl TryFrom<AccountId> for tendermint::account::Id {
+    type Error = ErrorReport;
+
+    fn try_from(id: AccountId) -> Result<tendermint::account::Id> {
+        tendermint::account::Id::try_from(&id)
+    }
+}
+
+// TODO(tarcieri): non-fixed-width account ID type
+impl TryFrom<&AccountId> for tendermint::account::Id {
+    type Error = ErrorReport;
+
+    fn try_from(id: &AccountId) -> Result<tendermint::account::Id> {
+        let bytes = id.to_bytes();
+        let len = bytes.len();
+
+        match bytes.try_into() {
+            Ok(bytes) => Ok(tendermint::account::Id::new(bytes)),
+            _ => Err(Error::AccountId {
+                id: id.bech32.clone(),
             })
-        } else {
-            Err(Error::AccountId { id: s.to_owned() }).wrap_err_with(|| {
-                format!(
-                    "account ID should be at most {} bytes long, but was {} bytes long",
-                    MAX_ADDRESS_LENGTH,
-                    bytes.len()
-                )
-            })
+            .wrap_err_with(|| format!("invalid length for account ID: {}", len)),
         }
-    }
-}
-
-impl From<AccountId> for tendermint::account::Id {
-    fn from(id: AccountId) -> tendermint::account::Id {
-        tendermint::account::Id::from(&id)
-    }
-}
-
-impl From<&AccountId> for tendermint::account::Id {
-    fn from(id: &AccountId) -> tendermint::account::Id {
-        tendermint::account::Id::new(id.to_bytes())
     }
 }
 

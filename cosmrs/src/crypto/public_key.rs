@@ -35,7 +35,7 @@ impl PublicKey {
         match &self.0 {
             tendermint::PublicKey::Secp256k1(encoded_point) => {
                 let id = tendermint::account::Id::from(*encoded_point);
-                AccountId::new(prefix, id.as_bytes().try_into()?)
+                AccountId::new(prefix, id.as_bytes())
             }
             _ => Err(Error::Crypto.into()),
         }
