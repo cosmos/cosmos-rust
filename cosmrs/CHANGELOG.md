@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.6.0 (2022-04-21)
+### Added
+- `TryFrom` impls for `tendermint` public key types ([#203])
+
+### Changed
+- Support variable-width `AccountId` using new Cosmos SDK rules ([#197], [#204])
+- Bump tendermint-rs crates to v0.23.6 ([#205])
+- Bump `cosmos-sdk-proto` to v0.11.0 ([#206])
+
+[#197]: https://github.com/cosmos/cosmos-rust/pull/197
+[#203]: https://github.com/cosmos/cosmos-rust/pull/203
+[#204]: https://github.com/cosmos/cosmos-rust/pull/204
+[#205]: https://github.com/cosmos/cosmos-rust/pull/205
+[#206]: https://github.com/cosmos/cosmos-rust/pull/206
+
 ## 0.5.1 (2022-03-14)
 ### Fixed
 - `Denom` parsing for IBC addresses ([#182])
