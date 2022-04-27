@@ -4,7 +4,9 @@
 //! - Protocol Docs: <https://github.com/CosmWasm/wasmd/blob/master/docs/proto/proto.md>
 
 pub use crate::proto::cosmwasm::wasm::v1::AccessType;
-use crate::{proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result};
+use crate::{
+    prost_ext::ParseOptional, proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result,
+};
 
 /// AccessConfig access control type.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -129,21 +131,11 @@ impl TryFrom<proto::cosmwasm::wasm::v1::MsgInstantiateContract> for MsgInstantia
     fn try_from(
         proto: proto::cosmwasm::wasm::v1::MsgInstantiateContract,
     ) -> Result<MsgInstantiateContract> {
-        let label = if proto.label.is_empty() {
-            None
-        } else {
-            Some(proto.label)
-        };
-        let admin = if proto.admin.is_empty() {
-            None
-        } else {
-            Some(proto.admin.parse())
-        };
         Ok(MsgInstantiateContract {
             sender: proto.sender.parse()?,
-            admin: admin.transpose()?,
+            admin: proto.admin.parse_optional()?,
             code_id: proto.code_id,
-            label,
+            label: proto.label.parse_optional()?,
             msg: proto.msg,
             funds: proto
                 .funds
