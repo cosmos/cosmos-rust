@@ -1,7 +1,7 @@
 //! Transaction fees
 
 use super::Gas;
-use crate::{proto, AccountId, Coin, ErrorReport, Result};
+use crate::{prost_ext::ParseOptional, proto, AccountId, Coin, ErrorReport, Result};
 
 /// Fee includes the amount of coins paid in fees and the maximum gas to be
 /// used by the transaction.
@@ -66,22 +66,11 @@ impl TryFrom<&proto::cosmos::tx::v1beta1::Fee> for Fee {
             .map(TryFrom::try_from)
             .collect::<Result<_, _>>()?;
 
-        let gas_limit = proto.gas_limit.into();
-        let mut accounts = [None, None];
-
-        for (index, id) in [&proto.payer, &proto.granter].iter().enumerate() {
-            if id.is_empty() {
-                accounts[index] = None;
-            } else {
-                accounts[index] = Some(proto.payer.parse()?)
-            }
-        }
-
         Ok(Fee {
             amount,
-            gas_limit,
-            payer: accounts[0].take(),
-            granter: accounts[1].take(),
+            gas_limit: proto.gas_limit.into(),
+            payer: proto.payer.parse_optional()?,
+            granter: proto.granter.parse_optional()?,
         })
     }
 }
