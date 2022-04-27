@@ -82,7 +82,7 @@ impl FromStr for AccountId {
     type Err = ErrorReport;
 
     fn from_str(s: &str) -> Result<Self> {
-        let (hrp, bytes) = bech32::decode(s).wrap_err("failed to decode bech32")?;
+        let (hrp, bytes) = bech32::decode(s).wrap_err(format!("invalid bech32: '{}'", s))?;
         Self::new(&hrp, &bytes)
     }
 }
@@ -204,7 +204,14 @@ impl FromStr for Denom {
 
 #[cfg(test)]
 mod tests {
-    use super::Denom;
+    use super::{AccountId, Denom};
+
+    #[test]
+    fn account_id() {
+        let _id = "juno1cma4czt2jnydvrvz3lrc9jvcmhpjxtds95s3c6"
+            .parse::<AccountId>()
+            .unwrap();
+    }
 
     #[test]
     fn denom_from_str() {

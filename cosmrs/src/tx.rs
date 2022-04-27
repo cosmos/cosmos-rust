@@ -183,6 +183,7 @@ impl TryFrom<&[u8]> for Tx {
         proto::cosmos::tx::v1beta1::Tx::decode(bytes)?.try_into()
     }
 }
+
 impl TryFrom<proto::cosmos::tx::v1beta1::Tx> for Tx {
     type Error = ErrorReport;
 
