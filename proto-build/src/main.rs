@@ -20,7 +20,7 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.45.2";
+const COSMOS_SDK_REV: &str = "v0.45.4";
 
 /// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
 const IBC_REV: &str = "v3.0.0";
@@ -50,12 +50,12 @@ const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint"];
 /// Regex for locating instances of `tendermint-proto` in prost/tonic build output
 const TENDERMINT_PROTO_REGEX: &str = "(super::)+tendermint";
 /// Attribute preceeding a Tonic client definition
-const TONIC_CLIENT_ATTRIBUTE: &str = "#[doc = r\" Generated client implementations.\"]";
+const TONIC_CLIENT_ATTRIBUTE: &str = "/// Generated client implementations.";
 /// Attributes to add to gRPC clients
 const GRPC_CLIENT_ATTRIBUTES: &[&str] = &[
+    TONIC_CLIENT_ATTRIBUTE,
     "#[cfg(feature = \"grpc\")]",
     "#[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
-    TONIC_CLIENT_ATTRIBUTE,
 ];
 
 /// Log info to the console (if `QUIET` is disabled)
@@ -255,7 +255,6 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
     tonic_build::configure()
         .build_client(true)
         .build_server(false)
-        .format(true)
         .out_dir(out_dir)
         .extern_path(".tendermint", "::tendermint_proto")
         .compile(&protos, &includes)
@@ -296,7 +295,6 @@ fn compile_wasmd_proto_services(out_dir: impl AsRef<Path>) {
     tonic_build::configure()
         .build_client(true)
         .build_server(false)
-        .format(true)
         .out_dir(out_dir)
         .compile(&services, &includes)
         .unwrap();
@@ -347,7 +345,6 @@ fn compile_ibc_protos_and_services(out_dir: &Path) {
     tonic_build::configure()
         .build_client(true)
         .build_server(false)
-        .format(true)
         .out_dir(out_dir)
         .extern_path(".tendermint", "::tendermint_proto")
         .compile(&protos, &includes)

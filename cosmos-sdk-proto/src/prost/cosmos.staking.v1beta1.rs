@@ -289,56 +289,242 @@ pub enum BondStatus {
     /// BONDED defines a validator that is bonded.
     Bonded = 3,
 }
-/// StakeAuthorization defines authorization for delegate/undelegate/redelegate.
-///
-/// Since: cosmos-sdk 0.43
+/// MsgCreateValidator defines a SDK message for creating a new validator.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct StakeAuthorization {
-    /// max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
-    /// empty, there is no spend limit and any amount of coins can be delegated.
+pub struct MsgCreateValidator {
     #[prost(message, optional, tag = "1")]
-    pub max_tokens: ::core::option::Option<super::super::base::v1beta1::Coin>,
-    /// authorization_type defines one of AuthorizationType.
-    #[prost(enumeration = "AuthorizationType", tag = "4")]
-    pub authorization_type: i32,
-    /// validators is the oneof that represents either allow_list or deny_list
-    #[prost(oneof = "stake_authorization::IsStakeAuthorizationValidators", tags = "2, 3")]
-    pub validators: ::core::option::Option<stake_authorization::IsStakeAuthorizationValidators>,
+    pub description: ::core::option::Option<Description>,
+    #[prost(message, optional, tag = "2")]
+    pub commission: ::core::option::Option<CommissionRates>,
+    #[prost(string, tag = "3")]
+    pub min_self_delegation: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub delegator_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "5")]
+    pub validator_address: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "6")]
+    pub pubkey: ::core::option::Option<::prost_types::Any>,
+    #[prost(message, optional, tag = "7")]
+    pub value: ::core::option::Option<super::super::base::v1beta1::Coin>,
 }
-/// Nested message and enum types in `StakeAuthorization`.
-pub mod stake_authorization {
-    /// Validators defines list of validator addresses.
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct StakeAuthorizationValidators {
-        #[prost(string, repeated, tag = "1")]
-        pub address: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    }
-    /// validators is the oneof that represents either allow_list or deny_list
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum IsStakeAuthorizationValidators {
-        /// allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
-        /// account.
-        #[prost(message, tag = "2")]
-        AllowList(StakeAuthorizationValidators),
-        /// deny_list specifies list of validator addresses to whom grantee can not delegate tokens.
-        #[prost(message, tag = "3")]
-        DenyList(StakeAuthorizationValidators),
-    }
+/// MsgCreateValidatorResponse defines the Msg/CreateValidator response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreateValidatorResponse {}
+/// MsgEditValidator defines a SDK message for editing an existing validator.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgEditValidator {
+    #[prost(message, optional, tag = "1")]
+    pub description: ::core::option::Option<Description>,
+    #[prost(string, tag = "2")]
+    pub validator_address: ::prost::alloc::string::String,
+    /// We pass a reference to the new commission rate and min self delegation as
+    /// it's not mandatory to update. If not updated, the deserialized rate will be
+    /// zero with no way to distinguish if an update was intended.
+    /// REF: #2373
+    #[prost(string, tag = "3")]
+    pub commission_rate: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub min_self_delegation: ::prost::alloc::string::String,
 }
-/// AuthorizationType defines the type of staking module authorization type
-///
-/// Since: cosmos-sdk 0.43
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
-#[repr(i32)]
-pub enum AuthorizationType {
-    /// AUTHORIZATION_TYPE_UNSPECIFIED specifies an unknown authorization type
-    Unspecified = 0,
-    /// AUTHORIZATION_TYPE_DELEGATE defines an authorization type for Msg/Delegate
-    Delegate = 1,
-    /// AUTHORIZATION_TYPE_UNDELEGATE defines an authorization type for Msg/Undelegate
-    Undelegate = 2,
-    /// AUTHORIZATION_TYPE_REDELEGATE defines an authorization type for Msg/BeginRedelegate
-    Redelegate = 3,
+/// MsgEditValidatorResponse defines the Msg/EditValidator response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgEditValidatorResponse {}
+/// MsgDelegate defines a SDK message for performing a delegation of coins
+/// from a delegator to a validator.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgDelegate {
+    #[prost(string, tag = "1")]
+    pub delegator_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub validator_address: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
+}
+/// MsgDelegateResponse defines the Msg/Delegate response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgDelegateResponse {}
+/// MsgBeginRedelegate defines a SDK message for performing a redelegation
+/// of coins from a delegator and source validator to a destination validator.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgBeginRedelegate {
+    #[prost(string, tag = "1")]
+    pub delegator_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub validator_src_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub validator_dst_address: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "4")]
+    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
+}
+/// MsgBeginRedelegateResponse defines the Msg/BeginRedelegate response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgBeginRedelegateResponse {
+    #[prost(message, optional, tag = "1")]
+    pub completion_time: ::core::option::Option<::prost_types::Timestamp>,
+}
+/// MsgUndelegate defines a SDK message for performing an undelegation from a
+/// delegate and a validator.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUndelegate {
+    #[prost(string, tag = "1")]
+    pub delegator_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub validator_address: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
+}
+/// MsgUndelegateResponse defines the Msg/Undelegate response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUndelegateResponse {
+    #[prost(message, optional, tag = "1")]
+    pub completion_time: ::core::option::Option<::prost_types::Timestamp>,
+}
+/// Generated client implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+pub mod msg_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    /// Msg defines the staking Msg service.
+    #[derive(Debug, Clone)]
+    pub struct MsgClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl MsgClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> MsgClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
+        {
+            MsgClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with `gzip`.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_gzip(mut self) -> Self {
+            self.inner = self.inner.send_gzip();
+            self
+        }
+        /// Enable decompressing responses with `gzip`.
+        #[must_use]
+        pub fn accept_gzip(mut self) -> Self {
+            self.inner = self.inner.accept_gzip();
+            self
+        }
+        /// CreateValidator defines a method for creating a new validator.
+        pub async fn create_validator(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgCreateValidator>,
+        ) -> Result<tonic::Response<super::MsgCreateValidatorResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/CreateValidator");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// EditValidator defines a method for editing an existing validator.
+        pub async fn edit_validator(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgEditValidator>,
+        ) -> Result<tonic::Response<super::MsgEditValidatorResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/EditValidator");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// Delegate defines a method for performing a delegation of coins
+        /// from a delegator to a validator.
+        pub async fn delegate(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgDelegate>,
+        ) -> Result<tonic::Response<super::MsgDelegateResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/Delegate");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// BeginRedelegate defines a method for performing a redelegation
+        /// of coins from a delegator and source validator to a destination validator.
+        pub async fn begin_redelegate(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgBeginRedelegate>,
+        ) -> Result<tonic::Response<super::MsgBeginRedelegateResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/BeginRedelegate");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// Undelegate defines a method for performing an undelegation from a
+        /// delegate and a validator.
+        pub async fn undelegate(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgUndelegate>,
+        ) -> Result<tonic::Response<super::MsgUndelegateResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/Undelegate");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
 }
 /// QueryValidatorsRequest is request type for Query/Validators RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -599,19 +785,19 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
 }
+/// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-#[doc = r" Generated client implementations."]
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    #[doc = " Query defines the gRPC querier service."]
+    /// Query defines the gRPC querier service.
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     impl QueryClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
+        /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
             D: std::convert::TryInto<tonic::transport::Endpoint>,
@@ -624,8 +810,8 @@ pub mod query_client {
     impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + Send + 'static,
         T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
     {
         pub fn new(inner: T) -> Self {
@@ -638,6 +824,7 @@ pub mod query_client {
         ) -> QueryClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
             T: tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
                 Response = http::Response<
@@ -649,20 +836,22 @@ pub mod query_client {
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        #[doc = r" Compress requests with `gzip`."]
-        #[doc = r""]
-        #[doc = r" This requires the server to support it otherwise it might respond with an"]
-        #[doc = r" error."]
+        /// Compress requests with `gzip`.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
         pub fn send_gzip(mut self) -> Self {
             self.inner = self.inner.send_gzip();
             self
         }
-        #[doc = r" Enable decompressing responses with `gzip`."]
+        /// Enable decompressing responses with `gzip`.
+        #[must_use]
         pub fn accept_gzip(mut self) -> Self {
             self.inner = self.inner.accept_gzip();
             self
         }
-        #[doc = " Validators queries all validators that match the given status."]
+        /// Validators queries all validators that match the given status.
         pub async fn validators(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorsRequest>,
@@ -678,7 +867,7 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Query/Validators");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Validator queries validator info for given validator address."]
+        /// Validator queries validator info for given validator address.
         pub async fn validator(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorRequest>,
@@ -694,7 +883,7 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Query/Validator");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " ValidatorDelegations queries delegate info for given validator."]
+        /// ValidatorDelegations queries delegate info for given validator.
         pub async fn validator_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorDelegationsRequest>,
@@ -712,7 +901,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " ValidatorUnbondingDelegations queries unbonding delegations of a validator."]
+        /// ValidatorUnbondingDelegations queries unbonding delegations of a validator.
         pub async fn validator_unbonding_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorUnbondingDelegationsRequest>,
@@ -730,7 +919,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Delegation queries delegate info for given validator delegator pair."]
+        /// Delegation queries delegate info for given validator delegator pair.
         pub async fn delegation(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegationRequest>,
@@ -746,8 +935,8 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Query/Delegation");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " UnbondingDelegation queries unbonding info for given validator delegator"]
-        #[doc = " pair."]
+        /// UnbondingDelegation queries unbonding info for given validator delegator
+        /// pair.
         pub async fn unbonding_delegation(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryUnbondingDelegationRequest>,
@@ -765,7 +954,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " DelegatorDelegations queries all delegations of a given delegator address."]
+        /// DelegatorDelegations queries all delegations of a given delegator address.
         pub async fn delegator_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorDelegationsRequest>,
@@ -783,8 +972,8 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " DelegatorUnbondingDelegations queries all unbonding delegations of a given"]
-        #[doc = " delegator address."]
+        /// DelegatorUnbondingDelegations queries all unbonding delegations of a given
+        /// delegator address.
         pub async fn delegator_unbonding_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorUnbondingDelegationsRequest>,
@@ -802,7 +991,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Redelegations queries redelegations of given address."]
+        /// Redelegations queries redelegations of given address.
         pub async fn redelegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryRedelegationsRequest>,
@@ -818,8 +1007,8 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Query/Redelegations");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " DelegatorValidators queries all validators info for given delegator"]
-        #[doc = " address."]
+        /// DelegatorValidators queries all validators info for given delegator
+        /// address.
         pub async fn delegator_validators(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorValidatorsRequest>,
@@ -837,8 +1026,8 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " DelegatorValidator queries validator info for given delegator validator"]
-        #[doc = " pair."]
+        /// DelegatorValidator queries validator info for given delegator validator
+        /// pair.
         pub async fn delegator_validator(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorValidatorRequest>,
@@ -856,7 +1045,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " HistoricalInfo queries the historical info for given height."]
+        /// HistoricalInfo queries the historical info for given height.
         pub async fn historical_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryHistoricalInfoRequest>,
@@ -873,7 +1062,7 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Pool queries the pool info."]
+        /// Pool queries the pool info.
         pub async fn pool(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPoolRequest>,
@@ -888,7 +1077,7 @@ pub mod query_client {
             let path = http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Query/Pool");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        #[doc = " Parameters queries the staking parameters."]
+        /// Parameters queries the staking parameters.
         pub async fn params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryParamsRequest>,
@@ -905,239 +1094,59 @@ pub mod query_client {
         }
     }
 }
-/// MsgCreateValidator defines a SDK message for creating a new validator.
+/// StakeAuthorization defines authorization for delegate/undelegate/redelegate.
+///
+/// Since: cosmos-sdk 0.43
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateValidator {
+pub struct StakeAuthorization {
+    /// max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
+    /// empty, there is no spend limit and any amount of coins can be delegated.
     #[prost(message, optional, tag = "1")]
-    pub description: ::core::option::Option<Description>,
-    #[prost(message, optional, tag = "2")]
-    pub commission: ::core::option::Option<CommissionRates>,
-    #[prost(string, tag = "3")]
-    pub min_self_delegation: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub delegator_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "5")]
-    pub validator_address: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "6")]
-    pub pubkey: ::core::option::Option<::prost_types::Any>,
-    #[prost(message, optional, tag = "7")]
-    pub value: ::core::option::Option<super::super::base::v1beta1::Coin>,
+    pub max_tokens: ::core::option::Option<super::super::base::v1beta1::Coin>,
+    /// authorization_type defines one of AuthorizationType.
+    #[prost(enumeration = "AuthorizationType", tag = "4")]
+    pub authorization_type: i32,
+    /// validators is the oneof that represents either allow_list or deny_list
+    #[prost(
+        oneof = "stake_authorization::IsStakeAuthorizationValidators",
+        tags = "2, 3"
+    )]
+    pub validators: ::core::option::Option<stake_authorization::IsStakeAuthorizationValidators>,
 }
-/// MsgCreateValidatorResponse defines the Msg/CreateValidator response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateValidatorResponse {}
-/// MsgEditValidator defines a SDK message for editing an existing validator.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgEditValidator {
-    #[prost(message, optional, tag = "1")]
-    pub description: ::core::option::Option<Description>,
-    #[prost(string, tag = "2")]
-    pub validator_address: ::prost::alloc::string::String,
-    /// We pass a reference to the new commission rate and min self delegation as
-    /// it's not mandatory to update. If not updated, the deserialized rate will be
-    /// zero with no way to distinguish if an update was intended.
-    /// REF: #2373
-    #[prost(string, tag = "3")]
-    pub commission_rate: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub min_self_delegation: ::prost::alloc::string::String,
-}
-/// MsgEditValidatorResponse defines the Msg/EditValidator response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgEditValidatorResponse {}
-/// MsgDelegate defines a SDK message for performing a delegation of coins
-/// from a delegator to a validator.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgDelegate {
-    #[prost(string, tag = "1")]
-    pub delegator_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub validator_address: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
-}
-/// MsgDelegateResponse defines the Msg/Delegate response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgDelegateResponse {}
-/// MsgBeginRedelegate defines a SDK message for performing a redelegation
-/// of coins from a delegator and source validator to a destination validator.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgBeginRedelegate {
-    #[prost(string, tag = "1")]
-    pub delegator_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub validator_src_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub validator_dst_address: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "4")]
-    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
-}
-/// MsgBeginRedelegateResponse defines the Msg/BeginRedelegate response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgBeginRedelegateResponse {
-    #[prost(message, optional, tag = "1")]
-    pub completion_time: ::core::option::Option<::prost_types::Timestamp>,
-}
-/// MsgUndelegate defines a SDK message for performing an undelegation from a
-/// delegate and a validator.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUndelegate {
-    #[prost(string, tag = "1")]
-    pub delegator_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub validator_address: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
-}
-/// MsgUndelegateResponse defines the Msg/Undelegate response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgUndelegateResponse {
-    #[prost(message, optional, tag = "1")]
-    pub completion_time: ::core::option::Option<::prost_types::Timestamp>,
-}
-#[cfg(feature = "grpc")]
-#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-#[doc = r" Generated client implementations."]
-pub mod msg_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
-    #[doc = " Msg defines the staking Msg service."]
-    #[derive(Debug, Clone)]
-    pub struct MsgClient<T> {
-        inner: tonic::client::Grpc<T>,
+/// Nested message and enum types in `StakeAuthorization`.
+pub mod stake_authorization {
+    /// Validators defines list of validator addresses.
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct StakeAuthorizationValidators {
+        #[prost(string, repeated, tag = "1")]
+        pub address: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
-    impl MsgClient<tonic::transport::Channel> {
-        #[doc = r" Attempt to create a new client by connecting to a given endpoint."]
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
+    /// validators is the oneof that represents either allow_list or deny_list
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum IsStakeAuthorizationValidators {
+        /// allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
+        /// account.
+        #[prost(message, tag = "2")]
+        AllowList(StakeAuthorizationValidators),
+        /// deny_list specifies list of validator addresses to whom grantee can not delegate tokens.
+        #[prost(message, tag = "3")]
+        DenyList(StakeAuthorizationValidators),
     }
-    impl<T> MsgClient<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::ResponseBody: Body + Send + 'static,
-        T::Error: Into<StdError>,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
-        where
-            F: tonic::service::Interceptor,
-            T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-                Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
-                >,
-            >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
-                Into<StdError> + Send + Sync,
-        {
-            MsgClient::new(InterceptedService::new(inner, interceptor))
-        }
-        #[doc = r" Compress requests with `gzip`."]
-        #[doc = r""]
-        #[doc = r" This requires the server to support it otherwise it might respond with an"]
-        #[doc = r" error."]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
-            self
-        }
-        #[doc = r" Enable decompressing responses with `gzip`."]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
-            self
-        }
-        #[doc = " CreateValidator defines a method for creating a new validator."]
-        pub async fn create_validator(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgCreateValidator>,
-        ) -> Result<tonic::Response<super::MsgCreateValidatorResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/CreateValidator");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " EditValidator defines a method for editing an existing validator."]
-        pub async fn edit_validator(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgEditValidator>,
-        ) -> Result<tonic::Response<super::MsgEditValidatorResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/EditValidator");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " Delegate defines a method for performing a delegation of coins"]
-        #[doc = " from a delegator to a validator."]
-        pub async fn delegate(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgDelegate>,
-        ) -> Result<tonic::Response<super::MsgDelegateResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/Delegate");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " BeginRedelegate defines a method for performing a redelegation"]
-        #[doc = " of coins from a delegator and source validator to a destination validator."]
-        pub async fn begin_redelegate(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgBeginRedelegate>,
-        ) -> Result<tonic::Response<super::MsgBeginRedelegateResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/BeginRedelegate");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        #[doc = " Undelegate defines a method for performing an undelegation from a"]
-        #[doc = " delegate and a validator."]
-        pub async fn undelegate(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgUndelegate>,
-        ) -> Result<tonic::Response<super::MsgUndelegateResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/Undelegate");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-    }
+}
+/// AuthorizationType defines the type of staking module authorization type
+///
+/// Since: cosmos-sdk 0.43
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum AuthorizationType {
+    /// AUTHORIZATION_TYPE_UNSPECIFIED specifies an unknown authorization type
+    Unspecified = 0,
+    /// AUTHORIZATION_TYPE_DELEGATE defines an authorization type for Msg/Delegate
+    Delegate = 1,
+    /// AUTHORIZATION_TYPE_UNDELEGATE defines an authorization type for Msg/Undelegate
+    Undelegate = 2,
+    /// AUTHORIZATION_TYPE_REDELEGATE defines an authorization type for Msg/BeginRedelegate
+    Redelegate = 3,
 }
 /// GenesisState defines the staking module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
