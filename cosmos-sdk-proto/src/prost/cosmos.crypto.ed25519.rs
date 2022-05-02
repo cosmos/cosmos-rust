@@ -5,13 +5,13 @@
 /// then you must create a new proto message and follow ADR-28 for Address construction.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PubKey {
-    #[prost(bytes = "vec", tag = "1")]
+    #[prost(bytes="vec", tag="1")]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
 /// Deprecated: PrivKey defines a ed25519 private key.
 /// NOTE: ed25519 keys must not be used in SDK apps except in a tendermint validator context.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PrivKey {
-    #[prost(bytes = "vec", tag = "1")]
+    #[prost(bytes="vec", tag="1")]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
