@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.12.0 (2022-05-02)
+### Changed
+- Bump tendermint-rs crates to v0.23.7 ([#215])
+- Bump `prost` to v0.10 ([#215])
+- Bump `tonic` to v0.7 ([#215])
+- Bump `COSMOS_SDK_REV` from v0.45.2 => v0.45.4 ([#215])
+
+[#215]: https://github.com/cosmos/cosmos-rust/pull/215
+
 ## 0.11.0 (2022-04-21)
 ### Added
 - Missing modules from `ibc-go` ([#187])
