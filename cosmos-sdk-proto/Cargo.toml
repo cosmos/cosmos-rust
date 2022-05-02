@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.11.0"
+version = "0.12.0-pre"
 authors = [
     "Justin Kilpatrick <justin@althea.net>",
     "Greg Szabo <greg@informal.systems>",
@@ -16,12 +16,12 @@ edition = "2021"
 rust-version = "1.56"
 
 [dependencies]
-prost = "0.9"
-prost-types = "0.9"
-tendermint-proto = "=0.23.6"
+prost = "0.10"
+prost-types = "0.10"
+tendermint-proto = "=0.23.7"
 
 # Optional dependencies
-tonic = { version = "0.6", optional = true }
+tonic = { version = "0.7", optional = true }
 
 [features]
 default = ["grpc"]
