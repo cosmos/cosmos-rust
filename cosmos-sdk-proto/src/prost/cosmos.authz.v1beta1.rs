@@ -214,6 +214,32 @@ pub mod msg_client {
         }
     }
 }
+/// EventGrant is emitted on Msg/Grant
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventGrant {
+    /// Msg type URL for which an autorization is granted
+    #[prost(string, tag="2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag="3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag="4")]
+    pub grantee: ::prost::alloc::string::String,
+}
+/// EventRevoke is emitted on Msg/Revoke
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventRevoke {
+    /// Msg type URL for which an autorization is revoked
+    #[prost(string, tag="2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag="3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag="4")]
+    pub grantee: ::prost::alloc::string::String,
+}
 /// QueryGrantsRequest is the request type for the Query/Grants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsRequest {
@@ -408,32 +434,6 @@ pub mod query_client {
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
-}
-/// EventGrant is emitted on Msg/Grant
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventGrant {
-    /// Msg type URL for which an autorization is granted
-    #[prost(string, tag="2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag="3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag="4")]
-    pub grantee: ::prost::alloc::string::String,
-}
-/// EventRevoke is emitted on Msg/Revoke
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventRevoke {
-    /// Msg type URL for which an autorization is revoked
-    #[prost(string, tag="2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag="3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag="4")]
-    pub grantee: ::prost::alloc::string::String,
 }
 /// GenesisState defines the authz module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
