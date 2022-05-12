@@ -83,17 +83,26 @@ fn main() {
         fs::remove_dir_all(tmp_build_dir.clone()).unwrap();
     }
 
-    fs::create_dir(tmp_build_dir.clone()).unwrap();
+    let temp_sdk_dir = tmp_build_dir.join("cosmos-sdk");
+    let temp_ibc_dir = tmp_build_dir.join("ibc-go");
+    let temp_wasmd_dir = tmp_build_dir.join("wasmd");
+
+    fs::create_dir_all(&temp_sdk_dir).unwrap();
+    fs::create_dir_all(&temp_ibc_dir).unwrap();
+    fs::create_dir_all(&temp_wasmd_dir).unwrap();
 
     update_submodules();
-    output_sdk_version(&tmp_build_dir);
-    output_ibc_version(&tmp_build_dir);
-    output_wasmd_version(&tmp_build_dir);
-    compile_sdk_protos_and_services(&tmp_build_dir);
-    compile_ibc_protos_and_services(&tmp_build_dir);
-    compile_wasmd_protos(&tmp_build_dir);
-    compile_wasmd_proto_services(&tmp_build_dir);
-    copy_generated_files(&tmp_build_dir, &proto_dir);
+    output_sdk_version(&temp_sdk_dir);
+    output_ibc_version(&temp_ibc_dir);
+    output_wasmd_version(&temp_wasmd_dir);
+    compile_sdk_protos_and_services(&temp_sdk_dir);
+    compile_ibc_protos_and_services(&temp_ibc_dir);
+    compile_wasmd_protos(&temp_wasmd_dir);
+    compile_wasmd_proto_services(&temp_wasmd_dir);
+
+    copy_generated_files(&temp_sdk_dir, &proto_dir.join("cosmos-sdk"));
+    copy_generated_files(&temp_ibc_dir, &proto_dir.join("ibc-go"));
+    copy_generated_files(&temp_wasmd_dir, &proto_dir.join("wasmd"));
 
     if is_github() {
         println!(
@@ -263,7 +272,7 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
     info!("=> Done!");
 }
 
-fn compile_wasmd_proto_services(out_dir: impl AsRef<Path>) {
+fn compile_wasmd_proto_services(out_dir: &Path) {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let sdk_dir = PathBuf::from(WASMD_DIR);
 
