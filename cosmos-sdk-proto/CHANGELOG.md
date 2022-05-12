@@ -11,7 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [#220]: https://github.com/cosmos/cosmos-rust/pull/220
 
-## 0.12.0 (2022-05-02)
+## 0.12.0 (2022-05-02) [YANKED]
+
+NOTE: this release was yanked due to the clashing namespace bug ([#220])
+
 ### Changed
 - Bump tendermint-rs crates to v0.23.7 ([#215])
 - Bump `prost` to v0.10 ([#215])
