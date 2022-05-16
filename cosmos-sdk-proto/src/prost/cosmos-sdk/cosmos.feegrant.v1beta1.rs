@@ -1,3 +1,148 @@
+/// MsgGrantAllowance adds permission for Grantee to spend up to Allowance
+/// of fees from the account of Granter.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgGrantAllowance {
+    /// granter is the address of the user granting an allowance of their funds.
+    #[prost(string, tag="1")]
+    pub granter: ::prost::alloc::string::String,
+    /// grantee is the address of the user being granted an allowance of another user's funds.
+    #[prost(string, tag="2")]
+    pub grantee: ::prost::alloc::string::String,
+    /// allowance can be any of basic and filtered fee allowance.
+    #[prost(message, optional, tag="3")]
+    pub allowance: ::core::option::Option<::prost_types::Any>,
+}
+/// MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgGrantAllowanceResponse {
+}
+/// MsgRevokeAllowance removes any existing Allowance from Granter to Grantee.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgRevokeAllowance {
+    /// granter is the address of the user granting an allowance of their funds.
+    #[prost(string, tag="1")]
+    pub granter: ::prost::alloc::string::String,
+    /// grantee is the address of the user being granted an allowance of another user's funds.
+    #[prost(string, tag="2")]
+    pub grantee: ::prost::alloc::string::String,
+}
+/// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgRevokeAllowanceResponse {
+}
+/// Generated client implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+pub mod msg_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    /// Msg defines the feegrant msg service.
+    #[derive(Debug, Clone)]
+    pub struct MsgClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
+    impl MsgClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> MsgClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> MsgClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
+        {
+            MsgClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with `gzip`.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_gzip(mut self) -> Self {
+            self.inner = self.inner.send_gzip();
+            self
+        }
+        /// Enable decompressing responses with `gzip`.
+        #[must_use]
+        pub fn accept_gzip(mut self) -> Self {
+            self.inner = self.inner.accept_gzip();
+            self
+        }
+        /// GrantAllowance grants fee allowance to the grantee on the granter's
+        /// account with the provided expiration time.
+        pub async fn grant_allowance(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgGrantAllowance>,
+        ) -> Result<tonic::Response<super::MsgGrantAllowanceResponse>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.feegrant.v1beta1.Msg/GrantAllowance",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// RevokeAllowance revokes any fee allowance of granter's account that
+        /// has been granted to the grantee.
+        pub async fn revoke_allowance(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgRevokeAllowance>,
+        ) -> Result<tonic::Response<super::MsgRevokeAllowanceResponse>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.feegrant.v1beta1.Msg/RevokeAllowance",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+}
 /// BasicAllowance implements Allowance with a one-time grant of tokens
 /// that optionally expires. The grantee can use up to SpendLimit to cover fees.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -105,6 +250,8 @@ pub mod query_client {
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
     impl QueryClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
@@ -198,149 +345,6 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.feegrant.v1beta1.Query/Allowances",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-    }
-}
-/// MsgGrantAllowance adds permission for Grantee to spend up to Allowance
-/// of fees from the account of Granter.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgGrantAllowance {
-    /// granter is the address of the user granting an allowance of their funds.
-    #[prost(string, tag="1")]
-    pub granter: ::prost::alloc::string::String,
-    /// grantee is the address of the user being granted an allowance of another user's funds.
-    #[prost(string, tag="2")]
-    pub grantee: ::prost::alloc::string::String,
-    /// allowance can be any of basic and filtered fee allowance.
-    #[prost(message, optional, tag="3")]
-    pub allowance: ::core::option::Option<::prost_types::Any>,
-}
-/// MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgGrantAllowanceResponse {
-}
-/// MsgRevokeAllowance removes any existing Allowance from Granter to Grantee.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgRevokeAllowance {
-    /// granter is the address of the user granting an allowance of their funds.
-    #[prost(string, tag="1")]
-    pub granter: ::prost::alloc::string::String,
-    /// grantee is the address of the user being granted an allowance of another user's funds.
-    #[prost(string, tag="2")]
-    pub grantee: ::prost::alloc::string::String,
-}
-/// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgRevokeAllowanceResponse {
-}
-/// Generated client implementations.
-#[cfg(feature = "grpc")]
-#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-pub mod msg_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
-    /// Msg defines the feegrant msg service.
-    #[derive(Debug, Clone)]
-    pub struct MsgClient<T> {
-        inner: tonic::client::Grpc<T>,
-    }
-    impl MsgClient<tonic::transport::Channel> {
-        /// Attempt to create a new client by connecting to a given endpoint.
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
-    impl<T> MsgClient<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> MsgClient<InterceptedService<T, F>>
-        where
-            F: tonic::service::Interceptor,
-            T::ResponseBody: Default,
-            T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-                Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
-                >,
-            >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
-        {
-            MsgClient::new(InterceptedService::new(inner, interceptor))
-        }
-        /// Compress requests with `gzip`.
-        ///
-        /// This requires the server to support it otherwise it might respond with an
-        /// error.
-        #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
-            self
-        }
-        /// Enable decompressing responses with `gzip`.
-        #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
-            self
-        }
-        /// GrantAllowance grants fee allowance to the grantee on the granter's
-        /// account with the provided expiration time.
-        pub async fn grant_allowance(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgGrantAllowance>,
-        ) -> Result<tonic::Response<super::MsgGrantAllowanceResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Msg/GrantAllowance",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        /// RevokeAllowance revokes any fee allowance of granter's account that
-        /// has been granted to the grantee.
-        pub async fn revoke_allowance(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgRevokeAllowance>,
-        ) -> Result<tonic::Response<super::MsgRevokeAllowanceResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Msg/RevokeAllowance",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
