@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.12.2 (2022-05-16)
+### Added
+- `grpc-transport` crate feature ([#230])
+
+[#230]: https://github.com/cosmos/cosmos-rust/pull/230
+
 ## 0.12.1 (2022-05-12)
 ### Fixed
 - Clashing protobuf namespaces between `cosmos-sdk` and `ibc` ([#220])
