@@ -141,6 +141,8 @@ pub mod service_client {
     pub struct ServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
     impl ServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
