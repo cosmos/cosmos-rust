@@ -57,6 +57,12 @@ const GRPC_CLIENT_ATTRIBUTES: &[&str] = &[
     "#[cfg(feature = \"grpc\")]",
     "#[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
 ];
+/// Regex for locating client impl blocks which use `tonic::transport`
+const TONIC_CLIENT_IMPL: &str = "impl (.+)Client<tonic::transport::Channel>";
+/// Replacement for tonic client impl blocks which feature gates them.
+const TONIC_CLIENT_REPLACEMENT: &str = "#[cfg(feature = \"grpc-transport\")]
+    #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]
+    impl ${1}Client<tonic::transport::Channel>";
 
 /// Log info to the console (if `QUIET` is disabled)
 // TODO(tarcieri): use a logger for this
@@ -434,8 +440,13 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
         .replace_all(&contents, "tendermint_proto");
 
     // Patch each service definition with a feature attribute
-    let patched_contents =
-        contents.replace(TONIC_CLIENT_ATTRIBUTE, &GRPC_CLIENT_ATTRIBUTES.join("\n"));
+    let contents = contents.replace(TONIC_CLIENT_ATTRIBUTE, &GRPC_CLIENT_ATTRIBUTES.join("\n"));
 
-    fs::write(dest, patched_contents)
+    // Feature gate gRPC client impl blocks which rely on `tonic::transport`
+    let contents = Regex::new(TONIC_CLIENT_IMPL)
+        .unwrap()
+        .replace_all(&contents, TONIC_CLIENT_REPLACEMENT);
+
+    // Write output to destination
+    fs::write(dest, &*contents)
 }
