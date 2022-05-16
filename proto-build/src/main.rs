@@ -47,22 +47,6 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 /// Protos belonging to these Protobuf packages will be excluded
 /// (i.e. because they are sourced from `tendermint-proto`)
 const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint"];
-/// Regex for locating instances of `tendermint-proto` in prost/tonic build output
-const TENDERMINT_PROTO_REGEX: &str = "(super::)+tendermint";
-/// Attribute preceeding a Tonic client definition
-const TONIC_CLIENT_ATTRIBUTE: &str = "/// Generated client implementations.";
-/// Attributes to add to gRPC clients
-const GRPC_CLIENT_ATTRIBUTES: &[&str] = &[
-    TONIC_CLIENT_ATTRIBUTE,
-    "#[cfg(feature = \"grpc\")]",
-    "#[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
-];
-/// Regex for locating client impl blocks which use `tonic::transport`
-const TONIC_CLIENT_IMPL: &str = "impl (.+)Client<tonic::transport::Channel>";
-/// Replacement for tonic client impl blocks which feature gates them.
-const TONIC_CLIENT_REPLACEMENT: &str = "#[cfg(feature = \"grpc-transport\")]
-    #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]
-    impl ${1}Client<tonic::transport::Channel>";
 
 /// Log info to the console (if `QUIET` is disabled)
 // TODO(tarcieri): use a logger for this
@@ -421,6 +405,26 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 }
 
 fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
+    /// Regex substitutions to apply to the prost-generated output
+    const REPLACEMENTS: &[(&str, &str)] = &[
+        // Use `tendermint-proto` proto definitions
+        ("(super::)+tendermint", "tendermint_proto"),
+        // Feature-gate gRPC client modules
+        (
+            "/// Generated client implementations.",
+            "/// Generated client implementations.\n\
+             #[cfg(feature = \"grpc\")]\n\
+             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
+        ),
+        // Feature-gate gRPC client impls which use `tonic::transport`
+        (
+            "impl (.+)Client<tonic::transport::Channel>",
+            "#[cfg(feature = \"grpc-transport\")]\n    \
+             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
+             impl ${1}Client<tonic::transport::Channel>",
+        ),
+    ];
+
     // Skip proto files belonging to `EXCLUDED_PROTO_PACKAGES`
     for package in EXCLUDED_PROTO_PACKAGES {
         if let Some(filename) = src.as_ref().file_name().and_then(OsStr::to_str) {
@@ -430,23 +434,14 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
         }
     }
 
-    let contents = fs::read_to_string(src)?;
+    let mut contents = fs::read_to_string(src)?;
 
-    // `prost-build` output references types from `tendermint-proto` crate
-    // relative paths, which we need to munge into `tendermint_proto` in
-    // order to leverage types from the upstream crate.
-    let contents = Regex::new(TENDERMINT_PROTO_REGEX)
-        .unwrap()
-        .replace_all(&contents, "tendermint_proto");
+    for &(regex, replacement) in REPLACEMENTS {
+        contents = Regex::new(regex)
+            .unwrap_or_else(|_| panic!("invalid regex: {}", regex))
+            .replace_all(&contents, replacement)
+            .to_string();
+    }
 
-    // Patch each service definition with a feature attribute
-    let contents = contents.replace(TONIC_CLIENT_ATTRIBUTE, &GRPC_CLIENT_ATTRIBUTES.join("\n"));
-
-    // Feature gate gRPC client impl blocks which rely on `tonic::transport`
-    let contents = Regex::new(TONIC_CLIENT_IMPL)
-        .unwrap()
-        .replace_all(&contents, TONIC_CLIENT_REPLACEMENT);
-
-    // Write output to destination
     fs::write(dest, &*contents)
 }
