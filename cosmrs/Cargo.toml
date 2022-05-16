@@ -13,7 +13,7 @@ rust-version = "1.56"
 
 [dependencies]
 cosmos-sdk-proto = { version = "0.12", default-features = false, path = "../cosmos-sdk-proto" }
-ecdsa = { version = "0.13", features = ["std"] }
+ecdsa = { version = "0.14", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.10", features = ["ecdsa", "sha256"] }
 prost = "0.10"
