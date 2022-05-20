@@ -93,6 +93,14 @@ impl MsgProto for proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
     const TYPE_URL: &'static str = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
 }
 
+impl MsgProto for proto::cosmos::base::abci::v1beta1::MsgData {
+    const TYPE_URL: &'static str = "/cosmos.base.v1beta1.abci.MsgData";
+}
+
+impl MsgProto for proto::cosmos::base::abci::v1beta1::TxMsgData {
+    const TYPE_URL: &'static str = "/cosmos.base.v1beta1.abci.TxMsgData";
+}
+
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgStoreCode {
     const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCode";

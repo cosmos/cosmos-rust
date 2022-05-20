@@ -17,6 +17,7 @@
     unused_import_braces
 )]
 
+pub mod abci;
 pub mod bank;
 pub mod crypto;
 pub mod distribution;
