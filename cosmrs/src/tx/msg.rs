@@ -122,3 +122,33 @@ impl MsgProto for proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgClearAdmin {
     const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdmin";
 }
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgStoreCodeResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCodeResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgInstantiateContractResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgExecuteContractResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgExecuteContractResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgMigrateContractResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgMigrateContractResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgUpdateAdminResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgClearAdminResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdminResponse";
+}

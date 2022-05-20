@@ -98,6 +98,37 @@ impl From<MsgStoreCode> for proto::cosmwasm::wasm::v1::MsgStoreCode {
     }
 }
 
+/// MsgStoreCodeResponse returns store result data.
+#[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgStoreCodeResponse {
+    /// CodeID is the reference to the stored WASM code
+    pub code_id: u64,
+}
+
+impl Msg for MsgStoreCodeResponse {
+    type Proto = proto::cosmwasm::wasm::v1::MsgStoreCodeResponse;
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgStoreCodeResponse> for MsgStoreCodeResponse {
+    type Error = ErrorReport;
+
+    fn try_from(
+        proto: proto::cosmwasm::wasm::v1::MsgStoreCodeResponse,
+    ) -> Result<MsgStoreCodeResponse> {
+        Ok(MsgStoreCodeResponse {
+            code_id: proto.code_id,
+        })
+    }
+}
+
+impl From<MsgStoreCodeResponse> for proto::cosmwasm::wasm::v1::MsgStoreCodeResponse {
+    fn from(msg: MsgStoreCodeResponse) -> proto::cosmwasm::wasm::v1::MsgStoreCodeResponse {
+        proto::cosmwasm::wasm::v1::MsgStoreCodeResponse {
+            code_id: msg.code_id,
+        }
+    }
+}
+
 /// MsgInstantiateContract create a new smart contract instance for the given
 /// code id.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -159,6 +190,47 @@ impl From<MsgInstantiateContract> for proto::cosmwasm::wasm::v1::MsgInstantiateC
     }
 }
 
+/// MsgInstantiateContractResponse return instantiation result data
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgInstantiateContractResponse {
+    /// Address is the bech32 address of the new contract instance.
+    pub address: AccountId,
+    /// Data contains base64-encoded bytes to returned from the contract
+    pub data: Vec<u8>,
+}
+
+impl Msg for MsgInstantiateContractResponse {
+    type Proto = proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse;
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse>
+    for MsgInstantiateContractResponse
+{
+    type Error = ErrorReport;
+
+    fn try_from(
+        proto: proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse,
+    ) -> Result<MsgInstantiateContractResponse> {
+        Ok(MsgInstantiateContractResponse {
+            address: proto.address.parse()?,
+            data: proto.data,
+        })
+    }
+}
+
+impl From<MsgInstantiateContractResponse>
+    for proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse
+{
+    fn from(
+        msg: MsgInstantiateContractResponse,
+    ) -> proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse {
+        proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse {
+            address: msg.address.to_string(),
+            data: msg.data,
+        }
+    }
+}
+
 /// MsgExecuteContract submits the given message data to a smart contract
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct MsgExecuteContract {
@@ -209,6 +281,35 @@ impl From<MsgExecuteContract> for proto::cosmwasm::wasm::v1::MsgExecuteContract 
     }
 }
 
+/// MsgExecuteContractResponse returns execution result data.
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgExecuteContractResponse {
+    /// Data contains base64-encoded bytes to returned from the contract
+    pub data: Vec<u8>,
+}
+
+impl Msg for MsgExecuteContractResponse {
+    type Proto = proto::cosmwasm::wasm::v1::MsgExecuteContractResponse;
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgExecuteContractResponse> for MsgExecuteContractResponse {
+    type Error = ErrorReport;
+
+    fn try_from(
+        proto: proto::cosmwasm::wasm::v1::MsgExecuteContractResponse,
+    ) -> Result<MsgExecuteContractResponse> {
+        Ok(MsgExecuteContractResponse { data: proto.data })
+    }
+}
+
+impl From<MsgExecuteContractResponse> for proto::cosmwasm::wasm::v1::MsgExecuteContractResponse {
+    fn from(
+        msg: MsgExecuteContractResponse,
+    ) -> proto::cosmwasm::wasm::v1::MsgExecuteContractResponse {
+        proto::cosmwasm::wasm::v1::MsgExecuteContractResponse { data: msg.data }
+    }
+}
+
 /// MsgMigrateContract runs a code upgrade/ downgrade for a smart contract
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct MsgMigrateContract {
@@ -252,6 +353,36 @@ impl From<MsgMigrateContract> for proto::cosmwasm::wasm::v1::MsgMigrateContract 
             code_id: msg.code_id,
             msg: msg.msg,
         }
+    }
+}
+
+/// MsgMigrateContractResponse returns contract migration result data.
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgMigrateContractResponse {
+    /// Data contains same raw bytes returned as data from the wasm contract.
+    /// (May be empty)
+    pub data: Vec<u8>,
+}
+
+impl Msg for MsgMigrateContractResponse {
+    type Proto = proto::cosmwasm::wasm::v1::MsgMigrateContractResponse;
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgMigrateContractResponse> for MsgMigrateContractResponse {
+    type Error = ErrorReport;
+
+    fn try_from(
+        proto: proto::cosmwasm::wasm::v1::MsgMigrateContractResponse,
+    ) -> Result<MsgMigrateContractResponse> {
+        Ok(MsgMigrateContractResponse { data: proto.data })
+    }
+}
+
+impl From<MsgMigrateContractResponse> for proto::cosmwasm::wasm::v1::MsgMigrateContractResponse {
+    fn from(
+        msg: MsgMigrateContractResponse,
+    ) -> proto::cosmwasm::wasm::v1::MsgMigrateContractResponse {
+        proto::cosmwasm::wasm::v1::MsgMigrateContractResponse { data: msg.data }
     }
 }
 
@@ -308,6 +439,30 @@ impl From<&MsgUpdateAdmin> for proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
     }
 }
 
+/// MsgUpdateAdminResponse returns empty data
+#[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgUpdateAdminResponse {}
+
+impl Msg for MsgUpdateAdminResponse {
+    type Proto = proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse;
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse> for MsgUpdateAdminResponse {
+    type Error = ErrorReport;
+
+    fn try_from(
+        _proto: proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse,
+    ) -> Result<MsgUpdateAdminResponse> {
+        Ok(MsgUpdateAdminResponse {})
+    }
+}
+
+impl From<MsgUpdateAdminResponse> for proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse {
+    fn from(_msg: MsgUpdateAdminResponse) -> proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse {
+        proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse {}
+    }
+}
+
 /// MsgClearAdmin removes any admin stored for a smart contract
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct MsgClearAdmin {
@@ -353,5 +508,29 @@ impl From<&MsgClearAdmin> for proto::cosmwasm::wasm::v1::MsgClearAdmin {
             sender: msg.sender.to_string(),
             contract: msg.contract.to_string(),
         }
+    }
+}
+
+/// MsgClearAdminResponse returns empty data
+#[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgClearAdminResponse {}
+
+impl Msg for MsgClearAdminResponse {
+    type Proto = proto::cosmwasm::wasm::v1::MsgClearAdminResponse;
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::MsgClearAdminResponse> for MsgClearAdminResponse {
+    type Error = ErrorReport;
+
+    fn try_from(
+        _proto: proto::cosmwasm::wasm::v1::MsgClearAdminResponse,
+    ) -> Result<MsgClearAdminResponse> {
+        Ok(MsgClearAdminResponse {})
+    }
+}
+
+impl From<MsgClearAdminResponse> for proto::cosmwasm::wasm::v1::MsgClearAdminResponse {
+    fn from(_msg: MsgClearAdminResponse) -> proto::cosmwasm::wasm::v1::MsgClearAdminResponse {
+        proto::cosmwasm::wasm::v1::MsgClearAdminResponse {}
     }
 }
