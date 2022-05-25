@@ -135,8 +135,8 @@ pub struct Coin {
 
     /// Amount
     // represent coin amount as an u128, which theoretically supports lower maximum value than
-    // cosmos-sdk's `Int` that has a maximum value of 2^256 - 1, but I would argue this is sufficient
-    // for the current realistic use cases and is less cumbersome to use than the `Decimal`
+    // cosmos-sdk's `Int` that has a maximum value of 2^256 - 1. (https://github.com/cosmos/cosmos-sdk/blob/v0.45.4/types/int.go#L72-L74=)
+    // But I would argue this is sufficient for the current realistic use cases and is less cumbersome to use than the `Decimal`
     // (which should have been used for a `DecCoin`)
     pub amount: u128,
 }
