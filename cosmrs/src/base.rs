@@ -1,6 +1,6 @@
 //! Base functionality.
 
-use crate::{proto, Decimal, Error, ErrorReport, Result};
+use crate::{proto, Error, ErrorReport, Result};
 use eyre::WrapErr;
 use serde::{de, de::Error as _, ser, Deserialize, Serialize};
 use std::{fmt, str::FromStr};
@@ -128,13 +128,17 @@ impl Serialize for AccountId {
 }
 
 /// Coin defines a token with a denomination and an amount.
-#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Serialize, Deserialize, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct Coin {
     /// Denomination
     pub denom: Denom,
 
     /// Amount
-    pub amount: Decimal,
+    // represent coin amount as an u128, which theoretically supports lower maximum value than
+    // cosmos-sdk's `Int` that has a maximum value of 2^256 - 1, but I would argue this is sufficient
+    // for the current realistic use cases and is less cumbersome to use than the `Decimal`
+    // (which should have been used for a `DecCoin`)
+    pub amount: u128,
 }
 
 impl TryFrom<proto::cosmos::base::v1beta1::Coin> for Coin {
@@ -168,6 +172,15 @@ impl From<&Coin> for proto::cosmos::base::v1beta1::Coin {
             denom: coin.denom.to_string(),
             amount: coin.amount.to_string(),
         }
+    }
+}
+
+impl fmt::Display for Coin {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // Follow the same formatting without the space between amount and denom as
+        // Cosmwasm in their Coin, which is furthermore consistent with the cosmos-sdk:
+        // https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L643-L645
+        write!(f, "{}{}", self.amount, self.denom)
     }
 }
 
