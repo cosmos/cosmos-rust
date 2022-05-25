@@ -15,6 +15,12 @@ use std::{
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct Decimal(u64);
 
+impl Decimal {
+    pub fn u64(&self) -> u64 {
+        self.0
+    }
+}
+
 impl FromStr for Decimal {
     type Err = ErrorReport;
 
