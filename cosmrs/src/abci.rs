@@ -3,7 +3,6 @@
 use crate::tx::Msg;
 use crate::{proto, ErrorReport, Result};
 use prost::Message;
-use prost_types::Any;
 
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct MsgData {
@@ -12,15 +11,8 @@ pub struct MsgData {
 }
 
 impl MsgData {
-    // MsgData has the same structure as `Any` and is actually treated as such,
-    // so abuse this fact to attempt to decode it into the corresponding proto type.
-    pub fn try_decode<M: Msg>(&self) -> Result<M> {
-        let as_any = Any {
-            type_url: self.msg_type.clone(),
-            value: self.data.clone(),
-        };
-        
-        M::from_any(&as_any)
+    pub fn try_decode_as<M: Msg>(&self) -> Result<M> {
+        M::Proto::decode(&*self.data)?.try_into()
     }
 }
 
@@ -53,11 +45,11 @@ pub struct TxMsgData {
     pub data: Vec<MsgData>,
 }
 
-impl<'a> TryFrom<&'a [u8]> for TxMsgData {
+impl TryFrom<tendermint::abci::Data> for TxMsgData {
     type Error = ErrorReport;
 
-    fn try_from(value: &'a [u8]) -> Result<TxMsgData> {
-        let proto = proto::cosmos::base::abci::v1beta1::TxMsgData::decode(value)?;
+    fn try_from(data: tendermint::abci::Data) -> Result<TxMsgData> {
+        let proto = proto::cosmos::base::abci::v1beta1::TxMsgData::decode(data.value().as_ref())?;
         proto.try_into()
     }
 }
