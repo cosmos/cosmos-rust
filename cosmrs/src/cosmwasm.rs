@@ -7,6 +7,9 @@ pub use crate::proto::cosmwasm::wasm::v1::AccessType;
 use crate::{
     prost_ext::ParseOptional, proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result,
 };
+use cosmos_sdk_proto::cosmwasm::wasm::v1::ContractCodeHistoryOperationType;
+
+pub type ContractCodeId = u64;
 
 /// AccessConfig access control type.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -532,5 +535,169 @@ impl TryFrom<proto::cosmwasm::wasm::v1::MsgClearAdminResponse> for MsgClearAdmin
 impl From<MsgClearAdminResponse> for proto::cosmwasm::wasm::v1::MsgClearAdminResponse {
     fn from(_msg: MsgClearAdminResponse) -> proto::cosmwasm::wasm::v1::MsgClearAdminResponse {
         proto::cosmwasm::wasm::v1::MsgClearAdminResponse {}
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct CodeInfoResponse {
+    pub code_id: ContractCodeId,
+
+    /// Bech32 account address
+    pub creator: AccountId,
+
+    /// sha256 hash of the code stored
+    pub data_hash: Vec<u8>,
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::CodeInfoResponse> for CodeInfoResponse {
+    type Error = ErrorReport;
+
+    fn try_from(proto: proto::cosmwasm::wasm::v1::CodeInfoResponse) -> Result<CodeInfoResponse> {
+        Ok(CodeInfoResponse {
+            code_id: proto.code_id,
+            creator: proto.creator.parse()?,
+            data_hash: proto.data_hash,
+        })
+    }
+}
+
+impl From<CodeInfoResponse> for proto::cosmwasm::wasm::v1::CodeInfoResponse {
+    fn from(code_info: CodeInfoResponse) -> Self {
+        proto::cosmwasm::wasm::v1::CodeInfoResponse {
+            code_id: code_info.code_id,
+            creator: code_info.creator.to_string(),
+            data_hash: code_info.data_hash,
+        }
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct QueryCodeResponse {
+    pub code_info: Option<CodeInfoResponse>,
+
+    /// The original wasm bytes
+    pub data: Vec<u8>,
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::QueryCodeResponse> for QueryCodeResponse {
+    type Error = ErrorReport;
+
+    fn try_from(proto: proto::cosmwasm::wasm::v1::QueryCodeResponse) -> Result<QueryCodeResponse> {
+        Ok(QueryCodeResponse {
+            code_info: proto.code_info.map(TryFrom::try_from).transpose()?,
+            data: proto.data,
+        })
+    }
+}
+
+impl From<QueryCodeResponse> for proto::cosmwasm::wasm::v1::QueryCodeResponse {
+    fn from(response: QueryCodeResponse) -> Self {
+        proto::cosmwasm::wasm::v1::QueryCodeResponse {
+            code_info: response.code_info.map(Into::into),
+            data: response.data,
+        }
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub(crate) struct ContractInfo {
+    code_id: ContractCodeId,
+    creator: AccountId,
+    admin: Option<AccountId>,
+    label: String,
+    created: Option<AbsoluteTxPosition>,
+    ibc_port_id: String,
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::ContractInfo> for ContractInfo {
+    type Error = ErrorReport;
+
+    fn try_from(proto: proto::cosmwasm::wasm::v1::ContractInfo) -> Result<ContractInfo> {
+        Ok(ContractInfo {
+            code_id: proto.code_id,
+            creator: proto.creator.parse()?,
+            admin: proto.admin.parse_optional()?,
+            label: proto.label,
+            created: proto.created.map(TryFrom::try_from).transpose()?,
+            ibc_port_id: proto.ibc_port_id,
+        })
+    }
+}
+
+impl From<ContractInfo> for proto::cosmwasm::wasm::v1::ContractInfo {
+    fn from(info: ContractInfo) -> Self {
+        proto::cosmwasm::wasm::v1::ContractInfo {
+            code_id: info.code_id,
+            creator: info.creator.to_string(),
+            admin: info
+                .admin
+                .map(|admin| admin.to_string())
+                .unwrap_or_default(),
+            label: info.label,
+            created: info.created.map(Into::into),
+            ibc_port_id: info.ibc_port_id,
+            extension: None,
+        }
+    }
+}
+
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct ContractCodeHistoryEntry {
+    /// The source of this history entry
+    pub operation: ContractCodeHistoryOperationType,
+    pub code_id: ContractCodeId,
+    pub updated: Option<AbsoluteTxPosition>,
+    pub msg: Vec<u8>,
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::ContractCodeHistoryEntry> for ContractCodeHistoryEntry {
+    type Error = ErrorReport;
+
+    fn try_from(
+        proto: proto::cosmwasm::wasm::v1::ContractCodeHistoryEntry,
+    ) -> Result<ContractCodeHistoryEntry> {
+        Ok(ContractCodeHistoryEntry {
+            operation: ContractCodeHistoryOperationType::from_i32(proto.operation).ok_or(
+                Error::InvalidEnumValue {
+                    name: "operation",
+                    found_value: proto.operation,
+                },
+            )?,
+            code_id: proto.code_id,
+            updated: None,
+            msg: vec![],
+        })
+    }
+}
+
+/// AbsoluteTxPosition is a unique transaction position that allows for global
+/// ordering of transactions.
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct AbsoluteTxPosition {
+    /// BlockHeight is the block the contract was created at
+    pub block_height: u64,
+    /// TxIndex is a monotonic counter within the block (actual transaction index, or gas consumed)
+    pub tx_index: u64,
+}
+
+impl TryFrom<proto::cosmwasm::wasm::v1::AbsoluteTxPosition> for AbsoluteTxPosition {
+    type Error = ErrorReport;
+
+    fn try_from(
+        proto: proto::cosmwasm::wasm::v1::AbsoluteTxPosition,
+    ) -> Result<AbsoluteTxPosition> {
+        Ok(AbsoluteTxPosition {
+            block_height: proto.block_height,
+            tx_index: proto.tx_index,
+        })
+    }
+}
+
+impl From<AbsoluteTxPosition> for proto::cosmwasm::wasm::v1::AbsoluteTxPosition {
+    fn from(pos: AbsoluteTxPosition) -> Self {
+        proto::cosmwasm::wasm::v1::AbsoluteTxPosition {
+            block_height: pos.block_height,
+            tx_index: pos.tx_index,
+        }
     }
 }
