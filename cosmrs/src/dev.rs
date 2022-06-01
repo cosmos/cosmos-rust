@@ -3,6 +3,8 @@
 //! This module contains support for integration testing against a
 //! Cosmos SDK-compatible full node (gaia) running inside of Docker.
 
+#![allow(clippy::panic)]
+
 use crate::{
     rpc::{self, Client},
     tx::{self, Tx},
@@ -80,7 +82,7 @@ pub async fn poll_for_first_block(rpc_client: &rpc::HttpClient) {
     rpc_client
         .wait_until_healthy(Duration::from_secs(5))
         .await
-        .unwrap();
+        .expect("error waiting for RPC to return healthy responses");
 
     let mut attempts_remaining = 25;
 

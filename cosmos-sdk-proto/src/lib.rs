@@ -3,6 +3,7 @@
     html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png"
 )]
 #![cfg_attr(docsrs, feature(doc_cfg))]
+#![allow(rustdoc::broken_intra_doc_links)]
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 

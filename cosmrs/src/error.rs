@@ -57,6 +57,7 @@ pub enum Error {
         hash: tx::Hash,
     },
 
+    /// Invalid value for the given field of an enum.
     #[error("invalid proto enum value: {name:?}, value: {found_value:?}")]
     InvalidEnumValue {
         /// Name of the enum field
