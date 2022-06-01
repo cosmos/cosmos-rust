@@ -1,0 +1,17 @@
+[package]
+name = "osmosis-proto"
+version = "0.0.0"
+authors = ["Tony Arcieri <tony@iqlusion.io>"]
+license = "Apache-2.0"
+repository = "https://github.com/cosmos/cosmos-rust/tree/main/osmosis-proto"
+description = "Protobuf stuct defintions for interacting with Osmosis blockchains"
+readme = "README.md"
+categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
+keywords = ["blockchain", "cosmos", "tendermint", "proto"]
+edition = "2021"
+rust-version = "1.56"
+
+[dependencies]
+cosmos-sdk-proto = { version = "0.12", path = "../cosmos-sdk-proto" }
+prost = "0.10"
+prost-types = "0.10"
