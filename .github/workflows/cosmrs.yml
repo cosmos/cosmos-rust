@@ -16,6 +16,7 @@ defaults:
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: -Dwarnings
+  RUSTDOCFLAGS: -Dwarnings
 
 jobs:
   build:
@@ -55,3 +56,14 @@ jobs:
       - run: cargo test --release --no-default-features
       - run: cargo test --release
       - run: cargo test --release --all-features
+
+  doc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          profile: minimal
+      - run: cargo doc --all-features

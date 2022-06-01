@@ -4,7 +4,18 @@
 )]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![forbid(unsafe_code)]
-#![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
+#![warn(
+    clippy::checked_conversions,
+    clippy::panic,
+    clippy::panic_in_result_fn,
+    clippy::unwrap_used,
+    missing_docs,
+    trivial_casts,
+    trivial_numeric_casts,
+    rust_2018_idioms,
+    unused_lifetimes,
+    unused_import_braces
+)]
 
 pub mod bank;
 pub mod crypto;
