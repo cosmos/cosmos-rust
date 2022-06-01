@@ -61,6 +61,10 @@ impl MsgProto for proto::cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }
 
+impl MsgProto for proto::cosmos::bank::v1beta1::MsgMultiSend {
+    const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgMultiSend";
+}
+
 impl MsgProto for proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress {
     const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress";
 }

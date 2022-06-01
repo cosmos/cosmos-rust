@@ -60,3 +60,142 @@ impl From<&MsgSend> for proto::cosmos::bank::v1beta1::MsgSend {
         }
     }
 }
+
+/// MsgMultiSend represents an arbitrary multi-in, multi-out send message.
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MsgMultiSend {
+    /// Sender account/amount pairs.
+    pub inputs: Vec<MultiSendIO>,
+
+    /// Recipient account/amount pairs.
+    pub outputs: Vec<MultiSendIO>,
+}
+
+impl Msg for MsgMultiSend {
+    type Proto = proto::cosmos::bank::v1beta1::MsgMultiSend;
+}
+
+impl TryFrom<proto::cosmos::bank::v1beta1::MsgMultiSend> for MsgMultiSend {
+    type Error = ErrorReport;
+
+    fn try_from(proto: proto::cosmos::bank::v1beta1::MsgMultiSend) -> Result<MsgMultiSend> {
+        MsgMultiSend::try_from(&proto)
+    }
+}
+
+impl TryFrom<&proto::cosmos::bank::v1beta1::MsgMultiSend> for MsgMultiSend {
+    type Error = ErrorReport;
+
+    fn try_from(proto: &proto::cosmos::bank::v1beta1::MsgMultiSend) -> Result<MsgMultiSend> {
+        Ok(MsgMultiSend {
+            inputs: proto
+                .inputs
+                .iter()
+                .map(TryFrom::try_from)
+                .collect::<Result<_, _>>()?,
+            outputs: proto
+                .outputs
+                .iter()
+                .map(TryFrom::try_from)
+                .collect::<Result<_, _>>()?,
+        })
+    }
+}
+
+impl From<MsgMultiSend> for proto::cosmos::bank::v1beta1::MsgMultiSend {
+    fn from(coin: MsgMultiSend) -> proto::cosmos::bank::v1beta1::MsgMultiSend {
+        proto::cosmos::bank::v1beta1::MsgMultiSend::from(&coin)
+    }
+}
+
+impl From<&MsgMultiSend> for proto::cosmos::bank::v1beta1::MsgMultiSend {
+    fn from(msg: &MsgMultiSend) -> proto::cosmos::bank::v1beta1::MsgMultiSend {
+        proto::cosmos::bank::v1beta1::MsgMultiSend {
+            inputs: msg.inputs.iter().map(Into::into).collect(),
+            outputs: msg.outputs.iter().map(Into::into).collect(),
+        }
+    }
+}
+
+/// Represents a MultiSend Input or Output
+#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+pub struct MultiSendIO {
+    pub address: AccountId,
+    pub coins: Vec<Coin>,
+}
+
+impl TryFrom<proto::cosmos::bank::v1beta1::Input> for MultiSendIO {
+    type Error = ErrorReport;
+
+    fn try_from(proto: proto::cosmos::bank::v1beta1::Input) -> Result<MultiSendIO> {
+        MultiSendIO::try_from(&proto)
+    }
+}
+
+impl TryFrom<&proto::cosmos::bank::v1beta1::Input> for MultiSendIO {
+    type Error = ErrorReport;
+
+    fn try_from(proto: &proto::cosmos::bank::v1beta1::Input) -> Result<MultiSendIO> {
+        Ok(MultiSendIO {
+            address: proto.address.parse()?,
+            coins: proto
+                .coins
+                .iter()
+                .map(TryFrom::try_from)
+                .collect::<Result<_, _>>()?,
+        })
+    }
+}
+
+impl TryFrom<proto::cosmos::bank::v1beta1::Output> for MultiSendIO {
+    type Error = ErrorReport;
+
+    fn try_from(proto: proto::cosmos::bank::v1beta1::Output) -> Result<MultiSendIO> {
+        MultiSendIO::try_from(&proto)
+    }
+}
+
+impl TryFrom<&proto::cosmos::bank::v1beta1::Output> for MultiSendIO {
+    type Error = ErrorReport;
+
+    fn try_from(proto: &proto::cosmos::bank::v1beta1::Output) -> Result<MultiSendIO> {
+        Ok(MultiSendIO {
+            address: proto.address.parse()?,
+            coins: proto
+                .coins
+                .iter()
+                .map(TryFrom::try_from)
+                .collect::<Result<_, _>>()?,
+        })
+    }
+}
+
+impl From<MultiSendIO> for proto::cosmos::bank::v1beta1::Output {
+    fn from(output: MultiSendIO) -> proto::cosmos::bank::v1beta1::Output {
+        proto::cosmos::bank::v1beta1::Output::from(&output)
+    }
+}
+
+impl From<&MultiSendIO> for proto::cosmos::bank::v1beta1::Output {
+    fn from(output: &MultiSendIO) -> proto::cosmos::bank::v1beta1::Output {
+        proto::cosmos::bank::v1beta1::Output {
+            address: output.address.to_string(),
+            coins: output.coins.iter().map(Into::into).collect(),
+        }
+    }
+}
+
+impl From<MultiSendIO> for proto::cosmos::bank::v1beta1::Input {
+    fn from(input: MultiSendIO) -> proto::cosmos::bank::v1beta1::Input {
+        proto::cosmos::bank::v1beta1::Input::from(&input)
+    }
+}
+
+impl From<&MultiSendIO> for proto::cosmos::bank::v1beta1::Input {
+    fn from(input: &MultiSendIO) -> proto::cosmos::bank::v1beta1::Input {
+        proto::cosmos::bank::v1beta1::Input {
+            address: input.address.to_string(),
+            coins: input.coins.iter().map(Into::into).collect(),
+        }
+    }
+}
