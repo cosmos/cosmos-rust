@@ -120,7 +120,10 @@ impl From<&MsgMultiSend> for proto::cosmos::bank::v1beta1::MsgMultiSend {
 /// Represents a MultiSend Input or Output
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct MultiSendIo {
+    /// The address that `coins` will be sent to/from
     pub address: AccountId,
+
+    /// The coins to send to/from `address`
     pub coins: Vec<Coin>,
 }
 
