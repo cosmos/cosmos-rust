@@ -1,17 +1,34 @@
 [package]
 name = "osmosis-proto"
-version = "0.0.0"
-authors = ["Tony Arcieri <tony@iqlusion.io>"]
+version = "1.0.0"
+authors = [
+    "Tony Arcieri <tony@iqlusion.io>",
+    "Philipp Schlütermann <philipp.schluetermann@udo.edu>"
+]
 license = "Apache-2.0"
 repository = "https://github.com/cosmos/cosmos-rust/tree/main/osmosis-proto"
-description = "Protobuf stuct defintions for interacting with Osmosis blockchains"
+description = "Protobuf stuct defintions for interacting with Osmosis"
 readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
-keywords = ["blockchain", "cosmos", "tendermint", "proto"]
+keywords = ["blockchain", "cosmos", "osmosis", "tendermint", "proto"]
 edition = "2021"
 rust-version = "1.56"
 
 [dependencies]
-cosmos-sdk-proto = { version = "0.12", path = "../cosmos-sdk-proto" }
 prost = "0.10"
 prost-types = "0.10"
+tendermint-proto = "=0.23.7"
+
+# Optional dependencies
+tonic = { version = "0.7", optional = true, default-features = false, features = ["codegen", "prost"] }
+
+[features]
+default = ["grpc-transport"]
+grpc = ["tonic"]
+grpc-transport = ["grpc", "tonic/transport"]
+osmosis = []
+cosmos = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
