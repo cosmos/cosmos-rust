@@ -33,7 +33,7 @@ pub mod dev;
 mod base;
 mod decimal;
 mod error;
-mod prost_ext;
+pub mod prost_ext;
 
 pub use crate::{
     base::{AccountId, Coin, Denom},
