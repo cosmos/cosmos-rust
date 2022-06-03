@@ -141,7 +141,13 @@ fn update_submodules() {
     run_git(&["-C", OSMOSISD_DIR, "fetch"]);
     run_git(&["-C", OSMOSISD_DIR, "reset", "--hard", OSMOSISD_REV]);
     run_cmd("pwd",&[""]);
-    run_cmd("rm",&["../osmosis/proto/osmosis/gamm/pool-models/balancer/tx.proto"]);
+    /*
+     * osmosis/gamm/v1beta1/tx.proto:9:9: "osmosis.gamm.v1beta1.Msg" is already defined in file "osmosis/gamm/pool-models/balancer/tx.proto".
+     * To workaround this issue renaming Msg.
+     */
+    run_cmd("sed",&["-i",r##"/service Msg {/c\service Msg1 {"##,"../osmosis/proto/osmosis/gamm/pool-models/balancer/tx.proto"]);
+    run_cmd("sed",&["-i",r##"/service Msg {/c\service Msg2 {"##,"../osmosis/proto/osmosis/gamm/v1beta1/tx.proto"]);
+    //run_cmd("rm",&["../osmosis/proto/osmosis/gamm/pool-models/balancer/tx.proto"]);
 }
 
 
@@ -202,6 +208,7 @@ fn compile_osmosisd_proto_services(out_dir: &Path) {
     let proto_services_path = [
         PathBuf::from(sdk_dir).join("proto/osmosis/gamm/v1beta1/query.proto"),
         PathBuf::from(sdk_dir).join("proto/osmosis/gamm/v1beta1/tx.proto"),
+        PathBuf::from(sdk_dir).join("proto/osmosis/gamm/pool-models/balancer/tx.proto"),
     ];
 
     // List available paths for dependencies

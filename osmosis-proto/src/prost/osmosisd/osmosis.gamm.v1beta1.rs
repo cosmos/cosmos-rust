@@ -139,16 +139,16 @@ pub struct MsgExitSwapExternAmountOutResponse {
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-pub mod msg_client {
+pub mod msg2_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
     #[derive(Debug, Clone)]
-    pub struct MsgClient<T> {
+    pub struct Msg2Client<T> {
         inner: tonic::client::Grpc<T>,
     }
     #[cfg(feature = "grpc-transport")]
     #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
-    impl MsgClient<tonic::transport::Channel> {
+    impl Msg2Client<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -159,7 +159,7 @@ pub mod msg_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MsgClient<T>
+    impl<T> Msg2Client<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -173,7 +173,7 @@ pub mod msg_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> MsgClient<InterceptedService<T, F>>
+        ) -> Msg2Client<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -187,7 +187,7 @@ pub mod msg_client {
                 http::Request<tonic::body::BoxBody>,
             >>::Error: Into<StdError> + Send + Sync,
         {
-            MsgClient::new(InterceptedService::new(inner, interceptor))
+            Msg2Client::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with `gzip`.
         ///
@@ -219,7 +219,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/JoinPool",
+                "/osmosis.gamm.v1beta1.Msg2/JoinPool",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -238,7 +238,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/ExitPool",
+                "/osmosis.gamm.v1beta1.Msg2/ExitPool",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -260,7 +260,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/SwapExactAmountIn",
+                "/osmosis.gamm.v1beta1.Msg2/SwapExactAmountIn",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -282,7 +282,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/SwapExactAmountOut",
+                "/osmosis.gamm.v1beta1.Msg2/SwapExactAmountOut",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -304,7 +304,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/JoinSwapExternAmountIn",
+                "/osmosis.gamm.v1beta1.Msg2/JoinSwapExternAmountIn",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -326,7 +326,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/JoinSwapShareAmountOut",
+                "/osmosis.gamm.v1beta1.Msg2/JoinSwapShareAmountOut",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -348,7 +348,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/ExitSwapExternAmountOut",
+                "/osmosis.gamm.v1beta1.Msg2/ExitSwapExternAmountOut",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -370,7 +370,7 @@ pub mod msg_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg/ExitSwapShareAmountIn",
+                "/osmosis.gamm.v1beta1.Msg2/ExitSwapShareAmountIn",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -777,6 +777,199 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/osmosis.gamm.v1beta1.Query/EstimateSwapExactAmountOut",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+    }
+}
+/// Parameters for changing the weights in a balancer pool smoothly from
+/// a start weight and end weight over a period of time.
+/// Currently, the only smooth change supported is linear changing between
+/// the two weights, but more types may be added in the future.
+/// When these parameters are set, the weight w(t) for pool time `t` is the
+/// following:
+///   t <= start_time: w(t) = initial_pool_weights
+///   start_time < t <= start_time + duration:
+///     w(t) = initial_pool_weights + (t - start_time) *
+///       (target_pool_weights - initial_pool_weights) / (duration)
+///   t > start_time + duration: w(t) = target_pool_weights
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SmoothWeightChangeParams {
+    /// The start time for beginning the weight change.
+    /// If a parameter change / pool instantiation leaves this blank,
+    /// it should be generated by the state_machine as the current time.
+    #[prost(message, optional, tag="1")]
+    pub start_time: ::core::option::Option<::prost_types::Timestamp>,
+    /// Duration for the weights to change over
+    #[prost(message, optional, tag="2")]
+    pub duration: ::core::option::Option<::prost_types::Duration>,
+    /// The initial pool weights. These are copied from the pool's settings
+    /// at the time of weight change instantiation.
+    /// The amount PoolAsset.token.amount field is ignored if present,
+    /// future type refactorings should just have a type with the denom & weight
+    /// here.
+    #[prost(message, repeated, tag="3")]
+    pub initial_pool_weights: ::prost::alloc::vec::Vec<PoolAsset>,
+    /// The target pool weights. The pool weights will change linearly with respect
+    /// to time between start_time, and start_time + duration. The amount
+    /// PoolAsset.token.amount field is ignored if present, future type
+    /// refactorings should just have a type with the denom & weight here.
+    ///
+    /// Intermediate variable for the 'slope' of pool weights. This is equal to
+    /// (target_pool_weights - initial_pool_weights) / (duration)
+    /// TODO: Work out precision, and decide if this is good to add
+    /// repeated PoolAsset poolWeightSlope = 5 [
+    ///  (gogoproto.moretags) = "yaml:\"pool_weight_slope\"",
+    ///  (gogoproto.nullable) = false
+    /// ];
+    #[prost(message, repeated, tag="4")]
+    pub target_pool_weights: ::prost::alloc::vec::Vec<PoolAsset>,
+}
+/// PoolParams defined the parameters that will be managed by the pool
+/// governance in the future. This params are not managed by the chain
+/// governance. Instead they will be managed by the token holders of the pool.
+/// The pool's token holders are specified in future_pool_governor.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PoolParams {
+    #[prost(string, tag="1")]
+    pub swap_fee: ::prost::alloc::string::String,
+    #[prost(string, tag="2")]
+    pub exit_fee: ::prost::alloc::string::String,
+    #[prost(message, optional, tag="3")]
+    pub smooth_weight_change_params: ::core::option::Option<SmoothWeightChangeParams>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Pool {
+    #[prost(string, tag="1")]
+    pub address: ::prost::alloc::string::String,
+    #[prost(uint64, tag="2")]
+    pub id: u64,
+    #[prost(message, optional, tag="3")]
+    pub pool_params: ::core::option::Option<PoolParams>,
+    /// This string specifies who will govern the pool in the future.
+    /// Valid forms of this are:
+    /// {token name},{duration}
+    /// {duration}
+    /// where {token name} if specified is the token which determines the
+    /// governor, and if not specified is the LP token for this pool.duration is
+    /// a time specified as 0w,1w,2w, etc. which specifies how long the token
+    /// would need to be locked up to count in governance. 0w means no lockup.
+    /// TODO: Further improve these docs
+    #[prost(string, tag="4")]
+    pub future_pool_governor: ::prost::alloc::string::String,
+    /// sum of all LP tokens sent out
+    #[prost(message, optional, tag="5")]
+    pub total_shares: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
+    /// These are assumed to be sorted by denomiation.
+    /// They contain the pool asset and the information about the weight
+    #[prost(message, repeated, tag="6")]
+    pub pool_assets: ::prost::alloc::vec::Vec<PoolAsset>,
+    /// sum of all non-normalized pool weights
+    #[prost(string, tag="7")]
+    pub total_weight: ::prost::alloc::string::String,
+}
+/// ===================== MsgCreatePool
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreateBalancerPool {
+    #[prost(string, tag="1")]
+    pub sender: ::prost::alloc::string::String,
+    #[prost(message, optional, tag="2")]
+    pub pool_params: ::core::option::Option<PoolParams>,
+    #[prost(message, repeated, tag="3")]
+    pub pool_assets: ::prost::alloc::vec::Vec<PoolAsset>,
+    #[prost(string, tag="4")]
+    pub future_pool_governor: ::prost::alloc::string::String,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreateBalancerPoolResponse {
+}
+/// Generated client implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+pub mod msg1_client {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    #[derive(Debug, Clone)]
+    pub struct Msg1Client<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
+    impl Msg1Client<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> Msg1Client<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> Msg1Client<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::BoxBody>,
+            >>::Error: Into<StdError> + Send + Sync,
+        {
+            Msg1Client::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with `gzip`.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_gzip(mut self) -> Self {
+            self.inner = self.inner.send_gzip();
+            self
+        }
+        /// Enable decompressing responses with `gzip`.
+        #[must_use]
+        pub fn accept_gzip(mut self) -> Self {
+            self.inner = self.inner.accept_gzip();
+            self
+        }
+        pub async fn create_balancer_pool(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgCreateBalancerPool>,
+        ) -> Result<
+            tonic::Response<super::MsgCreateBalancerPoolResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.gamm.v1beta1.Msg1/CreateBalancerPool",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
