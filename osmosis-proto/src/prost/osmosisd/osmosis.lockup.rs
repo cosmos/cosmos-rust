@@ -12,7 +12,7 @@ pub struct PeriodLock {
     #[prost(message, optional, tag="4")]
     pub end_time: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(message, repeated, tag="5")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryCondition {
@@ -72,7 +72,7 @@ pub struct MsgLockTokens {
     #[prost(message, optional, tag="2")]
     pub duration: ::core::option::Option<::prost_types::Duration>,
     #[prost(message, repeated, tag="3")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgLockTokensResponse {
@@ -97,7 +97,7 @@ pub struct MsgBeginUnlocking {
     pub id: u64,
     /// Amount of unlocking coins. Unlock all if not set.
     #[prost(message, repeated, tag="3")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgBeginUnlockingResponse {
@@ -120,7 +120,7 @@ pub struct ModuleBalanceRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleBalanceResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleLockedAmountRequest {
@@ -128,7 +128,7 @@ pub struct ModuleLockedAmountRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleLockedAmountResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountUnlockableCoinsRequest {
@@ -138,7 +138,7 @@ pub struct AccountUnlockableCoinsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountUnlockableCoinsResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountUnlockingCoinsRequest {
@@ -148,7 +148,7 @@ pub struct AccountUnlockingCoinsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountUnlockingCoinsResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountLockedCoinsRequest {
@@ -158,7 +158,7 @@ pub struct AccountLockedCoinsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountLockedCoinsResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountLockedPastTimeRequest {

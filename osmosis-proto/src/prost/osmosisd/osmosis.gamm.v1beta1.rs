@@ -8,7 +8,7 @@ pub struct MsgJoinPool {
     #[prost(string, tag="3")]
     pub share_out_amount: ::prost::alloc::string::String,
     #[prost(message, repeated, tag="4")]
-    pub token_in_maxs: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub token_in_maxs: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgJoinPoolResponse {
@@ -23,7 +23,7 @@ pub struct MsgExitPool {
     #[prost(string, tag="3")]
     pub share_in_amount: ::prost::alloc::string::String,
     #[prost(message, repeated, tag="4")]
-    pub token_out_mins: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub token_out_mins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExitPoolResponse {
@@ -43,7 +43,7 @@ pub struct MsgSwapExactAmountIn {
     #[prost(message, repeated, tag="2")]
     pub routes: ::prost::alloc::vec::Vec<SwapAmountInRoute>,
     #[prost(message, optional, tag="3")]
-    pub token_in: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub token_in: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     #[prost(string, tag="4")]
     pub token_out_min_amount: ::prost::alloc::string::String,
 }
@@ -67,7 +67,7 @@ pub struct MsgSwapExactAmountOut {
     #[prost(string, tag="3")]
     pub token_in_max_amount: ::prost::alloc::string::String,
     #[prost(message, optional, tag="4")]
-    pub token_out: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub token_out: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSwapExactAmountOutResponse {
@@ -80,7 +80,7 @@ pub struct MsgJoinSwapExternAmountIn {
     #[prost(uint64, tag="2")]
     pub pool_id: u64,
     #[prost(message, optional, tag="3")]
-    pub token_in: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub token_in: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     #[prost(string, tag="4")]
     pub share_out_min_amount: ::prost::alloc::string::String,
 }
@@ -129,7 +129,7 @@ pub struct MsgExitSwapExternAmountOut {
     #[prost(uint64, tag="2")]
     pub pool_id: u64,
     #[prost(message, optional, tag="3")]
-    pub token_out: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub token_out: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     #[prost(string, tag="4")]
     pub share_in_max_amount: ::prost::alloc::string::String,
 }
@@ -381,7 +381,7 @@ pub struct PoolAsset {
     /// Coins we are talking about,
     /// the denomination must be unique amongst all PoolAssets for this pool.
     #[prost(message, optional, tag="1")]
-    pub token: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub token: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     /// Weight that is not normalized. This weight must be less than 2^50
     #[prost(string, tag="2")]
     pub weight: ::prost::alloc::string::String,
@@ -402,7 +402,7 @@ pub struct QueryPoolResponse {
 pub struct QueryPoolsRequest {
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPoolsResponse {
@@ -410,7 +410,7 @@ pub struct QueryPoolsResponse {
     pub pools: ::prost::alloc::vec::Vec<::prost_types::Any>,
     /// pagination defines the pagination in the response.
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
 ///=============================== NumPools
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -441,7 +441,7 @@ pub struct QueryTotalSharesRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTotalSharesResponse {
     #[prost(message, optional, tag="1")]
-    pub total_shares: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub total_shares: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 ///=============================== PoolAssets
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -512,7 +512,7 @@ pub struct QueryTotalLiquidityRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTotalLiquidityResponse {
     #[prost(message, repeated, tag="1")]
-    pub liquidity: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub liquidity: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 /// Generated client implementations.
 #[cfg(feature = "grpc")]

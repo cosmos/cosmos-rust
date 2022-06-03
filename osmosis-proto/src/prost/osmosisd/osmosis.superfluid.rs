@@ -44,7 +44,7 @@ pub struct SuperfluidDelegationRecord {
     #[prost(string, tag="2")]
     pub validator_address: ::prost::alloc::string::String,
     #[prost(message, optional, tag="3")]
-    pub delegation_amount: ::core::option::Option<super::super::cosmos::base::v1beta1::Coin>,
+    pub delegation_amount: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LockIdIntermediaryAccountConnection {
@@ -112,7 +112,7 @@ pub struct MsgLockAndSuperfluidDelegate {
     #[prost(string, tag="1")]
     pub sender: ::prost::alloc::string::String,
     #[prost(message, repeated, tag="2")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     #[prost(string, tag="3")]
     pub val_addr: ::prost::alloc::string::String,
 }
@@ -214,14 +214,14 @@ pub struct SuperfluidIntermediaryAccountInfo {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllIntermediaryAccountsRequest {
     #[prost(message, optional, tag="1")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllIntermediaryAccountsResponse {
     #[prost(message, repeated, tag="1")]
     pub accounts: ::prost::alloc::vec::Vec<SuperfluidIntermediaryAccountInfo>,
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConnectedIntermediaryAccountRequest {
@@ -253,7 +253,7 @@ pub struct SuperfluidDelegationAmountRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SuperfluidDelegationAmountResponse {
     #[prost(message, repeated, tag="1")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub amount: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SuperfluidDelegationsByDelegatorRequest {
@@ -265,7 +265,7 @@ pub struct SuperfluidDelegationsByDelegatorResponse {
     #[prost(message, repeated, tag="1")]
     pub superfluid_delegation_records: ::prost::alloc::vec::Vec<SuperfluidDelegationRecord>,
     #[prost(message, repeated, tag="2")]
-    pub total_delegated_coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub total_delegated_coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SuperfluidUndelegationsByDelegatorRequest {
@@ -279,7 +279,7 @@ pub struct SuperfluidUndelegationsByDelegatorResponse {
     #[prost(message, repeated, tag="1")]
     pub superfluid_delegation_records: ::prost::alloc::vec::Vec<SuperfluidDelegationRecord>,
     #[prost(message, repeated, tag="2")]
-    pub total_undelegated_coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub total_undelegated_coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     #[prost(message, repeated, tag="3")]
     pub synthetic_locks: ::prost::alloc::vec::Vec<super::lockup::SyntheticLock>,
 }
@@ -305,5 +305,5 @@ pub struct EstimateSuperfluidDelegatedAmountByValidatorDenomRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EstimateSuperfluidDelegatedAmountByValidatorDenomResponse {
     #[prost(message, repeated, tag="1")]
-    pub total_delegated_coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub total_delegated_coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }

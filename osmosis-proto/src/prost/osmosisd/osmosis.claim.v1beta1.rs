@@ -19,7 +19,7 @@ pub struct ClaimRecord {
     pub address: ::prost::alloc::string::String,
     /// total initial claimable amount for the user
     #[prost(message, repeated, tag="2")]
-    pub initial_claimable_amount: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub initial_claimable_amount: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     /// true if action is completed
     /// index of bool in array refers to action enum #
     #[prost(bool, repeated, packed="false", tag="3")]
@@ -38,7 +38,7 @@ pub enum Action {
 pub struct GenesisState {
     /// balance of the claim module's account
     #[prost(message, optional, tag="1")]
-    pub module_account_balance: ::core::option::Option<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub module_account_balance: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     /// params defines all the parameters of the module.
     #[prost(message, optional, tag="2")]
     pub params: ::core::option::Option<Params>,
@@ -55,7 +55,7 @@ pub struct QueryModuleAccountBalanceRequest {
 pub struct QueryModuleAccountBalanceResponse {
     /// params defines the parameters of the module.
     #[prost(message, repeated, tag="1")]
-    pub module_account_balance: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub module_account_balance: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -88,7 +88,7 @@ pub struct QueryClaimableForActionRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClaimableForActionResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTotalClaimableRequest {
@@ -98,5 +98,5 @@ pub struct QueryTotalClaimableRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTotalClaimableResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }

@@ -15,7 +15,7 @@ pub struct Gauge {
     ///
     /// can distribute multiple coins
     #[prost(message, repeated, tag="4")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     /// distribution start time
     #[prost(message, optional, tag="5")]
     pub start_time: ::core::option::Option<::prost_types::Timestamp>,
@@ -27,7 +27,7 @@ pub struct Gauge {
     pub filled_epochs: u64,
     /// already distributed coins
     #[prost(message, repeated, tag="8")]
-    pub distributed_coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub distributed_coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LockableDurationsInfo {
@@ -47,7 +47,7 @@ pub struct MsgCreateGauge {
     pub distribute_to: ::core::option::Option<super::lockup::QueryCondition>,
     /// can distribute multiple coins
     #[prost(message, repeated, tag="4")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
     /// distribution start time
     #[prost(message, optional, tag="5")]
     pub start_time: ::core::option::Option<::prost_types::Timestamp>,
@@ -65,7 +65,7 @@ pub struct MsgAddToGauge {
     #[prost(uint64, tag="2")]
     pub gauge_id: u64,
     #[prost(message, repeated, tag="3")]
-    pub rewards: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub rewards: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgAddToGaugeResponse {
@@ -96,7 +96,7 @@ pub struct ModuleToDistributeCoinsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleToDistributeCoinsResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleDistributedCoinsRequest {
@@ -104,7 +104,7 @@ pub struct ModuleDistributedCoinsRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleDistributedCoinsResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GaugeByIdRequest {
@@ -120,7 +120,7 @@ pub struct GaugeByIdResponse {
 pub struct GaugesRequest {
     /// pagination defines an pagination for the request.
     #[prost(message, optional, tag="1")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GaugesResponse {
@@ -128,13 +128,13 @@ pub struct GaugesResponse {
     pub data: ::prost::alloc::vec::Vec<Gauge>,
     /// pagination defines an pagination for the response.
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ActiveGaugesRequest {
     /// pagination defines an pagination for the request.
     #[prost(message, optional, tag="1")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ActiveGaugesResponse {
@@ -142,7 +142,7 @@ pub struct ActiveGaugesResponse {
     pub data: ::prost::alloc::vec::Vec<Gauge>,
     /// pagination defines an pagination for the response.
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ActiveGaugesPerDenomRequest {
@@ -150,7 +150,7 @@ pub struct ActiveGaugesPerDenomRequest {
     pub denom: ::prost::alloc::string::String,
     /// pagination defines an pagination for the request.
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ActiveGaugesPerDenomResponse {
@@ -158,13 +158,13 @@ pub struct ActiveGaugesPerDenomResponse {
     pub data: ::prost::alloc::vec::Vec<Gauge>,
     /// pagination defines an pagination for the response.
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpcomingGaugesRequest {
     /// pagination defines an pagination for the request.
     #[prost(message, optional, tag="1")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpcomingGaugesResponse {
@@ -172,21 +172,21 @@ pub struct UpcomingGaugesResponse {
     pub data: ::prost::alloc::vec::Vec<Gauge>,
     /// pagination defines an pagination for the response.
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpcomingGaugesPerDenomRequest {
     #[prost(string, tag="1")]
     pub denom: ::prost::alloc::string::String,
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageRequest>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageRequest>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpcomingGaugesPerDenomResponse {
     #[prost(message, repeated, tag="1")]
     pub upcoming_gauges: ::prost::alloc::vec::Vec<Gauge>,
     #[prost(message, optional, tag="2")]
-    pub pagination: ::core::option::Option<super::super::cosmos::base::query::v1beta1::PageResponse>,
+    pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RewardsEstRequest {
@@ -200,7 +200,7 @@ pub struct RewardsEstRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RewardsEstResponse {
     #[prost(message, repeated, tag="1")]
-    pub coins: ::prost::alloc::vec::Vec<super::super::cosmos::base::v1beta1::Coin>,
+    pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryLockableDurationsRequest {

@@ -18,6 +18,7 @@ rust-version = "1.56"
 prost = "0.10"
 prost-types = "0.10"
 tendermint-proto = "=0.23.7"
+cosmos-sdk-proto = { version = "0.12.2", path = "../cosmos-sdk-proto" }
 
 # Optional dependencies
 tonic = { version = "0.7", optional = true, default-features = false, features = ["codegen", "prost"] }
@@ -26,8 +27,7 @@ tonic = { version = "0.7", optional = true, default-features = false, features =
 default = ["grpc-transport"]
 grpc = ["tonic"]
 grpc-transport = ["grpc", "tonic/transport"]
-osmosis = []
-cosmos = []
+osmosis = [] 
 
 [package.metadata.docs.rs]
 all-features = true

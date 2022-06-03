@@ -39,7 +39,7 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 /// Protos belonging to these Protobuf packages will be excluded
 /// (i.e. because they are sourced from `tendermint-proto`)
-const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint"]; // gogoproto
+const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint","cosmos"]; 
 
 /// Log info to the console (if `QUIET` is disabled)
 // TODO(tarcieri): use a logger for this
@@ -178,6 +178,7 @@ fn compile_osmosisd_protos(out_dir: &Path) {
     let mut config = prost_build::Config::default();
     config.out_dir(out_dir);
     config.extern_path(".tendermint", "::tendermint_proto");
+    config.extern_path(".cosmos", "cosmos_sdk_proto::cosmos");
 
     if let Err(e) = config.compile_protos(&protos, &includes) {
         eprintln!("[error] couldn't compile protos: {}", e);
@@ -276,6 +277,7 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
     /// Regex substitutions to apply to the prost-generated output
     const REPLACEMENTS: &[(&str, &str)] = &[
+        ("(super::)+cosmos", "cosmos_sdk_proto::cosmos"),
         // Use `tendermint-proto` proto definitions
         ("(super::)+tendermint", "tendermint_proto"),
         // Feature-gate gRPC client modules

@@ -11,41 +11,6 @@ pub use tendermint_proto as tendermint;
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
 pub const OSMOSISD_VERSION: &str = include_str!("prost/osmosisd/OSMOSISD_COMMIT");
 
-
-#[cfg(feature = "cosmos")]
-#[cfg_attr(docsrs, doc(cfg(feature = "cosmos")))]
-/// Cosmos protobuf definitions.
-pub mod cosmos {
-    /// Authentication of accounts and transactions.
-    pub mod auth {
-        pub mod v1beta1 {
-            include!("prost/osmosisd/cosmos.auth.v1beta1.rs");
-        }
-    }
-
-    /// Balances.
-    pub mod bank {
-        pub mod v1beta1 {
-            include!("prost/osmosisd/cosmos.bank.v1beta1.rs");
-        }
-    }
-
-    /// Base functionality.
-    pub mod base {
-
-        /// Query support.
-        pub mod query {
-            pub mod v1beta1 {
-                include!("prost/osmosisd/cosmos.base.query.v1beta1.rs");
-            }
-        }
-
-        pub mod v1beta1 {
-            include!("prost/osmosisd/cosmos.base.v1beta1.rs");
-        }
-    }
-}
-
 /// Osmosis protobuf definitions.
 #[cfg(feature = "osmosis")]
 #[cfg_attr(docsrs, doc(cfg(feature = "osmosis")))]
