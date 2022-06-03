@@ -6,13 +6,19 @@
 [![Apache 2.0 Licensed][license-image]][license-link]
 ![MSRV][rustc-image]
 
-Rust crate for interacting with [Protobufs] defined by the [Osmosis] protocol.
+Rust crate for interacting with [Protobufs] defined by the [Osmosis] blockchain.
+Only includes Osmosis specific types. To get general cosmos types also import `cosmos-sdk-proto`.
 
 [Documentation][docs-link]
 
-## Minimum Supported Rust Version
+## Build
 
-This crate is supported on Rust **1.56** or newer.
+`cd osmosis-proto-build`  
+`cargo run`
+
+## Cargo.toml
+`osmosis-proto = { path = "../cosmos-rust/osmosis-proto", features = ["grpc-transport", "osmosis"] }`
+
 
 [//]: # "badges"
 [crate-image]: https://buildstats.info/crate/osmosis-proto
