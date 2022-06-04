@@ -57,6 +57,10 @@ pub trait MsgProto: Default + MessageExt + Sized {
     }
 }
 
+impl MsgProto for proto::cosmos::vesting::v1beta1::PeriodicVestingAccount {
+    const TYPE_URL: &'static str = "/cosmos.vesting.v1beta1.PeriodicVestingAccount";
+}
+
 impl MsgProto for proto::cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }
