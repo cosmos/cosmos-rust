@@ -83,7 +83,7 @@ impl From<TxMsgData> for proto::cosmos::base::abci::v1beta1::TxMsgData {
 }
 
 #[derive(Copy, Clone, Debug, Serialize, Deserialize, Default, Eq, PartialEq)]
-struct GasInfo {
+pub struct GasInfo {
     /// GasWanted is the maximum units of work we allow this tx to perform.
     pub gas_wanted: Gas,
 
