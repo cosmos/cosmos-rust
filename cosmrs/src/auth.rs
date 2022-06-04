@@ -10,10 +10,17 @@ use crate::{proto, AccountId, ErrorReport};
 /// type for additional functionality (e.g. vesting).
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct BaseAccount {
-    /// Bech32 account address
+    /// Bech32 [`AccountId`] of this account.
     pub address: AccountId,
+
+    /// Optional [`PublicKey`] associated with this account.
     pub pubkey: Option<PublicKey>,
+
+    /// `account_number` is the account number of the account in state
     pub account_number: AccountNumber,
+
+    /// Sequence of the account, which describes the number of committed transactions signed by a
+    /// given address.
     pub sequence: SequenceNumber,
 }
 
@@ -44,8 +51,13 @@ impl From<BaseAccount> for proto::cosmos::auth::v1beta1::BaseAccount {
 /// ModuleAccount defines an account for modules that holds coins on a pool.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ModuleAccount {
+    /// [`BaseAccount`] specification of this module account.
     pub base_account: Option<BaseAccount>,
+
+    /// Name of the module.
     pub name: String,
+
+    /// Permissions associated with this module account.
     pub permissions: Vec<String>,
 }
 

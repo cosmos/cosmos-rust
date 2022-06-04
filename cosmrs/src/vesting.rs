@@ -8,10 +8,22 @@ use crate::{proto, Coin, ErrorReport};
 /// the necessary fields needed for any vesting account implementation.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct BaseVestingAccount {
+    /// [`BaseAccount`] specification of this vesting account.
     pub base_account: Option<BaseAccount>,
+
+    /// The amount of coins (per denomination) that are initially part of a vesting account.
+    /// These coins are set at genesis.
     pub original_vesting: Vec<Coin>,
+
+    /// The tracked amount of coins (per denomination) that are delegated from a vesting account
+    /// that have been fully vested at time of delegation.
     pub delegated_free: Vec<Coin>,
+
+    /// The tracked amount of coins (per denomination) that are delegated from a vesting account
+    /// that were vesting at time of delegation.
     pub delegated_vesting: Vec<Coin>,
+
+    /// The BFT time at which a vesting account is fully vested
     pub end_time: i64,
 }
 
@@ -67,7 +79,10 @@ impl From<BaseVestingAccount> for proto::cosmos::vesting::v1beta1::BaseVestingAc
 /// continuously vests by unlocking coins linearly with respect to time.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct ContinuousVestingAccount {
+    /// Base vesting account specification required for this vesting implementation.
     pub base_vesting_account: Option<BaseVestingAccount>,
+
+    /// The BFT time at which a vesting account starts to vest.
     pub start_time: i64,
 }
 
@@ -103,6 +118,7 @@ impl From<ContinuousVestingAccount> for proto::cosmos::vesting::v1beta1::Continu
 /// locked until a specified time.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct DelayedVestingAccount {
+    /// Base vesting account specification required for this vesting implementation.
     pub base_vesting_account: Option<BaseVestingAccount>,
 }
 
@@ -132,7 +148,10 @@ impl From<DelayedVestingAccount> for proto::cosmos::vesting::v1beta1::DelayedVes
 /// Period defines a length of time and amount of coins that will vest.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Period {
+    /// Length of this vesting period in seconds.
     pub length: i64,
+
+    /// The amount of coins (per denomination) that will vest upon this period finishing.
     pub amount: Vec<Coin>,
 }
 
@@ -164,8 +183,14 @@ impl From<Period> for proto::cosmos::vesting::v1beta1::Period {
 /// periodically vests by unlocking coins during each specified period.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct PeriodicVestingAccount {
+    /// Base vesting account specification required for this vesting implementation.
     pub base_vesting_account: Option<BaseVestingAccount>,
+
+    /// The BFT time at which a vesting account starts to vest.
     pub start_time: i64,
+
+    /// Vesting [`Period`]s associated with this account. Periods are sequential,
+    /// in that the duration of a period only starts at the end of the previous period.
     pub vesting_periods: Vec<Period>,
 }
 
@@ -209,6 +234,7 @@ impl From<PeriodicVestingAccount> for proto::cosmos::vesting::v1beta1::PeriodicV
 /// still be used for delegating and for governance votes even while locked.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct PermanentLockedAccount {
+    /// Base vesting account specification required for this vesting implementation.
     pub base_vesting_account: Option<BaseVestingAccount>,
 }
 

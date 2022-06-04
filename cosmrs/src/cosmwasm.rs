@@ -9,6 +9,7 @@ use crate::{
 };
 use cosmos_sdk_proto::cosmwasm::wasm::v1::ContractCodeHistoryOperationType;
 
+/// The ID of a particular contract code assigned by the chain.
 pub type ContractCodeId = u64;
 
 /// AccessConfig access control type.
@@ -198,6 +199,7 @@ impl From<MsgInstantiateContract> for proto::cosmwasm::wasm::v1::MsgInstantiateC
 pub struct MsgInstantiateContractResponse {
     /// Address is the bech32 address of the new contract instance.
     pub address: AccountId,
+
     /// Data contains base64-encoded bytes to returned from the contract
     pub data: Vec<u8>,
 }
@@ -538,11 +540,13 @@ impl From<MsgClearAdminResponse> for proto::cosmwasm::wasm::v1::MsgClearAdminRes
     }
 }
 
+/// CodeInfoResponse contains code meta data from CodeInfo
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct CodeInfoResponse {
+    /// CodeId of the stored contract code.
     pub code_id: ContractCodeId,
 
-    /// Bech32 account address
+    /// Bech32 [`AccountId`] of the creator of this smart contract.
     pub creator: AccountId,
 
     /// sha256 hash of the code stored
@@ -571,11 +575,13 @@ impl From<CodeInfoResponse> for proto::cosmwasm::wasm::v1::CodeInfoResponse {
     }
 }
 
+/// QueryCodeResponse is the response type for the Query/Code RPC method.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct QueryCodeResponse {
+    /// If available, the associated code ID metadata.
     pub code_info: Option<CodeInfoResponse>,
 
-    /// The original wasm bytes
+    /// The original wasm bytes.
     pub data: Vec<u8>,
 }
 
@@ -599,13 +605,28 @@ impl From<QueryCodeResponse> for proto::cosmwasm::wasm::v1::QueryCodeResponse {
     }
 }
 
+/// ContractInfo stores a WASM contract instance
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub(crate) struct ContractInfo {
+    /// Reference to the stored Wasm code.
     code_id: ContractCodeId,
+
+    /// Creator address who initially instantiated the contract.
     creator: AccountId,
+
+    /// Admin is an optional address that can execute migrations.
     admin: Option<AccountId>,
+
+    /// Label is optional metadata to be stored with a contract instance.
     label: String,
+
+    /// Created Tx position when the contract was instantiated.
+    // Note that this data should kept internal and not be exposed via query results.
+    // Just use for sorting.
     created: Option<AbsoluteTxPosition>,
+
+    /// The IBC port ID assigned to this contract by wasmd.
+    /// This is set for all IBC contracts (https://github.com/CosmWasm/wasmd/blob/v0.16.0/x/wasm/keeper/keeper.go#L299-L306).
     ibc_port_id: String,
 }
 
@@ -641,12 +662,19 @@ impl From<ContractInfo> for proto::cosmwasm::wasm::v1::ContractInfo {
     }
 }
 
+/// ContractCodeHistoryEntry metadata to a contract.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct ContractCodeHistoryEntry {
-    /// The source of this history entry
+    /// The source of this history entry.
     pub operation: ContractCodeHistoryOperationType,
+
+    /// Reference to the stored Wasm code.
     pub code_id: ContractCodeId,
+
+    /// Updated Tx position when the operation was executed.
     pub updated: Option<AbsoluteTxPosition>,
+
+    /// Raw message returned by a wasm contract.
     pub msg: Vec<u8>,
 }
 
