@@ -4,10 +4,11 @@ This is a place for commonly shared rust resources related to the Cosmos ecosyst
 
 ## Crates
 
-| Name                 | Description                 | crates.io | docs.rs | CI Build |
-|----------------------|-----------------------------|-----------|---------|----------|
-| [`cosmrs`]           | Cosmos SDK for Rust         | [![crates.io][cosmrs-crate-img]][cosmrs-crate-link] | [![docs.rs][cosmrs-docs-img]][cosmrs-docs-link] | [![CI][cosmrs-ci-img]][cosmrs-ci-link] |
-| [`cosmos‑sdk‑proto`] | Proto and gRPC definitions  | [![crates.io][cosmos-sdk-proto-crate-img]][cosmrs-crate-link] | ![docs.rs][cosmos-sdk-proto-docs-img] | [![CI][cosmos-sdk-proto-ci-img]][cosmos-sdk-proto-ci-link] |
+| Name                 | Description                 | crates.io                                                     | docs.rs                                         | CI Build                                                   |
+|----------------------|-----------------------------|---------------------------------------------------------------|-------------------------------------------------|------------------------------------------------------------|
+| [`cosmrs`]           | Cosmos SDK for Rust         | [![crates.io][cosmrs-crate-img]][cosmrs-crate-link]           | [![docs.rs][cosmrs-docs-img]][cosmrs-docs-link] | [![CI][cosmrs-ci-img]][cosmrs-ci-link]                     |
+| [`cosmos‑sdk‑proto`] | Proto and gRPC definitions  | [![crates.io][cosmos-sdk-proto-crate-img]][cosmrs-crate-link] | ![docs.rs][cosmos-sdk-proto-docs-img]           | [![CI][cosmos-sdk-proto-ci-img]][cosmos-sdk-proto-ci-link] |
+| [`osmosis‑proto`]    | Proto and gRPC definitions  | [![crates.io][osmosis-crate-image]][osmosis-crate-link]       | ![docs.rs][osmosis-docs-image]                  | [![CI][osmosis-build-image]][osmosis-build-link]   |
 
 ## Merge Policy
 
@@ -40,6 +41,7 @@ Rust **1.56**
 
 [`cosmrs`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmrs
 [`cosmos‑sdk‑proto`]: https://github.com/cosmos/cosmos-rust/tree/main/cosmos-sdk-proto
+[`osmosis‑proto`]: https://github.com/cosmos/cosmos-rust/tree/main/osmosis-proto
 
 [//]: # "badges"
 
@@ -56,3 +58,13 @@ Rust **1.56**
 [cosmos-sdk-proto-docs-link]: https://docs.rs/cosmos-sdk-proto/
 [cosmos-sdk-proto-ci-img]: https://github.com/cosmos/cosmos-rust/workflows/cosmos-sdk-proto/badge.svg
 [cosmos-sdk-proto-ci-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/cosmos-sdk-proto.yml
+
+
+
+[osmosis-crate-image]: https://buildstats.info/crate/osmosis-proto
+[osmosis-crate-link]: https://crates.io/crates/osmosis-proto
+[osmosis-docs-image]: https://docs.rs/osmosis-proto/badge.svg
+[osmosis-docs-link]: https://docs.rs/osmosis-proto/
+
+[osmosis-build-image]: https://github.com/cosmos/cosmos-rust/workflows/osmosis-proto/badge.svg
+[osmosis-build-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/osmosis-proto.yml
