@@ -284,9 +284,9 @@ pub mod service_client {
             &mut self,
             request: impl tonic::IntoRequest<super::GetLatestValidatorSetRequest>,
         ) -> Result<
-                tonic::Response<super::GetLatestValidatorSetResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::GetLatestValidatorSetResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -307,9 +307,9 @@ pub mod service_client {
             &mut self,
             request: impl tonic::IntoRequest<super::GetValidatorSetByHeightRequest>,
         ) -> Result<
-                tonic::Response<super::GetValidatorSetByHeightResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::GetValidatorSetByHeightResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await

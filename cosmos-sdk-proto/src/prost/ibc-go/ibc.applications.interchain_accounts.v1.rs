@@ -1,10 +1,26 @@
-/// An InterchainAccount is defined as a BaseAccount & the address of the account owner on the controller chain
+/// Metadata defines a set of protocol specific data encoded into the ICS27 channel version bytestring
+/// See ICS004: <https://github.com/cosmos/ibc/tree/master/spec/core/ics-004-channel-and-packet-semantics#Versioning>
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct InterchainAccount {
-    #[prost(message, optional, tag="1")]
-    pub base_account: ::core::option::Option<super::super::super::super::cosmos::auth::v1beta1::BaseAccount>,
+pub struct Metadata {
+    /// version defines the ICS27 protocol version
+    #[prost(string, tag="1")]
+    pub version: ::prost::alloc::string::String,
+    /// controller_connection_id is the connection identifier associated with the controller chain
     #[prost(string, tag="2")]
-    pub account_owner: ::prost::alloc::string::String,
+    pub controller_connection_id: ::prost::alloc::string::String,
+    /// host_connection_id is the connection identifier associated with the host chain
+    #[prost(string, tag="3")]
+    pub host_connection_id: ::prost::alloc::string::String,
+    /// address defines the interchain account address to be fulfilled upon the OnChanOpenTry handshake step
+    /// NOTE: the address field is empty on the OnChanOpenInit handshake step
+    #[prost(string, tag="4")]
+    pub address: ::prost::alloc::string::String,
+    /// encoding defines the supported codec format
+    #[prost(string, tag="5")]
+    pub encoding: ::prost::alloc::string::String,
+    /// tx_type defines the type of transactions the interchain account can execute
+    #[prost(string, tag="6")]
+    pub tx_type: ::prost::alloc::string::String,
 }
 /// InterchainAccountPacketData is comprised of a raw transaction, type of transaction and optional memo field.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -32,29 +48,13 @@ pub enum Type {
     /// Execute a transaction on an interchain accounts host chain
     ExecuteTx = 1,
 }
-/// Metadata defines a set of protocol specific data encoded into the ICS27 channel version bytestring
-/// See ICS004: <https://github.com/cosmos/ibc/tree/master/spec/core/ics-004-channel-and-packet-semantics#Versioning>
+/// An InterchainAccount is defined as a BaseAccount & the address of the account owner on the controller chain
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Metadata {
-    /// version defines the ICS27 protocol version
-    #[prost(string, tag="1")]
-    pub version: ::prost::alloc::string::String,
-    /// controller_connection_id is the connection identifier associated with the controller chain
+pub struct InterchainAccount {
+    #[prost(message, optional, tag="1")]
+    pub base_account: ::core::option::Option<super::super::super::super::cosmos::auth::v1beta1::BaseAccount>,
     #[prost(string, tag="2")]
-    pub controller_connection_id: ::prost::alloc::string::String,
-    /// host_connection_id is the connection identifier associated with the host chain
-    #[prost(string, tag="3")]
-    pub host_connection_id: ::prost::alloc::string::String,
-    /// address defines the interchain account address to be fulfilled upon the OnChanOpenTry handshake step
-    /// NOTE: the address field is empty on the OnChanOpenInit handshake step
-    #[prost(string, tag="4")]
-    pub address: ::prost::alloc::string::String,
-    /// encoding defines the supported codec format
-    #[prost(string, tag="5")]
-    pub encoding: ::prost::alloc::string::String,
-    /// tx_type defines the type of transactions the interchain account can execute
-    #[prost(string, tag="6")]
-    pub tx_type: ::prost::alloc::string::String,
+    pub account_owner: ::prost::alloc::string::String,
 }
 /// GenesisState defines the interchain accounts genesis state
 #[derive(Clone, PartialEq, ::prost::Message)]

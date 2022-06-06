@@ -180,9 +180,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAnnualProvisionsRequest>,
         ) -> Result<
-                tonic::Response<super::QueryAnnualProvisionsResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryAnnualProvisionsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await

@@ -250,9 +250,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryUpgradedConsensusStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryUpgradedConsensusStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryUpgradedConsensusStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await

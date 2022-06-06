@@ -362,9 +362,9 @@ pub mod reflection_service_client {
             &mut self,
             request: impl tonic::IntoRequest<super::GetConfigurationDescriptorRequest>,
         ) -> Result<
-                tonic::Response<super::GetConfigurationDescriptorResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::GetConfigurationDescriptorResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -385,9 +385,9 @@ pub mod reflection_service_client {
             &mut self,
             request: impl tonic::IntoRequest<super::GetQueryServicesDescriptorRequest>,
         ) -> Result<
-                tonic::Response<super::GetQueryServicesDescriptorResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::GetQueryServicesDescriptorResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await

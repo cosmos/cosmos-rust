@@ -92,9 +92,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateVestingAccount>,
         ) -> Result<
-                tonic::Response<super::MsgCreateVestingAccountResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgCreateVestingAccountResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
