@@ -607,27 +607,27 @@ impl From<QueryCodeResponse> for proto::cosmwasm::wasm::v1::QueryCodeResponse {
 
 /// ContractInfo stores a WASM contract instance
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
-pub(crate) struct ContractInfo {
+pub struct ContractInfo {
     /// Reference to the stored Wasm code.
-    code_id: ContractCodeId,
+    pub code_id: ContractCodeId,
 
     /// Creator address who initially instantiated the contract.
-    creator: AccountId,
+    pub creator: AccountId,
 
     /// Admin is an optional address that can execute migrations.
-    admin: Option<AccountId>,
+    pub admin: Option<AccountId>,
 
     /// Label is optional metadata to be stored with a contract instance.
-    label: String,
+    pub label: String,
 
     /// Created Tx position when the contract was instantiated.
     // Note that this data should kept internal and not be exposed via query results.
     // Just use for sorting.
-    created: Option<AbsoluteTxPosition>,
+    pub created: Option<AbsoluteTxPosition>,
 
     /// The IBC port ID assigned to this contract by wasmd.
-    /// This is set for all IBC contracts (https://github.com/CosmWasm/wasmd/blob/v0.16.0/x/wasm/keeper/keeper.go#L299-L306).
-    ibc_port_id: String,
+    /// This is set for all IBC contracts (<https://github.com/CosmWasm/wasmd/blob/v0.16.0/x/wasm/keeper/keeper.go#L299-L306>).
+    pub ibc_port_id: String,
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1::ContractInfo> for ContractInfo {
