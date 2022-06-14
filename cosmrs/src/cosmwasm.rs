@@ -626,7 +626,7 @@ pub struct ContractInfo {
     pub created: Option<AbsoluteTxPosition>,
 
     /// The IBC port ID assigned to this contract by wasmd.
-    /// This is set for all IBC contracts (https://github.com/CosmWasm/wasmd/blob/v0.16.0/x/wasm/keeper/keeper.go#L299-L306).
+    /// This is set for all IBC contracts (<https://github.com/CosmWasm/wasmd/blob/v0.16.0/x/wasm/keeper/keeper.go#L299-L306>).
     pub ibc_port_id: String,
 }
 
