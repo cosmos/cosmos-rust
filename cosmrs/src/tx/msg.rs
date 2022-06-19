@@ -57,8 +57,23 @@ pub trait MsgProto: Default + MessageExt + Sized {
     }
 }
 
+
+
+
+impl MsgProto for proto::cosmos::crypto::secp256k1::PubKey {
+    const TYPE_URL: &'static str = "/cosmos.crypto.secp256k1.PubKey";
+}
+
 impl MsgProto for proto::cosmos::vesting::v1beta1::PeriodicVestingAccount {
     const TYPE_URL: &'static str = "/cosmos.vesting.v1beta1.PeriodicVestingAccount";
+}
+
+impl MsgProto for proto::cosmos::auth::v1beta1::BaseAccount {
+    const TYPE_URL: &'static str = "/cosmos.auth.v1beta1.BaseAccount";
+}
+
+impl MsgProto for proto::cosmos::auth::v1beta1::ModuleAccount {
+    const TYPE_URL: &'static str = "/cosmos.auth.v1beta1.ModuleAccount";
 }
 
 impl MsgProto for proto::cosmos::bank::v1beta1::MsgSend {
