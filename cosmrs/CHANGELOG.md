@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.7.1 (2022-06-09)
+### Added
+- `abci`, `auth`, `cosmwasm`, and `vesting` type wrappers ([#234])
+- `bank::MsgMultiSend` support ([#237])
+
+### Fixed
+- Remove unneeded generic type parameter to `SigningKey::derive_from_path` ([#243])
+
+[#234]: https://github.com/cosmos/cosmos-rust/pull/234
+[#237]: https://github.com/cosmos/cosmos-rust/pull/237
+[#243]: https://github.com/cosmos/cosmos-rust/pull/243
+
 ## 0.7.0 (2022-05-02)
 ### Changed
 - Bump tendermint-rs crates to v0.23.7 ([#215])
