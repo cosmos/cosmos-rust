@@ -87,8 +87,7 @@ fn main() {
     output_wasmd_version(&temp_wasmd_dir);
     compile_sdk_protos_and_services(&temp_sdk_dir);
     compile_ibc_protos_and_services(&temp_ibc_dir);
-    compile_wasmd_protos(&temp_wasmd_dir);
-    compile_wasmd_proto_services(&temp_wasmd_dir);
+    compile_wasmd_proto_and_services(&temp_wasmd_dir);
 
     copy_generated_files(&temp_sdk_dir, &proto_dir.join("cosmos-sdk"));
     copy_generated_files(&temp_ibc_dir, &proto_dir.join("ibc-go"));
@@ -166,42 +165,6 @@ fn output_wasmd_version(out_dir: &Path) {
     fs::write(path, WASMD_REV).unwrap();
 }
 
-fn compile_wasmd_protos(out_dir: &Path) {
-    let sdk_dir = Path::new(WASMD_DIR);
-
-    info!(
-        "Compiling .proto files to Rust into '{}'...",
-        out_dir.display()
-    );
-
-    let root = env!("CARGO_MANIFEST_DIR");
-
-    // Paths
-    let proto_paths = [format!("{}/proto/cosmwasm/wasm", sdk_dir.display())];
-
-    let proto_includes_paths = [
-        format!("{}/../proto", root),
-        format!("{}/proto", sdk_dir.display()),
-        format!("{}/third_party/proto", sdk_dir.display()),
-    ];
-    // List available proto files
-    let mut protos: Vec<PathBuf> = vec![];
-    collect_protos(&proto_paths, &mut protos);
-
-    // List available paths for dependencies
-    let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
-
-    // Compile all proto files
-    let mut config = prost_build::Config::default();
-    config.out_dir(out_dir);
-    config.extern_path(".tendermint", "::tendermint_proto");
-
-    if let Err(e) = config.compile_protos(&protos, &includes) {
-        eprintln!("[error] couldn't compile protos: {}", e);
-        panic!("protoc failed!");
-    }
-}
-
 fn compile_sdk_protos_and_services(out_dir: &Path) {
     info!(
         "Compiling cosmos-sdk .proto files to Rust into '{}'...",
@@ -262,7 +225,7 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
     info!("=> Done!");
 }
 
-fn compile_wasmd_proto_services(out_dir: &Path) {
+fn compile_wasmd_proto_and_services(out_dir: &Path) {
     let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let sdk_dir = PathBuf::from(WASMD_DIR);
 
@@ -273,21 +236,13 @@ fn compile_wasmd_proto_services(out_dir: &Path) {
     ];
 
     // List available paths for dependencies
-    let includes = proto_includes_paths
-        .iter()
-        .map(|p| p.as_os_str().to_os_string())
-        .collect::<Vec<_>>();
+    let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
 
-    let proto_services_path = [
-        sdk_dir.join("proto/cosmwasm/wasm/v1/query.proto"),
-        sdk_dir.join("proto/cosmwasm/wasm/v1/tx.proto"),
-    ];
+    let proto_paths = [format!("{}/proto/cosmwasm/wasm", sdk_dir.display())];
 
-    // List available paths for dependencies
-    let services = proto_services_path
-        .iter()
-        .map(|p| p.as_os_str().to_os_string())
-        .collect::<Vec<_>>();
+    // List available proto files
+    let mut protos: Vec<PathBuf> = vec![];
+    collect_protos(&proto_paths, &mut protos);
 
     // Compile all proto client for GRPC services
     info!("Compiling wasmd proto clients for GRPC services!");
@@ -295,7 +250,7 @@ fn compile_wasmd_proto_services(out_dir: &Path) {
         .build_client(true)
         .build_server(false)
         .out_dir(out_dir)
-        .compile(&services, &includes)
+        .compile(&protos, &includes)
         .unwrap();
 
     info!("=> Done!");

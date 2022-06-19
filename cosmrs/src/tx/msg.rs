@@ -80,6 +80,10 @@ impl MsgProto for proto::cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }
 
+impl MsgProto for proto::cosmos::bank::v1beta1::MsgMultiSend {
+    const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgMultiSend";
+}
+
 impl MsgProto for proto::cosmos::distribution::v1beta1::MsgSetWithdrawAddress {
     const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress";
 }
@@ -106,6 +110,14 @@ impl MsgProto for proto::cosmos::staking::v1beta1::MsgUndelegate {
 
 impl MsgProto for proto::cosmos::staking::v1beta1::MsgBeginRedelegate {
     const TYPE_URL: &'static str = "/cosmos.staking.v1beta1.MsgBeginRedelegate";
+}
+
+impl MsgProto for proto::cosmos::base::abci::v1beta1::MsgData {
+    const TYPE_URL: &'static str = "/cosmos.base.v1beta1.abci.MsgData";
+}
+
+impl MsgProto for proto::cosmos::base::abci::v1beta1::TxMsgData {
+    const TYPE_URL: &'static str = "/cosmos.base.v1beta1.abci.TxMsgData";
 }
 
 #[cfg(feature = "cosmwasm")]
@@ -136,4 +148,34 @@ impl MsgProto for proto::cosmwasm::wasm::v1::MsgUpdateAdmin {
 #[cfg(feature = "cosmwasm")]
 impl MsgProto for proto::cosmwasm::wasm::v1::MsgClearAdmin {
     const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdmin";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgStoreCodeResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCodeResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgInstantiateContractResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgInstantiateContractResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgExecuteContractResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgExecuteContractResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgMigrateContractResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgMigrateContractResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgUpdateAdminResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgUpdateAdminResponse";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl MsgProto for proto::cosmwasm::wasm::v1::MsgClearAdminResponse {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdminResponse";
 }

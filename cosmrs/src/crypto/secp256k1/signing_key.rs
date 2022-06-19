@@ -49,7 +49,7 @@ impl SigningKey {
     /// therefore you can use `parse()` to parse it from a string.
     #[cfg(feature = "bip32")]
     #[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
-    pub fn derive_from_path<S>(
+    pub fn derive_from_path(
         seed: impl AsRef<[u8]>,
         path: &bip32::DerivationPath,
     ) -> bip32::Result<Self> {
