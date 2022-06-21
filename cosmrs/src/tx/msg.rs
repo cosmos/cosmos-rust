@@ -81,6 +81,26 @@ impl MsgProto for proto::cosmos::distribution::v1beta1::MsgFundCommunityPool {
     const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.MsgFundCommunityPool";
 }
 
+impl MsgProto for proto::cosmos::feegrant::v1beta1::MsgGrantAllowance {
+    const TYPE_URL: &'static str = "/cosmos.feegrant.v1beta1.MsgGrantAllowance";
+}
+
+impl MsgProto for proto::cosmos::feegrant::v1beta1::MsgRevokeAllowance {
+    const TYPE_URL: &'static str = "/cosmos.feegrant.v1beta1.MsgRevokeAllowance";
+}
+
+impl MsgProto for proto::cosmos::feegrant::v1beta1::BasicAllowance {
+    const TYPE_URL: &'static str = "/cosmos.feegrant.v1beta1.BasicAllowance";
+}
+
+impl MsgProto for proto::cosmos::feegrant::v1beta1::PeriodicAllowance {
+    const TYPE_URL: &'static str = "/cosmos.feegrant.v1beta1.PeriodicAllowance";
+}
+
+impl MsgProto for proto::cosmos::feegrant::v1beta1::AllowedMsgAllowance {
+    const TYPE_URL: &'static str = "/cosmos.feegrant.v1beta1.AllowedMsgAllowance";
+}
+
 impl MsgProto for proto::cosmos::staking::v1beta1::MsgDelegate {
     const TYPE_URL: &'static str = "/cosmos.staking.v1beta1.MsgDelegate";
 }

@@ -22,6 +22,7 @@ pub mod auth;
 pub mod bank;
 pub mod crypto;
 pub mod distribution;
+pub mod feegrant;
 pub mod staking;
 pub mod tx;
 pub mod vesting;
