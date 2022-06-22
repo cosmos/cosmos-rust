@@ -59,6 +59,24 @@ pub trait MsgProto: Default + MessageExt + Sized {
 
 
 
+impl MsgProto for proto::ibc::core::client::v1::ClientUpdateProposal {
+    const TYPE_URL: &'static str = "/ibc.core.client.v1.ClientUpdateProposal";
+}
+
+impl MsgProto for proto::cosmos::upgrade::v1beta1::SoftwareUpgradeProposal {
+    const TYPE_URL: &'static str = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal";
+}
+
+impl MsgProto for proto::cosmos::params::v1beta1::ParameterChangeProposal {
+    const TYPE_URL: &'static str = "/cosmos.params.v1beta1.ParameterChangeProposal";
+}
+
+impl MsgProto for proto::cosmos::distribution::v1beta1::CommunityPoolSpendProposal {
+    const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal";
+}
+impl MsgProto for proto::cosmos::gov::v1beta1::TextProposal{
+    const TYPE_URL: &'static str = "/cosmos.gov.v1beta1.TextProposal";
+}
 
 impl MsgProto for proto::cosmos::crypto::secp256k1::PubKey {
     const TYPE_URL: &'static str = "/cosmos.crypto.secp256k1.PubKey";

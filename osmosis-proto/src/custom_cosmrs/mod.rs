@@ -65,3 +65,7 @@ pub trait MsgProto: Default + MessageExt + Sized {
 impl MsgProto for super::osmosis::gamm::v1beta1::Pool {
     const TYPE_URL: &'static str = "/osmosis.gamm.v1beta1.Pool";
 }
+#[cfg(feature = "osmosis")]
+impl MsgProto for super::osmosis::poolincentives::v1beta1::UpdatePoolIncentivesProposal {
+    const TYPE_URL: &'static str = "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal";
+}
