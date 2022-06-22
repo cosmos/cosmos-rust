@@ -507,9 +507,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgChannelOpenConfirm>,
         ) -> Result<
-                tonic::Response<super::MsgChannelOpenConfirmResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgChannelOpenConfirmResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -551,9 +551,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgChannelCloseConfirm>,
         ) -> Result<
-                tonic::Response<super::MsgChannelCloseConfirmResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgChannelCloseConfirmResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1114,9 +1114,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConnectionChannelsRequest>,
         ) -> Result<
-                tonic::Response<super::QueryConnectionChannelsResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryConnectionChannelsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1138,9 +1138,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryChannelClientStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryChannelClientStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryChannelClientStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1162,9 +1162,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryChannelConsensusStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryChannelConsensusStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryChannelConsensusStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1185,9 +1185,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPacketCommitmentRequest>,
         ) -> Result<
-                tonic::Response<super::QueryPacketCommitmentResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryPacketCommitmentResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1209,9 +1209,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPacketCommitmentsRequest>,
         ) -> Result<
-                tonic::Response<super::QueryPacketCommitmentsResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryPacketCommitmentsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1253,9 +1253,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPacketAcknowledgementRequest>,
         ) -> Result<
-                tonic::Response<super::QueryPacketAcknowledgementResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryPacketAcknowledgementResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1277,9 +1277,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPacketAcknowledgementsRequest>,
         ) -> Result<
-                tonic::Response<super::QueryPacketAcknowledgementsResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryPacketAcknowledgementsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1301,9 +1301,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryUnreceivedPacketsRequest>,
         ) -> Result<
-                tonic::Response<super::QueryUnreceivedPacketsResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryUnreceivedPacketsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -1345,9 +1345,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryNextSequenceReceiveRequest>,
         ) -> Result<
-                tonic::Response<super::QueryNextSequenceReceiveResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryNextSequenceReceiveResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await

@@ -216,7 +216,7 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
     info!("Compiling proto definitions and clients for GRPC services!");
     tonic_build::configure()
         .build_client(true)
-        .build_server(false)
+        .build_server(true)
         .out_dir(out_dir)
         .extern_path(".tendermint", "::tendermint_proto")
         .compile(&protos, &includes)

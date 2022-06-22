@@ -350,9 +350,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgInstantiateContract>,
         ) -> Result<
-                tonic::Response<super::MsgInstantiateContractResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgInstantiateContractResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -723,9 +723,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractHistoryRequest>,
         ) -> Result<
-                tonic::Response<super::QueryContractHistoryResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryContractHistoryResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -746,9 +746,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractsByCodeRequest>,
         ) -> Result<
-                tonic::Response<super::QueryContractsByCodeResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryContractsByCodeResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -769,9 +769,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAllContractStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryAllContractStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryAllContractStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -792,9 +792,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryRawContractStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryRawContractStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryRawContractStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -815,9 +815,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QuerySmartContractStateRequest>,
         ) -> Result<
-                tonic::Response<super::QuerySmartContractStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QuerySmartContractStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
