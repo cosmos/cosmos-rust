@@ -378,6 +378,20 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
              #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
              impl ${1}Client<tonic::transport::Channel>",
         ),
+        // Feature-gate gRPC server modules
+        (
+            "/// Generated server implementations.",
+            "/// Generated server implementations.\n\
+             #[cfg(feature = \"grpc\")]\n\
+             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
+        ),
+        // Feature-gate gRPC server impls which use `tonic::transport`
+        (
+            "impl(.+) tonic::transport(.+) for (.+)Server",
+            "#[cfg(feature = \"grpc-transport\")]\n    \
+             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
+             impl${1} tonic::transport${2} for ${3}Server",
+        ),
     ];
 
     // Skip proto files belonging to `EXCLUDED_PROTO_PACKAGES`

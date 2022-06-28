@@ -102,6 +102,8 @@ pub mod msg_client {
     }
 }
 /// Generated server implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 pub mod msg_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
@@ -235,6 +237,8 @@ pub mod msg_server {
             write!(f, "{:?}", self.0)
         }
     }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
     impl<T: Msg> tonic::transport::NamedService for MsgServer<T> {
         const NAME: &'static str = "cosmos.slashing.v1beta1.Msg";
     }
@@ -454,6 +458,8 @@ pub mod query_client {
     }
 }
 /// Generated server implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 pub mod query_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
@@ -675,6 +681,8 @@ pub mod query_server {
             write!(f, "{:?}", self.0)
         }
     }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
     impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.slashing.v1beta1.Query";
     }

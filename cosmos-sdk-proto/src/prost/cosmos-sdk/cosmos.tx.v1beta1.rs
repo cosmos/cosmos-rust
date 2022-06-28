@@ -507,6 +507,8 @@ pub mod service_client {
     }
 }
 /// Generated server implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 pub mod service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
@@ -816,6 +818,8 @@ pub mod service_server {
             write!(f, "{:?}", self.0)
         }
     }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
     impl<T: Service> tonic::transport::NamedService for ServiceServer<T> {
         const NAME: &'static str = "cosmos.tx.v1beta1.Service";
     }
