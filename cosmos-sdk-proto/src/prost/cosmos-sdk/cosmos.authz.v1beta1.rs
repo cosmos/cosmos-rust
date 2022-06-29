@@ -216,6 +216,234 @@ pub mod msg_client {
         }
     }
 }
+/// Generated server implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+pub mod msg_server {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    ///Generated trait containing gRPC methods that should be implemented for use with MsgServer.
+    #[async_trait]
+    pub trait Msg: Send + Sync + 'static {
+        /// Grant grants the provided authorization to the grantee on the granter's
+        /// account with the provided expiration time. If there is already a grant
+        /// for the given (granter, grantee, Authorization) triple, then the grant
+        /// will be overwritten.
+        async fn grant(
+            &self,
+            request: tonic::Request<super::MsgGrant>,
+        ) -> Result<tonic::Response<super::MsgGrantResponse>, tonic::Status>;
+        /// Exec attempts to execute the provided messages using
+        /// authorizations granted to the grantee. Each message should have only
+        /// one signer corresponding to the granter of the authorization.
+        async fn exec(
+            &self,
+            request: tonic::Request<super::MsgExec>,
+        ) -> Result<tonic::Response<super::MsgExecResponse>, tonic::Status>;
+        /// Revoke revokes any authorization corresponding to the provided method name on the
+        /// granter's account that has been granted to the grantee.
+        async fn revoke(
+            &self,
+            request: tonic::Request<super::MsgRevoke>,
+        ) -> Result<tonic::Response<super::MsgRevokeResponse>, tonic::Status>;
+    }
+    /// Msg defines the authz Msg service.
+    #[derive(Debug)]
+    pub struct MsgServer<T: Msg> {
+        inner: _Inner<T>,
+        accept_compression_encodings: (),
+        send_compression_encodings: (),
+    }
+    struct _Inner<T>(Arc<T>);
+    impl<T: Msg> MsgServer<T> {
+        pub fn new(inner: T) -> Self {
+            Self::from_arc(Arc::new(inner))
+        }
+        pub fn from_arc(inner: Arc<T>) -> Self {
+            let inner = _Inner(inner);
+            Self {
+                inner,
+                accept_compression_encodings: Default::default(),
+                send_compression_encodings: Default::default(),
+            }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
+        where
+            F: tonic::service::Interceptor,
+        {
+            InterceptedService::new(Self::new(inner), interceptor)
+        }
+    }
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for MsgServer<T>
+    where
+        T: Msg,
+        B: Body + Send + 'static,
+        B::Error: Into<StdError> + Send + 'static,
+    {
+        type Response = http::Response<tonic::body::BoxBody>;
+        type Error = std::convert::Infallible;
+        type Future = BoxFuture<Self::Response, Self::Error>;
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
+            Poll::Ready(Ok(()))
+        }
+        fn call(&mut self, req: http::Request<B>) -> Self::Future {
+            let inner = self.inner.clone();
+            match req.uri().path() {
+                "/cosmos.authz.v1beta1.Msg/Grant" => {
+                    #[allow(non_camel_case_types)]
+                    struct GrantSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgGrant>
+                    for GrantSvc<T> {
+                        type Response = super::MsgGrantResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgGrant>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).grant(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = GrantSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.authz.v1beta1.Msg/Exec" => {
+                    #[allow(non_camel_case_types)]
+                    struct ExecSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgExec>
+                    for ExecSvc<T> {
+                        type Response = super::MsgExecResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgExec>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).exec(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = ExecSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.authz.v1beta1.Msg/Revoke" => {
+                    #[allow(non_camel_case_types)]
+                    struct RevokeSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgRevoke>
+                    for RevokeSvc<T> {
+                        type Response = super::MsgRevokeResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgRevoke>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).revoke(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = RevokeSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
+            }
+        }
+    }
+    impl<T: Msg> Clone for MsgServer<T> {
+        fn clone(&self) -> Self {
+            let inner = self.inner.clone();
+            Self {
+                inner,
+                accept_compression_encodings: self.accept_compression_encodings,
+                send_compression_encodings: self.send_compression_encodings,
+            }
+        }
+    }
+    impl<T: Msg> Clone for _Inner<T> {
+        fn clone(&self) -> Self {
+            Self(self.0.clone())
+        }
+    }
+    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{:?}", self.0)
+        }
+    }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
+    impl<T: Msg> tonic::transport::NamedService for MsgServer<T> {
+        const NAME: &'static str = "cosmos.authz.v1beta1.Msg";
+    }
+}
 /// QueryGrantsRequest is the request type for the Query/Grants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsRequest {
@@ -411,6 +639,240 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+    }
+}
+/// Generated server implementations.
+#[cfg(feature = "grpc")]
+#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
+pub mod query_server {
+    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::*;
+    ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
+    #[async_trait]
+    pub trait Query: Send + Sync + 'static {
+        /// Returns list of `Authorization`, granted to the grantee by the granter.
+        async fn grants(
+            &self,
+            request: tonic::Request<super::QueryGrantsRequest>,
+        ) -> Result<tonic::Response<super::QueryGrantsResponse>, tonic::Status>;
+        /// GranterGrants returns list of `GrantAuthorization`, granted by granter.
+        ///
+        /// Since: cosmos-sdk 0.45.2
+        async fn granter_grants(
+            &self,
+            request: tonic::Request<super::QueryGranterGrantsRequest>,
+        ) -> Result<tonic::Response<super::QueryGranterGrantsResponse>, tonic::Status>;
+        /// GranteeGrants returns a list of `GrantAuthorization` by grantee.
+        ///
+        /// Since: cosmos-sdk 0.45.2
+        async fn grantee_grants(
+            &self,
+            request: tonic::Request<super::QueryGranteeGrantsRequest>,
+        ) -> Result<tonic::Response<super::QueryGranteeGrantsResponse>, tonic::Status>;
+    }
+    /// Query defines the gRPC querier service.
+    #[derive(Debug)]
+    pub struct QueryServer<T: Query> {
+        inner: _Inner<T>,
+        accept_compression_encodings: (),
+        send_compression_encodings: (),
+    }
+    struct _Inner<T>(Arc<T>);
+    impl<T: Query> QueryServer<T> {
+        pub fn new(inner: T) -> Self {
+            Self::from_arc(Arc::new(inner))
+        }
+        pub fn from_arc(inner: Arc<T>) -> Self {
+            let inner = _Inner(inner);
+            Self {
+                inner,
+                accept_compression_encodings: Default::default(),
+                send_compression_encodings: Default::default(),
+            }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> InterceptedService<Self, F>
+        where
+            F: tonic::service::Interceptor,
+        {
+            InterceptedService::new(Self::new(inner), interceptor)
+        }
+    }
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for QueryServer<T>
+    where
+        T: Query,
+        B: Body + Send + 'static,
+        B::Error: Into<StdError> + Send + 'static,
+    {
+        type Response = http::Response<tonic::body::BoxBody>;
+        type Error = std::convert::Infallible;
+        type Future = BoxFuture<Self::Response, Self::Error>;
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<Result<(), Self::Error>> {
+            Poll::Ready(Ok(()))
+        }
+        fn call(&mut self, req: http::Request<B>) -> Self::Future {
+            let inner = self.inner.clone();
+            match req.uri().path() {
+                "/cosmos.authz.v1beta1.Query/Grants" => {
+                    #[allow(non_camel_case_types)]
+                    struct GrantsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryGrantsRequest>
+                    for GrantsSvc<T> {
+                        type Response = super::QueryGrantsResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryGrantsRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).grants(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = GrantsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.authz.v1beta1.Query/GranterGrants" => {
+                    #[allow(non_camel_case_types)]
+                    struct GranterGrantsSvc<T: Query>(pub Arc<T>);
+                    impl<
+                        T: Query,
+                    > tonic::server::UnaryService<super::QueryGranterGrantsRequest>
+                    for GranterGrantsSvc<T> {
+                        type Response = super::QueryGranterGrantsResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryGranterGrantsRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).granter_grants(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = GranterGrantsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.authz.v1beta1.Query/GranteeGrants" => {
+                    #[allow(non_camel_case_types)]
+                    struct GranteeGrantsSvc<T: Query>(pub Arc<T>);
+                    impl<
+                        T: Query,
+                    > tonic::server::UnaryService<super::QueryGranteeGrantsRequest>
+                    for GranteeGrantsSvc<T> {
+                        type Response = super::QueryGranteeGrantsResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryGranteeGrantsRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).grantee_grants(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = GranteeGrantsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                _ => {
+                    Box::pin(async move {
+                        Ok(
+                            http::Response::builder()
+                                .status(200)
+                                .header("grpc-status", "12")
+                                .header("content-type", "application/grpc")
+                                .body(empty_body())
+                                .unwrap(),
+                        )
+                    })
+                }
+            }
+        }
+    }
+    impl<T: Query> Clone for QueryServer<T> {
+        fn clone(&self) -> Self {
+            let inner = self.inner.clone();
+            Self {
+                inner,
+                accept_compression_encodings: self.accept_compression_encodings,
+                send_compression_encodings: self.send_compression_encodings,
+            }
+        }
+    }
+    impl<T: Query> Clone for _Inner<T> {
+        fn clone(&self) -> Self {
+            Self(self.0.clone())
+        }
+    }
+    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{:?}", self.0)
+        }
+    }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
+    impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
+        const NAME: &'static str = "cosmos.authz.v1beta1.Query";
     }
 }
 /// EventGrant is emitted on Msg/Grant

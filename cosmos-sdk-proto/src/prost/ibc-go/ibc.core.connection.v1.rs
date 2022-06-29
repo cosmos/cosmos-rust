@@ -302,9 +302,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenInit>,
         ) -> Result<
-                tonic::Response<super::MsgConnectionOpenInitResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgConnectionOpenInitResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -325,9 +325,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenTry>,
         ) -> Result<
-                tonic::Response<super::MsgConnectionOpenTryResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgConnectionOpenTryResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -348,9 +348,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenAck>,
         ) -> Result<
-                tonic::Response<super::MsgConnectionOpenAckResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgConnectionOpenAckResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -372,9 +372,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenConfirm>,
         ) -> Result<
-                tonic::Response<super::MsgConnectionOpenConfirmResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgConnectionOpenConfirmResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -624,9 +624,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryClientConnectionsRequest>,
         ) -> Result<
-                tonic::Response<super::QueryClientConnectionsResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryClientConnectionsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -648,9 +648,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConnectionClientStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryConnectionClientStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryConnectionClientStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -672,9 +672,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConnectionConsensusStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryConnectionConsensusStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryConnectionConsensusStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await

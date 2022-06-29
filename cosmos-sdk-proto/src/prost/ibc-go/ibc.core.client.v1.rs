@@ -313,9 +313,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgSubmitMisbehaviour>,
         ) -> Result<
-                tonic::Response<super::MsgSubmitMisbehaviourResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::MsgSubmitMisbehaviourResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -620,9 +620,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConsensusStatesRequest>,
         ) -> Result<
-                tonic::Response<super::QueryConsensusStatesResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryConsensusStatesResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -683,9 +683,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryUpgradedClientStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryUpgradedClientStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryUpgradedClientStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -706,9 +706,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryUpgradedConsensusStateRequest>,
         ) -> Result<
-                tonic::Response<super::QueryUpgradedConsensusStateResponse>,
-                tonic::Status,
-            > {
+            tonic::Response<super::QueryUpgradedConsensusStateResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
