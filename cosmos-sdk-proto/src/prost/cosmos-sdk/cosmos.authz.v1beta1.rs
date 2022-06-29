@@ -30,6 +30,38 @@ pub struct GrantAuthorization {
     #[prost(message, optional, tag="4")]
     pub expiration: ::core::option::Option<::prost_types::Timestamp>,
 }
+/// GenesisState defines the authz module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    #[prost(message, repeated, tag="1")]
+    pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
+}
+/// EventGrant is emitted on Msg/Grant
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventGrant {
+    /// Msg type URL for which an autorization is granted
+    #[prost(string, tag="2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag="3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag="4")]
+    pub grantee: ::prost::alloc::string::String,
+}
+/// EventRevoke is emitted on Msg/Revoke
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventRevoke {
+    /// Msg type URL for which an autorization is revoked
+    #[prost(string, tag="2")]
+    pub msg_type_url: ::prost::alloc::string::String,
+    /// Granter account address
+    #[prost(string, tag="3")]
+    pub granter: ::prost::alloc::string::String,
+    /// Grantee account address
+    #[prost(string, tag="4")]
+    pub grantee: ::prost::alloc::string::String,
+}
 /// MsgGrant is a request type for Grant method. It declares authorization to the grantee
 /// on behalf of the granter with the provided expiration time.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -874,36 +906,4 @@ pub mod query_server {
     impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.authz.v1beta1.Query";
     }
-}
-/// EventGrant is emitted on Msg/Grant
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventGrant {
-    /// Msg type URL for which an autorization is granted
-    #[prost(string, tag="2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag="3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag="4")]
-    pub grantee: ::prost::alloc::string::String,
-}
-/// EventRevoke is emitted on Msg/Revoke
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct EventRevoke {
-    /// Msg type URL for which an autorization is revoked
-    #[prost(string, tag="2")]
-    pub msg_type_url: ::prost::alloc::string::String,
-    /// Granter account address
-    #[prost(string, tag="3")]
-    pub granter: ::prost::alloc::string::String,
-    /// Grantee account address
-    #[prost(string, tag="4")]
-    pub grantee: ::prost::alloc::string::String,
-}
-/// GenesisState defines the authz module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    #[prost(message, repeated, tag="1")]
-    pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
 }

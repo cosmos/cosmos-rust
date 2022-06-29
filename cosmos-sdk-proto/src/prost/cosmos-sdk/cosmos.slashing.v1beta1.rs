@@ -1,3 +1,89 @@
+/// ValidatorSigningInfo defines a validator's signing info for monitoring their
+/// liveness activity.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorSigningInfo {
+    #[prost(string, tag="1")]
+    pub address: ::prost::alloc::string::String,
+    /// Height at which validator was first a candidate OR was unjailed
+    #[prost(int64, tag="2")]
+    pub start_height: i64,
+    /// Index which is incremented each time the validator was a bonded
+    /// in a block and may have signed a precommit or not. This in conjunction with the
+    /// `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
+    #[prost(int64, tag="3")]
+    pub index_offset: i64,
+    /// Timestamp until which the validator is jailed due to liveness downtime.
+    #[prost(message, optional, tag="4")]
+    pub jailed_until: ::core::option::Option<::prost_types::Timestamp>,
+    /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
+    /// once the validator commits an equivocation or for any other configured misbehiavor.
+    #[prost(bool, tag="5")]
+    pub tombstoned: bool,
+    /// A counter kept to avoid unnecessary array reads.
+    /// Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
+    #[prost(int64, tag="6")]
+    pub missed_blocks_counter: i64,
+}
+/// Params represents the parameters used for by the slashing module.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Params {
+    #[prost(int64, tag="1")]
+    pub signed_blocks_window: i64,
+    #[prost(bytes="vec", tag="2")]
+    pub min_signed_per_window: ::prost::alloc::vec::Vec<u8>,
+    #[prost(message, optional, tag="3")]
+    pub downtime_jail_duration: ::core::option::Option<::prost_types::Duration>,
+    #[prost(bytes="vec", tag="4")]
+    pub slash_fraction_double_sign: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes="vec", tag="5")]
+    pub slash_fraction_downtime: ::prost::alloc::vec::Vec<u8>,
+}
+/// GenesisState defines the slashing module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// params defines all the paramaters of related to deposit.
+    #[prost(message, optional, tag="1")]
+    pub params: ::core::option::Option<Params>,
+    /// signing_infos represents a map between validator addresses and their
+    /// signing infos.
+    #[prost(message, repeated, tag="2")]
+    pub signing_infos: ::prost::alloc::vec::Vec<SigningInfo>,
+    /// missed_blocks represents a map between validator addresses and their
+    /// missed blocks.
+    #[prost(message, repeated, tag="3")]
+    pub missed_blocks: ::prost::alloc::vec::Vec<ValidatorMissedBlocks>,
+}
+/// SigningInfo stores validator signing info of corresponding address.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SigningInfo {
+    /// address is the validator address.
+    #[prost(string, tag="1")]
+    pub address: ::prost::alloc::string::String,
+    /// validator_signing_info represents the signing info of this validator.
+    #[prost(message, optional, tag="2")]
+    pub validator_signing_info: ::core::option::Option<ValidatorSigningInfo>,
+}
+/// ValidatorMissedBlocks contains array of missed blocks of corresponding
+/// address.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorMissedBlocks {
+    /// address is the validator address.
+    #[prost(string, tag="1")]
+    pub address: ::prost::alloc::string::String,
+    /// missed_blocks is an array of missed blocks by the validator.
+    #[prost(message, repeated, tag="2")]
+    pub missed_blocks: ::prost::alloc::vec::Vec<MissedBlock>,
+}
+/// MissedBlock contains height and missed status as boolean.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MissedBlock {
+    /// index is the height at which the block was missed.
+    #[prost(int64, tag="1")]
+    pub index: i64,
+    /// missed is the missed status.
+    #[prost(bool, tag="2")]
+    pub missed: bool,
+}
 /// MsgUnjail defines the Msg/Unjail request type
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUnjail {
@@ -242,46 +328,6 @@ pub mod msg_server {
     impl<T: Msg> tonic::transport::NamedService for MsgServer<T> {
         const NAME: &'static str = "cosmos.slashing.v1beta1.Msg";
     }
-}
-/// ValidatorSigningInfo defines a validator's signing info for monitoring their
-/// liveness activity.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorSigningInfo {
-    #[prost(string, tag="1")]
-    pub address: ::prost::alloc::string::String,
-    /// Height at which validator was first a candidate OR was unjailed
-    #[prost(int64, tag="2")]
-    pub start_height: i64,
-    /// Index which is incremented each time the validator was a bonded
-    /// in a block and may have signed a precommit or not. This in conjunction with the
-    /// `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
-    #[prost(int64, tag="3")]
-    pub index_offset: i64,
-    /// Timestamp until which the validator is jailed due to liveness downtime.
-    #[prost(message, optional, tag="4")]
-    pub jailed_until: ::core::option::Option<::prost_types::Timestamp>,
-    /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
-    /// once the validator commits an equivocation or for any other configured misbehiavor.
-    #[prost(bool, tag="5")]
-    pub tombstoned: bool,
-    /// A counter kept to avoid unnecessary array reads.
-    /// Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
-    #[prost(int64, tag="6")]
-    pub missed_blocks_counter: i64,
-}
-/// Params represents the parameters used for by the slashing module.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Params {
-    #[prost(int64, tag="1")]
-    pub signed_blocks_window: i64,
-    #[prost(bytes="vec", tag="2")]
-    pub min_signed_per_window: ::prost::alloc::vec::Vec<u8>,
-    #[prost(message, optional, tag="3")]
-    pub downtime_jail_duration: ::core::option::Option<::prost_types::Duration>,
-    #[prost(bytes="vec", tag="4")]
-    pub slash_fraction_double_sign: ::prost::alloc::vec::Vec<u8>,
-    #[prost(bytes="vec", tag="5")]
-    pub slash_fraction_downtime: ::prost::alloc::vec::Vec<u8>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -686,50 +732,4 @@ pub mod query_server {
     impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.slashing.v1beta1.Query";
     }
-}
-/// GenesisState defines the slashing module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    /// params defines all the paramaters of related to deposit.
-    #[prost(message, optional, tag="1")]
-    pub params: ::core::option::Option<Params>,
-    /// signing_infos represents a map between validator addresses and their
-    /// signing infos.
-    #[prost(message, repeated, tag="2")]
-    pub signing_infos: ::prost::alloc::vec::Vec<SigningInfo>,
-    /// missed_blocks represents a map between validator addresses and their
-    /// missed blocks.
-    #[prost(message, repeated, tag="3")]
-    pub missed_blocks: ::prost::alloc::vec::Vec<ValidatorMissedBlocks>,
-}
-/// SigningInfo stores validator signing info of corresponding address.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SigningInfo {
-    /// address is the validator address.
-    #[prost(string, tag="1")]
-    pub address: ::prost::alloc::string::String,
-    /// validator_signing_info represents the signing info of this validator.
-    #[prost(message, optional, tag="2")]
-    pub validator_signing_info: ::core::option::Option<ValidatorSigningInfo>,
-}
-/// ValidatorMissedBlocks contains array of missed blocks of corresponding
-/// address.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorMissedBlocks {
-    /// address is the validator address.
-    #[prost(string, tag="1")]
-    pub address: ::prost::alloc::string::String,
-    /// missed_blocks is an array of missed blocks by the validator.
-    #[prost(message, repeated, tag="2")]
-    pub missed_blocks: ::prost::alloc::vec::Vec<MissedBlock>,
-}
-/// MissedBlock contains height and missed status as boolean.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MissedBlock {
-    /// index is the height at which the block was missed.
-    #[prost(int64, tag="1")]
-    pub index: i64,
-    /// missed is the missed status.
-    #[prost(bool, tag="2")]
-    pub missed: bool,
 }

@@ -289,6 +289,96 @@ pub enum BondStatus {
     /// BONDED defines a validator that is bonded.
     Bonded = 3,
 }
+/// GenesisState defines the staking module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// params defines all the paramaters of related to deposit.
+    #[prost(message, optional, tag="1")]
+    pub params: ::core::option::Option<Params>,
+    /// last_total_power tracks the total amounts of bonded tokens recorded during
+    /// the previous end block.
+    #[prost(bytes="vec", tag="2")]
+    pub last_total_power: ::prost::alloc::vec::Vec<u8>,
+    /// last_validator_powers is a special index that provides a historical list
+    /// of the last-block's bonded validators.
+    #[prost(message, repeated, tag="3")]
+    pub last_validator_powers: ::prost::alloc::vec::Vec<LastValidatorPower>,
+    /// delegations defines the validator set at genesis.
+    #[prost(message, repeated, tag="4")]
+    pub validators: ::prost::alloc::vec::Vec<Validator>,
+    /// delegations defines the delegations active at genesis.
+    #[prost(message, repeated, tag="5")]
+    pub delegations: ::prost::alloc::vec::Vec<Delegation>,
+    /// unbonding_delegations defines the unbonding delegations active at genesis.
+    #[prost(message, repeated, tag="6")]
+    pub unbonding_delegations: ::prost::alloc::vec::Vec<UnbondingDelegation>,
+    /// redelegations defines the redelegations active at genesis.
+    #[prost(message, repeated, tag="7")]
+    pub redelegations: ::prost::alloc::vec::Vec<Redelegation>,
+    #[prost(bool, tag="8")]
+    pub exported: bool,
+}
+/// LastValidatorPower required for validator set update logic.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct LastValidatorPower {
+    /// address is the address of the validator.
+    #[prost(string, tag="1")]
+    pub address: ::prost::alloc::string::String,
+    /// power defines the power of the validator.
+    #[prost(int64, tag="2")]
+    pub power: i64,
+}
+/// StakeAuthorization defines authorization for delegate/undelegate/redelegate.
+///
+/// Since: cosmos-sdk 0.43
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StakeAuthorization {
+    /// max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
+    /// empty, there is no spend limit and any amount of coins can be delegated.
+    #[prost(message, optional, tag="1")]
+    pub max_tokens: ::core::option::Option<super::super::base::v1beta1::Coin>,
+    /// authorization_type defines one of AuthorizationType.
+    #[prost(enumeration="AuthorizationType", tag="4")]
+    pub authorization_type: i32,
+    /// validators is the oneof that represents either allow_list or deny_list
+    #[prost(oneof="stake_authorization::Validators", tags="2, 3")]
+    pub validators: ::core::option::Option<stake_authorization::Validators>,
+}
+/// Nested message and enum types in `StakeAuthorization`.
+pub mod stake_authorization {
+    /// Validators defines list of validator addresses.
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct Validators {
+        #[prost(string, repeated, tag="1")]
+        pub address: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    /// validators is the oneof that represents either allow_list or deny_list
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Validators {
+        /// allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
+        /// account.
+        #[prost(message, tag="2")]
+        AllowList(Validators),
+        /// deny_list specifies list of validator addresses to whom grantee can not delegate tokens.
+        #[prost(message, tag="3")]
+        DenyList(Validators),
+    }
+}
+/// AuthorizationType defines the type of staking module authorization type
+///
+/// Since: cosmos-sdk 0.43
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum AuthorizationType {
+    /// AUTHORIZATION_TYPE_UNSPECIFIED specifies an unknown authorization type
+    Unspecified = 0,
+    /// AUTHORIZATION_TYPE_DELEGATE defines an authorization type for Msg/Delegate
+    Delegate = 1,
+    /// AUTHORIZATION_TYPE_UNDELEGATE defines an authorization type for Msg/Undelegate
+    Undelegate = 2,
+    /// AUTHORIZATION_TYPE_REDELEGATE defines an authorization type for Msg/BeginRedelegate
+    Redelegate = 3,
+}
 /// MsgCreateValidator defines a SDK message for creating a new validator.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateValidator {
@@ -2267,94 +2357,4 @@ pub mod query_server {
     impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.staking.v1beta1.Query";
     }
-}
-/// StakeAuthorization defines authorization for delegate/undelegate/redelegate.
-///
-/// Since: cosmos-sdk 0.43
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct StakeAuthorization {
-    /// max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
-    /// empty, there is no spend limit and any amount of coins can be delegated.
-    #[prost(message, optional, tag="1")]
-    pub max_tokens: ::core::option::Option<super::super::base::v1beta1::Coin>,
-    /// authorization_type defines one of AuthorizationType.
-    #[prost(enumeration="AuthorizationType", tag="4")]
-    pub authorization_type: i32,
-    /// validators is the oneof that represents either allow_list or deny_list
-    #[prost(oneof="stake_authorization::IsStakeAuthorizationValidators", tags="2, 3")]
-    pub validators: ::core::option::Option<stake_authorization::IsStakeAuthorizationValidators>,
-}
-/// Nested message and enum types in `StakeAuthorization`.
-pub mod stake_authorization {
-    /// Validators defines list of validator addresses.
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct StakeAuthorizationValidators {
-        #[prost(string, repeated, tag="1")]
-        pub address: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    }
-    /// validators is the oneof that represents either allow_list or deny_list
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum IsStakeAuthorizationValidators {
-        /// allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
-        /// account.
-        #[prost(message, tag="2")]
-        AllowList(StakeAuthorizationValidators),
-        /// deny_list specifies list of validator addresses to whom grantee can not delegate tokens.
-        #[prost(message, tag="3")]
-        DenyList(StakeAuthorizationValidators),
-    }
-}
-/// AuthorizationType defines the type of staking module authorization type
-///
-/// Since: cosmos-sdk 0.43
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
-#[repr(i32)]
-pub enum AuthorizationType {
-    /// AUTHORIZATION_TYPE_UNSPECIFIED specifies an unknown authorization type
-    Unspecified = 0,
-    /// AUTHORIZATION_TYPE_DELEGATE defines an authorization type for Msg/Delegate
-    Delegate = 1,
-    /// AUTHORIZATION_TYPE_UNDELEGATE defines an authorization type for Msg/Undelegate
-    Undelegate = 2,
-    /// AUTHORIZATION_TYPE_REDELEGATE defines an authorization type for Msg/BeginRedelegate
-    Redelegate = 3,
-}
-/// GenesisState defines the staking module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    /// params defines all the paramaters of related to deposit.
-    #[prost(message, optional, tag="1")]
-    pub params: ::core::option::Option<Params>,
-    /// last_total_power tracks the total amounts of bonded tokens recorded during
-    /// the previous end block.
-    #[prost(bytes="vec", tag="2")]
-    pub last_total_power: ::prost::alloc::vec::Vec<u8>,
-    /// last_validator_powers is a special index that provides a historical list
-    /// of the last-block's bonded validators.
-    #[prost(message, repeated, tag="3")]
-    pub last_validator_powers: ::prost::alloc::vec::Vec<LastValidatorPower>,
-    /// delegations defines the validator set at genesis.
-    #[prost(message, repeated, tag="4")]
-    pub validators: ::prost::alloc::vec::Vec<Validator>,
-    /// delegations defines the delegations active at genesis.
-    #[prost(message, repeated, tag="5")]
-    pub delegations: ::prost::alloc::vec::Vec<Delegation>,
-    /// unbonding_delegations defines the unbonding delegations active at genesis.
-    #[prost(message, repeated, tag="6")]
-    pub unbonding_delegations: ::prost::alloc::vec::Vec<UnbondingDelegation>,
-    /// redelegations defines the redelegations active at genesis.
-    #[prost(message, repeated, tag="7")]
-    pub redelegations: ::prost::alloc::vec::Vec<Redelegation>,
-    #[prost(bool, tag="8")]
-    pub exported: bool,
-}
-/// LastValidatorPower required for validator set update logic.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct LastValidatorPower {
-    /// address is the address of the validator.
-    #[prost(string, tag="1")]
-    pub address: ::prost::alloc::string::String,
-    /// power defines the power of the validator.
-    #[prost(int64, tag="2")]
-    pub power: i64,
 }
