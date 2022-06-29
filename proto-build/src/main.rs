@@ -371,12 +371,12 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
              #[cfg(feature = \"grpc\")]\n\
              #[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
         ),
-        // Feature-gate gRPC client impls which use `tonic::transport`
+        // Feature-gate gRPC impls which use `tonic::transport`
         (
-            "impl (.+)Client<tonic::transport::Channel>",
+            "impl(.+)tonic::transport(.+)",
             "#[cfg(feature = \"grpc-transport\")]\n    \
              #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
-             impl ${1}Client<tonic::transport::Channel>",
+             impl${1}tonic::transport${2}",
         ),
         // Feature-gate gRPC server modules
         (
@@ -384,13 +384,6 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
             "/// Generated server implementations.\n\
              #[cfg(feature = \"grpc\")]\n\
              #[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
-        ),
-        // Feature-gate gRPC server impls which use `tonic::transport`
-        (
-            "impl(.+) tonic::transport(.+) for (.+)Server",
-            "#[cfg(feature = \"grpc-transport\")]\n    \
-             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
-             impl${1} tonic::transport${2} for ${3}Server",
         ),
     ];
 

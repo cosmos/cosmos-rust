@@ -322,6 +322,8 @@ pub mod reflection_service_server {
             write!(f, "{:?}", self.0)
         }
     }
+    #[cfg(feature = "grpc-transport")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
     impl<T: ReflectionService> tonic::transport::NamedService
     for ReflectionServiceServer<T> {
         const NAME: &'static str = "cosmos.base.reflection.v1beta1.ReflectionService";
