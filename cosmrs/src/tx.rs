@@ -47,7 +47,7 @@
 //! // We'll be doing a simple send transaction.
 //! // First we'll create a "Coin" amount to be sent, in this case 1 million uatoms.
 //! let amount = Coin {
-//!     amount: 1_000_000u64.into(),
+//!     amount: 1_000_000u128,
 //!     denom: "uatom".parse()?,
 //! };
 //!

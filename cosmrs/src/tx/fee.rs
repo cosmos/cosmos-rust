@@ -2,13 +2,14 @@
 
 use super::Gas;
 use crate::{prost_ext::ParseOptional, proto, AccountId, Coin, ErrorReport, Result};
+use serde::{Deserialize, Serialize};
 
 /// Fee includes the amount of coins paid in fees and the maximum gas to be
 /// used by the transaction.
 ///
 /// The ratio yields an effective “gasprice”, which must be above some minimum
 /// to be accepted into the mempool.
-#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq, PartialOrd, Ord, Serialize)]
 pub struct Fee {
     /// Amount of coins to be paid as a fee.
     pub amount: Vec<Coin>,
