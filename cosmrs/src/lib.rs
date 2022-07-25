@@ -17,6 +17,15 @@
     unused_import_braces
 )]
 
+//! ## Re-exports
+//!
+//! CosmRS re-exports the following crates for easy access:
+//!
+//! - `bip32`: re-exported as `cosmrs::bip32`
+//! - `cosmos-sdk-proto`: re-exported as `cosmrs::proto`
+//! - `tendermint`: re-exported as `cosmrs::tendermint`
+//! - `tendermint-rpc`: re-exported as `cosmrs::rpc` (requires `rpc` crate feature)
+
 pub mod abci;
 pub mod auth;
 pub mod bank;
