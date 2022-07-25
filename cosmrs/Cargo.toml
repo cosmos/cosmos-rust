@@ -9,7 +9,7 @@ readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]
 keywords = ["blockchain", "cosmos", "tendermint", "transaction"]
 edition = "2021"
-rust-version = "1.56"
+rust-version = "1.57"
 
 [dependencies]
 cosmos-sdk-proto = { version = "=0.13.0-pre", default-features = false, path = "../cosmos-sdk-proto" }
