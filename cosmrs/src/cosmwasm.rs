@@ -5,7 +5,9 @@
 
 pub use crate::proto::cosmwasm::wasm::v1::AccessType;
 use crate::{
-    prost_ext::ParseOptional, proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result,
+    proto::{self, traits::ParseOptional},
+    tx::Msg,
+    AccountId, Coin, Error, ErrorReport, Result,
 };
 use cosmos_sdk_proto::cosmwasm::wasm::v1::ContractCodeHistoryOperationType;
 

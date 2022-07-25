@@ -1,7 +1,10 @@
 //! Auth info.
 
 use super::{Fee, SignerInfo};
-use crate::{prost_ext::MessageExt, proto, Error, ErrorReport, Result};
+use crate::{
+    proto::{self, traits::MessageExt},
+    Error, ErrorReport, Result,
+};
 
 /// [`AuthInfo`] describes the fee and signer modes that are used to sign a transaction.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -29,7 +32,7 @@ impl AuthInfo {
 
     /// Encode this type using Protocol Buffers.
     pub fn into_bytes(self) -> Result<Vec<u8>> {
-        self.into_proto().to_bytes()
+        Ok(self.into_proto().to_bytes()?)
     }
 }
 

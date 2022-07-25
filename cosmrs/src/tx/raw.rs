@@ -1,6 +1,9 @@
 //! Raw transaction.
 
-use crate::{prost_ext::MessageExt, proto, Result};
+use crate::{
+    proto::{self, traits::MessageExt},
+    Result,
+};
 
 #[cfg(feature = "rpc")]
 use crate::rpc;
@@ -21,7 +24,7 @@ impl Raw {
 
     /// Serialize raw transaction as a byte vector.
     pub fn to_bytes(&self) -> Result<Vec<u8>> {
-        self.0.to_bytes()
+        Ok(self.0.to_bytes()?)
     }
 
     /// Broadcast this transaction using the provided RPC client

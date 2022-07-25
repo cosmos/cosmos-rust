@@ -7,6 +7,11 @@
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
+pub mod traits;
+pub mod type_urls;
+
+pub use prost;
+pub use prost_types::Any;
 pub use tendermint_proto as tendermint;
 
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
