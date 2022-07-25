@@ -1,7 +1,10 @@
 //! Legacy Amino support.
 
 use super::PublicKey;
-use crate::{prost_ext::MessageExt, proto, Any, Error, ErrorReport, Result};
+use crate::{
+    proto::{self, traits::MessageExt},
+    Any, Error, ErrorReport, Result,
+};
 use eyre::WrapErr;
 use prost::Message;
 

@@ -1,9 +1,13 @@
 //! Public keys
 
-use crate::{prost_ext::MessageExt, proto, AccountId, Error, ErrorReport, Result};
+use crate::{
+    proto::{
+        self,
+        traits::{Message, MessageExt},
+    },
+    AccountId, Any, Error, ErrorReport, Result,
+};
 use eyre::WrapErr;
-use prost::Message;
-use prost_types::Any;
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 use subtle_encoding::base64;
@@ -57,13 +61,13 @@ impl PublicKey {
             tendermint::PublicKey::Ed25519(_) => proto::cosmos::crypto::secp256k1::PubKey {
                 key: self.to_bytes(),
             }
-            .to_bytes(),
+            .to_bytes()?,
             tendermint::PublicKey::Secp256k1(_) => proto::cosmos::crypto::secp256k1::PubKey {
                 key: self.to_bytes(),
             }
-            .to_bytes(),
-            _ => Err(Error::Crypto.into()),
-        }?;
+            .to_bytes()?,
+            _ => return Err(Error::Crypto.into()),
+        };
 
         Ok(Any {
             type_url: self.type_url().to_owned(),

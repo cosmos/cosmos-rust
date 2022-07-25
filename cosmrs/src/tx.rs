@@ -117,12 +117,15 @@ pub use self::{
     body::Body,
     fee::Fee,
     mode_info::ModeInfo,
-    msg::{Msg, MsgProto},
+    msg::Msg,
     raw::Raw,
     sign_doc::SignDoc,
     signer_info::{SignerInfo, SignerPublicKey},
 };
-pub use crate::{proto::cosmos::tx::signing::v1beta1::SignMode, ErrorReport};
+pub use crate::{
+    proto::{cosmos::tx::signing::v1beta1::SignMode, traits::MessageExt},
+    ErrorReport,
+};
 pub use tendermint::abci::{transaction::Hash, Gas};
 
 use crate::{proto, Error, Result};

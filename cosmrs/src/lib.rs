@@ -36,7 +36,6 @@ pub mod dev;
 
 mod base;
 mod error;
-mod prost_ext;
 
 pub use crate::{
     base::{AccountId, Coin, Denom},

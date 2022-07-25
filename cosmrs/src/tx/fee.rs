@@ -1,7 +1,10 @@
 //! Transaction fees
 
 use super::Gas;
-use crate::{prost_ext::ParseOptional, proto, AccountId, Coin, ErrorReport, Result};
+use crate::{
+    proto::{self, traits::ParseOptional},
+    AccountId, Coin, ErrorReport, Result,
+};
 use serde::{Deserialize, Serialize};
 
 /// Fee includes the amount of coins paid in fees and the maximum gas to be
