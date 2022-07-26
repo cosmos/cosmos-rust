@@ -8,7 +8,7 @@
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
 pub mod traits;
-pub mod type_urls;
+mod type_urls;
 
 pub use prost;
 pub use prost_types::Any;
