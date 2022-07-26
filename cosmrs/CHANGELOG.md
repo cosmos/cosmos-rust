@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.0 (2022-07-25)
+### Added
+- `feegrant` module support ([#250])
+- `grpc` features ([#258])
+
+### Changed
+- Changed internal `Coin` representation to `u128` ([#235])
+- Implemented `serde` traits for `Denom` ([#235])
+- Bump `k256` to v0.11 ([#253])
+- Bump tendermint-rs crates to v0.23.8 ([#253])
+- Move protobuf traits from `cosmrs` => `cosmos-sdk-proto` ([#255])
+- MSRV 1.57 ([#257])
+- Bump `cosmos-sdk-proto` to v0.13.0 ([#260])
+
+### Fixed
+- Visibility on `cosmwasm::ContractInfo` ([#247])
+
+### Removed
+- `Decimal` type ([#235])
+
+[#235]: https://github.com/cosmos/cosmos-rust/pull/235
+[#247]: https://github.com/cosmos/cosmos-rust/pull/247
+[#250]: https://github.com/cosmos/cosmos-rust/pull/250
+[#253]: https://github.com/cosmos/cosmos-rust/pull/253
+[#255]: https://github.com/cosmos/cosmos-rust/pull/255
+[#257]: https://github.com/cosmos/cosmos-rust/pull/257
+[#258]: https://github.com/cosmos/cosmos-rust/pull/258
+[#260]: https://github.com/cosmos/cosmos-rust/pull/260
+
 ## 0.7.1 (2022-06-09)
 ### Added
 - `abci`, `auth`, `cosmwasm`, and `vesting` type wrappers ([#234])

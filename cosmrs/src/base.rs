@@ -134,10 +134,6 @@ pub struct Coin {
     pub denom: Denom,
 
     /// Amount
-    // represent coin amount as an u128, which theoretically supports lower maximum value than
-    // cosmos-sdk's `Int` that has a maximum value of 2^256 - 1. (https://github.com/cosmos/cosmos-sdk/blob/v0.45.4/types/int.go#L72-L74=)
-    // But I would argue this is sufficient for the current realistic use cases and is less cumbersome to use than the `Decimal`
-    // (which should have been used for a `DecCoin`)
     pub amount: u128,
 }
 
@@ -177,9 +173,7 @@ impl From<&Coin> for proto::cosmos::base::v1beta1::Coin {
 
 impl fmt::Display for Coin {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        // Follow the same formatting without the space between amount and denom as
-        // Cosmwasm in their Coin, which is furthermore consistent with the cosmos-sdk:
-        // https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L643-L645
+        // See: https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L643-L645
         write!(f, "{}{}", self.amount, self.denom)
     }
 }
@@ -235,7 +229,7 @@ mod tests {
 
     #[test]
     fn account_id() {
-        let _id = "juno1cma4czt2jnydvrvz3lrc9jvcmhpjxtds95s3c6"
+        "juno1cma4czt2jnydvrvz3lrc9jvcmhpjxtds95s3c6"
             .parse::<AccountId>()
             .unwrap();
     }
