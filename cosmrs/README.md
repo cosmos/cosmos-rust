@@ -33,7 +33,7 @@ and message passing.
 This crate is supported on Rust **1.57** or newer.
 
 [//]: # "badges"
-[crate-image]: https://img.shields.io/crates/v/cosmrs.svg?logo=rust
+[crate-image]: https://buildstats.info/crate/cosmrs
 [crate-link]: https://crates.io/crates/cosmrs
 [docs-image]: https://docs.rs/cosmrs/badge.svg
 [docs-link]: https://docs.rs/cosmrs/
