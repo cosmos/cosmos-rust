@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.13.0 (2022-07-25)
+### Added
+- gRPC server definitions ([#249])
+- Protobuf traits originally from `cosmrs` ([#255])
+
+### Changed
+- Bump `tendermint-proto` to v0.23.8 ([#253])
+
+[#249]: https://github.com/cosmos/cosmos-rust/pull/249
+[#253]: https://github.com/cosmos/cosmos-rust/pull/253
+[#255]: https://github.com/cosmos/cosmos-rust/pull/255
+
 ## 0.12.3 (2022-06-09)
 ### Added
 - Additional `cosmwasm` protos ([#240], [#244])
