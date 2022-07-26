@@ -37,10 +37,12 @@ getrandom = { version = "0.2", features = ["js"] }
 hex-literal = "0.3"
 
 [features]
-default = ["bip32"]
-dev = ["rpc", "tokio"]
-rpc = ["tendermint-rpc"]
-cosmwasm = ["cosmos-sdk-proto/cosmwasm"]
+default   = ["bip32"]
+cosmwasm  = ["cosmos-sdk-proto/cosmwasm"]
+dev       = ["rpc", "tokio"]
+grpc      = ["cosmos-sdk-proto/grpc-transport", "grpc-core"]
+grpc-core = ["cosmos-sdk-proto/grpc"]
+rpc       = ["tendermint-rpc"]
 
 [package.metadata.docs.rs]
 all-features = true
