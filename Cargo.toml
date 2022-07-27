@@ -3,5 +3,6 @@ resolver = "2"
 members = [
     "proto-build",
     "cosmos-sdk-proto",
-    "cosmrs"
+    "cosmrs",
+    "osmosis-proto-build"
 ]
