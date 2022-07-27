@@ -47,7 +47,7 @@
 //! // We'll be doing a simple send transaction.
 //! // First we'll create a "Coin" amount to be sent, in this case 1 million uatoms.
 //! let amount = Coin {
-//!     amount: 1_000_000u64.into(),
+//!     amount: 1_000_000u128,
 //!     denom: "uatom".parse()?,
 //! };
 //!
@@ -117,12 +117,15 @@ pub use self::{
     body::Body,
     fee::Fee,
     mode_info::ModeInfo,
-    msg::{Msg, MsgProto},
+    msg::Msg,
     raw::Raw,
     sign_doc::SignDoc,
     signer_info::{SignerInfo, SignerPublicKey},
 };
-pub use crate::{proto::cosmos::tx::signing::v1beta1::SignMode, ErrorReport};
+pub use crate::{
+    proto::{cosmos::tx::signing::v1beta1::SignMode, traits::MessageExt},
+    ErrorReport,
+};
 pub use tendermint::abci::{transaction::Hash, Gas};
 
 use crate::{proto, Error, Result};

@@ -17,11 +17,21 @@
     unused_import_braces
 )]
 
+//! ## Re-exports
+//!
+//! CosmRS re-exports the following crates for easy access:
+//!
+//! - `bip32`: re-exported as `cosmrs::bip32`
+//! - `cosmos-sdk-proto`: re-exported as `cosmrs::proto`
+//! - `tendermint`: re-exported as `cosmrs::tendermint`
+//! - `tendermint-rpc`: re-exported as `cosmrs::rpc` (requires `rpc` crate feature)
+
 pub mod abci;
 pub mod auth;
 pub mod bank;
 pub mod crypto;
 pub mod distribution;
+pub mod feegrant;
 pub mod staking;
 pub mod tx;
 pub mod vesting;
@@ -34,13 +44,10 @@ pub mod cosmwasm;
 pub mod dev;
 
 mod base;
-mod decimal;
 mod error;
-pub mod prost_ext;
 
 pub use crate::{
     base::{AccountId, Coin, Denom},
-    decimal::Decimal,
     error::{Error, Result},
     tx::Tx,
 };

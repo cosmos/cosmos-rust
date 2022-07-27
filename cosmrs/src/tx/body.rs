@@ -1,6 +1,9 @@
 //! Transaction bodies.
 
-use crate::{prost_ext::MessageExt, proto, ErrorReport, Result};
+use crate::{
+    proto::{self, traits::MessageExt},
+    ErrorReport, Result,
+};
 use prost_types::Any;
 use tendermint::block;
 
@@ -63,7 +66,7 @@ impl Body {
 
     /// Encode this type using Protocol Buffers.
     pub fn into_bytes(self) -> Result<Vec<u8>> {
-        self.into_proto().to_bytes()
+        Ok(self.into_proto().to_bytes()?)
     }
 }
 

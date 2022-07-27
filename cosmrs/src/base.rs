@@ -1,6 +1,6 @@
 //! Base functionality.
 
-use crate::{proto, Decimal, Error, ErrorReport, Result};
+use crate::{proto, Error, ErrorReport, Result};
 use eyre::WrapErr;
 use serde::{de, de::Error as _, ser, Deserialize, Serialize};
 use std::{fmt, str::FromStr};
@@ -128,13 +128,13 @@ impl Serialize for AccountId {
 }
 
 /// Coin defines a token with a denomination and an amount.
-#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Serialize, Deserialize, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct Coin {
     /// Denomination
     pub denom: Denom,
 
     /// Amount
-    pub amount: Decimal,
+    pub amount: u128,
 }
 
 impl TryFrom<proto::cosmos::base::v1beta1::Coin> for Coin {
@@ -171,6 +171,13 @@ impl From<&Coin> for proto::cosmos::base::v1beta1::Coin {
     }
 }
 
+impl fmt::Display for Coin {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // See: https://github.com/cosmos/cosmos-sdk/blob/v0.42.4/types/coin.go#L643-L645
+        write!(f, "{}{}", self.amount, self.denom)
+    }
+}
+
 /// Denomination.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct Denom(String);
@@ -202,13 +209,27 @@ impl FromStr for Denom {
     }
 }
 
+impl<'de> Deserialize<'de> for Denom {
+    fn deserialize<D: de::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        String::deserialize(deserializer)?
+            .parse()
+            .map_err(D::Error::custom)
+    }
+}
+
+impl Serialize for Denom {
+    fn serialize<S: ser::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        self.0.serialize(serializer)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::{AccountId, Denom};
 
     #[test]
     fn account_id() {
-        let _id = "juno1cma4czt2jnydvrvz3lrc9jvcmhpjxtds95s3c6"
+        "juno1cma4czt2jnydvrvz3lrc9jvcmhpjxtds95s3c6"
             .parse::<AccountId>()
             .unwrap();
     }

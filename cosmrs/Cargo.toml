@@ -1,6 +1,6 @@
 [package]
 name = "cosmrs"
-version = "0.7.1"
+version = "0.8.0"
 authors = ["Tony Arcieri <tony@iqlusion.io>"]
 license = "Apache-2.0"
 repository = "https://github.com/cosmos/cosmos-rust/tree/main/cosmrs"
@@ -9,25 +9,25 @@ readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "encoding"]
 keywords = ["blockchain", "cosmos", "tendermint", "transaction"]
 edition = "2021"
-rust-version = "1.56"
+rust-version = "1.57"
 
 [dependencies]
-cosmos-sdk-proto = { version = "0.12", default-features = false, path = "../cosmos-sdk-proto" }
-ecdsa = { version = "0.13", features = ["std"] }
+cosmos-sdk-proto = { version = "0.13.0", default-features = false, path = "../cosmos-sdk-proto" }
+ecdsa = { version = "0.14", features = ["std"] }
 eyre = "0.6"
-k256 = { version = "0.10", features = ["ecdsa", "sha256"] }
+k256 = { version = "0.11", features = ["ecdsa", "sha256"] }
 prost = "0.10"
 prost-types = "0.10"
 rand_core = { version = "0.6", features = ["std"] }
 serde = { version = "1", features = ["serde_derive"] }
 serde_json = "1"
 subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
-tendermint = { version = "=0.23.7", features = ["secp256k1"] }
+tendermint = { version = "=0.23.8", features = ["secp256k1"] }
 thiserror = "1"
 
 # optional dependencies
-bip32 = { version = "0.3", optional = true }
-tendermint-rpc = { version = "=0.23.7", optional = true, features = ["http-client"] }
+bip32 = { version = "0.4", optional = true }
+tendermint-rpc = { version = "=0.23.8", optional = true, features = ["http-client"] }
 tokio = { version = "1", optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
@@ -37,10 +37,12 @@ getrandom = { version = "0.2", features = ["js"] }
 hex-literal = "0.3"
 
 [features]
-default = ["bip32"]
-dev = ["rpc", "tokio"]
-rpc = ["tendermint-rpc"]
-cosmwasm = ["cosmos-sdk-proto/cosmwasm"]
+default   = ["bip32"]
+cosmwasm  = ["cosmos-sdk-proto/cosmwasm"]
+dev       = ["rpc", "tokio"]
+grpc      = ["cosmos-sdk-proto/grpc-transport", "grpc-core"]
+grpc-core = ["cosmos-sdk-proto/grpc"]
+rpc       = ["tendermint-rpc"]
 
 [package.metadata.docs.rs]
 all-features = true

@@ -1,7 +1,11 @@
 //! Signing document.
 
 use super::{AccountNumber, AuthInfo, Body, Raw};
-use crate::{crypto::secp256k1, prost_ext::MessageExt, proto, Result};
+use crate::{
+    crypto::secp256k1,
+    proto::{self, traits::MessageExt},
+    Result,
+};
 use tendermint::chain;
 
 /// [`SignDoc`] is the type used for generating sign bytes for `SIGN_MODE_DIRECT`.
@@ -49,7 +53,7 @@ impl SignDoc {
 
     /// Encode this type using Protocol Buffers.
     pub fn into_bytes(self) -> Result<Vec<u8>> {
-        self.into_proto().to_bytes()
+        Ok(self.into_proto().to_bytes()?)
     }
 
     /// Sign this [`SignDoc`], producing a [`Raw`] transaction.
