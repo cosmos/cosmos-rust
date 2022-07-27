@@ -234,6 +234,13 @@ mod tests {
     }
 
     #[test]
+    fn account_id_with_digit() {
+        "okp41urdh3smlstyafjtyg0d606egllhwp8kvnw0d2f"
+            .parse::<AccountId>()
+            .unwrap();
+    }
+
+    #[test]
     fn denom_from_str() {
         assert!(
             "ibc/9F53D255F5320A4BE124FF20C29D46406E126CE8A09B00CA8D3CFF7905119728"
