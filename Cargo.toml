@@ -4,5 +4,6 @@ members = [
     "proto-build",
     "cosmos-sdk-proto",
     "cosmrs",
-    "osmosis-proto-build"
+    "osmosis-proto-build",
+    "osmosis-proto",
 ]
