@@ -25,9 +25,12 @@ impl AccountId {
     pub fn new(prefix: &str, bytes: &[u8]) -> Result<Self> {
         let id = bech32::encode(prefix, &bytes);
 
-        if !prefix.chars().all(|c| matches!(c, '!'..='@' | 'A'..='Z' | '['..='`' | 'a'..='z' | '{'..='~')) {
+        if !prefix
+            .chars()
+            .all(|c| matches!(c, '!'..='@' | 'A'..='Z' | '['..='`' | 'a'..='z' | '{'..='~'))
+        {
             return Err(Error::AccountId { id })
-                .wrap_err("expected prefix to be lowercase alphabetical characters only");
+                .wrap_err("expected prefix to be an US_ASCII characters with each character having a value in the range [33-126]");
         }
 
         if matches!(bytes.len(), 1..=MAX_ADDRESS_LENGTH) {
