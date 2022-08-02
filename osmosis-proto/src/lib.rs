@@ -11,8 +11,8 @@ pub use tendermint_proto as tendermint;
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
 pub const OSMOSISD_VERSION: &str = include_str!("prost/osmosisd/OSMOSISD_COMMIT");
 
-
-pub mod custom_cosmrs;
+ 
+mod type_urls;
 
 
 
