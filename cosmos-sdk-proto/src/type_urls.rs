@@ -45,8 +45,6 @@ impl TypeUrl for cosmos::auth::v1beta1::ModuleAccount {
     const TYPE_URL: &'static str = "/cosmos.auth.v1beta1.ModuleAccount";
 }
 
-// />
-
 impl TypeUrl for cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }
