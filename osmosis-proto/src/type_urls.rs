@@ -4,7 +4,7 @@
 // TODO(tarcieri): leverage first-class support for type URLs in prost?
 // See: https://github.com/tokio-rs/prost/issues/299
 
-use crate::{osmosis, cosmos_sdk_proto::traits};
+use crate::{osmosis, cosmos_sdk_proto::traits::TypeUrl};
 
  
 impl TypeUrl for osmosis::gamm::v1beta1::Pool {
