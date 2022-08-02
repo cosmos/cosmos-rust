@@ -17,7 +17,7 @@ rust-version = "1.56"
 [dependencies]
 prost = "0.10"
 prost-types = "0.10"
-tendermint-proto = "=0.23.7"
+tendermint-proto = "^0.23.7"
 cosmos-sdk-proto = { path = "../cosmos-sdk-proto" }
 
 eyre = "0.6"
