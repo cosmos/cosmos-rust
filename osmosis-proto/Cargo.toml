@@ -25,7 +25,7 @@ eyre = "0.6"
 tonic = { version = "0.7", optional = true, default-features = false, features = ["codegen", "prost"] }
 
 [features]
-default = ["grpc-transport"]
+default = ["grpc-transport","osmosis"]
 grpc = ["tonic"]
 grpc-transport = ["grpc", "tonic/transport"]
 osmosis = [] 
