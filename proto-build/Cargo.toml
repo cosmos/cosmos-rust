@@ -1,10 +1,9 @@
 [package]
 name = "proto-build"
 version = "0.1.0"
-authors = ["Justin Kilpatrick <justin@althea.net>", "Tony Arcieri <tony@iqlusion.io>"]
+authors = ["Justin Kilpatrick <justin@althea.net>", "Tony Arcieri <tony@iqlusion.io>", "Philipp Schlütermann <philipp.schluetermann@udo.edu>"]
 edition = "2018"
 publish = false
-
 
 [dependencies]
 prost = "0.10"
@@ -13,3 +12,8 @@ tonic = "0.7"
 tonic-build = "0.7"
 regex = "1"
 walkdir = "2"
+
+[features]
+default = ["cosmos","osmosis"]
+cosmos = []
+osmosis = []
