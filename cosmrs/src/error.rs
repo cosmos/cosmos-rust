@@ -46,7 +46,7 @@ pub enum Error {
         /// Expected type URL.
         expected: &'static str,
 
-        /// Actual type URL found in the [`prost_types::Any`] message.
+        /// Actual type URL found in the [`crate::Any`] message.
         found: String,
     },
 
