@@ -1,7 +1,10 @@
 //! Raw transaction.
 
 use crate::{
-    proto::{self, traits::MessageExt},
+    proto::{
+        self,
+        traits::{Message, MessageExt},
+    },
     Result,
 };
 
@@ -19,7 +22,7 @@ pub struct Raw(proto::cosmos::tx::v1beta1::TxRaw);
 impl Raw {
     /// Deserialize raw transaction from serialized protobuf.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self> {
-        Ok(Raw(prost::Message::decode(bytes)?))
+        Ok(Raw(Message::decode(bytes)?))
     }
 
     /// Serialize raw transaction as a byte vector.
