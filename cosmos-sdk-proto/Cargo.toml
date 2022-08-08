@@ -18,7 +18,7 @@ rust-version = "1.56"
 [dependencies]
 prost = "0.10"
 prost-types = "0.10"
-tendermint-proto = "=0.23.8"
+tendermint-proto = "=0.23.9"
 
 # Optional dependencies
 tonic = { version = "0.7", optional = true, default-features = false, features = ["codegen", "prost"] }
