@@ -130,8 +130,10 @@ pub use crate::{
 };
 pub use tendermint::abci::{transaction::Hash, Gas};
 
-use crate::{proto, Error, Result};
-use prost::Message;
+use crate::{
+    proto::{self, traits::Message},
+    Error, Result,
+};
 
 #[cfg(feature = "rpc")]
 use crate::rpc;

@@ -2,8 +2,7 @@
 //!
 //! <https://docs.cosmos.network/master/modules/feegrant/>
 
-use crate::{proto, tx::Msg, AccountId, Coin, ErrorReport, Result};
-use prost_types::Any;
+use crate::{proto, tx::Msg, AccountId, Any, Coin, ErrorReport, Result};
 use std::time::{Duration, SystemTime};
 
 /// MsgGrantAllowance adds permission for Grantee to spend up to Allowance
