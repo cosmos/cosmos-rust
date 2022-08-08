@@ -869,6 +869,45 @@ pub mod msg_server {
         const NAME: &'static str = "cosmos.staking.v1beta1.Msg";
     }
 }
+/// GenesisState defines the staking module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// params defines all the paramaters of related to deposit.
+    #[prost(message, optional, tag="1")]
+    pub params: ::core::option::Option<Params>,
+    /// last_total_power tracks the total amounts of bonded tokens recorded during
+    /// the previous end block.
+    #[prost(bytes="vec", tag="2")]
+    pub last_total_power: ::prost::alloc::vec::Vec<u8>,
+    /// last_validator_powers is a special index that provides a historical list
+    /// of the last-block's bonded validators.
+    #[prost(message, repeated, tag="3")]
+    pub last_validator_powers: ::prost::alloc::vec::Vec<LastValidatorPower>,
+    /// delegations defines the validator set at genesis.
+    #[prost(message, repeated, tag="4")]
+    pub validators: ::prost::alloc::vec::Vec<Validator>,
+    /// delegations defines the delegations active at genesis.
+    #[prost(message, repeated, tag="5")]
+    pub delegations: ::prost::alloc::vec::Vec<Delegation>,
+    /// unbonding_delegations defines the unbonding delegations active at genesis.
+    #[prost(message, repeated, tag="6")]
+    pub unbonding_delegations: ::prost::alloc::vec::Vec<UnbondingDelegation>,
+    /// redelegations defines the redelegations active at genesis.
+    #[prost(message, repeated, tag="7")]
+    pub redelegations: ::prost::alloc::vec::Vec<Redelegation>,
+    #[prost(bool, tag="8")]
+    pub exported: bool,
+}
+/// LastValidatorPower required for validator set update logic.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct LastValidatorPower {
+    /// address is the address of the validator.
+    #[prost(string, tag="1")]
+    pub address: ::prost::alloc::string::String,
+    /// power defines the power of the validator.
+    #[prost(int64, tag="2")]
+    pub power: i64,
+}
 /// QueryValidatorsRequest is request type for Query/Validators RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryValidatorsRequest {
@@ -2318,43 +2357,4 @@ pub enum AuthorizationType {
     Undelegate = 2,
     /// AUTHORIZATION_TYPE_REDELEGATE defines an authorization type for Msg/BeginRedelegate
     Redelegate = 3,
-}
-/// GenesisState defines the staking module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    /// params defines all the paramaters of related to deposit.
-    #[prost(message, optional, tag="1")]
-    pub params: ::core::option::Option<Params>,
-    /// last_total_power tracks the total amounts of bonded tokens recorded during
-    /// the previous end block.
-    #[prost(bytes="vec", tag="2")]
-    pub last_total_power: ::prost::alloc::vec::Vec<u8>,
-    /// last_validator_powers is a special index that provides a historical list
-    /// of the last-block's bonded validators.
-    #[prost(message, repeated, tag="3")]
-    pub last_validator_powers: ::prost::alloc::vec::Vec<LastValidatorPower>,
-    /// delegations defines the validator set at genesis.
-    #[prost(message, repeated, tag="4")]
-    pub validators: ::prost::alloc::vec::Vec<Validator>,
-    /// delegations defines the delegations active at genesis.
-    #[prost(message, repeated, tag="5")]
-    pub delegations: ::prost::alloc::vec::Vec<Delegation>,
-    /// unbonding_delegations defines the unbonding delegations active at genesis.
-    #[prost(message, repeated, tag="6")]
-    pub unbonding_delegations: ::prost::alloc::vec::Vec<UnbondingDelegation>,
-    /// redelegations defines the redelegations active at genesis.
-    #[prost(message, repeated, tag="7")]
-    pub redelegations: ::prost::alloc::vec::Vec<Redelegation>,
-    #[prost(bool, tag="8")]
-    pub exported: bool,
-}
-/// LastValidatorPower required for validator set update logic.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct LastValidatorPower {
-    /// address is the address of the validator.
-    #[prost(string, tag="1")]
-    pub address: ::prost::alloc::string::String,
-    /// power defines the power of the validator.
-    #[prost(int64, tag="2")]
-    pub power: i64,
 }

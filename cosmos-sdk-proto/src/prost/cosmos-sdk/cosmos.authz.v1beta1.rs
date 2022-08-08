@@ -444,6 +444,12 @@ pub mod msg_server {
         const NAME: &'static str = "cosmos.authz.v1beta1.Msg";
     }
 }
+/// GenesisState defines the authz module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    #[prost(message, repeated, tag="1")]
+    pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
+}
 /// QueryGrantsRequest is the request type for the Query/Grants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsRequest {
@@ -900,10 +906,4 @@ pub struct EventRevoke {
     /// Grantee account address
     #[prost(string, tag="4")]
     pub grantee: ::prost::alloc::string::String,
-}
-/// GenesisState defines the authz module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    #[prost(message, repeated, tag="1")]
-    pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
 }

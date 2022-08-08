@@ -390,6 +390,12 @@ pub struct Grant {
     #[prost(message, optional, tag="3")]
     pub allowance: ::core::option::Option<::prost_types::Any>,
 }
+/// GenesisState contains a set of fee allowances, persisted from the store
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    #[prost(message, repeated, tag="1")]
+    pub allowances: ::prost::alloc::vec::Vec<Grant>,
+}
 /// QueryAllowanceRequest is the request type for the Query/Allowance RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowanceRequest {
@@ -721,10 +727,4 @@ pub mod query_server {
     impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.feegrant.v1beta1.Query";
     }
-}
-/// GenesisState contains a set of fee allowances, persisted from the store
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    #[prost(message, repeated, tag="1")]
-    pub allowances: ::prost::alloc::vec::Vec<Grant>,
 }

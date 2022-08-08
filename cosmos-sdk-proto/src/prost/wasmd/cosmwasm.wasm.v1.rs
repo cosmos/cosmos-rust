@@ -450,6 +450,75 @@ pub mod msg_client {
         }
     }
 }
+/// GenesisState - genesis state of x/wasm
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    #[prost(message, optional, tag="1")]
+    pub params: ::core::option::Option<Params>,
+    #[prost(message, repeated, tag="2")]
+    pub codes: ::prost::alloc::vec::Vec<Code>,
+    #[prost(message, repeated, tag="3")]
+    pub contracts: ::prost::alloc::vec::Vec<Contract>,
+    #[prost(message, repeated, tag="4")]
+    pub sequences: ::prost::alloc::vec::Vec<Sequence>,
+    #[prost(message, repeated, tag="5")]
+    pub gen_msgs: ::prost::alloc::vec::Vec<genesis_state::GenMsgs>,
+}
+/// Nested message and enum types in `GenesisState`.
+pub mod genesis_state {
+    /// GenMsgs define the messages that can be executed during genesis phase in
+    /// order. The intention is to have more human readable data that is auditable.
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct GenMsgs {
+        /// sum is a single message
+        #[prost(oneof="gen_msgs::Sum", tags="1, 2, 3")]
+        pub sum: ::core::option::Option<gen_msgs::Sum>,
+    }
+    /// Nested message and enum types in `GenMsgs`.
+    pub mod gen_msgs {
+        /// sum is a single message
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        pub enum Sum {
+            #[prost(message, tag="1")]
+            StoreCode(super::super::MsgStoreCode),
+            #[prost(message, tag="2")]
+            InstantiateContract(super::super::MsgInstantiateContract),
+            #[prost(message, tag="3")]
+            ExecuteContract(super::super::MsgExecuteContract),
+        }
+    }
+}
+/// Code struct encompasses CodeInfo and CodeBytes
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Code {
+    #[prost(uint64, tag="1")]
+    pub code_id: u64,
+    #[prost(message, optional, tag="2")]
+    pub code_info: ::core::option::Option<CodeInfo>,
+    #[prost(bytes="vec", tag="3")]
+    pub code_bytes: ::prost::alloc::vec::Vec<u8>,
+    /// Pinned to wasmvm cache
+    #[prost(bool, tag="4")]
+    pub pinned: bool,
+}
+/// Contract struct encompasses ContractAddress, ContractInfo, and ContractState
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Contract {
+    #[prost(string, tag="1")]
+    pub contract_address: ::prost::alloc::string::String,
+    #[prost(message, optional, tag="2")]
+    pub contract_info: ::core::option::Option<ContractInfo>,
+    #[prost(message, repeated, tag="3")]
+    pub contract_state: ::prost::alloc::vec::Vec<Model>,
+}
+/// Sequence key and value of an id generation counter
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Sequence {
+    #[prost(bytes="vec", tag="1")]
+    pub id_key: ::prost::alloc::vec::Vec<u8>,
+    #[prost(uint64, tag="2")]
+    pub value: u64,
+}
 /// QueryContractInfoRequest is the request type for the Query/ContractInfo RPC
 /// method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -894,75 +963,6 @@ pub mod query_client {
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
-}
-/// GenesisState - genesis state of x/wasm
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    #[prost(message, optional, tag="1")]
-    pub params: ::core::option::Option<Params>,
-    #[prost(message, repeated, tag="2")]
-    pub codes: ::prost::alloc::vec::Vec<Code>,
-    #[prost(message, repeated, tag="3")]
-    pub contracts: ::prost::alloc::vec::Vec<Contract>,
-    #[prost(message, repeated, tag="4")]
-    pub sequences: ::prost::alloc::vec::Vec<Sequence>,
-    #[prost(message, repeated, tag="5")]
-    pub gen_msgs: ::prost::alloc::vec::Vec<genesis_state::GenMsgs>,
-}
-/// Nested message and enum types in `GenesisState`.
-pub mod genesis_state {
-    /// GenMsgs define the messages that can be executed during genesis phase in
-    /// order. The intention is to have more human readable data that is auditable.
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct GenMsgs {
-        /// sum is a single message
-        #[prost(oneof="gen_msgs::Sum", tags="1, 2, 3")]
-        pub sum: ::core::option::Option<gen_msgs::Sum>,
-    }
-    /// Nested message and enum types in `GenMsgs`.
-    pub mod gen_msgs {
-        /// sum is a single message
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
-        pub enum Sum {
-            #[prost(message, tag="1")]
-            StoreCode(super::super::MsgStoreCode),
-            #[prost(message, tag="2")]
-            InstantiateContract(super::super::MsgInstantiateContract),
-            #[prost(message, tag="3")]
-            ExecuteContract(super::super::MsgExecuteContract),
-        }
-    }
-}
-/// Code struct encompasses CodeInfo and CodeBytes
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Code {
-    #[prost(uint64, tag="1")]
-    pub code_id: u64,
-    #[prost(message, optional, tag="2")]
-    pub code_info: ::core::option::Option<CodeInfo>,
-    #[prost(bytes="vec", tag="3")]
-    pub code_bytes: ::prost::alloc::vec::Vec<u8>,
-    /// Pinned to wasmvm cache
-    #[prost(bool, tag="4")]
-    pub pinned: bool,
-}
-/// Contract struct encompasses ContractAddress, ContractInfo, and ContractState
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Contract {
-    #[prost(string, tag="1")]
-    pub contract_address: ::prost::alloc::string::String,
-    #[prost(message, optional, tag="2")]
-    pub contract_info: ::core::option::Option<ContractInfo>,
-    #[prost(message, repeated, tag="3")]
-    pub contract_state: ::prost::alloc::vec::Vec<Model>,
-}
-/// Sequence key and value of an id generation counter
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Sequence {
-    #[prost(bytes="vec", tag="1")]
-    pub id_key: ::prost::alloc::vec::Vec<u8>,
-    #[prost(uint64, tag="2")]
-    pub value: u64,
 }
 /// StoreCodeProposal gov proposal content type to submit WASM code to the system
 #[derive(Clone, PartialEq, ::prost::Message)]
