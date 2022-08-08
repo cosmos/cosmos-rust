@@ -111,6 +111,20 @@ pub enum AccessType {
     /// AccessTypeEverybody unrestricted
     Everybody = 3,
 }
+impl AccessType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            AccessType::Unspecified => "ACCESS_TYPE_UNSPECIFIED",
+            AccessType::Nobody => "ACCESS_TYPE_NOBODY",
+            AccessType::OnlyAddress => "ACCESS_TYPE_ONLY_ADDRESS",
+            AccessType::Everybody => "ACCESS_TYPE_EVERYBODY",
+        }
+    }
+}
 /// ContractCodeHistoryOperationType actions that caused a code change
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
@@ -123,6 +137,20 @@ pub enum ContractCodeHistoryOperationType {
     Migrate = 2,
     /// ContractCodeHistoryOperationTypeGenesis based on genesis data
     Genesis = 3,
+}
+impl ContractCodeHistoryOperationType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ContractCodeHistoryOperationType::Unspecified => "CONTRACT_CODE_HISTORY_OPERATION_TYPE_UNSPECIFIED",
+            ContractCodeHistoryOperationType::Init => "CONTRACT_CODE_HISTORY_OPERATION_TYPE_INIT",
+            ContractCodeHistoryOperationType::Migrate => "CONTRACT_CODE_HISTORY_OPERATION_TYPE_MIGRATE",
+            ContractCodeHistoryOperationType::Genesis => "CONTRACT_CODE_HISTORY_OPERATION_TYPE_GENESIS",
+        }
+    }
 }
 /// MsgStoreCode submit Wasm code to the system
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -262,6 +290,7 @@ pub struct MsgClearAdminResponse {
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Msg defines the wasm Msg service.
     #[derive(Debug, Clone)]
     pub struct MsgClient<T> {
@@ -291,6 +320,10 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -310,19 +343,19 @@ pub mod msg_client {
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// StoreCode to submit Wasm code to the system
@@ -350,9 +383,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgInstantiateContract>,
         ) -> Result<
-            tonic::Response<super::MsgInstantiateContractResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgInstantiateContractResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -635,6 +668,7 @@ pub struct QueryPinnedCodesResponse {
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Query provides defines the gRPC querier service
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
@@ -664,6 +698,10 @@ pub mod query_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -683,19 +721,19 @@ pub mod query_client {
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// ContractInfo gets the contract meta data
@@ -723,9 +761,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractHistoryRequest>,
         ) -> Result<
-            tonic::Response<super::QueryContractHistoryResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryContractHistoryResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -746,9 +784,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractsByCodeRequest>,
         ) -> Result<
-            tonic::Response<super::QueryContractsByCodeResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryContractsByCodeResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -769,9 +807,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAllContractStateRequest>,
         ) -> Result<
-            tonic::Response<super::QueryAllContractStateResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryAllContractStateResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -792,9 +830,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryRawContractStateRequest>,
         ) -> Result<
-            tonic::Response<super::QueryRawContractStateResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryRawContractStateResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -815,9 +853,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QuerySmartContractStateRequest>,
         ) -> Result<
-            tonic::Response<super::QuerySmartContractStateResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QuerySmartContractStateResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await

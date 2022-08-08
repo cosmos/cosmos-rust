@@ -1,10 +1,10 @@
 /// PageRequest is to be embedded in gRPC request messages for efficient
 /// pagination. Ex:
 ///
-///  message SomeRequest {
-///          Foo some_parameter = 1;
-///          PageRequest pagination = 2;
-///  }
+///   message SomeRequest {
+///           Foo some_parameter = 1;
+///           PageRequest pagination = 2;
+///   }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PageRequest {
     /// key is a value returned in PageResponse.next_key to begin
@@ -31,10 +31,10 @@ pub struct PageRequest {
 /// PageResponse is to be embedded in gRPC response messages where the
 /// corresponding request message has used PageRequest.
 ///
-///  message SomeResponse {
-///          repeated Bar results = 1;
-///          PageResponse page = 2;
-///  }
+///   message SomeResponse {
+///           repeated Bar results = 1;
+///           PageResponse page = 2;
+///   }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PageResponse {
     /// next_key is the key to be passed to PageRequest.key to

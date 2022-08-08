@@ -117,6 +117,20 @@ pub enum State {
     /// A connection end has completed the handshake.
     Open = 3,
 }
+impl State {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            State::UninitializedUnspecified => "STATE_UNINITIALIZED_UNSPECIFIED",
+            State::Init => "STATE_INIT",
+            State::Tryopen => "STATE_TRYOPEN",
+            State::Open => "STATE_OPEN",
+        }
+    }
+}
 /// MsgConnectionOpenInit defines the msg sent by an account on Chain A to
 /// initialize a connection with Chain B.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -234,6 +248,7 @@ pub struct MsgConnectionOpenConfirmResponse {
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Msg defines the ibc/connection Msg service.
     #[derive(Debug, Clone)]
     pub struct MsgClient<T> {
@@ -263,6 +278,10 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -282,19 +301,19 @@ pub mod msg_client {
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// ConnectionOpenInit defines a rpc handler method for MsgConnectionOpenInit.
@@ -302,9 +321,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenInit>,
         ) -> Result<
-            tonic::Response<super::MsgConnectionOpenInitResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgConnectionOpenInitResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -325,9 +344,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenTry>,
         ) -> Result<
-            tonic::Response<super::MsgConnectionOpenTryResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgConnectionOpenTryResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -348,9 +367,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenAck>,
         ) -> Result<
-            tonic::Response<super::MsgConnectionOpenAckResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgConnectionOpenAckResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -372,9 +391,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgConnectionOpenConfirm>,
         ) -> Result<
-            tonic::Response<super::MsgConnectionOpenConfirmResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgConnectionOpenConfirmResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -515,6 +534,7 @@ pub struct QueryConnectionConsensusStateResponse {
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Query provides defines the gRPC querier service
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
@@ -544,6 +564,10 @@ pub mod query_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -563,19 +587,19 @@ pub mod query_client {
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// Connection queries an IBC connection end.
@@ -624,9 +648,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryClientConnectionsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryClientConnectionsResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryClientConnectionsResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -648,9 +672,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConnectionClientStateRequest>,
         ) -> Result<
-            tonic::Response<super::QueryConnectionClientStateResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryConnectionClientStateResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -672,9 +696,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConnectionConsensusStateRequest>,
         ) -> Result<
-            tonic::Response<super::QueryConnectionConsensusStateResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryConnectionConsensusStateResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
