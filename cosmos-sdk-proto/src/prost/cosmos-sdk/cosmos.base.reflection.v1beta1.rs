@@ -1,12 +1,11 @@
 /// ListAllInterfacesRequest is the request type of the ListAllInterfaces RPC.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListAllInterfacesRequest {
-}
+pub struct ListAllInterfacesRequest {}
 /// ListAllInterfacesResponse is the response type of the ListAllInterfaces RPC.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListAllInterfacesResponse {
     /// interface_names is an array of all the registered interfaces.
-    #[prost(string, repeated, tag="1")]
+    #[prost(string, repeated, tag = "1")]
     pub interface_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// ListImplementationsRequest is the request type of the ListImplementations
@@ -14,14 +13,14 @@ pub struct ListAllInterfacesResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListImplementationsRequest {
     /// interface_name defines the interface to query the implementations for.
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub interface_name: ::prost::alloc::string::String,
 }
 /// ListImplementationsResponse is the response type of the ListImplementations
 /// RPC.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListImplementationsResponse {
-    #[prost(string, repeated, tag="1")]
+    #[prost(string, repeated, tag = "1")]
     pub implementation_message_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Generated client implementations.
@@ -29,8 +28,8 @@ pub struct ListImplementationsResponse {
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 pub mod reflection_service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
     use tonic::codegen::http::Uri;
+    use tonic::codegen::*;
     /// ReflectionService defines a service for interface reflection.
     #[derive(Debug, Clone)]
     pub struct ReflectionServiceClient<T> {
@@ -77,9 +76,8 @@ pub mod reflection_service_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             ReflectionServiceClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -104,15 +102,12 @@ pub mod reflection_service_client {
             &mut self,
             request: impl tonic::IntoRequest<super::ListAllInterfacesRequest>,
         ) -> Result<tonic::Response<super::ListAllInterfacesResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v1beta1.ReflectionService/ListAllInterfaces",
@@ -125,15 +120,12 @@ pub mod reflection_service_client {
             &mut self,
             request: impl tonic::IntoRequest<super::ListImplementationsRequest>,
         ) -> Result<tonic::Response<super::ListImplementationsResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v1beta1.ReflectionService/ListImplementations",
@@ -184,10 +176,7 @@ pub mod reflection_service_server {
                 send_compression_encodings: Default::default(),
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -215,10 +204,7 @@ pub mod reflection_service_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(
-            &mut self,
-            _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -227,23 +213,18 @@ pub mod reflection_service_server {
                 "/cosmos.base.reflection.v1beta1.ReflectionService/ListAllInterfaces" => {
                     #[allow(non_camel_case_types)]
                     struct ListAllInterfacesSvc<T: ReflectionService>(pub Arc<T>);
-                    impl<
-                        T: ReflectionService,
-                    > tonic::server::UnaryService<super::ListAllInterfacesRequest>
-                    for ListAllInterfacesSvc<T> {
+                    impl<T: ReflectionService>
+                        tonic::server::UnaryService<super::ListAllInterfacesRequest>
+                        for ListAllInterfacesSvc<T>
+                    {
                         type Response = super::ListAllInterfacesResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::ListAllInterfacesRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).list_all_interfaces(request).await
-                            };
+                            let fut = async move { (*inner).list_all_interfaces(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -254,11 +235,10 @@ pub mod reflection_service_server {
                         let inner = inner.0;
                         let method = ListAllInterfacesSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -267,23 +247,18 @@ pub mod reflection_service_server {
                 "/cosmos.base.reflection.v1beta1.ReflectionService/ListImplementations" => {
                     #[allow(non_camel_case_types)]
                     struct ListImplementationsSvc<T: ReflectionService>(pub Arc<T>);
-                    impl<
-                        T: ReflectionService,
-                    > tonic::server::UnaryService<super::ListImplementationsRequest>
-                    for ListImplementationsSvc<T> {
+                    impl<T: ReflectionService>
+                        tonic::server::UnaryService<super::ListImplementationsRequest>
+                        for ListImplementationsSvc<T>
+                    {
                         type Response = super::ListImplementationsResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::ListImplementationsRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).list_implementations(request).await
-                            };
+                            let fut = async move { (*inner).list_implementations(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -294,28 +269,23 @@ pub mod reflection_service_server {
                         let inner = inner.0;
                         let method = ListImplementationsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -339,8 +309,7 @@ pub mod reflection_service_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: ReflectionService> tonic::server::NamedService
-    for ReflectionServiceServer<T> {
+    impl<T: ReflectionService> tonic::server::NamedService for ReflectionServiceServer<T> {
         const NAME: &'static str = "cosmos.base.reflection.v1beta1.ReflectionService";
     }
 }

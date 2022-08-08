@@ -2,28 +2,27 @@
 /// account.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateVestingAccount {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub from_address: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub to_address: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag="3")]
+    #[prost(message, repeated, tag = "3")]
     pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(int64, tag="4")]
+    #[prost(int64, tag = "4")]
     pub end_time: i64,
-    #[prost(bool, tag="5")]
+    #[prost(bool, tag = "5")]
     pub delayed: bool,
 }
 /// MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateVestingAccountResponse {
-}
+pub struct MsgCreateVestingAccountResponse {}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
     use tonic::codegen::http::Uri;
+    use tonic::codegen::*;
     /// Msg defines the bank Msg service.
     #[derive(Debug, Clone)]
     pub struct MsgClient<T> {
@@ -57,10 +56,7 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::with_origin(inner, origin);
             Self { inner }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> MsgClient<InterceptedService<T, F>>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -70,9 +66,8 @@ pub mod msg_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -96,19 +91,14 @@ pub mod msg_client {
         pub async fn create_vesting_account(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateVestingAccount>,
-        ) -> Result<
-                tonic::Response<super::MsgCreateVestingAccountResponse>,
-                tonic::Status,
-            > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> Result<tonic::Response<super::MsgCreateVestingAccountResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.vesting.v1beta1.Msg/CreateVestingAccount",
@@ -131,10 +121,7 @@ pub mod msg_server {
         async fn create_vesting_account(
             &self,
             request: tonic::Request<super::MsgCreateVestingAccount>,
-        ) -> Result<
-                tonic::Response<super::MsgCreateVestingAccountResponse>,
-                tonic::Status,
-            >;
+        ) -> Result<tonic::Response<super::MsgCreateVestingAccountResponse>, tonic::Status>;
     }
     /// Msg defines the bank Msg service.
     #[derive(Debug)]
@@ -156,10 +143,7 @@ pub mod msg_server {
                 send_compression_encodings: Default::default(),
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -187,10 +171,7 @@ pub mod msg_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(
-            &mut self,
-            _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -199,23 +180,17 @@ pub mod msg_server {
                 "/cosmos.vesting.v1beta1.Msg/CreateVestingAccount" => {
                     #[allow(non_camel_case_types)]
                     struct CreateVestingAccountSvc<T: Msg>(pub Arc<T>);
-                    impl<
-                        T: Msg,
-                    > tonic::server::UnaryService<super::MsgCreateVestingAccount>
-                    for CreateVestingAccountSvc<T> {
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgCreateVestingAccount>
+                        for CreateVestingAccountSvc<T>
+                    {
                         type Response = super::MsgCreateVestingAccountResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::MsgCreateVestingAccount>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).create_vesting_account(request).await
-                            };
+                            let fut = async move { (*inner).create_vesting_account(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -226,28 +201,23 @@ pub mod msg_server {
                         let inner = inner.0;
                         let method = CreateVestingAccountSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -279,24 +249,24 @@ pub mod msg_server {
 /// the necessary fields needed for any vesting account implementation.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BaseVestingAccount {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub base_account: ::core::option::Option<super::super::auth::v1beta1::BaseAccount>,
-    #[prost(message, repeated, tag="2")]
+    #[prost(message, repeated, tag = "2")]
     pub original_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(message, repeated, tag="3")]
+    #[prost(message, repeated, tag = "3")]
     pub delegated_free: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(message, repeated, tag="4")]
+    #[prost(message, repeated, tag = "4")]
     pub delegated_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(int64, tag="5")]
+    #[prost(int64, tag = "5")]
     pub end_time: i64,
 }
 /// ContinuousVestingAccount implements the VestingAccount interface. It
 /// continuously vests by unlocking coins linearly with respect to time.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ContinuousVestingAccount {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
-    #[prost(int64, tag="2")]
+    #[prost(int64, tag = "2")]
     pub start_time: i64,
 }
 /// DelayedVestingAccount implements the VestingAccount interface. It vests all
@@ -304,26 +274,26 @@ pub struct ContinuousVestingAccount {
 /// locked until a specified time.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DelayedVestingAccount {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
 }
 /// Period defines a length of time and amount of coins that will vest.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Period {
-    #[prost(int64, tag="1")]
+    #[prost(int64, tag = "1")]
     pub length: i64,
-    #[prost(message, repeated, tag="2")]
+    #[prost(message, repeated, tag = "2")]
     pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// PeriodicVestingAccount implements the VestingAccount interface. It
 /// periodically vests by unlocking coins during each specified period.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PeriodicVestingAccount {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
-    #[prost(int64, tag="2")]
+    #[prost(int64, tag = "2")]
     pub start_time: i64,
-    #[prost(message, repeated, tag="3")]
+    #[prost(message, repeated, tag = "3")]
     pub vesting_periods: ::prost::alloc::vec::Vec<Period>,
 }
 /// PermanentLockedAccount implements the VestingAccount interface. It does
@@ -333,6 +303,6 @@ pub struct PeriodicVestingAccount {
 /// Since: cosmos-sdk 0.43
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PermanentLockedAccount {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
 }
