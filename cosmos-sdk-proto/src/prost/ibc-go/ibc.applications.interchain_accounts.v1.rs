@@ -32,6 +32,18 @@ pub enum Type {
     /// Execute a transaction on an interchain accounts host chain
     ExecuteTx = 1,
 }
+impl Type {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Type::Unspecified => "TYPE_UNSPECIFIED",
+            Type::ExecuteTx => "TYPE_EXECUTE_TX",
+        }
+    }
+}
 /// Metadata defines a set of protocol specific data encoded into the ICS27 channel version bytestring
 /// See ICS004: <https://github.com/cosmos/ibc/tree/master/spec/core/ics-004-channel-and-packet-semantics#Versioning>
 #[derive(Clone, PartialEq, ::prost::Message)]

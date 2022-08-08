@@ -54,6 +54,7 @@ pub struct MsgFundCommunityPoolResponse {
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Msg defines the distribution Msg service.
     #[derive(Debug, Clone)]
     pub struct MsgClient<T> {
@@ -83,6 +84,10 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -102,19 +107,19 @@ pub mod msg_client {
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// SetWithdrawAddress defines a method to change the withdraw address
@@ -123,9 +128,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgSetWithdrawAddress>,
         ) -> Result<
-            tonic::Response<super::MsgSetWithdrawAddressResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgSetWithdrawAddressResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -147,9 +152,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgWithdrawDelegatorReward>,
         ) -> Result<
-            tonic::Response<super::MsgWithdrawDelegatorRewardResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgWithdrawDelegatorRewardResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -171,9 +176,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgWithdrawValidatorCommission>,
         ) -> Result<
-            tonic::Response<super::MsgWithdrawValidatorCommissionResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgWithdrawValidatorCommissionResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -195,9 +200,9 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgFundCommunityPool>,
         ) -> Result<
-            tonic::Response<super::MsgFundCommunityPoolResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::MsgFundCommunityPoolResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -230,27 +235,27 @@ pub mod msg_server {
             &self,
             request: tonic::Request<super::MsgSetWithdrawAddress>,
         ) -> Result<
-            tonic::Response<super::MsgSetWithdrawAddressResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::MsgSetWithdrawAddressResponse>,
+                tonic::Status,
+            >;
         /// WithdrawDelegatorReward defines a method to withdraw rewards of delegator
         /// from a single validator.
         async fn withdraw_delegator_reward(
             &self,
             request: tonic::Request<super::MsgWithdrawDelegatorReward>,
         ) -> Result<
-            tonic::Response<super::MsgWithdrawDelegatorRewardResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::MsgWithdrawDelegatorRewardResponse>,
+                tonic::Status,
+            >;
         /// WithdrawValidatorCommission defines a method to withdraw the
         /// full commission to the validator address.
         async fn withdraw_validator_commission(
             &self,
             request: tonic::Request<super::MsgWithdrawValidatorCommission>,
         ) -> Result<
-            tonic::Response<super::MsgWithdrawValidatorCommissionResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::MsgWithdrawValidatorCommissionResponse>,
+                tonic::Status,
+            >;
         /// FundCommunityPool defines a method to allow an account to directly
         /// fund the community pool.
         async fn fund_community_pool(
@@ -262,8 +267,8 @@ pub mod msg_server {
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
         inner: _Inner<T>,
-        accept_compression_encodings: (),
-        send_compression_encodings: (),
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Msg> MsgServer<T> {
@@ -286,6 +291,18 @@ pub mod msg_server {
             F: tonic::service::Interceptor,
         {
             InterceptedService::new(Self::new(inner), interceptor)
+        }
+        /// Enable decompressing requests with the given encoding.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.accept_compression_encodings.enable(encoding);
+            self
+        }
+        /// Compress responses with the given encoding, if the client supports it.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.send_compression_encodings.enable(encoding);
+            self
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for MsgServer<T>
@@ -501,9 +518,7 @@ pub mod msg_server {
             write!(f, "{:?}", self.0)
         }
     }
-    #[cfg(feature = "grpc-transport")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
-    impl<T: Msg> tonic::transport::NamedService for MsgServer<T> {
+    impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
         const NAME: &'static str = "cosmos.distribution.v1beta1.Msg";
     }
 }
@@ -526,11 +541,11 @@ pub struct Params {
 /// The reference count indicates the number of objects
 /// which might need to reference this historical entry at any point.
 /// ReferenceCount =
-///    number of outstanding delegations which ended the associated period (and
-///    might need to read that record)
-///  + number of slashes which ended the associated period (and might need to
-///  read that record)
-///  + one per validator for the zeroeth period, set on initialization
+///     number of outstanding delegations which ended the associated period (and
+///     might need to read that record)
+///   + number of slashes which ended the associated period (and might need to
+///   read that record)
+///   + one per validator for the zeroeth period, set on initialization
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValidatorHistoricalRewards {
     #[prost(message, repeated, tag="1")]
@@ -797,6 +812,7 @@ pub struct QueryCommunityPoolResponse {
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Query defines the gRPC querier service for distribution module.
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
@@ -826,6 +842,10 @@ pub mod query_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -845,19 +865,19 @@ pub mod query_client {
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// Params queries params of the distribution module.
@@ -887,9 +907,9 @@ pub mod query_client {
                 super::QueryValidatorOutstandingRewardsRequest,
             >,
         ) -> Result<
-            tonic::Response<super::QueryValidatorOutstandingRewardsResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryValidatorOutstandingRewardsResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -910,9 +930,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorCommissionRequest>,
         ) -> Result<
-            tonic::Response<super::QueryValidatorCommissionResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryValidatorCommissionResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -933,9 +953,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorSlashesRequest>,
         ) -> Result<
-            tonic::Response<super::QueryValidatorSlashesResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryValidatorSlashesResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -956,9 +976,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegationRewardsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegationRewardsResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryDelegationRewardsResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -980,9 +1000,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegationTotalRewardsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegationTotalRewardsResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryDelegationTotalRewardsResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -1003,9 +1023,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorValidatorsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegatorValidatorsResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryDelegatorValidatorsResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -1026,9 +1046,9 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorWithdrawAddressRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegatorWithdrawAddressResponse>,
-            tonic::Status,
-        > {
+                tonic::Response<super::QueryDelegatorWithdrawAddressResponse>,
+                tonic::Status,
+            > {
             self.inner
                 .ready()
                 .await
@@ -1085,58 +1105,58 @@ pub mod query_server {
             &self,
             request: tonic::Request<super::QueryValidatorOutstandingRewardsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryValidatorOutstandingRewardsResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::QueryValidatorOutstandingRewardsResponse>,
+                tonic::Status,
+            >;
         /// ValidatorCommission queries accumulated commission for a validator.
         async fn validator_commission(
             &self,
             request: tonic::Request<super::QueryValidatorCommissionRequest>,
         ) -> Result<
-            tonic::Response<super::QueryValidatorCommissionResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::QueryValidatorCommissionResponse>,
+                tonic::Status,
+            >;
         /// ValidatorSlashes queries slash events of a validator.
         async fn validator_slashes(
             &self,
             request: tonic::Request<super::QueryValidatorSlashesRequest>,
         ) -> Result<
-            tonic::Response<super::QueryValidatorSlashesResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::QueryValidatorSlashesResponse>,
+                tonic::Status,
+            >;
         /// DelegationRewards queries the total rewards accrued by a delegation.
         async fn delegation_rewards(
             &self,
             request: tonic::Request<super::QueryDelegationRewardsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegationRewardsResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::QueryDelegationRewardsResponse>,
+                tonic::Status,
+            >;
         /// DelegationTotalRewards queries the total rewards accrued by a each
         /// validator.
         async fn delegation_total_rewards(
             &self,
             request: tonic::Request<super::QueryDelegationTotalRewardsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegationTotalRewardsResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::QueryDelegationTotalRewardsResponse>,
+                tonic::Status,
+            >;
         /// DelegatorValidators queries the validators of a delegator.
         async fn delegator_validators(
             &self,
             request: tonic::Request<super::QueryDelegatorValidatorsRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegatorValidatorsResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::QueryDelegatorValidatorsResponse>,
+                tonic::Status,
+            >;
         /// DelegatorWithdrawAddress queries withdraw address of a delegator.
         async fn delegator_withdraw_address(
             &self,
             request: tonic::Request<super::QueryDelegatorWithdrawAddressRequest>,
         ) -> Result<
-            tonic::Response<super::QueryDelegatorWithdrawAddressResponse>,
-            tonic::Status,
-        >;
+                tonic::Response<super::QueryDelegatorWithdrawAddressResponse>,
+                tonic::Status,
+            >;
         /// CommunityPool queries the community pool coins.
         async fn community_pool(
             &self,
@@ -1147,8 +1167,8 @@ pub mod query_server {
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
         inner: _Inner<T>,
-        accept_compression_encodings: (),
-        send_compression_encodings: (),
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Query> QueryServer<T> {
@@ -1171,6 +1191,18 @@ pub mod query_server {
             F: tonic::service::Interceptor,
         {
             InterceptedService::new(Self::new(inner), interceptor)
+        }
+        /// Enable decompressing requests with the given encoding.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.accept_compression_encodings.enable(encoding);
+            self
+        }
+        /// Compress responses with the given encoding, if the client supports it.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.send_compression_encodings.enable(encoding);
+            self
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for QueryServer<T>
@@ -1595,9 +1627,7 @@ pub mod query_server {
             write!(f, "{:?}", self.0)
         }
     }
-    #[cfg(feature = "grpc-transport")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
-    impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
+    impl<T: Query> tonic::server::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.distribution.v1beta1.Query";
     }
 }

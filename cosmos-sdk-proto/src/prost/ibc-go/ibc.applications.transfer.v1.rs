@@ -37,6 +37,7 @@ pub struct MsgTransferResponse {
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Msg defines the ibc/transfer Msg service.
     #[derive(Debug, Clone)]
     pub struct MsgClient<T> {
@@ -66,6 +67,10 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -85,19 +90,19 @@ pub mod msg_client {
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// Transfer defines a rpc handler method for MsgTransfer.
@@ -217,6 +222,7 @@ pub struct QueryDenomHashResponse {
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     /// Query provides defines the gRPC querier service.
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
@@ -246,6 +252,10 @@ pub mod query_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -265,19 +275,19 @@ pub mod query_client {
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// DenomTrace queries a denomination trace information.
