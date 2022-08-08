@@ -93,6 +93,22 @@ fn main() {
     copy_generated_files(&temp_ibc_dir, &proto_dir.join("ibc-go"));
     copy_generated_files(&temp_wasmd_dir, &proto_dir.join("wasmd"));
 
+    // Fix clashing type names in prost-generated code. See cosmos/cosmos-rust#154.
+    for (pattern, replacement) in [
+        ("enum Validators", "enum Policy"),
+        (
+            "stake_authorization::Validators",
+            "stake_authorization::Policy",
+        ),
+    ] {
+        patch_file(
+            &proto_dir.join("cosmos-sdk/cosmos.staking.v1beta1.rs"),
+            &Regex::new(pattern).unwrap(),
+            replacement,
+        )
+        .expect("error patching cosmos.staking.v1beta1.rs");
+    }
+
     if is_github() {
         println!(
             "Rebuild protos with proto-build (cosmos-sdk rev: {} ibc-go rev: {} wasmd rev: {}))",
@@ -405,5 +421,11 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
             .to_string();
     }
 
-    fs::write(dest, &*contents)
+    fs::write(dest, &contents)
+}
+
+fn patch_file(path: impl AsRef<Path>, pattern: &Regex, replacement: &str) -> io::Result<()> {
+    let mut contents = fs::read_to_string(&path)?;
+    contents = pattern.replace_all(&contents, replacement).to_string();
+    fs::write(path, &contents)
 }
