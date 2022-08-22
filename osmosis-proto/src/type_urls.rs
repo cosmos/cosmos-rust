@@ -17,5 +17,5 @@ impl TypeUrl for osmosis::poolincentives::v1beta1::UpdatePoolIncentivesProposal 
 }
 
 impl TypeUrl for osmosis::superfluid::v1beta1::RemoveSuperfluidAssetsProposal {
-    const TYPE_URL: &'static str = "/osmosis.superfluid.v1beta.RemoveSuperfluidAssetsProposal";
+    const TYPE_URL: &'static str = "/osmosis.superfluid.v1beta1.RemoveSuperfluidAssetsProposal";
 }
