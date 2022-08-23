@@ -6,7 +6,7 @@
 use regex::Regex;
 use std::{
     env,
-    ffi::OsStr,
+    ffi::{OsStr, OsString},
     fs::{self, create_dir_all, remove_dir_all},
     io,
     path::{Path, PathBuf},
@@ -93,6 +93,11 @@ fn main() {
     copy_generated_files(&temp_ibc_dir, &proto_dir.join("ibc-go"));
     copy_generated_files(&temp_wasmd_dir, &proto_dir.join("wasmd"));
 
+    apply_patches(&proto_dir);
+
+    info!("Running rustfmt on prost/tonic-generated code");
+    run_rustfmt(&proto_dir);
+
     if is_github() {
         println!(
             "Rebuild protos with proto-build (cosmos-sdk rev: {} ibc-go rev: {} wasmd rev: {}))",
@@ -115,22 +120,48 @@ fn is_github() -> bool {
     env::args().any(|arg| arg == "--github")
 }
 
-fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
+fn run_cmd(cmd: impl AsRef<OsStr>, args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
     let stdout = if is_quiet() {
         process::Stdio::null()
     } else {
         process::Stdio::inherit()
     };
 
-    let exit_status = process::Command::new("git")
+    let exit_status = process::Command::new(&cmd)
         .args(args)
         .stdout(stdout)
         .status()
-        .expect("git exit status missing");
+        .expect("exit status missing");
 
     if !exit_status.success() {
-        panic!("git exited with error code: {:?}", exit_status.code());
+        panic!(
+            "{:?} exited with error code: {:?}",
+            cmd.as_ref(),
+            exit_status.code()
+        );
     }
+}
+
+fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
+    run_cmd("git", args)
+}
+
+fn run_rustfmt(dir: &Path) {
+    let mut args = ["--edition", "2021"]
+        .iter()
+        .map(Into::into)
+        .collect::<Vec<OsString>>();
+
+    args.extend(
+        WalkDir::new(dir)
+            .into_iter()
+            .filter_map(|e| e.ok())
+            .filter(|e| e.file_type().is_file() && e.path().extension() == Some(OsStr::new("rs")))
+            .map(|e| e.into_path())
+            .map(Into::into),
+    );
+
+    run_cmd("rustfmt", args);
 }
 
 fn update_submodules() {
@@ -405,5 +436,29 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
             .to_string();
     }
 
-    fs::write(dest, &*contents)
+    fs::write(dest, &contents)
+}
+
+fn patch_file(path: impl AsRef<Path>, pattern: &Regex, replacement: &str) -> io::Result<()> {
+    let mut contents = fs::read_to_string(&path)?;
+    contents = pattern.replace_all(&contents, replacement).to_string();
+    fs::write(path, &contents)
+}
+
+/// Fix clashing type names in prost-generated code. See cosmos/cosmos-rust#154.
+fn apply_patches(proto_dir: &Path) {
+    for (pattern, replacement) in [
+        ("enum Validators", "enum Policy"),
+        (
+            "stake_authorization::Validators",
+            "stake_authorization::Policy",
+        ),
+    ] {
+        patch_file(
+            &proto_dir.join("cosmos-sdk/cosmos.staking.v1beta1.rs"),
+            &Regex::new(pattern).unwrap(),
+            replacement,
+        )
+        .expect("error patching cosmos.staking.v1beta1.rs");
+    }
 }

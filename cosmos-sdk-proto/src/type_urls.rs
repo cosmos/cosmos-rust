@@ -73,6 +73,14 @@ impl TypeUrl for cosmos::base::abci::v1beta1::TxMsgData {
     const TYPE_URL: &'static str = "/cosmos.base.v1beta1.abci.TxMsgData";
 }
 
+impl TypeUrl for cosmos::auth::v1beta1::BaseAccount {
+    const TYPE_URL: &'static str = "/cosmos.auth.v1beta1.BaseAccount";
+}
+
+impl TypeUrl for cosmos::auth::v1beta1::ModuleAccount {
+    const TYPE_URL: &'static str = "/cosmos.auth.v1beta1.ModuleAccount";
+}
+
 #[cfg(feature = "cosmwasm")]
 impl TypeUrl for cosmwasm::wasm::v1::MsgStoreCode {
     const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCode";

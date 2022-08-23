@@ -106,6 +106,7 @@ pub mod mode_info;
 
 mod auth_info;
 mod body;
+mod builder;
 mod fee;
 mod msg;
 mod raw;
@@ -115,6 +116,7 @@ mod signer_info;
 pub use self::{
     auth_info::AuthInfo,
     body::Body,
+    builder::BodyBuilder,
     fee::Fee,
     mode_info::ModeInfo,
     msg::Msg,
@@ -128,8 +130,10 @@ pub use crate::{
 };
 pub use tendermint::abci::{transaction::Hash, Gas};
 
-use crate::{proto, Error, Result};
-use prost::Message;
+use crate::{
+    proto::{self, traits::Message},
+    Error, Result,
+};
 
 #[cfg(feature = "rpc")]
 use crate::rpc;

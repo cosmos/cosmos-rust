@@ -17,6 +17,8 @@ jobs:
           components: rustfmt
           override: true
           profile: minimal
+      - name: Install protoc
+        run: sudo apt-get install protobuf-compiler
       - name: Run proto-build
         id: build
         working-directory: proto-build

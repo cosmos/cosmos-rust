@@ -60,9 +60,8 @@ fn msg_send() {
     let sequence_number = 0;
     let gas = 100_000;
     let fee = Fee::from_amount_and_gas(amount, gas);
-    let timeout_height = 9001u16;
 
-    let tx_body = tx::Body::new(vec![msg_send], MEMO, timeout_height);
+    let tx_body = tx::BodyBuilder::new().msg(msg_send).memo(MEMO).finish();
     let auth_info =
         SignerInfo::single_direct(Some(sender_public_key), sequence_number).auth_info(fee);
     let sign_doc = SignDoc::new(&tx_body, &auth_info, &chain_id, ACCOUNT_NUMBER).unwrap();
