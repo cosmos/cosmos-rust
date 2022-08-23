@@ -13,12 +13,15 @@ Only includes Osmosis specific types. To get general cosmos types also import `c
 
 ## Build
 
-`cd osmosis-proto-build`  
+`cd proto-build/osmosis`  
 `cargo run`
 
 ## Cargo.toml
 `osmosis-proto = { path = "../cosmos-rust/osmosis-proto", features = ["grpc-transport", "osmosis"] }`
 
+## Example Use Case
+
+- [cosmos-rust-package](https://github.com/Philipp-Sc/cosmos-rust-package)
 
 [//]: # "badges"
 [crate-image]: https://buildstats.info/crate/osmosis-proto
