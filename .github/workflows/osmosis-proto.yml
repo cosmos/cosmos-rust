@@ -4,8 +4,7 @@ on:
   push:
     branches: main
   pull_request:
-    paths:
-      - ".github/workflows/osmosis-proto.yml"
+    paths: 
       - "osmosis-proto/**"
       - "Cargo.*"
 
@@ -36,7 +35,8 @@ jobs:
           toolchain: ${{ matrix.rust }}
           target: ${{ matrix.target }}
           override: true
-      - run: cargo build --target ${{ matrix.target }} --release
+      - run: cargo build --target ${{ matrix.target }} --release --no-default-features
+      - run: cargo build --target ${{ matrix.target }} --release --no-default-features --features grpc
 
   test:
     runs-on: ubuntu-latest
