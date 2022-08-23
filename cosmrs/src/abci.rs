@@ -1,8 +1,10 @@
 //! Abci-related functionality
 
 use crate::tx::Msg;
-use crate::{proto, ErrorReport, Result};
-use prost::Message;
+use crate::{
+    proto::{self, traits::Message},
+    ErrorReport, Result,
+};
 use serde::{Deserialize, Serialize};
 use tendermint::abci::Gas;
 

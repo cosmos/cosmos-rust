@@ -25,10 +25,9 @@ impl AccountId {
     pub fn new(prefix: &str, bytes: &[u8]) -> Result<Self> {
         let id = bech32::encode(prefix, &bytes);
 
-        // TODO(tarcieri): ensure this is the proper validation for an account prefix
-        if !prefix.chars().all(|c| matches!(c, 'a'..='z')) {
+        if !prefix.chars().all(|c| matches!(c, 'a'..='z' | '0'..='9')) {
             return Err(Error::AccountId { id })
-                .wrap_err("expected prefix to be lowercase alphabetical characters only");
+                .wrap_err("expected prefix to be lowercase alphanumeric characters only");
         }
 
         if matches!(bytes.len(), 1..=MAX_ADDRESS_LENGTH) {
@@ -230,6 +229,13 @@ mod tests {
     #[test]
     fn account_id() {
         "juno1cma4czt2jnydvrvz3lrc9jvcmhpjxtds95s3c6"
+            .parse::<AccountId>()
+            .unwrap();
+    }
+
+    #[test]
+    fn account_id_with_digit() {
+        "okp41urdh3smlstyafjtyg0d606egllhwp8kvnw0d2f"
             .parse::<AccountId>()
             .unwrap();
     }

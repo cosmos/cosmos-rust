@@ -3,16 +3,16 @@
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenericAuthorization {
     /// Msg, identified by it's type URL, to grant unrestricted permissions to execute
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub msg: ::prost::alloc::string::String,
 }
 /// Grant gives permissions to execute
 /// the provide method with expiration time.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Grant {
-    #[prost(message, optional, tag="1")]
+    #[prost(message, optional, tag = "1")]
     pub authorization: ::core::option::Option<::prost_types::Any>,
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub expiration: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// GrantAuthorization extends a grant with both the addresses of the grantee and granter.
@@ -21,30 +21,30 @@ pub struct Grant {
 /// Since: cosmos-sdk 0.45.2
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrantAuthorization {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub granter: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub grantee: ::prost::alloc::string::String,
-    #[prost(message, optional, tag="3")]
+    #[prost(message, optional, tag = "3")]
     pub authorization: ::core::option::Option<::prost_types::Any>,
-    #[prost(message, optional, tag="4")]
+    #[prost(message, optional, tag = "4")]
     pub expiration: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// MsgGrant is a request type for Grant method. It declares authorization to the grantee
 /// on behalf of the granter with the provided expiration time.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgGrant {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub granter: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub grantee: ::prost::alloc::string::String,
-    #[prost(message, optional, tag="3")]
+    #[prost(message, optional, tag = "3")]
     pub grant: ::core::option::Option<Grant>,
 }
 /// MsgExecResponse defines the Msg/MsgExecResponse response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExecResponse {
-    #[prost(bytes="vec", repeated, tag="1")]
+    #[prost(bytes = "vec", repeated, tag = "1")]
     pub results: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// MsgExec attempts to execute the provided messages using
@@ -52,38 +52,37 @@ pub struct MsgExecResponse {
 /// one signer corresponding to the granter of the authorization.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExec {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub grantee: ::prost::alloc::string::String,
     /// Authorization Msg requests to execute. Each msg must implement Authorization interface
     /// The x/authz will try to find a grant matching (msg.signers\[0\], grantee, MsgTypeURL(msg))
     /// triple and validate it.
-    #[prost(message, repeated, tag="2")]
+    #[prost(message, repeated, tag = "2")]
     pub msgs: ::prost::alloc::vec::Vec<::prost_types::Any>,
 }
 /// MsgGrantResponse defines the Msg/MsgGrant response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgGrantResponse {
-}
+pub struct MsgGrantResponse {}
 /// MsgRevoke revokes any authorization with the provided sdk.Msg type on the
 /// granter's account with that has been granted to the grantee.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevoke {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub granter: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub grantee: ::prost::alloc::string::String,
-    #[prost(string, tag="3")]
+    #[prost(string, tag = "3")]
     pub msg_type_url: ::prost::alloc::string::String,
 }
 /// MsgRevokeResponse defines the Msg/MsgRevokeResponse response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgRevokeResponse {
-}
+pub struct MsgRevokeResponse {}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 pub mod msg_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::http::Uri;
     use tonic::codegen::*;
     /// Msg defines the authz Msg service.
     #[derive(Debug, Clone)]
@@ -114,10 +113,11 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> MsgClient<InterceptedService<T, F>>
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -127,25 +127,24 @@ pub mod msg_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// Grant grants the provided authorization to the grantee on the granter's
@@ -156,19 +155,14 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgGrant>,
         ) -> Result<tonic::Response<super::MsgGrantResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.authz.v1beta1.Msg/Grant",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.authz.v1beta1.Msg/Grant");
             self.inner.unary(request.into_request(), path, codec).await
         }
         /// Exec attempts to execute the provided messages using
@@ -178,19 +172,14 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgExec>,
         ) -> Result<tonic::Response<super::MsgExecResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.authz.v1beta1.Msg/Exec",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.authz.v1beta1.Msg/Exec");
             self.inner.unary(request.into_request(), path, codec).await
         }
         /// Revoke revokes any authorization corresponding to the provided method name on the
@@ -199,19 +188,14 @@ pub mod msg_client {
             &mut self,
             request: impl tonic::IntoRequest<super::MsgRevoke>,
         ) -> Result<tonic::Response<super::MsgRevokeResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.authz.v1beta1.Msg/Revoke",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.authz.v1beta1.Msg/Revoke");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -251,8 +235,8 @@ pub mod msg_server {
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
         inner: _Inner<T>,
-        accept_compression_encodings: (),
-        send_compression_encodings: (),
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Msg> MsgServer<T> {
@@ -267,14 +251,23 @@ pub mod msg_server {
                 send_compression_encodings: Default::default(),
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
             InterceptedService::new(Self::new(inner), interceptor)
+        }
+        /// Enable decompressing requests with the given encoding.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.accept_compression_encodings.enable(encoding);
+            self
+        }
+        /// Compress responses with the given encoding, if the client supports it.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.send_compression_encodings.enable(encoding);
+            self
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for MsgServer<T>
@@ -286,10 +279,7 @@ pub mod msg_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(
-            &mut self,
-            _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -298,13 +288,9 @@ pub mod msg_server {
                 "/cosmos.authz.v1beta1.Msg/Grant" => {
                     #[allow(non_camel_case_types)]
                     struct GrantSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgGrant>
-                    for GrantSvc<T> {
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgGrant> for GrantSvc<T> {
                         type Response = super::MsgGrantResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::MsgGrant>,
@@ -321,11 +307,10 @@ pub mod msg_server {
                         let inner = inner.0;
                         let method = GrantSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -334,13 +319,9 @@ pub mod msg_server {
                 "/cosmos.authz.v1beta1.Msg/Exec" => {
                     #[allow(non_camel_case_types)]
                     struct ExecSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgExec>
-                    for ExecSvc<T> {
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgExec> for ExecSvc<T> {
                         type Response = super::MsgExecResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::MsgExec>,
@@ -357,11 +338,10 @@ pub mod msg_server {
                         let inner = inner.0;
                         let method = ExecSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -370,13 +350,9 @@ pub mod msg_server {
                 "/cosmos.authz.v1beta1.Msg/Revoke" => {
                     #[allow(non_camel_case_types)]
                     struct RevokeSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgRevoke>
-                    for RevokeSvc<T> {
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgRevoke> for RevokeSvc<T> {
                         type Response = super::MsgRevokeResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::MsgRevoke>,
@@ -393,28 +369,23 @@ pub mod msg_server {
                         let inner = inner.0;
                         let method = RevokeSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -438,72 +409,70 @@ pub mod msg_server {
             write!(f, "{:?}", self.0)
         }
     }
-    #[cfg(feature = "grpc-transport")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
-    impl<T: Msg> tonic::transport::NamedService for MsgServer<T> {
+    impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
         const NAME: &'static str = "cosmos.authz.v1beta1.Msg";
     }
 }
 /// QueryGrantsRequest is the request type for the Query/Grants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsRequest {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub granter: ::prost::alloc::string::String,
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub grantee: ::prost::alloc::string::String,
     /// Optional, msg_type_url, when set, will query only grants matching given msg type.
-    #[prost(string, tag="3")]
+    #[prost(string, tag = "3")]
     pub msg_type_url: ::prost::alloc::string::String,
     /// pagination defines an pagination for the request.
-    #[prost(message, optional, tag="4")]
+    #[prost(message, optional, tag = "4")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGrantsResponse is the response type for the Query/Authorizations RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsResponse {
     /// authorizations is a list of grants granted for grantee by granter.
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, repeated, tag = "1")]
     pub grants: ::prost::alloc::vec::Vec<Grant>,
     /// pagination defines an pagination for the response.
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGranterGrantsRequest is the request type for the Query/GranterGrants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranterGrantsRequest {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub granter: ::prost::alloc::string::String,
     /// pagination defines an pagination for the request.
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGranterGrantsResponse is the response type for the Query/GranterGrants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranterGrantsResponse {
     /// grants is a list of grants granted by the granter.
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, repeated, tag = "1")]
     pub grants: ::prost::alloc::vec::Vec<GrantAuthorization>,
     /// pagination defines an pagination for the response.
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGranteeGrantsRequest is the request type for the Query/IssuedGrants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranteeGrantsRequest {
-    #[prost(string, tag="1")]
+    #[prost(string, tag = "1")]
     pub grantee: ::prost::alloc::string::String,
     /// pagination defines an pagination for the request.
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGranteeGrantsResponse is the response type for the Query/GranteeGrants RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranteeGrantsResponse {
     /// grants is a list of grants granted to the grantee.
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, repeated, tag = "1")]
     pub grants: ::prost::alloc::vec::Vec<GrantAuthorization>,
     /// pagination defines an pagination for the response.
-    #[prost(message, optional, tag="2")]
+    #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// Generated client implementations.
@@ -511,6 +480,7 @@ pub struct QueryGranteeGrantsResponse {
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
+    use tonic::codegen::http::Uri;
     use tonic::codegen::*;
     /// Query defines the gRPC querier service.
     #[derive(Debug, Clone)]
@@ -541,6 +511,10 @@ pub mod query_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -554,25 +528,24 @@ pub mod query_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         /// Returns list of `Authorization`, granted to the grantee by the granter.
@@ -580,19 +553,14 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGrantsRequest>,
         ) -> Result<tonic::Response<super::QueryGrantsResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.authz.v1beta1.Query/Grants",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.authz.v1beta1.Query/Grants");
             self.inner.unary(request.into_request(), path, codec).await
         }
         /// GranterGrants returns list of `GrantAuthorization`, granted by granter.
@@ -602,19 +570,15 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGranterGrantsRequest>,
         ) -> Result<tonic::Response<super::QueryGranterGrantsResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.authz.v1beta1.Query/GranterGrants",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.authz.v1beta1.Query/GranterGrants");
             self.inner.unary(request.into_request(), path, codec).await
         }
         /// GranteeGrants returns a list of `GrantAuthorization` by grantee.
@@ -624,19 +588,15 @@ pub mod query_client {
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGranteeGrantsRequest>,
         ) -> Result<tonic::Response<super::QueryGranteeGrantsResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.authz.v1beta1.Query/GranteeGrants",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.authz.v1beta1.Query/GranteeGrants");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -674,8 +634,8 @@ pub mod query_server {
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
         inner: _Inner<T>,
-        accept_compression_encodings: (),
-        send_compression_encodings: (),
+        accept_compression_encodings: EnabledCompressionEncodings,
+        send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Query> QueryServer<T> {
@@ -690,14 +650,23 @@ pub mod query_server {
                 send_compression_encodings: Default::default(),
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
             InterceptedService::new(Self::new(inner), interceptor)
+        }
+        /// Enable decompressing requests with the given encoding.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.accept_compression_encodings.enable(encoding);
+            self
+        }
+        /// Compress responses with the given encoding, if the client supports it.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.send_compression_encodings.enable(encoding);
+            self
         }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for QueryServer<T>
@@ -709,10 +678,7 @@ pub mod query_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(
-            &mut self,
-            _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -721,13 +687,9 @@ pub mod query_server {
                 "/cosmos.authz.v1beta1.Query/Grants" => {
                     #[allow(non_camel_case_types)]
                     struct GrantsSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryGrantsRequest>
-                    for GrantsSvc<T> {
+                    impl<T: Query> tonic::server::UnaryService<super::QueryGrantsRequest> for GrantsSvc<T> {
                         type Response = super::QueryGrantsResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::QueryGrantsRequest>,
@@ -744,11 +706,10 @@ pub mod query_server {
                         let inner = inner.0;
                         let method = GrantsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -757,23 +718,17 @@ pub mod query_server {
                 "/cosmos.authz.v1beta1.Query/GranterGrants" => {
                     #[allow(non_camel_case_types)]
                     struct GranterGrantsSvc<T: Query>(pub Arc<T>);
-                    impl<
-                        T: Query,
-                    > tonic::server::UnaryService<super::QueryGranterGrantsRequest>
-                    for GranterGrantsSvc<T> {
+                    impl<T: Query> tonic::server::UnaryService<super::QueryGranterGrantsRequest>
+                        for GranterGrantsSvc<T>
+                    {
                         type Response = super::QueryGranterGrantsResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::QueryGranterGrantsRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).granter_grants(request).await
-                            };
+                            let fut = async move { (*inner).granter_grants(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -784,11 +739,10 @@ pub mod query_server {
                         let inner = inner.0;
                         let method = GranterGrantsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -797,23 +751,17 @@ pub mod query_server {
                 "/cosmos.authz.v1beta1.Query/GranteeGrants" => {
                     #[allow(non_camel_case_types)]
                     struct GranteeGrantsSvc<T: Query>(pub Arc<T>);
-                    impl<
-                        T: Query,
-                    > tonic::server::UnaryService<super::QueryGranteeGrantsRequest>
-                    for GranteeGrantsSvc<T> {
+                    impl<T: Query> tonic::server::UnaryService<super::QueryGranteeGrantsRequest>
+                        for GranteeGrantsSvc<T>
+                    {
                         type Response = super::QueryGranteeGrantsResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::QueryGranteeGrantsRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move {
-                                (*inner).grantee_grants(request).await
-                            };
+                            let fut = async move { (*inner).grantee_grants(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -824,28 +772,23 @@ pub mod query_server {
                         let inner = inner.0;
                         let method = GranteeGrantsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -869,9 +812,7 @@ pub mod query_server {
             write!(f, "{:?}", self.0)
         }
     }
-    #[cfg(feature = "grpc-transport")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
-    impl<T: Query> tonic::transport::NamedService for QueryServer<T> {
+    impl<T: Query> tonic::server::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.authz.v1beta1.Query";
     }
 }
@@ -879,31 +820,31 @@ pub mod query_server {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventGrant {
     /// Msg type URL for which an autorization is granted
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub msg_type_url: ::prost::alloc::string::String,
     /// Granter account address
-    #[prost(string, tag="3")]
+    #[prost(string, tag = "3")]
     pub granter: ::prost::alloc::string::String,
     /// Grantee account address
-    #[prost(string, tag="4")]
+    #[prost(string, tag = "4")]
     pub grantee: ::prost::alloc::string::String,
 }
 /// EventRevoke is emitted on Msg/Revoke
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventRevoke {
     /// Msg type URL for which an autorization is revoked
-    #[prost(string, tag="2")]
+    #[prost(string, tag = "2")]
     pub msg_type_url: ::prost::alloc::string::String,
     /// Granter account address
-    #[prost(string, tag="3")]
+    #[prost(string, tag = "3")]
     pub granter: ::prost::alloc::string::String,
     /// Grantee account address
-    #[prost(string, tag="4")]
+    #[prost(string, tag = "4")]
     pub grantee: ::prost::alloc::string::String,
 }
 /// GenesisState defines the authz module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
-    #[prost(message, repeated, tag="1")]
+    #[prost(message, repeated, tag = "1")]
     pub authorization: ::prost::alloc::vec::Vec<GrantAuthorization>,
 }

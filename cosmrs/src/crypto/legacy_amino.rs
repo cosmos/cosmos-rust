@@ -2,11 +2,13 @@
 
 use super::PublicKey;
 use crate::{
-    proto::{self, traits::MessageExt},
+    proto::{
+        self,
+        traits::{Message, MessageExt},
+    },
     Any, Error, ErrorReport, Result,
 };
 use eyre::WrapErr;
-use prost::Message;
 
 /// Legacy Amino multisig key.
 #[derive(Clone, Debug, Eq, PartialEq)]
