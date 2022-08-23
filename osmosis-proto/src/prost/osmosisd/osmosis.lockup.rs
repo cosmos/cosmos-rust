@@ -116,6 +116,24 @@ pub struct MsgBeginUnlockingResponse {
     #[prost(bool, tag="1")]
     pub success: bool,
 }
+/// MsgExtendLockup extends the existing lockup's duration.
+/// The new duration is longer than the original.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgExtendLockup {
+    #[prost(string, tag="1")]
+    pub owner: ::prost::alloc::string::String,
+    #[prost(uint64, tag="2")]
+    pub id: u64,
+    /// duration to be set. fails if lower than the current duration, or is
+    /// unlocking
+    #[prost(message, optional, tag="3")]
+    pub duration: ::core::option::Option<::prost_types::Duration>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgExtendLockupResponse {
+    #[prost(bool, tag="1")]
+    pub success: bool,
+}
 /// GenesisState defines the lockup module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
@@ -263,6 +281,18 @@ pub struct AccountLockedLongerDurationRequest {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AccountLockedLongerDurationResponse {
+    #[prost(message, repeated, tag="1")]
+    pub locks: ::prost::alloc::vec::Vec<PeriodLock>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AccountLockedDurationRequest {
+    #[prost(string, tag="1")]
+    pub owner: ::prost::alloc::string::String,
+    #[prost(message, optional, tag="2")]
+    pub duration: ::core::option::Option<::prost_types::Duration>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AccountLockedDurationResponse {
     #[prost(message, repeated, tag="1")]
     pub locks: ::prost::alloc::vec::Vec<PeriodLock>,
 }

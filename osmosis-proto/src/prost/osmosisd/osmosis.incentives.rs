@@ -4,15 +4,14 @@ pub struct Gauge {
     #[prost(uint64, tag="1")]
     pub id: u64,
     /// flag to show if it's perpetual or multi-epoch
+    /// distribution incentives by third party
     #[prost(bool, tag="2")]
     pub is_perpetual: bool,
-    /// distribution incentives by third party
     /// Rewards are distributed to lockups that are are returned by at least one of
     /// these queries
     #[prost(message, optional, tag="3")]
     pub distribute_to: ::core::option::Option<super::lockup::QueryCondition>,
     /// total amount of Coins that has been in the gauge.
-    ///
     /// can distribute multiple coins
     #[prost(message, repeated, tag="4")]
     pub coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
@@ -37,9 +36,9 @@ pub struct LockableDurationsInfo {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGauge {
     /// flag to show if it's perpetual or multi-epoch
+    /// distribution incentives by third party
     #[prost(bool, tag="1")]
     pub is_perpetual: bool,
-    /// distribution incentives by third party
     #[prost(string, tag="2")]
     pub owner: ::prost::alloc::string::String,
     /// distribute condition of a lock which meet one of these conditions

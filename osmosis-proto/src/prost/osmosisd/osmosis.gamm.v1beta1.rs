@@ -1,4 +1,5 @@
 /// ===================== MsgJoinPool
+/// This is really MsgJoinPoolNoSwap
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgJoinPool {
     #[prost(string, tag="1")]
@@ -49,6 +50,8 @@ pub struct MsgSwapExactAmountIn {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSwapExactAmountInResponse {
+    #[prost(string, tag="1")]
+    pub token_out_amount: ::prost::alloc::string::String,
 }
 /// ===================== MsgSwapExactAmountOut
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -71,8 +74,11 @@ pub struct MsgSwapExactAmountOut {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSwapExactAmountOutResponse {
+    #[prost(string, tag="1")]
+    pub token_in_amount: ::prost::alloc::string::String,
 }
 /// ===================== MsgJoinSwapExternAmountIn
+/// TODO: Rename to MsgJoinSwapExactAmountIn
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgJoinSwapExternAmountIn {
     #[prost(string, tag="1")]
@@ -81,11 +87,17 @@ pub struct MsgJoinSwapExternAmountIn {
     pub pool_id: u64,
     #[prost(message, optional, tag="3")]
     pub token_in: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
+    /// repeated cosmos.base.v1beta1.Coin tokensIn = 5 [
+    ///    (gogoproto.moretags) = "yaml:\"tokens_in\"",
+    ///    (gogoproto.nullable) = false
+    /// ];
     #[prost(string, tag="4")]
     pub share_out_min_amount: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgJoinSwapExternAmountInResponse {
+    #[prost(string, tag="1")]
+    pub share_out_amount: ::prost::alloc::string::String,
 }
 /// ===================== MsgJoinSwapShareAmountOut
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -103,6 +115,8 @@ pub struct MsgJoinSwapShareAmountOut {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgJoinSwapShareAmountOutResponse {
+    #[prost(string, tag="1")]
+    pub token_in_amount: ::prost::alloc::string::String,
 }
 /// ===================== MsgExitSwapShareAmountIn
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -120,6 +134,8 @@ pub struct MsgExitSwapShareAmountIn {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExitSwapShareAmountInResponse {
+    #[prost(string, tag="1")]
+    pub token_out_amount: ::prost::alloc::string::String,
 }
 /// ===================== MsgExitSwapExternAmountOut
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -135,6 +151,8 @@ pub struct MsgExitSwapExternAmountOut {
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExitSwapExternAmountOutResponse {
+    #[prost(string, tag="1")]
+    pub share_in_amount: ::prost::alloc::string::String,
 }
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
@@ -381,16 +399,6 @@ pub mod msg2_client {
         }
     }
 }
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct PoolAsset {
-    /// Coins we are talking about,
-    /// the denomination must be unique amongst all PoolAssets for this pool.
-    #[prost(message, optional, tag="1")]
-    pub token: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
-    /// Weight that is not normalized. This weight must be less than 2^50
-    #[prost(string, tag="2")]
-    pub weight: ::prost::alloc::string::String,
-}
 /// =============================== Pool
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPoolRequest {
@@ -437,6 +445,17 @@ pub struct QueryPoolParamsResponse {
     #[prost(message, optional, tag="1")]
     pub params: ::core::option::Option<::prost_types::Any>,
 }
+/// =============================== PoolLiquidity
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryTotalPoolLiquidityRequest {
+    #[prost(uint64, tag="1")]
+    pub pool_id: u64,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryTotalPoolLiquidityResponse {
+    #[prost(message, repeated, tag="1")]
+    pub liquidity: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
+}
 /// =============================== TotalShares
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTotalSharesRequest {
@@ -448,29 +467,19 @@ pub struct QueryTotalSharesResponse {
     #[prost(message, optional, tag="1")]
     pub total_shares: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
-/// =============================== PoolAssets
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryPoolAssetsRequest {
-    #[prost(uint64, tag="1")]
-    pub pool_id: u64,
-}
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueryPoolAssetsResponse {
-    #[prost(message, repeated, tag="1")]
-    pub pool_assets: ::prost::alloc::vec::Vec<PoolAsset>,
-}
-/// =============================== SpotPrice
+/// QuerySpotPriceRequest defines the gRPC request structure for a SpotPrice
+/// query.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySpotPriceRequest {
     #[prost(uint64, tag="1")]
     pub pool_id: u64,
     #[prost(string, tag="2")]
-    pub token_in_denom: ::prost::alloc::string::String,
+    pub base_asset_denom: ::prost::alloc::string::String,
     #[prost(string, tag="3")]
-    pub token_out_denom: ::prost::alloc::string::String,
-    #[prost(bool, tag="4")]
-    pub with_swap_fee: bool,
+    pub quote_asset_denom: ::prost::alloc::string::String,
 }
+/// QuerySpotPriceResponse defines the gRPC response structure for a SpotPrice
+/// query.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySpotPriceResponse {
     /// String of the Dec. Ex) 10.203uatom
@@ -688,6 +697,28 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn total_pool_liquidity(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryTotalPoolLiquidityRequest>,
+        ) -> Result<
+            tonic::Response<super::QueryTotalPoolLiquidityResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/osmosis.gamm.v1beta1.Query/TotalPoolLiquidity",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
         pub async fn total_shares(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryTotalSharesRequest>,
@@ -707,25 +738,8 @@ pub mod query_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn pool_assets(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryPoolAssetsRequest>,
-        ) -> Result<tonic::Response<super::QueryPoolAssetsResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Query/PoolAssets",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
+        /// SpotPrice defines a gRPC query handler that returns the spot price given
+        /// a base denomination and a quote denomination.
         pub async fn spot_price(
             &mut self,
             request: impl tonic::IntoRequest<super::QuerySpotPriceRequest>,
@@ -848,6 +862,20 @@ pub struct PoolParams {
     #[prost(message, optional, tag="3")]
     pub smooth_weight_change_params: ::core::option::Option<SmoothWeightChangeParams>,
 }
+/// Pool asset is an internal struct that combines the amount of the
+/// token in the pool, and its balancer weight.
+/// This is an awkward packaging of data,
+/// and should be revisited in a future state migration.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PoolAsset {
+    /// Coins we are talking about,
+    /// the denomination must be unique amongst all PoolAssets for this pool.
+    #[prost(message, optional, tag="1")]
+    pub token: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
+    /// Weight that is not normalized. This weight must be less than 2^50
+    #[prost(string, tag="2")]
+    pub weight: ::prost::alloc::string::String,
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Pool {
     #[prost(string, tag="1")]
@@ -877,116 +905,4 @@ pub struct Pool {
     /// sum of all non-normalized pool weights
     #[prost(string, tag="7")]
     pub total_weight: ::prost::alloc::string::String,
-}
-/// ===================== MsgCreatePool
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateBalancerPool {
-    #[prost(string, tag="1")]
-    pub sender: ::prost::alloc::string::String,
-    #[prost(message, optional, tag="2")]
-    pub pool_params: ::core::option::Option<PoolParams>,
-    #[prost(message, repeated, tag="3")]
-    pub pool_assets: ::prost::alloc::vec::Vec<PoolAsset>,
-    #[prost(string, tag="4")]
-    pub future_pool_governor: ::prost::alloc::string::String,
-}
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateBalancerPoolResponse {
-}
-/// Generated client implementations.
-#[cfg(feature = "grpc")]
-#[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-pub mod msg1_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
-    use tonic::codegen::http::Uri;
-    #[derive(Debug, Clone)]
-    pub struct Msg1Client<T> {
-        inner: tonic::client::Grpc<T>,
-    }
-    #[cfg(feature = "grpc-transport")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
-    impl Msg1Client<tonic::transport::Channel> {
-        /// Attempt to create a new client by connecting to a given endpoint.
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
-    impl<T> Msg1Client<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_origin(inner: T, origin: Uri) -> Self {
-            let inner = tonic::client::Grpc::with_origin(inner, origin);
-            Self { inner }
-        }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> Msg1Client<InterceptedService<T, F>>
-        where
-            F: tonic::service::Interceptor,
-            T::ResponseBody: Default,
-            T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-                Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
-                >,
-            >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
-        {
-            Msg1Client::new(InterceptedService::new(inner, interceptor))
-        }
-        /// Compress requests with the given encoding.
-        ///
-        /// This requires the server to support it otherwise it might respond with an
-        /// error.
-        #[must_use]
-        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
-            self.inner = self.inner.send_compressed(encoding);
-            self
-        }
-        /// Enable decompressing responses.
-        #[must_use]
-        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
-            self.inner = self.inner.accept_compressed(encoding);
-            self
-        }
-        pub async fn create_balancer_pool(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgCreateBalancerPool>,
-        ) -> Result<
-            tonic::Response<super::MsgCreateBalancerPoolResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/osmosis.gamm.v1beta1.Msg1/CreateBalancerPool",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-    }
 }

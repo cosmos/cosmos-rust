@@ -18,12 +18,6 @@ pub use tendermint_proto as tendermint;
 #[cfg(feature = "osmosis")]
 #[cfg_attr(docsrs, doc(cfg(feature = "osmosis")))]
 pub mod osmosis {
-    /// Messages and services handling CosmWasm.
-    pub mod claim {
-        pub mod v1beta1 {
-            include!("prost/osmosisd/osmosis.claim.v1beta1.rs");
-        }
-    }
 
     pub mod epochs {
         pub mod v1beta1 {
@@ -34,6 +28,18 @@ pub mod osmosis {
     pub mod gamm {
         pub mod v1beta1 {
             include!("prost/osmosisd/osmosis.gamm.v1beta1.rs");
+        }
+        pub mod poolmodels {
+            pub mod balancer {
+                pub mod v1betai1 {
+                    include!("prost/osmosisd/osmosis.gamm.poolmodels.balancer.v1beta1.rs");
+                }
+            }
+            pub mod stableswap {
+                pub mod v1beta1 {
+                    include!("prost/osmosisd/osmosis.gamm.poolmodels.stableswap.v1beta1.rs");
+                }
+            }
         }
     }
     pub mod incentives {
@@ -72,6 +78,11 @@ pub mod osmosis {
     pub mod txfees {
         pub mod v1beta1 {
             include!("prost/osmosisd/osmosis.txfees.v1beta1.rs");
+        }
+    }
+    pub mod tokenfactory {
+        pub mod v1beta1 {
+            include!("prost/osmosisd/osmosis.tokenfactory.v1beta1.rs");
         }
     }
 }

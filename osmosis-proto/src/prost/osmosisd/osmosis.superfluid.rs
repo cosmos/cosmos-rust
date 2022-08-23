@@ -45,6 +45,8 @@ pub struct SuperfluidDelegationRecord {
     pub validator_address: ::prost::alloc::string::String,
     #[prost(message, optional, tag="3")]
     pub delegation_amount: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
+    #[prost(message, optional, tag="4")]
+    pub equivalent_staked_amount: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LockIdIntermediaryAccountConnection {
@@ -278,6 +280,8 @@ pub struct SuperfluidDelegationsByDelegatorResponse {
     pub superfluid_delegation_records: ::prost::alloc::vec::Vec<SuperfluidDelegationRecord>,
     #[prost(message, repeated, tag="2")]
     pub total_delegated_coins: ::prost::alloc::vec::Vec<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
+    #[prost(message, optional, tag="3")]
+    pub total_equivalent_staked_amount: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SuperfluidUndelegationsByDelegatorRequest {

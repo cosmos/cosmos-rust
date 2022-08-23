@@ -39,6 +39,22 @@ pub struct QueryFeeTokensResponse {
     #[prost(message, repeated, tag="1")]
     pub fee_tokens: ::prost::alloc::vec::Vec<FeeToken>,
 }
+/// QueryDenomSpotPriceRequest defines grpc request structure for querying spot
+/// price for the specified tx fee denom
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomSpotPriceRequest {
+    #[prost(string, tag="1")]
+    pub denom: ::prost::alloc::string::String,
+}
+/// QueryDenomSpotPriceRequest defines grpc response structure for querying spot
+/// price for the specified tx fee denom
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryDenomSpotPriceResponse {
+    #[prost(uint64, tag="1")]
+    pub pool_id: u64,
+    #[prost(string, tag="2")]
+    pub spot_price: ::prost::alloc::string::String,
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDenomPoolIdRequest {
     #[prost(string, tag="1")]
