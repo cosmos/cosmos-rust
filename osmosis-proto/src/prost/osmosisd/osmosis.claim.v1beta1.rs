@@ -33,6 +33,20 @@ pub enum Action {
     Vote = 2,
     DelegateStake = 3,
 }
+impl Action {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Action::AddLiquidity => "ActionAddLiquidity",
+            Action::Swap => "ActionSwap",
+            Action::Vote => "ActionVote",
+            Action::DelegateStake => "ActionDelegateStake",
+        }
+    }
+}
 /// GenesisState defines the claim module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {

@@ -7,7 +7,6 @@
 use crate::osmosis;
 use cosmos_sdk_proto::traits::TypeUrl;
 
- 
 impl TypeUrl for osmosis::gamm::v1beta1::Pool {
     const TYPE_URL: &'static str = "/osmosis.gamm.v1beta1.Pool";
 }

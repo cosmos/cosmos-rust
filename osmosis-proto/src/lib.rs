@@ -6,15 +6,13 @@
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
 
-pub use tendermint_proto as tendermint;
 
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
 pub const OSMOSISD_VERSION: &str = include_str!("prost/osmosisd/OSMOSISD_COMMIT");
 
- 
 mod type_urls;
 
-
+pub use tendermint_proto as tendermint;
 
 /// Osmosis protobuf definitions.
 #[cfg(feature = "osmosis")]

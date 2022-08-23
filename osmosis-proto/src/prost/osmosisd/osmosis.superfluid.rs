@@ -65,6 +65,18 @@ pub enum SuperfluidAssetType {
     /// SuperfluidAssetTypeLendingShare = 2; // for now not exist
     LpShare = 1,
 }
+impl SuperfluidAssetType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            SuperfluidAssetType::Native => "SuperfluidAssetTypeNative",
+            SuperfluidAssetType::LpShare => "SuperfluidAssetTypeLPShare",
+        }
+    }
+}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSuperfluidDelegate {
     #[prost(string, tag="1")]
@@ -98,9 +110,9 @@ pub struct MsgSuperfluidUnbondLock {
 pub struct MsgSuperfluidUnbondLockResponse {
 }
 // message MsgSuperfluidRedelegate {
-//   string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
-//   uint64 lock_id = 2;
-//   string new_val_addr = 3;
+//    string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+//    uint64 lock_id = 2;
+//    string new_val_addr = 3;
 // }
 // message MsgSuperfluidRedelegateResponse {}
 

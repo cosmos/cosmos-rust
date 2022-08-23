@@ -30,6 +30,16 @@ pub struct Params {
     #[prost(uint64, tag = "6")]
     pub blocks_per_year: u64,
 }
+/// GenesisState defines the mint module's genesis state.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GenesisState {
+    /// minter is a space for holding current inflation information.
+    #[prost(message, optional, tag = "1")]
+    pub minter: ::core::option::Option<Minter>,
+    /// params defines all the paramaters of the module.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {}
@@ -392,14 +402,4 @@ pub mod query_server {
     impl<T: Query> tonic::server::NamedService for QueryServer<T> {
         const NAME: &'static str = "cosmos.mint.v1beta1.Query";
     }
-}
-/// GenesisState defines the mint module's genesis state.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GenesisState {
-    /// minter is a space for holding current inflation information.
-    #[prost(message, optional, tag = "1")]
-    pub minter: ::core::option::Option<Minter>,
-    /// params defines all the paramaters of the module.
-    #[prost(message, optional, tag = "2")]
-    pub params: ::core::option::Option<Params>,
 }

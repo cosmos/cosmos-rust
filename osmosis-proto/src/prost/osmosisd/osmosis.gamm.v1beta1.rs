@@ -142,6 +142,7 @@ pub struct MsgExitSwapExternAmountOutResponse {
 pub mod msg2_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
     pub struct Msg2Client<T> {
         inner: tonic::client::Grpc<T>,
@@ -170,6 +171,10 @@ pub mod msg2_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -189,19 +194,19 @@ pub mod msg2_client {
         {
             Msg2Client::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         pub async fn join_pool(
@@ -386,7 +391,7 @@ pub struct PoolAsset {
     #[prost(string, tag="2")]
     pub weight: ::prost::alloc::string::String,
 }
-///=============================== Pool
+/// =============================== Pool
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPoolRequest {
     #[prost(uint64, tag="1")]
@@ -397,7 +402,7 @@ pub struct QueryPoolResponse {
     #[prost(message, optional, tag="1")]
     pub pool: ::core::option::Option<::prost_types::Any>,
 }
-///=============================== Pools
+/// =============================== Pools
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPoolsRequest {
     /// pagination defines an optional pagination for the request.
@@ -412,7 +417,7 @@ pub struct QueryPoolsResponse {
     #[prost(message, optional, tag="2")]
     pub pagination: ::core::option::Option<cosmos_sdk_proto::cosmos::base::query::v1beta1::PageResponse>,
 }
-///=============================== NumPools
+/// =============================== NumPools
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNumPoolsRequest {
 }
@@ -421,7 +426,7 @@ pub struct QueryNumPoolsResponse {
     #[prost(uint64, tag="1")]
     pub num_pools: u64,
 }
-///=============================== PoolParams
+/// =============================== PoolParams
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPoolParamsRequest {
     #[prost(uint64, tag="1")]
@@ -432,7 +437,7 @@ pub struct QueryPoolParamsResponse {
     #[prost(message, optional, tag="1")]
     pub params: ::core::option::Option<::prost_types::Any>,
 }
-///=============================== TotalShares
+/// =============================== TotalShares
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTotalSharesRequest {
     #[prost(uint64, tag="1")]
@@ -443,7 +448,7 @@ pub struct QueryTotalSharesResponse {
     #[prost(message, optional, tag="1")]
     pub total_shares: ::core::option::Option<cosmos_sdk_proto::cosmos::base::v1beta1::Coin>,
 }
-///=============================== PoolAssets
+/// =============================== PoolAssets
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryPoolAssetsRequest {
     #[prost(uint64, tag="1")]
@@ -454,7 +459,7 @@ pub struct QueryPoolAssetsResponse {
     #[prost(message, repeated, tag="1")]
     pub pool_assets: ::prost::alloc::vec::Vec<PoolAsset>,
 }
-///=============================== SpotPrice
+/// =============================== SpotPrice
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySpotPriceRequest {
     #[prost(uint64, tag="1")]
@@ -472,7 +477,7 @@ pub struct QuerySpotPriceResponse {
     #[prost(string, tag="1")]
     pub spot_price: ::prost::alloc::string::String,
 }
-///=============================== EstimateSwapExactAmountIn
+/// =============================== EstimateSwapExactAmountIn
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySwapExactAmountInRequest {
     #[prost(string, tag="1")]
@@ -489,7 +494,7 @@ pub struct QuerySwapExactAmountInResponse {
     #[prost(string, tag="1")]
     pub token_out_amount: ::prost::alloc::string::String,
 }
-///=============================== EstimateSwapExactAmountOut
+/// =============================== EstimateSwapExactAmountOut
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySwapExactAmountOutRequest {
     #[prost(string, tag="1")]
@@ -520,6 +525,7 @@ pub struct QueryTotalLiquidityResponse {
 pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
     pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -548,6 +554,10 @@ pub mod query_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -567,19 +577,19 @@ pub mod query_client {
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         pub async fn pools(
@@ -788,11 +798,11 @@ pub mod query_client {
 /// the two weights, but more types may be added in the future.
 /// When these parameters are set, the weight w(t) for pool time `t` is the
 /// following:
-///   t <= start_time: w(t) = initial_pool_weights
-///   start_time < t <= start_time + duration:
-///     w(t) = initial_pool_weights + (t - start_time) *
-///       (target_pool_weights - initial_pool_weights) / (duration)
-///   t > start_time + duration: w(t) = target_pool_weights
+///    t <= start_time: w(t) = initial_pool_weights
+///    start_time < t <= start_time + duration:
+///      w(t) = initial_pool_weights + (t - start_time) *
+///        (target_pool_weights - initial_pool_weights) / (duration)
+///    t > start_time + duration: w(t) = target_pool_weights
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SmoothWeightChangeParams {
     /// The start time for beginning the weight change.
@@ -819,8 +829,8 @@ pub struct SmoothWeightChangeParams {
     /// (target_pool_weights - initial_pool_weights) / (duration)
     /// TODO: Work out precision, and decide if this is good to add
     /// repeated PoolAsset poolWeightSlope = 5 [
-    ///  (gogoproto.moretags) = "yaml:\"pool_weight_slope\"",
-    ///  (gogoproto.nullable) = false
+    ///   (gogoproto.moretags) = "yaml:\"pool_weight_slope\"",
+    ///   (gogoproto.nullable) = false
     /// ];
     #[prost(message, repeated, tag="4")]
     pub target_pool_weights: ::prost::alloc::vec::Vec<PoolAsset>,
@@ -889,6 +899,7 @@ pub struct MsgCreateBalancerPoolResponse {
 pub mod msg1_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
     #[derive(Debug, Clone)]
     pub struct Msg1Client<T> {
         inner: tonic::client::Grpc<T>,
@@ -917,6 +928,10 @@ pub mod msg1_client {
             let inner = tonic::client::Grpc::new(inner);
             Self { inner }
         }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
@@ -936,19 +951,19 @@ pub mod msg1_client {
         {
             Msg1Client::new(InterceptedService::new(inner, interceptor))
         }
-        /// Compress requests with `gzip`.
+        /// Compress requests with the given encoding.
         ///
         /// This requires the server to support it otherwise it might respond with an
         /// error.
         #[must_use]
-        pub fn send_gzip(mut self) -> Self {
-            self.inner = self.inner.send_gzip();
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
             self
         }
-        /// Enable decompressing responses with `gzip`.
+        /// Enable decompressing responses.
         #[must_use]
-        pub fn accept_gzip(mut self) -> Self {
-            self.inner = self.inner.accept_gzip();
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
             self
         }
         pub async fn create_balancer_pool(
