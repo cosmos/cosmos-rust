@@ -36,6 +36,32 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub param: ::core::option::Option<ParamChange>,
 }
+/// QuerySubspacesRequest defines a request type for querying for all registered
+/// subspaces and all keys for a subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySubspacesRequest {}
+/// QuerySubspacesResponse defines the response types for querying for all
+/// registered subspaces and all keys for a subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySubspacesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub subspaces: ::prost::alloc::vec::Vec<Subspace>,
+}
+/// Subspace defines a parameter subspace name and all the keys that exist for
+/// the subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Subspace {
+    #[prost(string, tag = "1")]
+    pub subspace: ::prost::alloc::string::String,
+    #[prost(string, repeated, tag = "2")]
+    pub keys: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
@@ -125,6 +151,24 @@ pub mod query_client {
             let path = http::uri::PathAndQuery::from_static("/cosmos.params.v1beta1.Query/Params");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// Subspaces queries for all registered subspaces and all keys for a subspace.
+        ///
+        /// Since: cosmos-sdk 0.46
+        pub async fn subspaces(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QuerySubspacesRequest>,
+        ) -> Result<tonic::Response<super::QuerySubspacesResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.params.v1beta1.Query/Subspaces");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -142,6 +186,13 @@ pub mod query_server {
             &self,
             request: tonic::Request<super::QueryParamsRequest>,
         ) -> Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
+        /// Subspaces queries for all registered subspaces and all keys for a subspace.
+        ///
+        /// Since: cosmos-sdk 0.46
+        async fn subspaces(
+            &self,
+            request: tonic::Request<super::QuerySubspacesRequest>,
+        ) -> Result<tonic::Response<super::QuerySubspacesResponse>, tonic::Status>;
     }
     /// Query defines the gRPC querier service.
     #[derive(Debug)]
@@ -218,6 +269,37 @@ pub mod query_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = ParamsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.params.v1beta1.Query/Subspaces" => {
+                    #[allow(non_camel_case_types)]
+                    struct SubspacesSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QuerySubspacesRequest> for SubspacesSvc<T> {
+                        type Response = super::QuerySubspacesResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QuerySubspacesRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).subspaces(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = SubspacesSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,

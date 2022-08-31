@@ -93,6 +93,8 @@ pub struct Validator {
     #[prost(message, optional, tag = "10")]
     pub commission: ::core::option::Option<Commission>,
     /// min_self_delegation is the validator's self declared minimum self delegation.
+    ///
+    /// Since: cosmos-sdk 0.46
     #[prost(string, tag = "11")]
     pub min_self_delegation: ::prost::alloc::string::String,
 }
@@ -219,7 +221,7 @@ pub struct Redelegation {
     #[prost(message, repeated, tag = "4")]
     pub entries: ::prost::alloc::vec::Vec<RedelegationEntry>,
 }
-/// Params defines the parameters for the staking module.
+/// Params defines the parameters for the x/staking module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     /// unbonding_time is the time duration of unbonding.
@@ -237,6 +239,9 @@ pub struct Params {
     /// bond_denom defines the bondable coin denomination.
     #[prost(string, tag = "5")]
     pub bond_denom: ::prost::alloc::string::String,
+    /// min_commission_rate is the chain-wide minimum commission rate that a validator can charge their delegators
+    #[prost(string, tag = "6")]
+    pub min_commission_rate: ::prost::alloc::string::String,
 }
 /// DelegationResponse is equivalent to Delegation except that it contains a
 /// balance in addition to shares which is more suitable for client responses.
@@ -393,6 +398,47 @@ pub struct MsgUndelegateResponse {
     #[prost(message, optional, tag = "1")]
     pub completion_time: ::core::option::Option<::prost_types::Timestamp>,
 }
+/// MsgCancelUnbondingDelegation defines the SDK message for performing a cancel unbonding delegation for delegator
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCancelUnbondingDelegation {
+    #[prost(string, tag = "1")]
+    pub delegator_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub validator_address: ::prost::alloc::string::String,
+    /// amount is always less than or equal to unbonding delegation entry balance
+    #[prost(message, optional, tag = "3")]
+    pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
+    /// creation_height is the height which the unbonding took place.
+    #[prost(int64, tag = "4")]
+    pub creation_height: i64,
+}
+/// MsgCancelUnbondingDelegationResponse
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCancelUnbondingDelegationResponse {}
+/// MsgUpdateParams is the Msg/UpdateParams request type.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParams {
+    /// authority is the address of the governance account.
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// params defines the x/staking parameters to update.
+    ///
+    /// NOTE: All parameters must be supplied.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
+/// MsgUpdateParamsResponse defines the response structure for executing a
+/// MsgUpdateParams message.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParamsResponse {}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
@@ -545,6 +591,45 @@ pub mod msg_client {
                 http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/Undelegate");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// CancelUnbondingDelegation defines a method for performing canceling the unbonding delegation
+        /// and delegate back to previous validator.
+        ///
+        /// Since: cosmos-sdk 0.46
+        pub async fn cancel_unbonding_delegation(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgCancelUnbondingDelegation>,
+        ) -> Result<tonic::Response<super::MsgCancelUnbondingDelegationResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.staking.v1beta1.Msg/CancelUnbondingDelegation",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// UpdateParams defines an operation for updating the x/staking module
+        /// parameters.
+        /// Since: cosmos-sdk 0.47
+        pub async fn update_params(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgUpdateParams>,
+        ) -> Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.staking.v1beta1.Msg/UpdateParams");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -584,6 +669,21 @@ pub mod msg_server {
             &self,
             request: tonic::Request<super::MsgUndelegate>,
         ) -> Result<tonic::Response<super::MsgUndelegateResponse>, tonic::Status>;
+        /// CancelUnbondingDelegation defines a method for performing canceling the unbonding delegation
+        /// and delegate back to previous validator.
+        ///
+        /// Since: cosmos-sdk 0.46
+        async fn cancel_unbonding_delegation(
+            &self,
+            request: tonic::Request<super::MsgCancelUnbondingDelegation>,
+        ) -> Result<tonic::Response<super::MsgCancelUnbondingDelegationResponse>, tonic::Status>;
+        /// UpdateParams defines an operation for updating the x/staking module
+        /// parameters.
+        /// Since: cosmos-sdk 0.47
+        async fn update_params(
+            &self,
+            request: tonic::Request<super::MsgUpdateParams>,
+        ) -> Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
     }
     /// Msg defines the staking Msg service.
     #[derive(Debug)]
@@ -794,6 +894,71 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
+                "/cosmos.staking.v1beta1.Msg/CancelUnbondingDelegation" => {
+                    #[allow(non_camel_case_types)]
+                    struct CancelUnbondingDelegationSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgCancelUnbondingDelegation>
+                        for CancelUnbondingDelegationSvc<T>
+                    {
+                        type Response = super::MsgCancelUnbondingDelegationResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgCancelUnbondingDelegation>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut =
+                                async move { (*inner).cancel_unbonding_delegation(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = CancelUnbondingDelegationSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.staking.v1beta1.Msg/UpdateParams" => {
+                    #[allow(non_camel_case_types)]
+                    struct UpdateParamsSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgUpdateParams> for UpdateParamsSvc<T> {
+                        type Response = super::MsgUpdateParamsResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgUpdateParams>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).update_params(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UpdateParamsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 _ => Box::pin(async move {
                     Ok(http::Response::builder()
                         .status(200)
@@ -859,7 +1024,7 @@ pub struct QueryValidatorRequest {
 /// QueryValidatorResponse is response type for the Query/Validator RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryValidatorResponse {
-    /// validator defines the the validator info.
+    /// validator defines the validator info.
     #[prost(message, optional, tag = "1")]
     pub validator: ::core::option::Option<Validator>,
 }
@@ -1026,7 +1191,7 @@ pub struct QueryDelegatorValidatorsRequest {
 /// Query/DelegatorValidators RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDelegatorValidatorsResponse {
-    /// validators defines the the validators' info of a delegator.
+    /// validators defines the validators' info of a delegator.
     #[prost(message, repeated, tag = "1")]
     pub validators: ::prost::alloc::vec::Vec<Validator>,
     /// pagination defines the pagination in the response.
@@ -1048,7 +1213,7 @@ pub struct QueryDelegatorValidatorRequest {
 /// Query/DelegatorValidator RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDelegatorValidatorResponse {
-    /// validator defines the the validator info.
+    /// validator defines the validator info.
     #[prost(message, optional, tag = "1")]
     pub validator: ::core::option::Option<Validator>,
 }
@@ -2114,7 +2279,7 @@ impl AuthorizationType {
 /// GenesisState defines the staking module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
-    /// params defines all the paramaters of related to deposit.
+    /// params defines all the parameters of related to deposit.
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
     /// last_total_power tracks the total amounts of bonded tokens recorded during

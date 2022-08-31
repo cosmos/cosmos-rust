@@ -1,3 +1,64 @@
+/// BaseVestingAccount implements the VestingAccount interface. It contains all
+/// the necessary fields needed for any vesting account implementation.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BaseVestingAccount {
+    #[prost(message, optional, tag = "1")]
+    pub base_account: ::core::option::Option<super::super::auth::v1beta1::BaseAccount>,
+    #[prost(message, repeated, tag = "2")]
+    pub original_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    #[prost(message, repeated, tag = "3")]
+    pub delegated_free: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    #[prost(message, repeated, tag = "4")]
+    pub delegated_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    #[prost(int64, tag = "5")]
+    pub end_time: i64,
+}
+/// ContinuousVestingAccount implements the VestingAccount interface. It
+/// continuously vests by unlocking coins linearly with respect to time.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ContinuousVestingAccount {
+    #[prost(message, optional, tag = "1")]
+    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
+    #[prost(int64, tag = "2")]
+    pub start_time: i64,
+}
+/// DelayedVestingAccount implements the VestingAccount interface. It vests all
+/// coins after a specific time, but non prior. In other words, it keeps them
+/// locked until a specified time.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DelayedVestingAccount {
+    #[prost(message, optional, tag = "1")]
+    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
+}
+/// Period defines a length of time and amount of coins that will vest.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Period {
+    #[prost(int64, tag = "1")]
+    pub length: i64,
+    #[prost(message, repeated, tag = "2")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// PeriodicVestingAccount implements the VestingAccount interface. It
+/// periodically vests by unlocking coins during each specified period.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PeriodicVestingAccount {
+    #[prost(message, optional, tag = "1")]
+    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
+    #[prost(int64, tag = "2")]
+    pub start_time: i64,
+    #[prost(message, repeated, tag = "3")]
+    pub vesting_periods: ::prost::alloc::vec::Vec<Period>,
+}
+/// PermanentLockedAccount implements the VestingAccount interface. It does
+/// not ever release coins, locking them indefinitely. Coins in this account can
+/// still be used for delegating and for governance votes even while locked.
+///
+/// Since: cosmos-sdk 0.43
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PermanentLockedAccount {
+    #[prost(message, optional, tag = "1")]
+    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
+}
 /// MsgCreateVestingAccount defines a message that enables creating a vesting
 /// account.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -16,6 +77,45 @@ pub struct MsgCreateVestingAccount {
 /// MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateVestingAccountResponse {}
+/// MsgCreatePermanentLockedAccount defines a message that enables creating a permanent
+/// locked account.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePermanentLockedAccount {
+    #[prost(string, tag = "1")]
+    pub from_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub to_address: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// MsgCreatePermanentLockedAccountResponse defines the Msg/CreatePermanentLockedAccount response type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePermanentLockedAccountResponse {}
+/// MsgCreateVestingAccount defines a message that enables creating a vesting
+/// account.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePeriodicVestingAccount {
+    #[prost(string, tag = "1")]
+    pub from_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub to_address: ::prost::alloc::string::String,
+    #[prost(int64, tag = "3")]
+    pub start_time: i64,
+    #[prost(message, repeated, tag = "4")]
+    pub vesting_periods: ::prost::alloc::vec::Vec<Period>,
+}
+/// MsgCreateVestingAccountResponse defines the Msg/CreatePeriodicVestingAccount
+/// response type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePeriodicVestingAccountResponse {}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
@@ -105,6 +205,48 @@ pub mod msg_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// CreatePermanentLockedAccount defines a method that enables creating a permanent
+        /// locked account.
+        ///
+        /// Since: cosmos-sdk 0.46
+        pub async fn create_permanent_locked_account(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgCreatePermanentLockedAccount>,
+        ) -> Result<tonic::Response<super::MsgCreatePermanentLockedAccountResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.vesting.v1beta1.Msg/CreatePermanentLockedAccount",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// CreatePeriodicVestingAccount defines a method that enables creating a
+        /// periodic vesting account.
+        ///
+        /// Since: cosmos-sdk 0.46
+        pub async fn create_periodic_vesting_account(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgCreatePeriodicVestingAccount>,
+        ) -> Result<tonic::Response<super::MsgCreatePeriodicVestingAccountResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.vesting.v1beta1.Msg/CreatePeriodicVestingAccount",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -122,6 +264,22 @@ pub mod msg_server {
             &self,
             request: tonic::Request<super::MsgCreateVestingAccount>,
         ) -> Result<tonic::Response<super::MsgCreateVestingAccountResponse>, tonic::Status>;
+        /// CreatePermanentLockedAccount defines a method that enables creating a permanent
+        /// locked account.
+        ///
+        /// Since: cosmos-sdk 0.46
+        async fn create_permanent_locked_account(
+            &self,
+            request: tonic::Request<super::MsgCreatePermanentLockedAccount>,
+        ) -> Result<tonic::Response<super::MsgCreatePermanentLockedAccountResponse>, tonic::Status>;
+        /// CreatePeriodicVestingAccount defines a method that enables creating a
+        /// periodic vesting account.
+        ///
+        /// Since: cosmos-sdk 0.46
+        async fn create_periodic_vesting_account(
+            &self,
+            request: tonic::Request<super::MsgCreatePeriodicVestingAccount>,
+        ) -> Result<tonic::Response<super::MsgCreatePeriodicVestingAccountResponse>, tonic::Status>;
     }
     /// Msg defines the bank Msg service.
     #[derive(Debug)]
@@ -210,6 +368,76 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
+                "/cosmos.vesting.v1beta1.Msg/CreatePermanentLockedAccount" => {
+                    #[allow(non_camel_case_types)]
+                    struct CreatePermanentLockedAccountSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgCreatePermanentLockedAccount>
+                        for CreatePermanentLockedAccountSvc<T>
+                    {
+                        type Response = super::MsgCreatePermanentLockedAccountResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgCreatePermanentLockedAccount>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).create_permanent_locked_account(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = CreatePermanentLockedAccountSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.vesting.v1beta1.Msg/CreatePeriodicVestingAccount" => {
+                    #[allow(non_camel_case_types)]
+                    struct CreatePeriodicVestingAccountSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgCreatePeriodicVestingAccount>
+                        for CreatePeriodicVestingAccountSvc<T>
+                    {
+                        type Response = super::MsgCreatePeriodicVestingAccountResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgCreatePeriodicVestingAccount>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).create_periodic_vesting_account(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = CreatePeriodicVestingAccountSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 _ => Box::pin(async move {
                     Ok(http::Response::builder()
                         .status(200)
@@ -244,65 +472,4 @@ pub mod msg_server {
     impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
         const NAME: &'static str = "cosmos.vesting.v1beta1.Msg";
     }
-}
-/// BaseVestingAccount implements the VestingAccount interface. It contains all
-/// the necessary fields needed for any vesting account implementation.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct BaseVestingAccount {
-    #[prost(message, optional, tag = "1")]
-    pub base_account: ::core::option::Option<super::super::auth::v1beta1::BaseAccount>,
-    #[prost(message, repeated, tag = "2")]
-    pub original_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(message, repeated, tag = "3")]
-    pub delegated_free: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(message, repeated, tag = "4")]
-    pub delegated_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(int64, tag = "5")]
-    pub end_time: i64,
-}
-/// ContinuousVestingAccount implements the VestingAccount interface. It
-/// continuously vests by unlocking coins linearly with respect to time.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ContinuousVestingAccount {
-    #[prost(message, optional, tag = "1")]
-    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
-    #[prost(int64, tag = "2")]
-    pub start_time: i64,
-}
-/// DelayedVestingAccount implements the VestingAccount interface. It vests all
-/// coins after a specific time, but non prior. In other words, it keeps them
-/// locked until a specified time.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DelayedVestingAccount {
-    #[prost(message, optional, tag = "1")]
-    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
-}
-/// Period defines a length of time and amount of coins that will vest.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Period {
-    #[prost(int64, tag = "1")]
-    pub length: i64,
-    #[prost(message, repeated, tag = "2")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-}
-/// PeriodicVestingAccount implements the VestingAccount interface. It
-/// periodically vests by unlocking coins during each specified period.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct PeriodicVestingAccount {
-    #[prost(message, optional, tag = "1")]
-    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
-    #[prost(int64, tag = "2")]
-    pub start_time: i64,
-    #[prost(message, repeated, tag = "3")]
-    pub vesting_periods: ::prost::alloc::vec::Vec<Period>,
-}
-/// PermanentLockedAccount implements the VestingAccount interface. It does
-/// not ever release coins, locking them indefinitely. Coins in this account can
-/// still be used for delegating and for governance votes even while locked.
-///
-/// Since: cosmos-sdk 0.43
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct PermanentLockedAccount {
-    #[prost(message, optional, tag = "1")]
-    pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
 }

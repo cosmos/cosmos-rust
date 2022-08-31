@@ -1,3 +1,143 @@
+/// Params defines the set of params for the distribution module.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Params {
+    #[prost(string, tag = "1")]
+    pub community_tax: ::prost::alloc::string::String,
+    /// The base_proposer_reward and bonus_proposer_reward fields are deprecated
+    /// and are no longer used in the x/distribution module's reward mechanism.
+    #[deprecated]
+    #[prost(string, tag = "2")]
+    pub base_proposer_reward: ::prost::alloc::string::String,
+    #[deprecated]
+    #[prost(string, tag = "3")]
+    pub bonus_proposer_reward: ::prost::alloc::string::String,
+    #[prost(bool, tag = "4")]
+    pub withdraw_addr_enabled: bool,
+}
+/// ValidatorHistoricalRewards represents historical rewards for a validator.
+/// Height is implicit within the store key.
+/// Cumulative reward ratio is the sum from the zeroeth period
+/// until this period of rewards / tokens, per the spec.
+/// The reference count indicates the number of objects
+/// which might need to reference this historical entry at any point.
+/// ReferenceCount =
+///     number of outstanding delegations which ended the associated period (and
+///     might need to read that record)
+///   + number of slashes which ended the associated period (and might need to
+///   read that record)
+///   + one per validator for the zeroeth period, set on initialization
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorHistoricalRewards {
+    #[prost(message, repeated, tag = "1")]
+    pub cumulative_reward_ratio: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
+    #[prost(uint32, tag = "2")]
+    pub reference_count: u32,
+}
+/// ValidatorCurrentRewards represents current rewards and current
+/// period for a validator kept as a running counter and incremented
+/// each block as long as the validator's tokens remain constant.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorCurrentRewards {
+    #[prost(message, repeated, tag = "1")]
+    pub rewards: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
+    #[prost(uint64, tag = "2")]
+    pub period: u64,
+}
+/// ValidatorAccumulatedCommission represents accumulated commission
+/// for a validator kept as a running counter, can be withdrawn at any time.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorAccumulatedCommission {
+    #[prost(message, repeated, tag = "1")]
+    pub commission: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
+}
+/// ValidatorOutstandingRewards represents outstanding (un-withdrawn) rewards
+/// for a validator inexpensive to track, allows simple sanity checks.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorOutstandingRewards {
+    #[prost(message, repeated, tag = "1")]
+    pub rewards: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
+}
+/// ValidatorSlashEvent represents a validator slash event.
+/// Height is implicit within the store key.
+/// This is needed to calculate appropriate amount of staking tokens
+/// for delegations which are withdrawn after a slash has occurred.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorSlashEvent {
+    #[prost(uint64, tag = "1")]
+    pub validator_period: u64,
+    #[prost(string, tag = "2")]
+    pub fraction: ::prost::alloc::string::String,
+}
+/// ValidatorSlashEvents is a collection of ValidatorSlashEvent messages.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorSlashEvents {
+    #[prost(message, repeated, tag = "1")]
+    pub validator_slash_events: ::prost::alloc::vec::Vec<ValidatorSlashEvent>,
+}
+/// FeePool is the global fee pool for distribution.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FeePool {
+    #[prost(message, repeated, tag = "1")]
+    pub community_pool: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
+}
+/// CommunityPoolSpendProposal details a proposal for use of community funds,
+/// together with how many coins are proposed to be spent, and to which
+/// recipient account.
+///
+/// Deprecated: Do not use. As of the Cosmos SDK release v0.47.x, there is no
+/// longer a need for an explicit CommunityPoolSpendProposal. To spend community
+/// pool funds, a simple MsgCommunityPoolSpend can be invoked from the x/gov
+/// module via a v1 governance proposal.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CommunityPoolSpendProposal {
+    #[prost(string, tag = "1")]
+    pub title: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub description: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub recipient: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "4")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// DelegatorStartingInfo represents the starting info for a delegator reward
+/// period. It tracks the previous validator period, the delegation's amount of
+/// staking token, and the creation height (to check later on if any slashes have
+/// occurred). NOTE: Even though validators are slashed to whole staking tokens,
+/// the delegators within the validator may be left with less than a full token,
+/// thus sdk.Dec is used.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DelegatorStartingInfo {
+    #[prost(uint64, tag = "1")]
+    pub previous_period: u64,
+    #[prost(string, tag = "2")]
+    pub stake: ::prost::alloc::string::String,
+    #[prost(uint64, tag = "3")]
+    pub height: u64,
+}
+/// DelegationDelegatorReward represents the properties
+/// of a delegator's delegation reward.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DelegationDelegatorReward {
+    #[prost(string, tag = "1")]
+    pub validator_address: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "2")]
+    pub reward: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
+}
+/// CommunityPoolSpendProposalWithDeposit defines a CommunityPoolSpendProposal
+/// with a deposit
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CommunityPoolSpendProposalWithDeposit {
+    #[prost(string, tag = "1")]
+    pub title: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub description: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub recipient: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub amount: ::prost::alloc::string::String,
+    #[prost(string, tag = "5")]
+    pub deposit: ::prost::alloc::string::String,
+}
 /// MsgSetWithdrawAddress sets the withdraw address for
 /// a delegator (or validator self-delegation).
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -7,7 +147,8 @@ pub struct MsgSetWithdrawAddress {
     #[prost(string, tag = "2")]
     pub withdraw_address: ::prost::alloc::string::String,
 }
-/// MsgSetWithdrawAddressResponse defines the Msg/SetWithdrawAddress response type.
+/// MsgSetWithdrawAddressResponse defines the Msg/SetWithdrawAddress response
+/// type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSetWithdrawAddressResponse {}
 /// MsgWithdrawDelegatorReward represents delegation withdrawal to a delegator
@@ -19,9 +160,14 @@ pub struct MsgWithdrawDelegatorReward {
     #[prost(string, tag = "2")]
     pub validator_address: ::prost::alloc::string::String,
 }
-/// MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward response type.
+/// MsgWithdrawDelegatorRewardResponse defines the Msg/WithdrawDelegatorReward
+/// response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgWithdrawDelegatorRewardResponse {}
+pub struct MsgWithdrawDelegatorRewardResponse {
+    /// Since: cosmos-sdk 0.46
+    #[prost(message, repeated, tag = "1")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
 /// MsgWithdrawValidatorCommission withdraws the full commission to the validator
 /// address.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -29,9 +175,14 @@ pub struct MsgWithdrawValidatorCommission {
     #[prost(string, tag = "1")]
     pub validator_address: ::prost::alloc::string::String,
 }
-/// MsgWithdrawValidatorCommissionResponse defines the Msg/WithdrawValidatorCommission response type.
+/// MsgWithdrawValidatorCommissionResponse defines the
+/// Msg/WithdrawValidatorCommission response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgWithdrawValidatorCommissionResponse {}
+pub struct MsgWithdrawValidatorCommissionResponse {
+    /// Since: cosmos-sdk 0.46
+    #[prost(message, repeated, tag = "1")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
 /// MsgFundCommunityPool allows an account to directly
 /// fund the community pool.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -44,6 +195,47 @@ pub struct MsgFundCommunityPool {
 /// MsgFundCommunityPoolResponse defines the Msg/FundCommunityPool response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgFundCommunityPoolResponse {}
+/// MsgUpdateParams is the Msg/UpdateParams request type.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParams {
+    /// authority is the address of the governance account.
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// params defines the x/distribution parameters to update.
+    ///
+    /// NOTE: All parameters must be supplied.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
+/// MsgUpdateParamsResponse defines the response structure for executing a
+/// MsgUpdateParams message.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParamsResponse {}
+/// MsgCommunityPoolSpend defines a message for sending tokens from the community
+/// pool to another account. This message is typically executed via a governance
+/// proposal with the governance module being the executing authority.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCommunityPoolSpend {
+    /// authority is the address of the governance account.
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub recipient: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// MsgCommunityPoolSpendResponse defines the response to executing a
+/// MsgCommunityPoolSpend message.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCommunityPoolSpendResponse {}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
@@ -188,6 +380,48 @@ pub mod msg_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// UpdateParams defines a governance operation for updating the x/distribution
+        /// module parameters. The authority is defined in the keeper.
+        ///
+        /// Since: cosmos-sdk 0.47
+        pub async fn update_params(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgUpdateParams>,
+        ) -> Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.distribution.v1beta1.Msg/UpdateParams",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        /// CommunityPoolSpend defines a governance operation for sending tokens from
+        /// the community pool in the x/distribution module to another account, which
+        /// could be the governance module itself. The authority is defined in the
+        /// keeper.
+        ///
+        /// Since: cosmos-sdk 0.47
+        pub async fn community_pool_spend(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgCommunityPoolSpend>,
+        ) -> Result<tonic::Response<super::MsgCommunityPoolSpendResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.distribution.v1beta1.Msg/CommunityPoolSpend",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -223,6 +457,24 @@ pub mod msg_server {
             &self,
             request: tonic::Request<super::MsgFundCommunityPool>,
         ) -> Result<tonic::Response<super::MsgFundCommunityPoolResponse>, tonic::Status>;
+        /// UpdateParams defines a governance operation for updating the x/distribution
+        /// module parameters. The authority is defined in the keeper.
+        ///
+        /// Since: cosmos-sdk 0.47
+        async fn update_params(
+            &self,
+            request: tonic::Request<super::MsgUpdateParams>,
+        ) -> Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
+        /// CommunityPoolSpend defines a governance operation for sending tokens from
+        /// the community pool in the x/distribution module to another account, which
+        /// could be the governance module itself. The authority is defined in the
+        /// keeper.
+        ///
+        /// Since: cosmos-sdk 0.47
+        async fn community_pool_spend(
+            &self,
+            request: tonic::Request<super::MsgCommunityPoolSpend>,
+        ) -> Result<tonic::Response<super::MsgCommunityPoolSpendResponse>, tonic::Status>;
     }
     /// Msg defines the distribution Msg service.
     #[derive(Debug)]
@@ -411,6 +663,70 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
+                "/cosmos.distribution.v1beta1.Msg/UpdateParams" => {
+                    #[allow(non_camel_case_types)]
+                    struct UpdateParamsSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgUpdateParams> for UpdateParamsSvc<T> {
+                        type Response = super::MsgUpdateParamsResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgUpdateParams>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).update_params(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UpdateParamsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.distribution.v1beta1.Msg/CommunityPoolSpend" => {
+                    #[allow(non_camel_case_types)]
+                    struct CommunityPoolSpendSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgCommunityPoolSpend>
+                        for CommunityPoolSpendSvc<T>
+                    {
+                        type Response = super::MsgCommunityPoolSpendResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgCommunityPoolSpend>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).community_pool_spend(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = CommunityPoolSpendSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 _ => Box::pin(async move {
                     Ok(http::Response::builder()
                         .status(200)
@@ -445,137 +761,6 @@ pub mod msg_server {
     impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
         const NAME: &'static str = "cosmos.distribution.v1beta1.Msg";
     }
-}
-/// Params defines the set of params for the distribution module.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Params {
-    #[prost(string, tag = "1")]
-    pub community_tax: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub base_proposer_reward: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub bonus_proposer_reward: ::prost::alloc::string::String,
-    #[prost(bool, tag = "4")]
-    pub withdraw_addr_enabled: bool,
-}
-/// ValidatorHistoricalRewards represents historical rewards for a validator.
-/// Height is implicit within the store key.
-/// Cumulative reward ratio is the sum from the zeroeth period
-/// until this period of rewards / tokens, per the spec.
-/// The reference count indicates the number of objects
-/// which might need to reference this historical entry at any point.
-/// ReferenceCount =
-///     number of outstanding delegations which ended the associated period (and
-///     might need to read that record)
-///   + number of slashes which ended the associated period (and might need to
-///   read that record)
-///   + one per validator for the zeroeth period, set on initialization
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorHistoricalRewards {
-    #[prost(message, repeated, tag = "1")]
-    pub cumulative_reward_ratio: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
-    #[prost(uint32, tag = "2")]
-    pub reference_count: u32,
-}
-/// ValidatorCurrentRewards represents current rewards and current
-/// period for a validator kept as a running counter and incremented
-/// each block as long as the validator's tokens remain constant.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorCurrentRewards {
-    #[prost(message, repeated, tag = "1")]
-    pub rewards: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
-    #[prost(uint64, tag = "2")]
-    pub period: u64,
-}
-/// ValidatorAccumulatedCommission represents accumulated commission
-/// for a validator kept as a running counter, can be withdrawn at any time.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorAccumulatedCommission {
-    #[prost(message, repeated, tag = "1")]
-    pub commission: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
-}
-/// ValidatorOutstandingRewards represents outstanding (un-withdrawn) rewards
-/// for a validator inexpensive to track, allows simple sanity checks.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorOutstandingRewards {
-    #[prost(message, repeated, tag = "1")]
-    pub rewards: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
-}
-/// ValidatorSlashEvent represents a validator slash event.
-/// Height is implicit within the store key.
-/// This is needed to calculate appropriate amount of staking tokens
-/// for delegations which are withdrawn after a slash has occurred.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorSlashEvent {
-    #[prost(uint64, tag = "1")]
-    pub validator_period: u64,
-    #[prost(string, tag = "2")]
-    pub fraction: ::prost::alloc::string::String,
-}
-/// ValidatorSlashEvents is a collection of ValidatorSlashEvent messages.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorSlashEvents {
-    #[prost(message, repeated, tag = "1")]
-    pub validator_slash_events: ::prost::alloc::vec::Vec<ValidatorSlashEvent>,
-}
-/// FeePool is the global fee pool for distribution.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct FeePool {
-    #[prost(message, repeated, tag = "1")]
-    pub community_pool: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
-}
-/// CommunityPoolSpendProposal details a proposal for use of community funds,
-/// together with how many coins are proposed to be spent, and to which
-/// recipient account.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CommunityPoolSpendProposal {
-    #[prost(string, tag = "1")]
-    pub title: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub description: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub recipient: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag = "4")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-}
-/// DelegatorStartingInfo represents the starting info for a delegator reward
-/// period. It tracks the previous validator period, the delegation's amount of
-/// staking token, and the creation height (to check later on if any slashes have
-/// occurred). NOTE: Even though validators are slashed to whole staking tokens,
-/// the delegators within the validator may be left with less than a full token,
-/// thus sdk.Dec is used.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DelegatorStartingInfo {
-    #[prost(uint64, tag = "1")]
-    pub previous_period: u64,
-    #[prost(string, tag = "2")]
-    pub stake: ::prost::alloc::string::String,
-    #[prost(uint64, tag = "3")]
-    pub height: u64,
-}
-/// DelegationDelegatorReward represents the properties
-/// of a delegator's delegation reward.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DelegationDelegatorReward {
-    #[prost(string, tag = "1")]
-    pub validator_address: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag = "2")]
-    pub reward: ::prost::alloc::vec::Vec<super::super::base::v1beta1::DecCoin>,
-}
-/// CommunityPoolSpendProposalWithDeposit defines a CommunityPoolSpendProposal
-/// with a deposit
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CommunityPoolSpendProposalWithDeposit {
-    #[prost(string, tag = "1")]
-    pub title: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub description: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub recipient: ::prost::alloc::string::String,
-    #[prost(string, tag = "4")]
-    pub amount: ::prost::alloc::string::String,
-    #[prost(string, tag = "5")]
-    pub deposit: ::prost::alloc::string::String,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1499,7 +1684,7 @@ pub struct ValidatorSlashEventRecord {
 /// GenesisState defines the distribution module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
-    /// params defines all the paramaters of the module.
+    /// params defines all the parameters of the module.
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
     /// fee_pool defines the fee pool at genesis.

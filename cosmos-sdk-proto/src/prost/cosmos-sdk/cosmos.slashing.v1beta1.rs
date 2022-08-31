@@ -1,3 +1,43 @@
+/// ValidatorSigningInfo defines a validator's signing info for monitoring their
+/// liveness activity.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ValidatorSigningInfo {
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// Height at which validator was first a candidate OR was unjailed
+    #[prost(int64, tag = "2")]
+    pub start_height: i64,
+    /// Index which is incremented each time the validator was a bonded
+    /// in a block and may have signed a precommit or not. This in conjunction with the
+    /// `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
+    #[prost(int64, tag = "3")]
+    pub index_offset: i64,
+    /// Timestamp until which the validator is jailed due to liveness downtime.
+    #[prost(message, optional, tag = "4")]
+    pub jailed_until: ::core::option::Option<::prost_types::Timestamp>,
+    /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
+    /// once the validator commits an equivocation or for any other configured misbehiavor.
+    #[prost(bool, tag = "5")]
+    pub tombstoned: bool,
+    /// A counter kept to avoid unnecessary array reads.
+    /// Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
+    #[prost(int64, tag = "6")]
+    pub missed_blocks_counter: i64,
+}
+/// Params represents the parameters used for by the slashing module.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Params {
+    #[prost(int64, tag = "1")]
+    pub signed_blocks_window: i64,
+    #[prost(bytes = "vec", tag = "2")]
+    pub min_signed_per_window: ::prost::alloc::vec::Vec<u8>,
+    #[prost(message, optional, tag = "3")]
+    pub downtime_jail_duration: ::core::option::Option<::prost_types::Duration>,
+    #[prost(bytes = "vec", tag = "4")]
+    pub slash_fraction_double_sign: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "5")]
+    pub slash_fraction_downtime: ::prost::alloc::vec::Vec<u8>,
+}
 /// MsgUnjail defines the Msg/Unjail request type
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUnjail {
@@ -7,6 +47,26 @@ pub struct MsgUnjail {
 /// MsgUnjailResponse defines the Msg/Unjail response type
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUnjailResponse {}
+/// MsgUpdateParams is the Msg/UpdateParams request type.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParams {
+    /// authority is the address of the governance account.
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// params defines the x/slashing parameters to update.
+    ///
+    /// NOTE: All parameters must be supplied.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
+/// MsgUpdateParamsResponse defines the response structure for executing a
+/// MsgUpdateParams message.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParamsResponse {}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
@@ -94,6 +154,25 @@ pub mod msg_client {
             let path = http::uri::PathAndQuery::from_static("/cosmos.slashing.v1beta1.Msg/Unjail");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// UpdateParams defines a governance operation for updating the x/slashing module
+        /// parameters. The authority is hard-coded to the x/gov module account.
+        ///
+        /// Since: cosmos-sdk 0.47
+        pub async fn update_params(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgUpdateParams>,
+        ) -> Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.slashing.v1beta1.Msg/UpdateParams");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -112,6 +191,14 @@ pub mod msg_server {
             &self,
             request: tonic::Request<super::MsgUnjail>,
         ) -> Result<tonic::Response<super::MsgUnjailResponse>, tonic::Status>;
+        /// UpdateParams defines a governance operation for updating the x/slashing module
+        /// parameters. The authority is hard-coded to the x/gov module account.
+        ///
+        /// Since: cosmos-sdk 0.47
+        async fn update_params(
+            &self,
+            request: tonic::Request<super::MsgUpdateParams>,
+        ) -> Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
     }
     /// Msg defines the slashing Msg service.
     #[derive(Debug)]
@@ -198,6 +285,37 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
+                "/cosmos.slashing.v1beta1.Msg/UpdateParams" => {
+                    #[allow(non_camel_case_types)]
+                    struct UpdateParamsSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgUpdateParams> for UpdateParamsSvc<T> {
+                        type Response = super::MsgUpdateParamsResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgUpdateParams>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).update_params(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UpdateParamsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 _ => Box::pin(async move {
                     Ok(http::Response::builder()
                         .status(200)
@@ -232,46 +350,6 @@ pub mod msg_server {
     impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
         const NAME: &'static str = "cosmos.slashing.v1beta1.Msg";
     }
-}
-/// ValidatorSigningInfo defines a validator's signing info for monitoring their
-/// liveness activity.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ValidatorSigningInfo {
-    #[prost(string, tag = "1")]
-    pub address: ::prost::alloc::string::String,
-    /// Height at which validator was first a candidate OR was unjailed
-    #[prost(int64, tag = "2")]
-    pub start_height: i64,
-    /// Index which is incremented each time the validator was a bonded
-    /// in a block and may have signed a precommit or not. This in conjunction with the
-    /// `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
-    #[prost(int64, tag = "3")]
-    pub index_offset: i64,
-    /// Timestamp until which the validator is jailed due to liveness downtime.
-    #[prost(message, optional, tag = "4")]
-    pub jailed_until: ::core::option::Option<::prost_types::Timestamp>,
-    /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
-    /// once the validator commits an equivocation or for any other configured misbehiavor.
-    #[prost(bool, tag = "5")]
-    pub tombstoned: bool,
-    /// A counter kept to avoid unnecessary array reads.
-    /// Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
-    #[prost(int64, tag = "6")]
-    pub missed_blocks_counter: i64,
-}
-/// Params represents the parameters used for by the slashing module.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Params {
-    #[prost(int64, tag = "1")]
-    pub signed_blocks_window: i64,
-    #[prost(bytes = "vec", tag = "2")]
-    pub min_signed_per_window: ::prost::alloc::vec::Vec<u8>,
-    #[prost(message, optional, tag = "3")]
-    pub downtime_jail_duration: ::core::option::Option<::prost_types::Duration>,
-    #[prost(bytes = "vec", tag = "4")]
-    pub slash_fraction_double_sign: ::prost::alloc::vec::Vec<u8>,
-    #[prost(bytes = "vec", tag = "5")]
-    pub slash_fraction_downtime: ::prost::alloc::vec::Vec<u8>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -648,7 +726,7 @@ pub mod query_server {
 /// GenesisState defines the slashing module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
-    /// params defines all the paramaters of related to deposit.
+    /// params defines all the parameters of the module.
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
     /// signing_infos represents a map between validator addresses and their
