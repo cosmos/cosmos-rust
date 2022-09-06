@@ -139,7 +139,7 @@ pub struct Coin {
 impl Coin {
     /// Constructor
     pub fn new(amount: u128, denom: &str) -> Result<Self> {
-        Ok(Coin{
+        Ok(Coin {
             amount,
             denom: Denom::from_str(denom)?,
         })
