@@ -136,6 +136,16 @@ pub struct Coin {
     pub amount: u128,
 }
 
+impl Coin {
+    /// Constructor
+    pub fn new(amount: u128, denom: &str) -> Result<Self> {
+        Ok(Coin{
+            amount,
+            denom: Denom::from_str(denom)?,
+        })
+    }
+}
+
 impl TryFrom<proto::cosmos::base::v1beta1::Coin> for Coin {
     type Error = ErrorReport;
 
@@ -224,7 +234,7 @@ impl Serialize for Denom {
 
 #[cfg(test)]
 mod tests {
-    use super::{AccountId, Denom};
+    use super::{AccountId, Coin, Denom};
 
     #[test]
     fn account_id() {
@@ -247,5 +257,10 @@ mod tests {
                 .parse::<Denom>()
                 .is_ok()
         );
+    }
+
+    #[test]
+    fn coin() {
+        Coin::new(1000, "uatom").unwrap();
     }
 }
