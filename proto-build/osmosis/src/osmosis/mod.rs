@@ -3,8 +3,8 @@
 //! proto files for further compilation. This is based on the proto-compiler code
 //! in github.com/informalsystems/ibc-rs
 
-use crate::shared::*;
 use crate::shared::log_macro::info;
+use crate::shared::*;
 
 use regex::Regex;
 use std::{
@@ -34,7 +34,7 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 /// Protos belonging to these Protobuf packages will be excluded
 /// (i.e. because they are sourced from `tendermint-proto`)
-const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint","cosmos"];
+const EXCLUDED_PROTO_PACKAGES: &[&str] = &["gogoproto", "google", "tendermint", "cosmos"];
 
 pub fn main() {
     if is_github() {
@@ -72,16 +72,29 @@ fn update_submodules() {
     run_git(&["submodule", "update", "--init"]);
     run_git(&["-C", OSMOSISD_DIR, "fetch"]);
     run_git(&["-C", OSMOSISD_DIR, "reset", "--hard", OSMOSISD_REV]);
-    run_cmd("pwd",&[""]);
+    run_cmd("pwd", &[""]);
     /*
      * osmosis/gamm/v1beta1/tx.proto:9:9: "osmosis.gamm.v1beta1.Msg" is already defined in file "osmosis/gamm/pool-models/balancer/tx.proto".
      * To workaround this issue renaming Msg.
      */
-    run_cmd("sed",&["-i",r##"/service Msg {/c\service Msg1 {"##,"../../osmosis/proto/osmosis/gamm/pool-models/balancer/tx.proto"]);
-    run_cmd("sed",&["-i",r##"/service Msg {/c\service Msg2 {"##,"../../osmosis/proto/osmosis/gamm/v1beta1/tx.proto"]);
+    run_cmd(
+        "sed",
+        &[
+            "-i",
+            r##"/service Msg {/c\service Msg1 {"##,
+            "../../osmosis/proto/osmosis/gamm/pool-models/balancer/tx.proto",
+        ],
+    );
+    run_cmd(
+        "sed",
+        &[
+            "-i",
+            r##"/service Msg {/c\service Msg2 {"##,
+            "../../osmosis/proto/osmosis/gamm/v1beta1/tx.proto",
+        ],
+    );
     //run_cmd("rm",&["../osmosis/proto/osmosis/gamm/pool-models/balancer/tx.proto"]);
 }
-
 
 fn output_osmosisd_version(out_dir: &Path) {
     let path = out_dir.join("OSMOSISD_COMMIT");
@@ -181,7 +194,7 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
              #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
              impl ${1}Client<tonic::transport::Channel>",
         ),
-         // Feature-gate gRPC server modules
+        // Feature-gate gRPC server modules
         (
             "/// Generated server implementations.",
             "/// Generated server implementations.\n\

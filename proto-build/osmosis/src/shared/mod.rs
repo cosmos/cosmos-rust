@@ -1,7 +1,7 @@
 use std::{
     env,
     ffi::OsStr,
-    path::{PathBuf},
+    path::PathBuf,
     process,
     sync::atomic::{self, AtomicBool},
 };
@@ -14,7 +14,7 @@ static QUIET: AtomicBool = AtomicBool::new(false);
 pub mod log_macro {
     /// Log info to the console (if `QUIET` is disabled)
     // TODO(tarcieri): use a logger for this
-        macro_rules! info {
+    macro_rules! info {
             ($msg:expr) => {
                 if !is_quiet() {
                     println!("[info] {}", $msg)
@@ -59,7 +59,7 @@ pub fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
     }
 }
 
-pub fn run_cmd(cmd: &str,args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
+pub fn run_cmd(cmd: &str, args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
     let stdout = if is_quiet() {
         process::Stdio::null()
     } else {

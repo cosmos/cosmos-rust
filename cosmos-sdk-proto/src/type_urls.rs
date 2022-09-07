@@ -9,7 +9,6 @@ use crate::{cosmos, ibc, traits::TypeUrl};
 #[cfg(feature = "cosmwasm")]
 use crate::cosmwasm;
 
-
 #[cfg(feature = "cosmwasm")]
 impl TypeUrl for cosmwasm::wasm::v1::StoreCodeProposal {
     const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.StoreCodeProposal";
@@ -30,7 +29,7 @@ impl TypeUrl for cosmos::params::v1beta1::ParameterChangeProposal {
 impl TypeUrl for cosmos::distribution::v1beta1::CommunityPoolSpendProposal {
     const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal";
 }
-impl TypeUrl for cosmos::gov::v1beta1::TextProposal{
+impl TypeUrl for cosmos::gov::v1beta1::TextProposal {
     const TYPE_URL: &'static str = "/cosmos.gov.v1beta1.TextProposal";
 }
 
