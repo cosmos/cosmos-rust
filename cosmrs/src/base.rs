@@ -141,7 +141,7 @@ impl Coin {
     pub fn new(amount: u128, denom: &str) -> Result<Self> {
         Ok(Coin {
             amount,
-            denom: Denom::from_str(denom)?,
+            denom: denom.parse()?,
         })
     }
 }
