@@ -34,8 +34,8 @@ jobs:
           toolchain: ${{ matrix.rust }}
           target: ${{ matrix.target }}
           override: true
-      - run: cargo build --target ${{ matrix.target }} --release --no-default-features
-      - run: cargo build --target ${{ matrix.target }} --release --no-default-features --features grpc
+      - run: cargo build --target ${{ matrix.target }} --release
+      - run: cargo build --target ${{ matrix.target }} --release --features grpc
 
   test:
     runs-on: ubuntu-latest
