@@ -25,7 +25,7 @@ thiserror = "1"
 
 # optional dependencies
 bip32 = { version = "0.4", optional = true }
-tendermint-rpc = { version = "=0.23.9", optional = true, features = ["http-client"] }
+tendermint-rpc = { version = "=0.25.0", optional = true, features = ["http-client"] }
 tokio = { version = "1", optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
