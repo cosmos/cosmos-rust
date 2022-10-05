@@ -4,7 +4,7 @@
 // TODO(tarcieri): leverage first-class support for type URLs in prost?
 // See: https://github.com/tokio-rs/prost/issues/299
 
-use crate::{cosmos, traits::TypeUrl};
+use crate::{cosmos, ibc, traits::TypeUrl};
 
 #[cfg(feature = "cosmwasm")]
 use crate::cosmwasm;
@@ -139,4 +139,8 @@ impl TypeUrl for cosmwasm::wasm::v1::MsgUpdateAdminResponse {
 #[cfg(feature = "cosmwasm")]
 impl TypeUrl for cosmwasm::wasm::v1::MsgClearAdminResponse {
     const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdminResponse";
+}
+
+impl TypeUrl for ibc::applications::transfer::v1::MsgTransfer {
+    const TYPE_URL: &'static str = "/ibc.applications.transfer.v1.MsgTransfer";
 }
