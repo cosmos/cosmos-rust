@@ -47,7 +47,7 @@ mod base;
 mod error;
 
 pub use crate::{
-    base::{AccountId, Coin, Denom},
+    base::{AccountId, Amount, Coin, Denom, Gas},
     error::{Error, Result},
     tx::Tx,
 };

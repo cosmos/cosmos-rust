@@ -126,6 +126,9 @@ impl Serialize for AccountId {
     }
 }
 
+/// Amounts.
+pub type Amount = u128;
+
 /// Coin defines a token with a denomination and an amount.
 #[derive(Serialize, Deserialize, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 pub struct Coin {
@@ -133,12 +136,12 @@ pub struct Coin {
     pub denom: Denom,
 
     /// Amount
-    pub amount: u128,
+    pub amount: Amount,
 }
 
 impl Coin {
     /// Constructor
-    pub fn new(amount: u128, denom: &str) -> Result<Self> {
+    pub fn new(amount: Amount, denom: &str) -> Result<Self> {
         Ok(Coin {
             amount,
             denom: denom.parse()?,
@@ -231,6 +234,9 @@ impl Serialize for Denom {
         self.0.serialize(serializer)
     }
 }
+
+/// Gas cost.
+pub type Gas = u64;
 
 #[cfg(test)]
 mod tests {

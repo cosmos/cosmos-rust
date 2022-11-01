@@ -1,12 +1,14 @@
 //! Abci-related functionality
 
-use crate::tx::Msg;
 use crate::{
     proto::{self, traits::Message},
-    ErrorReport, Result,
+    tx::Msg,
+    ErrorReport, Gas, Result,
 };
 use serde::{Deserialize, Serialize};
-use tendermint::abci::Gas;
+
+/// Transaction data.
+pub type Data = Vec<u8>;
 
 /// MsgData defines the data returned in a Result object during message execution.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -61,12 +63,11 @@ pub struct TxMsgData {
     pub data: Vec<MsgData>,
 }
 
-impl TryFrom<tendermint::abci::Data> for TxMsgData {
+impl TryFrom<Data> for TxMsgData {
     type Error = ErrorReport;
 
-    fn try_from(data: tendermint::abci::Data) -> Result<TxMsgData> {
-        let proto = proto::cosmos::base::abci::v1beta1::TxMsgData::decode(data.value().as_ref())?;
-        proto.try_into()
+    fn try_from(data: Data) -> Result<TxMsgData> {
+        proto::cosmos::base::abci::v1beta1::TxMsgData::decode(data.as_ref())?.try_into()
     }
 }
 
@@ -111,8 +112,8 @@ impl TryFrom<proto::cosmos::base::abci::v1beta1::GasInfo> for GasInfo {
 
     fn try_from(proto: proto::cosmos::base::abci::v1beta1::GasInfo) -> Result<GasInfo> {
         Ok(GasInfo {
-            gas_wanted: Gas::from(proto.gas_wanted),
-            gas_used: Gas::from(proto.gas_used),
+            gas_wanted: proto.gas_wanted,
+            gas_used: proto.gas_used,
         })
     }
 }
@@ -120,8 +121,8 @@ impl TryFrom<proto::cosmos::base::abci::v1beta1::GasInfo> for GasInfo {
 impl From<GasInfo> for proto::cosmos::base::abci::v1beta1::GasInfo {
     fn from(info: GasInfo) -> Self {
         proto::cosmos::base::abci::v1beta1::GasInfo {
-            gas_wanted: info.gas_wanted.value(),
-            gas_used: info.gas_wanted.value(),
+            gas_wanted: info.gas_wanted,
+            gas_used: info.gas_wanted,
         }
     }
 }

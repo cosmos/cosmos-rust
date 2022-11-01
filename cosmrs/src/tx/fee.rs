@@ -72,7 +72,7 @@ impl TryFrom<&proto::cosmos::tx::v1beta1::Fee> for Fee {
 
         Ok(Fee {
             amount,
-            gas_limit: proto.gas_limit.into(),
+            gas_limit: proto.gas_limit,
             payer: proto.payer.parse_optional()?,
             granter: proto.granter.parse_optional()?,
         })
@@ -89,7 +89,7 @@ impl From<&Fee> for proto::cosmos::tx::v1beta1::Fee {
     fn from(fee: &Fee) -> proto::cosmos::tx::v1beta1::Fee {
         proto::cosmos::tx::v1beta1::Fee {
             amount: fee.amount.iter().map(Into::into).collect(),
-            gas_limit: fee.gas_limit.value(),
+            gas_limit: fee.gas_limit,
             payer: fee
                 .payer
                 .as_ref()

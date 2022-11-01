@@ -58,7 +58,7 @@ fn msg_send() {
 
     let chain_id = CHAIN_ID.parse().unwrap();
     let sequence_number = 0;
-    let gas = 100_000;
+    let gas = 100_000u64;
     let fee = Fee::from_amount_and_gas(amount, gas);
 
     let tx_body = tx::BodyBuilder::new().msg(msg_send).memo(MEMO).finish();
