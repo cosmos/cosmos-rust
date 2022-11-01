@@ -86,6 +86,12 @@ impl FromStr for AccountId {
     }
 }
 
+impl From<AccountId> for String {
+    fn from(id: AccountId) -> Self {
+        id.bech32
+    }
+}
+
 impl TryFrom<AccountId> for tendermint::account::Id {
     type Error = ErrorReport;
 
@@ -248,6 +254,16 @@ mod tests {
         "okp41urdh3smlstyafjtyg0d606egllhwp8kvnw0d2f"
             .parse::<AccountId>()
             .unwrap();
+    }
+
+    #[test]
+    fn account_id_into_string() {
+        let account_id = "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg"
+            .parse::<AccountId>()
+            .unwrap();
+
+        let s: String = account_id.into();
+        assert_eq!(s, "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg".to_string());
     }
 
     #[test]
