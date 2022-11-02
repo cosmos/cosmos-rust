@@ -63,7 +63,7 @@
 //! let chain_id = "cosmoshub-4".parse()?;
 //! let account_number = 1;
 //! let sequence_number = 0;
-//! let gas = 100_000;
+//! let gas = 100_000u64;
 //! let timeout_height = 9001u16;
 //! let memo = "example memo";
 //!
@@ -128,15 +128,14 @@ pub use crate::{
     proto::{cosmos::tx::signing::v1beta1::SignMode, traits::MessageExt},
     ErrorReport,
 };
-pub use tendermint::abci::{transaction::Hash, Gas};
 
 use crate::{
     proto::{self, traits::Message},
-    Error, Result,
+    Error, Gas, Result,
 };
 
 #[cfg(feature = "rpc")]
-use crate::rpc;
+use {crate::rpc, tendermint::Hash};
 
 /// Account number.
 pub type AccountNumber = u64;
@@ -178,6 +177,12 @@ impl Tx {
     where
         C: rpc::Client + Send + Sync,
     {
+        // TODO(tarcieri): better conversion or unified `Hash` type, see tendermint-rs#1221
+        let tx_hash = match tx_hash {
+            Hash::Sha256(bytes) => tendermint_rpc::abci::transaction::Hash::new(bytes),
+            _ => return Err(Error::Crypto.into()),
+        };
+
         let response = rpc_client.tx(tx_hash, false).await?;
         Tx::from_bytes(response.tx.as_bytes())
     }

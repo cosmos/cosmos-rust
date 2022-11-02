@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.14.0"
+version = "0.15.0-pre"
 authors = [
     "Justin Kilpatrick <justin@althea.net>",
     "Greg Szabo <greg@informal.systems>",
@@ -13,12 +13,12 @@ readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
 keywords = ["blockchain", "cosmos", "tendermint", "proto"]
 edition = "2021"
-rust-version = "1.56"
+rust-version = "1.59"
 
 [dependencies]
 prost = "0.11"
 prost-types = "0.11"
-tendermint-proto = "=0.23.9"
+tendermint-proto = "0.26"
 
 # Optional dependencies
 tonic = { version = "0.8", optional = true, default-features = false, features = ["codegen", "prost"] }

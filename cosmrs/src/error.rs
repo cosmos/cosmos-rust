@@ -2,7 +2,7 @@
 
 pub use eyre::{Report, Result};
 
-use crate::tx;
+use tendermint::Hash;
 use thiserror::Error;
 
 /// Kinds of errors.
@@ -54,7 +54,7 @@ pub enum Error {
     #[error("transaction not found: {hash:?}")]
     TxNotFound {
         /// Transaction hash that wasn't found.
-        hash: tx::Hash,
+        hash: Hash,
     },
 
     /// Invalid value for the given field of an enum.
