@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.15.0 (2022-11-07)
+### Added
+- `TypeUrl` impl for auth accounts ([#285])
+- `TypeUrl` impl for `MsgTransfer` ([#296])
+
+### Changed
+- Bump `tendermint-proto` to v0.26; MSRV 1.59 ([#302])
+
+[#285]: https://github.com/cosmos/cosmos-rust/pull/285
+[#296]: https://github.com/cosmos/cosmos-rust/pull/296
+[#302]: https://github.com/cosmos/cosmos-rust/pull/302
+
 ## 0.14.0 (2022-08-08)
 ### Changed
 - Rename `cosmos::staking::v1beta1::IsStakeAuthroizationValidator` to `::Policy` ([#275])
