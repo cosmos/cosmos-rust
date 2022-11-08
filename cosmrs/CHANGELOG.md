@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.10.0 (2022-11-07)
+### Added
+- `Coin` constructor ([#291])
+- Impl `From<AccountId>` for `String` ([#301])
+
+### Changed
+- Bump tendermint-rs crates to v0.26; MSRV 1.59 ([#302])
+- Refactor into submodules ([#303])
+- Bump `cosmos-sdk-proto` to v0.15 ([#304])
+
+[#291]: https://github.com/cosmos/cosmos-rust/pull/291
+[#301]: https://github.com/cosmos/cosmos-rust/pull/301
+[#302]: https://github.com/cosmos/cosmos-rust/pull/302
+[#303]: https://github.com/cosmos/cosmos-rust/pull/303
+[#304]: https://github.com/cosmos/cosmos-rust/pull/304
+
 ## 0.9.0 (2022-08-08)
 ### Added
 - `tx::BodyBuilder` ([#254])
