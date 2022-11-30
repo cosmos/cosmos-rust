@@ -10,7 +10,7 @@ use crate::{
     tx::Tx,
 };
 use std::{ffi::OsStr, panic, process, str, time::Duration};
-use tendermint_rpc::abci::transaction::Hash;
+use tendermint::Hash;
 use tokio::time;
 
 /// Docker image (on Docker Hub) containing a single-node test environment for
