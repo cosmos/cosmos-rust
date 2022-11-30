@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.16.0 (2022-11-30)
+### Changed
+- Bump tendermint-rs crates to 0.27 ([#306])
+
+[#306]: https://github.com/cosmos/cosmos-rust/pull/306
+
 ## 0.15.0 (2022-11-07)
 ### Added
 - `TypeUrl` impl for auth accounts ([#285])

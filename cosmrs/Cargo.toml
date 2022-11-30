@@ -1,6 +1,6 @@
 [package]
 name = "cosmrs"
-version = "0.10.0"
+version = "0.11.0-pre"
 authors = ["Tony Arcieri <tony@iqlusion.io>"]
 license = "Apache-2.0"
 repository = "https://github.com/cosmos/cosmos-rust/tree/main/cosmrs"
@@ -12,7 +12,7 @@ edition = "2021"
 rust-version = "1.59"
 
 [dependencies]
-cosmos-sdk-proto = { version = "0.15", default-features = false, path = "../cosmos-sdk-proto" }
+cosmos-sdk-proto = { version = "0.16", default-features = false, path = "../cosmos-sdk-proto" }
 ecdsa = { version = "0.14", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.11", features = ["ecdsa", "sha256"] }
