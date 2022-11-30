@@ -177,14 +177,8 @@ impl Tx {
     where
         C: rpc::Client + Send + Sync,
     {
-        // TODO(tarcieri): better conversion or unified `Hash` type, see tendermint-rs#1221
-        let tx_hash = match tx_hash {
-            Hash::Sha256(bytes) => tendermint_rpc::abci::transaction::Hash::new(bytes),
-            _ => return Err(Error::Crypto.into()),
-        };
-
         let response = rpc_client.tx(tx_hash, false).await?;
-        Tx::from_bytes(response.tx.as_bytes())
+        Tx::from_bytes(&response.tx)
     }
 }
 

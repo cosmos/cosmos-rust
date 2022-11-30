@@ -37,7 +37,7 @@ impl Raw {
     where
         C: rpc::Client + Send + Sync,
     {
-        Ok(client.broadcast_tx_commit(self.to_bytes()?.into()).await?)
+        Ok(client.broadcast_tx_commit(self.to_bytes()?).await?)
     }
 }
 
