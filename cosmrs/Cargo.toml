@@ -20,12 +20,12 @@ rand_core = { version = "0.6", features = ["std"] }
 serde = { version = "1", features = ["serde_derive"] }
 serde_json = "1"
 subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
-tendermint = { version = "0.27", features = ["secp256k1"] }
+tendermint = { version = "0.28", features = ["secp256k1"] }
 thiserror = "1"
 
 # optional dependencies
 bip32 = { version = "0.4", optional = true }
-tendermint-rpc = { version = "0.27", optional = true, features = ["http-client"] }
+tendermint-rpc = { version = "0.28", optional = true, features = ["http-client"] }
 tokio = { version = "1", optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
