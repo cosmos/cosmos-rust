@@ -1,4 +1,5 @@
 /// MsgVerifyInvariant represents a message to verify a particular invariance.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVerifyInvariant {
     #[prost(string, tag = "1")]
@@ -9,6 +10,7 @@ pub struct MsgVerifyInvariant {
     pub invariant_route: ::prost::alloc::string::String,
 }
 /// MsgVerifyInvariantResponse defines the Msg/VerifyInvariant response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVerifyInvariantResponse {}
 /// Generated client implementations.
@@ -105,7 +107,7 @@ pub mod msg_client {
 pub mod msg_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with MsgServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
         /// VerifyInvariant defines a method to verify a particular invariance.
@@ -235,6 +237,7 @@ pub mod msg_server {
     }
 }
 /// GenesisState defines the crisis module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// constant_fee is the fee used to verify the invariant in the crisis

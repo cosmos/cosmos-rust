@@ -1,4 +1,5 @@
 /// GenesisState defines the ibc module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// ICS002 - Clients genesis state

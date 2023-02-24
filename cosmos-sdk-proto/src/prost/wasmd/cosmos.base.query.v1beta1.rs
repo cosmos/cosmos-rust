@@ -1,3 +1,4 @@
+// @generated
 /// PageRequest is to be embedded in gRPC request messages for efficient
 /// pagination. Ex:
 ///
@@ -43,7 +44,8 @@ pub struct PageRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PageResponse {
     /// next_key is the key to be passed to PageRequest.key to
-    /// query the next page most efficiently
+    /// query the next page most efficiently. It will be empty if
+    /// there are no more results.
     #[prost(bytes = "vec", tag = "1")]
     pub next_key: ::prost::alloc::vec::Vec<u8>,
     /// total is total number of results available if PageRequest.count_total
@@ -51,3 +53,4 @@ pub struct PageResponse {
     #[prost(uint64, tag = "2")]
     pub total: u64,
 }
+// @@protoc_insertion_point(module)
