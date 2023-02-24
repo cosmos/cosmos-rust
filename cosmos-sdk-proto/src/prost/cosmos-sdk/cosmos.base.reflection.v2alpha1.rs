@@ -1,4 +1,5 @@
 /// AppDescriptor describes a cosmos-sdk based application
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AppDescriptor {
     /// AuthnDescriptor provides information on how to authenticate transactions on the application
@@ -22,6 +23,7 @@ pub struct AppDescriptor {
     pub tx: ::core::option::Option<TxDescriptor>,
 }
 /// TxDescriptor describes the accepted transaction type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TxDescriptor {
     /// fullname is the protobuf fullname of the raw transaction type (for instance the tx.Tx type)
@@ -35,6 +37,7 @@ pub struct TxDescriptor {
 }
 /// AuthnDescriptor provides information on how to sign transactions without relying
 /// on the online RPCs GetTxMetadata and CombineUnsignedTxAndSignatures
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AuthnDescriptor {
     /// sign_modes defines the supported signature algorithm
@@ -45,6 +48,7 @@ pub struct AuthnDescriptor {
 /// NOTE(fdymylja): here we could go as far as providing an entire flow on how
 /// to sign a message given a SigningModeDescriptor, but it's better to think about
 /// this another time
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SigningModeDescriptor {
     /// name defines the unique name of the signing mode
@@ -59,6 +63,7 @@ pub struct SigningModeDescriptor {
     pub authn_info_provider_method_fullname: ::prost::alloc::string::String,
 }
 /// ChainDescriptor describes chain information of the application
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ChainDescriptor {
     /// id is the chain id
@@ -66,6 +71,7 @@ pub struct ChainDescriptor {
     pub id: ::prost::alloc::string::String,
 }
 /// CodecDescriptor describes the registered interfaces and provides metadata information on the types
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CodecDescriptor {
     /// interfaces is a list of the registerted interfaces descriptors
@@ -73,6 +79,7 @@ pub struct CodecDescriptor {
     pub interfaces: ::prost::alloc::vec::Vec<InterfaceDescriptor>,
 }
 /// InterfaceDescriptor describes the implementation of an interface
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterfaceDescriptor {
     /// fullname is the name of the interface
@@ -87,6 +94,7 @@ pub struct InterfaceDescriptor {
     pub interface_implementers: ::prost::alloc::vec::Vec<InterfaceImplementerDescriptor>,
 }
 /// InterfaceImplementerDescriptor describes an interface implementer
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterfaceImplementerDescriptor {
     /// fullname is the protobuf queryable name of the interface implementer
@@ -101,6 +109,7 @@ pub struct InterfaceImplementerDescriptor {
 }
 /// InterfaceAcceptingMessageDescriptor describes a protobuf message which contains
 /// an interface represented as a google.protobuf.Any
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterfaceAcceptingMessageDescriptor {
     /// fullname is the protobuf fullname of the type containing the interface
@@ -113,6 +122,7 @@ pub struct InterfaceAcceptingMessageDescriptor {
     pub field_descriptor_names: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// ConfigurationDescriptor contains metadata information on the sdk.Config
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConfigurationDescriptor {
     /// bech32_account_address_prefix is the account address prefix
@@ -120,6 +130,7 @@ pub struct ConfigurationDescriptor {
     pub bech32_account_address_prefix: ::prost::alloc::string::String,
 }
 /// MsgDescriptor describes a cosmos-sdk message that can be delivered with a transaction
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDescriptor {
     /// msg_type_url contains the TypeURL of a sdk.Msg.
@@ -127,9 +138,11 @@ pub struct MsgDescriptor {
     pub msg_type_url: ::prost::alloc::string::String,
 }
 /// GetAuthnDescriptorRequest is the request used for the GetAuthnDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetAuthnDescriptorRequest {}
 /// GetAuthnDescriptorResponse is the response returned by the GetAuthnDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetAuthnDescriptorResponse {
     /// authn describes how to authenticate to the application when sending transactions
@@ -137,9 +150,11 @@ pub struct GetAuthnDescriptorResponse {
     pub authn: ::core::option::Option<AuthnDescriptor>,
 }
 /// GetChainDescriptorRequest is the request used for the GetChainDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetChainDescriptorRequest {}
 /// GetChainDescriptorResponse is the response returned by the GetChainDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetChainDescriptorResponse {
     /// chain describes application chain information
@@ -147,9 +162,11 @@ pub struct GetChainDescriptorResponse {
     pub chain: ::core::option::Option<ChainDescriptor>,
 }
 /// GetCodecDescriptorRequest is the request used for the GetCodecDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetCodecDescriptorRequest {}
 /// GetCodecDescriptorResponse is the response returned by the GetCodecDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetCodecDescriptorResponse {
     /// codec describes the application codec such as registered interfaces and implementations
@@ -157,9 +174,11 @@ pub struct GetCodecDescriptorResponse {
     pub codec: ::core::option::Option<CodecDescriptor>,
 }
 /// GetConfigurationDescriptorRequest is the request used for the GetConfigurationDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetConfigurationDescriptorRequest {}
 /// GetConfigurationDescriptorResponse is the response returned by the GetConfigurationDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetConfigurationDescriptorResponse {
     /// config describes the application's sdk.Config
@@ -167,9 +186,11 @@ pub struct GetConfigurationDescriptorResponse {
     pub config: ::core::option::Option<ConfigurationDescriptor>,
 }
 /// GetQueryServicesDescriptorRequest is the request used for the GetQueryServicesDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetQueryServicesDescriptorRequest {}
 /// GetQueryServicesDescriptorResponse is the response returned by the GetQueryServicesDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetQueryServicesDescriptorResponse {
     /// queries provides information on the available queryable services
@@ -177,9 +198,11 @@ pub struct GetQueryServicesDescriptorResponse {
     pub queries: ::core::option::Option<QueryServicesDescriptor>,
 }
 /// GetTxDescriptorRequest is the request used for the GetTxDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxDescriptorRequest {}
 /// GetTxDescriptorResponse is the response returned by the GetTxDescriptor RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxDescriptorResponse {
     /// tx provides information on msgs that can be forwarded to the application
@@ -188,6 +211,7 @@ pub struct GetTxDescriptorResponse {
     pub tx: ::core::option::Option<TxDescriptor>,
 }
 /// QueryServicesDescriptor contains the list of cosmos-sdk queriable services
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryServicesDescriptor {
     /// query_services is a list of cosmos-sdk QueryServiceDescriptor
@@ -195,6 +219,7 @@ pub struct QueryServicesDescriptor {
     pub query_services: ::prost::alloc::vec::Vec<QueryServiceDescriptor>,
 }
 /// QueryServiceDescriptor describes a cosmos-sdk queryable service
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryServiceDescriptor {
     /// fullname is the protobuf fullname of the service descriptor
@@ -210,6 +235,7 @@ pub struct QueryServiceDescriptor {
 /// QueryMethodDescriptor describes a queryable method of a query service
 /// no other info is provided beside method name and tendermint queryable path
 /// because it would be redundant with the grpc reflection service
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryMethodDescriptor {
     /// name is the protobuf name (not fullname) of the method
@@ -407,7 +433,7 @@ pub mod reflection_service_client {
 pub mod reflection_service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with ReflectionServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with ReflectionServiceServer.
     #[async_trait]
     pub trait ReflectionService: Send + Sync + 'static {
         /// GetAuthnDescriptor returns information on how to authenticate transactions in the application

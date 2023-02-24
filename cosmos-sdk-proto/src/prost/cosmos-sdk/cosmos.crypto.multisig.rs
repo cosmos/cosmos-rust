@@ -1,6 +1,7 @@
 /// LegacyAminoPubKey specifies a public key type
 /// which nests multiple public keys and a threshold,
 /// it uses legacy amino address rules.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LegacyAminoPubKey {
     #[prost(uint32, tag = "1")]

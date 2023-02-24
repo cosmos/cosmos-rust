@@ -1,5 +1,6 @@
 /// Params defines the set of on-chain interchain accounts parameters.
 /// The following parameters may be used to disable the controller submodule.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     /// controller_enabled enables or disables the controller submodule.
@@ -7,9 +8,11 @@ pub struct Params {
     pub controller_enabled: bool,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsResponse {
     /// params defines the parameters of the module.

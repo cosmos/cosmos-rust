@@ -1,4 +1,5 @@
 /// Tx is the standard type used for broadcasting transactions.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Tx {
     /// body is the processable content of the transaction
@@ -19,6 +20,7 @@ pub struct Tx {
 /// verification. The binary `serialize(tx: TxRaw)` is stored in Tendermint and
 /// the hash `sha256(serialize(tx: TxRaw))` becomes the "txhash", commonly used
 /// as the transaction ID.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TxRaw {
     /// body_bytes is a protobuf serialization of a TxBody that matches the
@@ -36,6 +38,7 @@ pub struct TxRaw {
     pub signatures: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// SignDoc is the type used for generating sign bytes for SIGN_MODE_DIRECT.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SignDoc {
     /// body_bytes is protobuf serialization of a TxBody that matches the
@@ -56,6 +59,7 @@ pub struct SignDoc {
     pub account_number: u64,
 }
 /// TxBody is the body of a transaction that all signers sign over.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TxBody {
     /// messages is a list of messages to be executed. The required signers of
@@ -89,6 +93,7 @@ pub struct TxBody {
 }
 /// AuthInfo describes the fee and signer modes that are used to sign a
 /// transaction.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AuthInfo {
     /// signer_infos defines the signing modes for the required signers. The number
@@ -106,6 +111,7 @@ pub struct AuthInfo {
 }
 /// SignerInfo describes the public key and signing mode of a single top-level
 /// signer.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SignerInfo {
     /// public_key is the public key of the signer. It is optional for accounts
@@ -124,6 +130,7 @@ pub struct SignerInfo {
     pub sequence: u64,
 }
 /// ModeInfo describes the signing mode of a single or nested multisig signer.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModeInfo {
     /// sum is the oneof that specifies whether this represents a single or nested
@@ -136,6 +143,7 @@ pub mod mode_info {
     /// Single is the mode info for a single signer. It is structured as a message
     /// to allow for additional fields such as locale for SIGN_MODE_TEXTUAL in the
     /// future
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Single {
         /// mode is the signing mode of the single signer
@@ -143,6 +151,7 @@ pub mod mode_info {
         pub mode: i32,
     }
     /// Multi is the mode info for a multisig public key
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Multi {
         /// bitarray specifies which keys within the multisig are signing
@@ -156,6 +165,7 @@ pub mod mode_info {
     }
     /// sum is the oneof that specifies whether this represents a single or nested
     /// multisig signer
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Sum {
         /// single represents a single signer
@@ -169,6 +179,7 @@ pub mod mode_info {
 /// Fee includes the amount of coins paid in fees and the maximum
 /// gas to be used by the transaction. The ratio yields an effective "gasprice",
 /// which must be above some miminum to be accepted into the mempool.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Fee {
     /// amount is the amount of coins to be paid as a fee
@@ -191,6 +202,7 @@ pub struct Fee {
 }
 /// GetTxsEventRequest is the request type for the Service.TxsByEvents
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxsEventRequest {
     /// events is the list of transaction event type.
@@ -204,6 +216,7 @@ pub struct GetTxsEventRequest {
 }
 /// GetTxsEventResponse is the response type for the Service.TxsByEvents
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxsEventResponse {
     /// txs is the list of queried transactions.
@@ -218,6 +231,7 @@ pub struct GetTxsEventResponse {
 }
 /// BroadcastTxRequest is the request type for the Service.BroadcastTxRequest
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BroadcastTxRequest {
     /// tx_bytes is the raw transaction.
@@ -228,6 +242,7 @@ pub struct BroadcastTxRequest {
 }
 /// BroadcastTxResponse is the response type for the
 /// Service.BroadcastTx method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BroadcastTxResponse {
     /// tx_response is the queried TxResponses.
@@ -236,6 +251,7 @@ pub struct BroadcastTxResponse {
 }
 /// SimulateRequest is the request type for the Service.Simulate
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SimulateRequest {
     /// tx is the transaction to simulate.
@@ -251,6 +267,7 @@ pub struct SimulateRequest {
 }
 /// SimulateResponse is the response type for the
 /// Service.SimulateRPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SimulateResponse {
     /// gas_info is the information about gas used in the simulation.
@@ -262,6 +279,7 @@ pub struct SimulateResponse {
 }
 /// GetTxRequest is the request type for the Service.GetTx
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxRequest {
     /// hash is the tx hash to query, encoded as a hex string.
@@ -269,6 +287,7 @@ pub struct GetTxRequest {
     pub hash: ::prost::alloc::string::String,
 }
 /// GetTxResponse is the response type for the Service.GetTx method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetTxResponse {
     /// tx is the queried transaction.
@@ -282,6 +301,7 @@ pub struct GetTxResponse {
 /// RPC method.
 ///
 /// Since: cosmos-sdk 0.45.2
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockWithTxsRequest {
     /// height is the height of the block to query.
@@ -294,6 +314,7 @@ pub struct GetBlockWithTxsRequest {
 /// GetBlockWithTxsResponse is the response type for the Service.GetBlockWithTxs method.
 ///
 /// Since: cosmos-sdk 0.45.2
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockWithTxsResponse {
     /// txs are the transactions in the block.
@@ -330,6 +351,15 @@ impl OrderBy {
             OrderBy::Desc => "ORDER_BY_DESC",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "ORDER_BY_UNSPECIFIED" => Some(Self::Unspecified),
+            "ORDER_BY_ASC" => Some(Self::Asc),
+            "ORDER_BY_DESC" => Some(Self::Desc),
+            _ => None,
+        }
+    }
 }
 /// BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC method.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -358,6 +388,16 @@ impl BroadcastMode {
             BroadcastMode::Block => "BROADCAST_MODE_BLOCK",
             BroadcastMode::Sync => "BROADCAST_MODE_SYNC",
             BroadcastMode::Async => "BROADCAST_MODE_ASYNC",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "BROADCAST_MODE_UNSPECIFIED" => Some(Self::Unspecified),
+            "BROADCAST_MODE_BLOCK" => Some(Self::Block),
+            "BROADCAST_MODE_SYNC" => Some(Self::Sync),
+            "BROADCAST_MODE_ASYNC" => Some(Self::Async),
+            _ => None,
         }
     }
 }
@@ -522,7 +562,7 @@ pub mod service_client {
 pub mod service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with ServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with ServiceServer.
     #[async_trait]
     pub trait Service: Send + Sync + 'static {
         /// Simulate simulates executing a transaction for estimating gas usage.

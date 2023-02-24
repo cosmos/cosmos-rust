@@ -1,5 +1,6 @@
 /// MsgGrantAllowance adds permission for Grantee to spend up to Allowance
 /// of fees from the account of Granter.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgGrantAllowance {
     /// granter is the address of the user granting an allowance of their funds.
@@ -13,9 +14,11 @@ pub struct MsgGrantAllowance {
     pub allowance: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgGrantAllowanceResponse {}
 /// MsgRevokeAllowance removes any existing Allowance from Granter to Grantee.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevokeAllowance {
     /// granter is the address of the user granting an allowance of their funds.
@@ -26,6 +29,7 @@ pub struct MsgRevokeAllowance {
     pub grantee: ::prost::alloc::string::String,
 }
 /// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevokeAllowanceResponse {}
 /// Generated client implementations.
@@ -141,7 +145,7 @@ pub mod msg_client {
 pub mod msg_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with MsgServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
         /// GrantAllowance grants fee allowance to the grantee on the granter's
@@ -310,6 +314,7 @@ pub mod msg_server {
 }
 /// BasicAllowance implements Allowance with a one-time grant of tokens
 /// that optionally expires. The grantee can use up to SpendLimit to cover fees.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BasicAllowance {
     /// spend_limit specifies the maximum amount of tokens that can be spent
@@ -323,6 +328,7 @@ pub struct BasicAllowance {
 }
 /// PeriodicAllowance extends Allowance to allow for both a maximum cap,
 /// as well as a limit per time period.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PeriodicAllowance {
     /// basic specifies a struct of `BasicAllowance`
@@ -346,6 +352,7 @@ pub struct PeriodicAllowance {
     pub period_reset: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// AllowedMsgAllowance creates allowance only for specified message types.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllowedMsgAllowance {
     /// allowance can be any of basic and filtered fee allowance.
@@ -356,6 +363,7 @@ pub struct AllowedMsgAllowance {
     pub allowed_messages: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Grant is stored in the KVStore to record a grant with full context
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Grant {
     /// granter is the address of the user granting an allowance of their funds.
@@ -369,6 +377,7 @@ pub struct Grant {
     pub allowance: ::core::option::Option<::prost_types::Any>,
 }
 /// QueryAllowanceRequest is the request type for the Query/Allowance RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowanceRequest {
     /// granter is the address of the user granting an allowance of their funds.
@@ -379,6 +388,7 @@ pub struct QueryAllowanceRequest {
     pub grantee: ::prost::alloc::string::String,
 }
 /// QueryAllowanceResponse is the response type for the Query/Allowance RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowanceResponse {
     /// allowance is a allowance granted for grantee by granter.
@@ -386,6 +396,7 @@ pub struct QueryAllowanceResponse {
     pub allowance: ::core::option::Option<Grant>,
 }
 /// QueryAllowancesRequest is the request type for the Query/Allowances RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesRequest {
     #[prost(string, tag = "1")]
@@ -395,6 +406,7 @@ pub struct QueryAllowancesRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryAllowancesResponse is the response type for the Query/Allowances RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesResponse {
     /// allowances are allowance's granted for grantee by granter.
@@ -517,7 +529,7 @@ pub mod query_client {
 pub mod query_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
         /// Allowance returns fee granted to the grantee by the granter.
@@ -683,6 +695,7 @@ pub mod query_server {
     }
 }
 /// GenesisState contains a set of fee allowances, persisted from the store
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]

@@ -1,5 +1,6 @@
 /// CommitInfo defines commit information used by the multi-store when committing
 /// a version/height.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommitInfo {
     #[prost(int64, tag = "1")]
@@ -9,6 +10,7 @@ pub struct CommitInfo {
 }
 /// StoreInfo defines store-specific commit information. It contains a reference
 /// between a store name and the commit ID.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StoreInfo {
     #[prost(string, tag = "1")]
@@ -18,6 +20,7 @@ pub struct StoreInfo {
 }
 /// CommitID defines the committment information when a specific store is
 /// committed.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CommitId {
     #[prost(int64, tag = "1")]
@@ -30,6 +33,7 @@ pub struct CommitId {
 /// Deletes
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StoreKvPair {
     /// the store key for the KVStore this pair originates from

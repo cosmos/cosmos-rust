@@ -1,5 +1,6 @@
 /// Capability defines an implementation of an object capability. The index
 /// provided to a Capability must be globally unique.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Capability {
     #[prost(uint64, tag = "1")]
@@ -7,6 +8,7 @@ pub struct Capability {
 }
 /// Owner defines a single capability owner. An owner is defined by the name of
 /// capability and the module name.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Owner {
     #[prost(string, tag = "1")]
@@ -16,12 +18,14 @@ pub struct Owner {
 }
 /// CapabilityOwners defines a set of owners of a single Capability. The set of
 /// owners must be unique.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CapabilityOwners {
     #[prost(message, repeated, tag = "1")]
     pub owners: ::prost::alloc::vec::Vec<Owner>,
 }
 /// GenesisOwners defines the capability owners with their corresponding index.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisOwners {
     /// index is the index of the capability owner.
@@ -32,6 +36,7 @@ pub struct GenesisOwners {
     pub index_owners: ::core::option::Option<CapabilityOwners>,
 }
 /// GenesisState defines the capability module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// index is the capability global index.

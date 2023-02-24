@@ -1,5 +1,6 @@
 /// ClientState defines a solo machine client that tracks the current consensus
 /// state and if the client is frozen.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientState {
     /// latest sequence of the client state
@@ -18,6 +19,7 @@ pub struct ClientState {
 /// ConsensusState defines a solo machine consensus state. The sequence of a
 /// consensus state is contained in the "height" key used in storing the
 /// consensus state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConsensusState {
     /// public key of the solo machine
@@ -32,6 +34,7 @@ pub struct ConsensusState {
     pub timestamp: u64,
 }
 /// Header defines a solo machine consensus header
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Header {
     /// sequence to update solo machine public key at
@@ -48,6 +51,7 @@ pub struct Header {
 }
 /// Misbehaviour defines misbehaviour for a solo machine which consists
 /// of a sequence and two signatures over different messages at that sequence.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Misbehaviour {
     #[prost(string, tag = "1")]
@@ -61,6 +65,7 @@ pub struct Misbehaviour {
 }
 /// SignatureAndData contains a signature and the data signed over to create that
 /// signature.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SignatureAndData {
     #[prost(bytes = "vec", tag = "1")]
@@ -74,6 +79,7 @@ pub struct SignatureAndData {
 }
 /// TimestampedSignatureData contains the signature data and the timestamp of the
 /// signature.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TimestampedSignatureData {
     #[prost(bytes = "vec", tag = "1")]
@@ -82,6 +88,7 @@ pub struct TimestampedSignatureData {
     pub timestamp: u64,
 }
 /// SignBytes defines the signed bytes used for signature verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SignBytes {
     #[prost(uint64, tag = "1")]
@@ -98,6 +105,7 @@ pub struct SignBytes {
     pub data: ::prost::alloc::vec::Vec<u8>,
 }
 /// HeaderData returns the SignBytes data for update verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HeaderData {
     /// header public key
@@ -108,6 +116,7 @@ pub struct HeaderData {
     pub new_diversifier: ::prost::alloc::string::String,
 }
 /// ClientStateData returns the SignBytes data for client state verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientStateData {
     #[prost(bytes = "vec", tag = "1")]
@@ -117,6 +126,7 @@ pub struct ClientStateData {
 }
 /// ConsensusStateData returns the SignBytes data for consensus state
 /// verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConsensusStateData {
     #[prost(bytes = "vec", tag = "1")]
@@ -126,6 +136,7 @@ pub struct ConsensusStateData {
 }
 /// ConnectionStateData returns the SignBytes data for connection state
 /// verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConnectionStateData {
     #[prost(bytes = "vec", tag = "1")]
@@ -136,6 +147,7 @@ pub struct ConnectionStateData {
 }
 /// ChannelStateData returns the SignBytes data for channel state
 /// verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ChannelStateData {
     #[prost(bytes = "vec", tag = "1")]
@@ -145,6 +157,7 @@ pub struct ChannelStateData {
 }
 /// PacketCommitmentData returns the SignBytes data for packet commitment
 /// verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PacketCommitmentData {
     #[prost(bytes = "vec", tag = "1")]
@@ -154,6 +167,7 @@ pub struct PacketCommitmentData {
 }
 /// PacketAcknowledgementData returns the SignBytes data for acknowledgement
 /// verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PacketAcknowledgementData {
     #[prost(bytes = "vec", tag = "1")]
@@ -163,6 +177,7 @@ pub struct PacketAcknowledgementData {
 }
 /// PacketReceiptAbsenceData returns the SignBytes data for
 /// packet receipt absence verification.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PacketReceiptAbsenceData {
     #[prost(bytes = "vec", tag = "1")]
@@ -170,6 +185,7 @@ pub struct PacketReceiptAbsenceData {
 }
 /// NextSequenceRecvData returns the SignBytes data for verification of the next
 /// sequence to be received.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NextSequenceRecvData {
     #[prost(bytes = "vec", tag = "1")]
@@ -220,6 +236,22 @@ impl DataType {
             DataType::PacketReceiptAbsence => "DATA_TYPE_PACKET_RECEIPT_ABSENCE",
             DataType::NextSequenceRecv => "DATA_TYPE_NEXT_SEQUENCE_RECV",
             DataType::Header => "DATA_TYPE_HEADER",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "DATA_TYPE_UNINITIALIZED_UNSPECIFIED" => Some(Self::UninitializedUnspecified),
+            "DATA_TYPE_CLIENT_STATE" => Some(Self::ClientState),
+            "DATA_TYPE_CONSENSUS_STATE" => Some(Self::ConsensusState),
+            "DATA_TYPE_CONNECTION_STATE" => Some(Self::ConnectionState),
+            "DATA_TYPE_CHANNEL_STATE" => Some(Self::ChannelState),
+            "DATA_TYPE_PACKET_COMMITMENT" => Some(Self::PacketCommitment),
+            "DATA_TYPE_PACKET_ACKNOWLEDGEMENT" => Some(Self::PacketAcknowledgement),
+            "DATA_TYPE_PACKET_RECEIPT_ABSENCE" => Some(Self::PacketReceiptAbsence),
+            "DATA_TYPE_NEXT_SEQUENCE_RECV" => Some(Self::NextSequenceRecv),
+            "DATA_TYPE_HEADER" => Some(Self::Header),
+            _ => None,
         }
     }
 }
