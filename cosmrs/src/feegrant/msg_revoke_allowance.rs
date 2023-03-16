@@ -1,7 +1,7 @@
 use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
 
 /// MsgRevokeAllowance removes any existing Allowance from Granter to Grantee.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct MsgRevokeAllowance {
     /// granter is the address of the user granting an allowance of their funds.
     pub granter: AccountId,
