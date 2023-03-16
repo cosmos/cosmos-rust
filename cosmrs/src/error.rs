@@ -6,7 +6,7 @@ use tendermint::Hash;
 use thiserror::Error;
 
 /// Kinds of errors.
-#[derive(Clone, Debug, Error, PartialEq)]
+#[derive(Clone, Debug, Eq, Error, PartialEq)]
 pub enum Error {
     /// Invalid account.
     #[error("invalid account ID: {id:?}")]
@@ -33,6 +33,16 @@ pub enum Error {
         name: String,
     },
 
+    /// Invalid value for the given field of an enum.
+    #[error("invalid proto enum value: {name:?}, value: {found_value:?}")]
+    InvalidEnumValue {
+        /// Name of the enum field
+        name: &'static str,
+
+        /// Actual value of the field found
+        found_value: i32,
+    },
+
     /// Protobuf is missing a field.
     #[error("missing proto field: {name:?}")]
     MissingField {
@@ -56,16 +66,4 @@ pub enum Error {
         /// Transaction hash that wasn't found.
         hash: Hash,
     },
-
-    /// Invalid value for the given field of an enum.
-    #[error("invalid proto enum value: {name:?}, value: {found_value:?}")]
-    InvalidEnumValue {
-        /// Name of the enum field
-        name: &'static str,
-
-        /// Actual value of the field found
-        found_value: i32,
-    },
 }
-
-impl Eq for Error {}
