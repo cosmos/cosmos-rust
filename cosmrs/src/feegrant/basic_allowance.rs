@@ -3,7 +3,7 @@ use std::time::SystemTime;
 
 /// BasicAllowance implements Allowance with a one-time grant of tokens
 /// that optionally expires. The grantee can use up to SpendLimit to cover fees.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct BasicAllowance {
     /// spend_limit specifies the maximum amount of tokens that can be spent
     /// by this allowance and will be updated as tokens are spent. If it is

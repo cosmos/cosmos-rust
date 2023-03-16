@@ -4,7 +4,7 @@ use std::time::{Duration, SystemTime};
 
 /// PeriodicAllowance extends Allowance to allow for both a maximum cap,
 /// as well as a limit per time period.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct PeriodicAllowance {
     /// basic specifies a struct of `BasicAllowance`
     pub basic: Option<BasicAllowance>,
