@@ -1,5 +1,6 @@
 /// GenericAuthorization gives the grantee unrestricted permissions to execute
 /// the provided method on behalf of the granter's account.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenericAuthorization {
     /// Msg, identified by it's type URL, to grant unrestricted permissions to execute
@@ -8,6 +9,7 @@ pub struct GenericAuthorization {
 }
 /// Grant gives permissions to execute
 /// the provide method with expiration time.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Grant {
     #[prost(message, optional, tag = "1")]
@@ -19,6 +21,7 @@ pub struct Grant {
 /// It is used in genesis.proto and query.proto
 ///
 /// Since: cosmos-sdk 0.45.2
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GrantAuthorization {
     #[prost(string, tag = "1")]
@@ -32,6 +35,7 @@ pub struct GrantAuthorization {
 }
 /// MsgGrant is a request type for Grant method. It declares authorization to the grantee
 /// on behalf of the granter with the provided expiration time.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgGrant {
     #[prost(string, tag = "1")]
@@ -42,6 +46,7 @@ pub struct MsgGrant {
     pub grant: ::core::option::Option<Grant>,
 }
 /// MsgExecResponse defines the Msg/MsgExecResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExecResponse {
     #[prost(bytes = "vec", repeated, tag = "1")]
@@ -50,6 +55,7 @@ pub struct MsgExecResponse {
 /// MsgExec attempts to execute the provided messages using
 /// authorizations granted to the grantee. Each message should have only
 /// one signer corresponding to the granter of the authorization.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExec {
     #[prost(string, tag = "1")]
@@ -61,10 +67,12 @@ pub struct MsgExec {
     pub msgs: ::prost::alloc::vec::Vec<::prost_types::Any>,
 }
 /// MsgGrantResponse defines the Msg/MsgGrant response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgGrantResponse {}
 /// MsgRevoke revokes any authorization with the provided sdk.Msg type on the
 /// granter's account with that has been granted to the grantee.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevoke {
     #[prost(string, tag = "1")]
@@ -75,6 +83,7 @@ pub struct MsgRevoke {
     pub msg_type_url: ::prost::alloc::string::String,
 }
 /// MsgRevokeResponse defines the Msg/MsgRevokeResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevokeResponse {}
 /// Generated client implementations.
@@ -206,7 +215,7 @@ pub mod msg_client {
 pub mod msg_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with MsgServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
         /// Grant grants the provided authorization to the grantee on the granter's
@@ -414,6 +423,7 @@ pub mod msg_server {
     }
 }
 /// QueryGrantsRequest is the request type for the Query/Grants RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsRequest {
     #[prost(string, tag = "1")]
@@ -428,6 +438,7 @@ pub struct QueryGrantsRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGrantsResponse is the response type for the Query/Authorizations RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGrantsResponse {
     /// authorizations is a list of grants granted for grantee by granter.
@@ -438,6 +449,7 @@ pub struct QueryGrantsResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGranterGrantsRequest is the request type for the Query/GranterGrants RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranterGrantsRequest {
     #[prost(string, tag = "1")]
@@ -447,6 +459,7 @@ pub struct QueryGranterGrantsRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGranterGrantsResponse is the response type for the Query/GranterGrants RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranterGrantsResponse {
     /// grants is a list of grants granted by the granter.
@@ -457,6 +470,7 @@ pub struct QueryGranterGrantsResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGranteeGrantsRequest is the request type for the Query/IssuedGrants RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranteeGrantsRequest {
     #[prost(string, tag = "1")]
@@ -466,6 +480,7 @@ pub struct QueryGranteeGrantsRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGranteeGrantsResponse is the response type for the Query/GranteeGrants RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGranteeGrantsResponse {
     /// grants is a list of grants granted to the grantee.
@@ -607,7 +622,7 @@ pub mod query_client {
 pub mod query_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
         /// Returns list of `Authorization`, granted to the grantee by the granter.
@@ -817,6 +832,7 @@ pub mod query_server {
     }
 }
 /// EventGrant is emitted on Msg/Grant
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventGrant {
     /// Msg type URL for which an autorization is granted
@@ -830,6 +846,7 @@ pub struct EventGrant {
     pub grantee: ::prost::alloc::string::String,
 }
 /// EventRevoke is emitted on Msg/Revoke
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventRevoke {
     /// Msg type URL for which an autorization is revoked
@@ -843,6 +860,7 @@ pub struct EventRevoke {
     pub grantee: ::prost::alloc::string::String,
 }
 /// GenesisState defines the authz module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]

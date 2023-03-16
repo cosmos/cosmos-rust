@@ -1,5 +1,6 @@
 /// ClientState defines a loopback (localhost) client. It requires (read-only)
 /// access to keys outside the client prefix.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientState {
     /// self chain ID

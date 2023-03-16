@@ -1,3 +1,4 @@
+// @generated
 /// Coin defines a token with a denomination and an amount.
 ///
 /// NOTE: The amount field is an Int which implements the custom method
@@ -32,3 +33,4 @@ pub struct DecProto {
     #[prost(string, tag = "1")]
     pub dec: ::prost::alloc::string::String,
 }
+// @@protoc_insertion_point(module)

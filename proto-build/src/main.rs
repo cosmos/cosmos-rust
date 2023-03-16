@@ -26,7 +26,7 @@ const COSMOS_SDK_REV: &str = "v0.45.4";
 const IBC_REV: &str = "v3.0.0";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
-const WASMD_REV: &str = "v0.23.0";
+const WASMD_REV: &str = "v0.29.2";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -257,17 +257,9 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
 }
 
 fn compile_wasmd_proto_and_services(out_dir: &Path) {
-    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-    let sdk_dir = PathBuf::from(WASMD_DIR);
+    let sdk_dir = Path::new(WASMD_DIR);
 
-    let proto_includes_paths = [
-        root.join("../proto"),
-        sdk_dir.join("proto"),
-        sdk_dir.join("third_party/proto"),
-    ];
-
-    // List available paths for dependencies
-    let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
+    let proto_path = sdk_dir.join("proto");
 
     let proto_paths = [format!("{}/proto/cosmwasm/wasm", sdk_dir.display())];
 
@@ -277,12 +269,18 @@ fn compile_wasmd_proto_and_services(out_dir: &Path) {
 
     // Compile all proto client for GRPC services
     info!("Compiling wasmd proto clients for GRPC services!");
-    tonic_build::configure()
-        .build_client(true)
-        .build_server(false)
-        .out_dir(out_dir)
-        .compile(&protos, &includes)
-        .unwrap();
+    run_cmd(
+        "buf",
+        vec![
+            "generate",
+            "--template",
+            "buf.wasmd.gen.yaml",
+            "--include-imports",
+            "-o",
+            &out_dir.display().to_string(),
+            &proto_path.display().to_string(),
+        ],
+    );
 
     info!("=> Done!");
 }

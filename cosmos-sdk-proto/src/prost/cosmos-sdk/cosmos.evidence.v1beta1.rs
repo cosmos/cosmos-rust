@@ -1,5 +1,6 @@
 /// MsgSubmitEvidence represents a message that supports submitting arbitrary
 /// Evidence of misbehavior such as equivocation or counterfactual signing.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitEvidence {
     #[prost(string, tag = "1")]
@@ -8,6 +9,7 @@ pub struct MsgSubmitEvidence {
     pub evidence: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgSubmitEvidenceResponse defines the Msg/SubmitEvidence response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitEvidenceResponse {
     /// hash defines the hash of the evidence.
@@ -109,7 +111,7 @@ pub mod msg_client {
 pub mod msg_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with MsgServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
         /// SubmitEvidence submits an arbitrary Evidence of misbehavior such as equivocation or
@@ -241,6 +243,7 @@ pub mod msg_server {
 }
 /// Equivocation implements the Evidence interface and defines evidence of double
 /// signing misbehavior.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Equivocation {
     #[prost(int64, tag = "1")]
@@ -253,6 +256,7 @@ pub struct Equivocation {
     pub consensus_address: ::prost::alloc::string::String,
 }
 /// QueryEvidenceRequest is the request type for the Query/Evidence RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryEvidenceRequest {
     /// evidence_hash defines the hash of the requested evidence.
@@ -260,6 +264,7 @@ pub struct QueryEvidenceRequest {
     pub evidence_hash: ::prost::alloc::vec::Vec<u8>,
 }
 /// QueryEvidenceResponse is the response type for the Query/Evidence RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryEvidenceResponse {
     /// evidence returns the requested evidence.
@@ -268,6 +273,7 @@ pub struct QueryEvidenceResponse {
 }
 /// QueryEvidenceRequest is the request type for the Query/AllEvidence RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllEvidenceRequest {
     /// pagination defines an optional pagination for the request.
@@ -276,6 +282,7 @@ pub struct QueryAllEvidenceRequest {
 }
 /// QueryAllEvidenceResponse is the response type for the Query/AllEvidence RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllEvidenceResponse {
     /// evidence returns all evidences.
@@ -398,7 +405,7 @@ pub mod query_client {
 pub mod query_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
         /// Evidence queries evidence based on evidence hash.
@@ -564,6 +571,7 @@ pub mod query_server {
     }
 }
 /// GenesisState defines the evidence module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// evidence defines all the evidence at genesis.

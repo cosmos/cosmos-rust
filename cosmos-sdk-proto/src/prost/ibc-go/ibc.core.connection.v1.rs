@@ -1,10 +1,8 @@
-// ICS03 - Connection Data Structures as defined in
-// <https://github.com/cosmos/ibc/blob/master/spec/core/ics-003-connection-semantics#data-structures>
-
 /// ConnectionEnd defines a stateful object on a chain connected to another
 /// separate one.
 /// NOTE: there must only be 2 defined ConnectionEnds to establish
 /// a connection between two chains.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConnectionEnd {
     /// client associated with this connection.
@@ -28,6 +26,7 @@ pub struct ConnectionEnd {
 }
 /// IdentifiedConnection defines a connection with additional connection
 /// identifier field.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IdentifiedConnection {
     /// connection identifier.
@@ -51,6 +50,7 @@ pub struct IdentifiedConnection {
     pub delay_period: u64,
 }
 /// Counterparty defines the counterparty chain associated with a connection end.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Counterparty {
     /// identifies the client on the counterparty chain associated with a given
@@ -66,6 +66,7 @@ pub struct Counterparty {
     pub prefix: ::core::option::Option<super::super::commitment::v1::MerklePrefix>,
 }
 /// ClientPaths define all the connection paths for a client state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientPaths {
     /// list of connection paths
@@ -73,6 +74,7 @@ pub struct ClientPaths {
     pub paths: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// ConnectionPaths define all the connection paths for a given client state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConnectionPaths {
     /// client state unique identifier
@@ -84,6 +86,7 @@ pub struct ConnectionPaths {
 }
 /// Version defines the versioning scheme used to negotiate the IBC verison in
 /// the connection handshake.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Version {
     /// unique version identifier
@@ -94,6 +97,7 @@ pub struct Version {
     pub features: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Params defines the set of Connection parameters.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     /// maximum expected time per block (in nanoseconds), used to enforce block delay. This parameter should reflect the
@@ -130,9 +134,20 @@ impl State {
             State::Open => "STATE_OPEN",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "STATE_UNINITIALIZED_UNSPECIFIED" => Some(Self::UninitializedUnspecified),
+            "STATE_INIT" => Some(Self::Init),
+            "STATE_TRYOPEN" => Some(Self::Tryopen),
+            "STATE_OPEN" => Some(Self::Open),
+            _ => None,
+        }
+    }
 }
 /// MsgConnectionOpenInit defines the msg sent by an account on Chain A to
 /// initialize a connection with Chain B.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenInit {
     #[prost(string, tag = "1")]
@@ -148,10 +163,12 @@ pub struct MsgConnectionOpenInit {
 }
 /// MsgConnectionOpenInitResponse defines the Msg/ConnectionOpenInit response
 /// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenInitResponse {}
 /// MsgConnectionOpenTry defines a msg sent by a Relayer to try to open a
 /// connection on Chain B.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenTry {
     #[prost(string, tag = "1")]
@@ -186,10 +203,12 @@ pub struct MsgConnectionOpenTry {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgConnectionOpenTryResponse defines the Msg/ConnectionOpenTry response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenTryResponse {}
 /// MsgConnectionOpenAck defines a msg sent by a Relayer to Chain A to
 /// acknowledge the change of connection state to TRYOPEN on Chain B.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenAck {
     #[prost(string, tag = "1")]
@@ -218,10 +237,12 @@ pub struct MsgConnectionOpenAck {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgConnectionOpenAckResponse defines the Msg/ConnectionOpenAck response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenAckResponse {}
 /// MsgConnectionOpenConfirm defines a msg sent by a Relayer to Chain B to
 /// acknowledge the change of connection state to OPEN on Chain A.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenConfirm {
     #[prost(string, tag = "1")]
@@ -236,6 +257,7 @@ pub struct MsgConnectionOpenConfirm {
 }
 /// MsgConnectionOpenConfirmResponse defines the Msg/ConnectionOpenConfirm
 /// response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenConfirmResponse {}
 /// Generated client implementations.
@@ -382,6 +404,7 @@ pub mod msg_client {
 }
 /// QueryConnectionRequest is the request type for the Query/Connection RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionRequest {
     /// connection unique identifier
@@ -391,6 +414,7 @@ pub struct QueryConnectionRequest {
 /// QueryConnectionResponse is the response type for the Query/Connection RPC
 /// method. Besides the connection end, it includes a proof and the height from
 /// which the proof was retrieved.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionResponse {
     /// connection associated with the request identifier
@@ -405,6 +429,7 @@ pub struct QueryConnectionResponse {
 }
 /// QueryConnectionsRequest is the request type for the Query/Connections RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionsRequest {
     #[prost(message, optional, tag = "1")]
@@ -414,6 +439,7 @@ pub struct QueryConnectionsRequest {
 }
 /// QueryConnectionsResponse is the response type for the Query/Connections RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionsResponse {
     /// list of stored connections of the chain.
@@ -430,6 +456,7 @@ pub struct QueryConnectionsResponse {
 }
 /// QueryClientConnectionsRequest is the request type for the
 /// Query/ClientConnections RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientConnectionsRequest {
     /// client identifier associated with a connection
@@ -438,6 +465,7 @@ pub struct QueryClientConnectionsRequest {
 }
 /// QueryClientConnectionsResponse is the response type for the
 /// Query/ClientConnections RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientConnectionsResponse {
     /// slice of all the connection paths associated with a client.
@@ -452,6 +480,7 @@ pub struct QueryClientConnectionsResponse {
 }
 /// QueryConnectionClientStateRequest is the request type for the
 /// Query/ConnectionClientState RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionClientStateRequest {
     /// connection identifier
@@ -460,6 +489,7 @@ pub struct QueryConnectionClientStateRequest {
 }
 /// QueryConnectionClientStateResponse is the response type for the
 /// Query/ConnectionClientState RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionClientStateResponse {
     /// client state associated with the channel
@@ -475,6 +505,7 @@ pub struct QueryConnectionClientStateResponse {
 }
 /// QueryConnectionConsensusStateRequest is the request type for the
 /// Query/ConnectionConsensusState RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionConsensusStateRequest {
     /// connection identifier
@@ -487,6 +518,7 @@ pub struct QueryConnectionConsensusStateRequest {
 }
 /// QueryConnectionConsensusStateResponse is the response type for the
 /// Query/ConnectionConsensusState RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConnectionConsensusStateResponse {
     /// consensus state associated with the channel
@@ -666,6 +698,7 @@ pub mod query_client {
     }
 }
 /// GenesisState defines the ibc connection submodule's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]

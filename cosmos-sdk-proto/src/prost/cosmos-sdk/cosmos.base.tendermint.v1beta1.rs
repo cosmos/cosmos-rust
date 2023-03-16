@@ -1,4 +1,5 @@
 /// GetValidatorSetByHeightRequest is the request type for the Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetValidatorSetByHeightRequest {
     #[prost(int64, tag = "1")]
@@ -8,6 +9,7 @@ pub struct GetValidatorSetByHeightRequest {
     pub pagination: ::core::option::Option<super::super::query::v1beta1::PageRequest>,
 }
 /// GetValidatorSetByHeightResponse is the response type for the Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetValidatorSetByHeightResponse {
     #[prost(int64, tag = "1")]
@@ -19,6 +21,7 @@ pub struct GetValidatorSetByHeightResponse {
     pub pagination: ::core::option::Option<super::super::query::v1beta1::PageResponse>,
 }
 /// GetLatestValidatorSetRequest is the request type for the Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestValidatorSetRequest {
     /// pagination defines an pagination for the request.
@@ -26,6 +29,7 @@ pub struct GetLatestValidatorSetRequest {
     pub pagination: ::core::option::Option<super::super::query::v1beta1::PageRequest>,
 }
 /// GetLatestValidatorSetResponse is the response type for the Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestValidatorSetResponse {
     #[prost(int64, tag = "1")]
@@ -37,6 +41,7 @@ pub struct GetLatestValidatorSetResponse {
     pub pagination: ::core::option::Option<super::super::query::v1beta1::PageResponse>,
 }
 /// Validator is the type for the validator-set.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Validator {
     #[prost(string, tag = "1")]
@@ -49,12 +54,14 @@ pub struct Validator {
     pub proposer_priority: i64,
 }
 /// GetBlockByHeightRequest is the request type for the Query/GetBlockByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockByHeightRequest {
     #[prost(int64, tag = "1")]
     pub height: i64,
 }
 /// GetBlockByHeightResponse is the response type for the Query/GetBlockByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockByHeightResponse {
     #[prost(message, optional, tag = "1")]
@@ -63,9 +70,11 @@ pub struct GetBlockByHeightResponse {
     pub block: ::core::option::Option<::tendermint_proto::types::Block>,
 }
 /// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestBlockRequest {}
 /// GetLatestBlockResponse is the response type for the Query/GetLatestBlock RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestBlockResponse {
     #[prost(message, optional, tag = "1")]
@@ -74,18 +83,22 @@ pub struct GetLatestBlockResponse {
     pub block: ::core::option::Option<::tendermint_proto::types::Block>,
 }
 /// GetSyncingRequest is the request type for the Query/GetSyncing RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSyncingRequest {}
 /// GetSyncingResponse is the response type for the Query/GetSyncing RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSyncingResponse {
     #[prost(bool, tag = "1")]
     pub syncing: bool,
 }
 /// GetNodeInfoRequest is the request type for the Query/GetNodeInfo RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetNodeInfoRequest {}
 /// GetNodeInfoResponse is the request type for the Query/GetNodeInfo RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetNodeInfoResponse {
     #[prost(message, optional, tag = "1")]
@@ -94,6 +107,7 @@ pub struct GetNodeInfoResponse {
     pub application_version: ::core::option::Option<VersionInfo>,
 }
 /// VersionInfo is the type for the GetNodeInfoResponse message.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VersionInfo {
     #[prost(string, tag = "1")]
@@ -115,6 +129,7 @@ pub struct VersionInfo {
     pub cosmos_sdk_version: ::prost::alloc::string::String,
 }
 /// Module is the type for VersionInfo
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Module {
     /// module path
@@ -311,7 +326,7 @@ pub mod service_client {
 pub mod service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with ServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with ServiceServer.
     #[async_trait]
     pub trait Service: Send + Sync + 'static {
         /// GetNodeInfo queries the current node info.

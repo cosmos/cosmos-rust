@@ -1,6 +1,7 @@
 /// BaseAccount defines a base account type. It contains all the necessary fields
 /// for basic account functionality. Any custom account type should extend this
 /// type for additional functionality (e.g. vesting).
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BaseAccount {
     #[prost(string, tag = "1")]
@@ -13,6 +14,7 @@ pub struct BaseAccount {
     pub sequence: u64,
 }
 /// ModuleAccount defines an account for modules that holds coins on a pool.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleAccount {
     #[prost(message, optional, tag = "1")]
@@ -23,6 +25,7 @@ pub struct ModuleAccount {
     pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Params defines the parameters for the auth module.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     #[prost(uint64, tag = "1")]

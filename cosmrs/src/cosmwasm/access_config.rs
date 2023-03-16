@@ -7,8 +7,8 @@ pub struct AccessConfig {
     /// Access type granted.
     pub permission: AccessType,
 
-    /// Account address with the associated permission.
-    pub address: AccountId,
+    /// Account addresses with the associated permission.
+    pub addresses: Vec<AccountId>,
 }
 
 impl TryFrom<proto::cosmwasm::wasm::v1::AccessConfig> for AccessConfig {
@@ -23,12 +23,24 @@ impl TryFrom<&proto::cosmwasm::wasm::v1::AccessConfig> for AccessConfig {
     type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmwasm::wasm::v1::AccessConfig) -> Result<AccessConfig> {
+        let permission = AccessType::from_i32(proto.permission).ok_or(Error::InvalidEnumValue {
+            name: "permission",
+            found_value: proto.permission,
+        })?;
+
+        let mut addresses = Vec::with_capacity(proto.addresses.len());
+
+        if !proto.address.is_empty() {
+            addresses.push(proto.address.parse()?);
+        }
+
+        for address in &proto.addresses {
+            addresses.push(address.parse()?);
+        }
+
         Ok(AccessConfig {
-            permission: AccessType::from_i32(proto.permission).ok_or(Error::InvalidEnumValue {
-                name: "permission",
-                found_value: proto.permission,
-            })?,
-            address: proto.address.parse()?,
+            permission,
+            addresses,
         })
     }
 }
@@ -43,7 +55,8 @@ impl From<&AccessConfig> for proto::cosmwasm::wasm::v1::AccessConfig {
     fn from(config: &AccessConfig) -> proto::cosmwasm::wasm::v1::AccessConfig {
         proto::cosmwasm::wasm::v1::AccessConfig {
             permission: config.permission as i32,
-            address: config.address.to_string(),
+            address: "".to_string(),
+            addresses: config.addresses.iter().map(ToString::to_string).collect(),
         }
     }
 }

@@ -1,5 +1,6 @@
 /// IdentifiedClientState defines a client state with an additional client
 /// identifier field.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IdentifiedClientState {
     /// client identifier
@@ -11,6 +12,7 @@ pub struct IdentifiedClientState {
 }
 /// ConsensusStateWithHeight defines a consensus state with an additional height
 /// field.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ConsensusStateWithHeight {
     /// consensus state height
@@ -22,6 +24,7 @@ pub struct ConsensusStateWithHeight {
 }
 /// ClientConsensusStates defines all the stored consensus states for a given
 /// client.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientConsensusStates {
     /// client identifier
@@ -35,6 +38,7 @@ pub struct ClientConsensusStates {
 /// client's latest consensus state is copied over to the subject client. The proposal
 /// handler may fail if the subject and the substitute do not match in client and
 /// chain parameters (with exception to latest height, frozen height, and chain-id).
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientUpdateProposal {
     /// the title of the update proposal
@@ -53,6 +57,7 @@ pub struct ClientUpdateProposal {
 }
 /// UpgradeProposal is a gov Content type for initiating an IBC breaking
 /// upgrade.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpgradeProposal {
     #[prost(string, tag = "1")]
@@ -80,6 +85,7 @@ pub struct UpgradeProposal {
 /// breaking changes In these cases, the RevisionNumber is incremented so that
 /// height continues to be monitonically increasing even as the RevisionHeight
 /// gets reset
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Height {
     /// the revision that the client is currently on
@@ -90,6 +96,7 @@ pub struct Height {
     pub revision_height: u64,
 }
 /// Params defines the set of IBC light client parameters.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     /// allowed_clients defines the list of allowed client state types.
@@ -97,6 +104,7 @@ pub struct Params {
     pub allowed_clients: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// MsgCreateClient defines a message to create an IBC client
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateClient {
     /// light client state
@@ -111,10 +119,12 @@ pub struct MsgCreateClient {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgCreateClientResponse defines the Msg/CreateClient response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateClientResponse {}
 /// MsgUpdateClient defines an sdk.Msg to update a IBC client state using
 /// the given header.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateClient {
     /// client unique identifier
@@ -128,10 +138,12 @@ pub struct MsgUpdateClient {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgUpdateClientResponse defines the Msg/UpdateClient response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateClientResponse {}
 /// MsgUpgradeClient defines an sdk.Msg to upgrade an IBC client to a new client
 /// state
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpgradeClient {
     /// client unique identifier
@@ -155,10 +167,12 @@ pub struct MsgUpgradeClient {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgUpgradeClientResponse defines the Msg/UpgradeClient response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpgradeClientResponse {}
 /// MsgSubmitMisbehaviour defines an sdk.Msg type that submits Evidence for
 /// light client misbehaviour.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitMisbehaviour {
     /// client unique identifier
@@ -173,6 +187,7 @@ pub struct MsgSubmitMisbehaviour {
 }
 /// MsgSubmitMisbehaviourResponse defines the Msg/SubmitMisbehaviour response
 /// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitMisbehaviourResponse {}
 /// Generated client implementations.
@@ -311,6 +326,7 @@ pub mod msg_client {
 }
 /// QueryClientStateRequest is the request type for the Query/ClientState RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientStateRequest {
     /// client state unique identifier
@@ -320,6 +336,7 @@ pub struct QueryClientStateRequest {
 /// QueryClientStateResponse is the response type for the Query/ClientState RPC
 /// method. Besides the client state, it includes a proof and the height from
 /// which the proof was retrieved.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientStateResponse {
     /// client state associated with the request identifier
@@ -334,6 +351,7 @@ pub struct QueryClientStateResponse {
 }
 /// QueryClientStatesRequest is the request type for the Query/ClientStates RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientStatesRequest {
     /// pagination request
@@ -344,6 +362,7 @@ pub struct QueryClientStatesRequest {
 }
 /// QueryClientStatesResponse is the response type for the Query/ClientStates RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientStatesResponse {
     /// list of stored ClientStates of the chain.
@@ -358,6 +377,7 @@ pub struct QueryClientStatesResponse {
 /// QueryConsensusStateRequest is the request type for the Query/ConsensusState
 /// RPC method. Besides the consensus state, it includes a proof and the height
 /// from which the proof was retrieved.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConsensusStateRequest {
     /// client identifier
@@ -376,6 +396,7 @@ pub struct QueryConsensusStateRequest {
 }
 /// QueryConsensusStateResponse is the response type for the Query/ConsensusState
 /// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConsensusStateResponse {
     /// consensus state associated with the client identifier at the given height
@@ -390,6 +411,7 @@ pub struct QueryConsensusStateResponse {
 }
 /// QueryConsensusStatesRequest is the request type for the Query/ConsensusStates
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConsensusStatesRequest {
     /// client identifier
@@ -403,6 +425,7 @@ pub struct QueryConsensusStatesRequest {
 }
 /// QueryConsensusStatesResponse is the response type for the
 /// Query/ConsensusStates RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConsensusStatesResponse {
     /// consensus states associated with the identifier
@@ -416,6 +439,7 @@ pub struct QueryConsensusStatesResponse {
 }
 /// QueryClientStatusRequest is the request type for the Query/ClientStatus RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientStatusRequest {
     /// client unique identifier
@@ -424,6 +448,7 @@ pub struct QueryClientStatusRequest {
 }
 /// QueryClientStatusResponse is the response type for the Query/ClientStatus RPC
 /// method. It returns the current status of the IBC client.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientStatusResponse {
     #[prost(string, tag = "1")]
@@ -431,10 +456,12 @@ pub struct QueryClientStatusResponse {
 }
 /// QueryClientParamsRequest is the request type for the Query/ClientParams RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientParamsRequest {}
 /// QueryClientParamsResponse is the response type for the Query/ClientParams RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClientParamsResponse {
     /// params defines the parameters of the module.
@@ -443,10 +470,12 @@ pub struct QueryClientParamsResponse {
 }
 /// QueryUpgradedClientStateRequest is the request type for the
 /// Query/UpgradedClientState RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUpgradedClientStateRequest {}
 /// QueryUpgradedClientStateResponse is the response type for the
 /// Query/UpgradedClientState RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUpgradedClientStateResponse {
     /// client state associated with the request identifier
@@ -455,10 +484,12 @@ pub struct QueryUpgradedClientStateResponse {
 }
 /// QueryUpgradedConsensusStateRequest is the request type for the
 /// Query/UpgradedConsensusState RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUpgradedConsensusStateRequest {}
 /// QueryUpgradedConsensusStateResponse is the response type for the
 /// Query/UpgradedConsensusState RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUpgradedConsensusStateResponse {
     /// Consensus state associated with the request identifier
@@ -675,6 +706,7 @@ pub mod query_client {
     }
 }
 /// GenesisState defines the ibc client submodule's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// client states with their corresponding identifiers
@@ -697,6 +729,7 @@ pub struct GenesisState {
 }
 /// GenesisMetadata defines the genesis type for metadata that clients may return
 /// with ExportMetadata
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisMetadata {
     /// store key of metadata without clientID-prefix
@@ -708,6 +741,7 @@ pub struct GenesisMetadata {
 }
 /// IdentifiedGenesisMetadata has the client metadata with the corresponding
 /// client id.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IdentifiedGenesisMetadata {
     #[prost(string, tag = "1")]

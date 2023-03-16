@@ -1,4 +1,5 @@
 /// Snapshot contains Tendermint state sync snapshot info.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Snapshot {
     #[prost(uint64, tag = "1")]
@@ -13,6 +14,7 @@ pub struct Snapshot {
     pub metadata: ::core::option::Option<Metadata>,
 }
 /// Metadata contains SDK-specific snapshot metadata.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Metadata {
     /// SHA-256 chunk hashes
@@ -20,6 +22,7 @@ pub struct Metadata {
     pub chunk_hashes: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// SnapshotItem is an item contained in a rootmulti.Store snapshot.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotItem {
     /// item is the specific type of snapshot item.
@@ -29,6 +32,7 @@ pub struct SnapshotItem {
 /// Nested message and enum types in `SnapshotItem`.
 pub mod snapshot_item {
     /// item is the specific type of snapshot item.
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Item {
         #[prost(message, tag = "1")]
@@ -42,12 +46,14 @@ pub mod snapshot_item {
     }
 }
 /// SnapshotStoreItem contains metadata about a snapshotted store.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotStoreItem {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
 }
 /// SnapshotIAVLItem is an exported IAVL node.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotIavlItem {
     #[prost(bytes = "vec", tag = "1")]
@@ -62,6 +68,7 @@ pub struct SnapshotIavlItem {
     pub height: i32,
 }
 /// SnapshotExtensionMeta contains metadata about an external snapshotter.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotExtensionMeta {
     #[prost(string, tag = "1")]
@@ -70,6 +77,7 @@ pub struct SnapshotExtensionMeta {
     pub format: u32,
 }
 /// SnapshotExtensionPayload contains payloads of an external snapshotter.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotExtensionPayload {
     #[prost(bytes = "vec", tag = "1")]

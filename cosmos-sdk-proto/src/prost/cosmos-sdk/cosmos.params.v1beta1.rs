@@ -1,4 +1,5 @@
 /// ParameterChangeProposal defines a proposal to change one or more parameters.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ParameterChangeProposal {
     #[prost(string, tag = "1")]
@@ -10,6 +11,7 @@ pub struct ParameterChangeProposal {
 }
 /// ParamChange defines an individual parameter change, for use in
 /// ParameterChangeProposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ParamChange {
     #[prost(string, tag = "1")]
@@ -20,6 +22,7 @@ pub struct ParamChange {
     pub value: ::prost::alloc::string::String,
 }
 /// QueryParamsRequest is request type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {
     /// subspace defines the module to query the parameter for.
@@ -30,6 +33,7 @@ pub struct QueryParamsRequest {
     pub key: ::prost::alloc::string::String,
 }
 /// QueryParamsResponse is response type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsResponse {
     /// param defines the queried parameter.
@@ -133,7 +137,7 @@ pub mod query_client {
 pub mod query_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
         /// Params queries a specific parameter of a module, given its subspace and
