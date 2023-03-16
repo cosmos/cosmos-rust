@@ -11,12 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: 1.63.0 # MSRV
           components: rustfmt
-          override: true
-          profile: minimal
       - name: Install protoc
         run: sudo apt-get install protobuf-compiler
       - name: Run proto-build
