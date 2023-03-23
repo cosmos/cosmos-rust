@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.12.0 (2023-03-23)
+### Added
+- Expose `cosmwasm::msg_migrate_contract` structs ([#315])
+
+### Changed
+- Bump tendermint-rs crates to 0.30 ([#354])
+- MSRV 1.63 ([#356])
+- Support for `wasmd` >=0.29 by generating files via `buf` ([#358])
+- Bump `cosmos-sdk-proto` to v0.17 ([#367])
+
+[#315]: https://github.com/cosmos/cosmos-rust/pull/315
+[#354]: https://github.com/cosmos/cosmos-rust/pull/354
+[#356]: https://github.com/cosmos/cosmos-rust/pull/356
+[#358]: https://github.com/cosmos/cosmos-rust/pull/358
+[#367]: https://github.com/cosmos/cosmos-rust/pull/367
+
 ## 0.11.0 (2022-11-30)
 ### Changed
 - Bump tendermint-rs crates to 0.27 ([#306])
