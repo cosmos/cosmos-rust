@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.17.0 (2023-03-21)
+### Added
+- Support for `wasmd` >=0.29 by generating files via buf ([#358])
+
+### Changed
+- Bump tendermint-rs crates to 0.30 ([#354])
+- MSRV 1.63 ([#356])
+
+[#354]: https://github.com/cosmos/cosmos-rust/pull/354
+[#356]: https://github.com/cosmos/cosmos-rust/pull/356
+[#358]: https://github.com/cosmos/cosmos-rust/pull/358
+
 ## 0.16.0 (2022-11-30)
 ### Changed
 - Bump tendermint-rs crates to 0.27 ([#306])
