@@ -21,7 +21,7 @@ prost-types = "0.11"
 tendermint-proto = "0.30"
 
 # Optional dependencies
-tonic = { version = "0.8", optional = true, default-features = false, features = ["codegen", "prost"] }
+tonic = { version = "0.9", optional = true, default-features = false, features = ["codegen", "prost"] }
 
 [features]
 default = ["grpc-transport"]
