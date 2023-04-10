@@ -24,7 +24,7 @@ tendermint = { version = "0.30", features = ["secp256k1"] }
 thiserror = "1"
 
 # optional dependencies
-bip32 = { version = "0.4", optional = true }
+bip32 = { version = "0.5", optional = true }
 tendermint-rpc = { version = "0.30", optional = true, features = ["http-client"] }
 tokio = { version = "1", optional = true }
 
