@@ -9,6 +9,83 @@ use crate::{cosmos, ibc, traits::TypeUrl};
 #[cfg(feature = "cosmwasm")]
 use crate::cosmwasm;
 
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::MigrateContractProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MigrateContractProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::UpdateInstantiateConfigProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::SudoContractProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.SudoContractProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::ExecuteContractProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.ExecuteContractProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::UpdateAdminProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UpdateAdminProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::ClearAdminProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.ClearAdminProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::PinCodesProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.PinCodesProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::UnpinCodesProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UnpinCodesProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::InstantiateContractProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.InstantiateContractProposal";
+}
+
+#[cfg(feature = "cosmwasm")]
+impl TypeUrl for cosmwasm::wasm::v1::StoreCodeProposal {
+    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.StoreCodeProposal";
+}
+
+impl TypeUrl for ibc::core::client::v1::ClientUpdateProposal {
+    const TYPE_URL: &'static str = "/ibc.core.client.v1.ClientUpdateProposal";
+}
+
+impl TypeUrl for cosmos::upgrade::v1beta1::SoftwareUpgradeProposal {
+    const TYPE_URL: &'static str = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal";
+}
+
+impl TypeUrl for cosmos::params::v1beta1::ParameterChangeProposal {
+    const TYPE_URL: &'static str = "/cosmos.params.v1beta1.ParameterChangeProposal";
+}
+
+impl TypeUrl for cosmos::distribution::v1beta1::CommunityPoolSpendProposal {
+    const TYPE_URL: &'static str = "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal";
+}
+impl TypeUrl for cosmos::gov::v1beta1::TextProposal {
+    const TYPE_URL: &'static str = "/cosmos.gov.v1beta1.TextProposal";
+}
+
+impl TypeUrl for cosmos::crypto::secp256k1::PubKey {
+    const TYPE_URL: &'static str = "/cosmos.crypto.secp256k1.PubKey";
+}
+
+impl TypeUrl for cosmos::vesting::v1beta1::PeriodicVestingAccount {
+    const TYPE_URL: &'static str = "/cosmos.vesting.v1beta1.PeriodicVestingAccount";
+}
+
 impl TypeUrl for cosmos::bank::v1beta1::MsgSend {
     const TYPE_URL: &'static str = "/cosmos.bank.v1beta1.MsgSend";
 }
