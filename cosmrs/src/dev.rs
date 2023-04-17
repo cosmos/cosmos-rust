@@ -35,13 +35,13 @@ where
     let result = panic::catch_unwind(f);
 
     if result.is_err() {
-        let logs = exec_docker_command("logs", &[&container_id]);
+        let logs = exec_docker_command("logs", [&container_id]);
 
         println!("\n---- docker stdout ----");
         println!("{}", logs);
     }
 
-    exec_docker_command("kill", &[&container_id]);
+    exec_docker_command("kill", [&container_id]);
 
     match result {
         Ok(res) => res,
