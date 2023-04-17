@@ -131,7 +131,13 @@ fn run_cmd(cmd: impl AsRef<OsStr>, args: impl IntoIterator<Item = impl AsRef<OsS
         .args(args)
         .stdout(stdout)
         .status()
-        .expect("exit status missing");
+        .unwrap_or_else(|e| match e.kind() {
+            io::ErrorKind::NotFound => panic!(
+                "error running '{:?}': command not found. Is it installed?",
+                cmd.as_ref()
+            ),
+            _ => panic!("error running '{:?}': {:?}", cmd.as_ref(), e),
+        });
 
     if !exit_status.success() {
         panic!(
@@ -140,6 +146,21 @@ fn run_cmd(cmd: impl AsRef<OsStr>, args: impl IntoIterator<Item = impl AsRef<OsS
             exit_status.code()
         );
     }
+}
+
+fn run_buf(out_dir: impl AsRef<Path>, proto_path: impl AsRef<Path>) {
+    run_cmd(
+        "buf",
+        [
+            "generate",
+            "--template",
+            "buf.wasmd.gen.yaml",
+            "--include-imports",
+            "-o",
+            &out_dir.as_ref().display().to_string(),
+            &proto_path.as_ref().display().to_string(),
+        ],
+    );
 }
 
 fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
@@ -258,9 +279,7 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
 
 fn compile_wasmd_proto_and_services(out_dir: &Path) {
     let sdk_dir = Path::new(WASMD_DIR);
-
     let proto_path = sdk_dir.join("proto");
-
     let proto_paths = [format!("{}/proto/cosmwasm/wasm", sdk_dir.display())];
 
     // List available proto files
@@ -269,19 +288,7 @@ fn compile_wasmd_proto_and_services(out_dir: &Path) {
 
     // Compile all proto client for GRPC services
     info!("Compiling wasmd proto clients for GRPC services!");
-    run_cmd(
-        "buf",
-        vec![
-            "generate",
-            "--template",
-            "buf.wasmd.gen.yaml",
-            "--include-imports",
-            "-o",
-            &out_dir.display().to_string(),
-            &proto_path.display().to_string(),
-        ],
-    );
-
+    run_buf(out_dir, proto_path);
     info!("=> Done!");
 }
 
