@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.13.0 (2023-04-17)
+### Changed
+- Bump signature + tendermint-rs dependencies; MSRV 1.65 ([#385])
+  - `bip32` v0.5
+  - `ecdsa` v0.16
+  - `k256` v0.13
+  - `tendermint` v0.31
+  - `tendermint-proto` v0.31
+  - `tendermint-rpc` v0.31
+- Bump `cosmos-sdk-proto` to v0.18 ([#390])
+
+[#385]: https://github.com/cosmos/cosmos-rust/pull/385
+[#390]: https://github.com/cosmos/cosmos-rust/pull/390
+
 ## 0.12.0 (2023-03-23)
 ### Added
 - Expose `cosmwasm::msg_migrate_contract` structs ([#315])
