@@ -4,6 +4,7 @@ use crate::{
     crypto::{secp256k1::Signature, PublicKey},
     ErrorReport, Result,
 };
+use ecdsa::signature::{Keypair, Signer};
 use k256::ecdsa::VerifyingKey;
 use rand_core::OsRng;
 
@@ -27,14 +28,14 @@ pub struct SigningKey {
 impl SigningKey {
     /// Initialize from a provided signer object.
     ///
-    /// Use [`SigningKey::from_bytes`] to initialize from a raw private key.
+    /// Use [`SigningKey::from_slice`] to initialize from a raw private key.
     pub fn new(signer: Box<dyn EcdsaSigner>) -> Self {
         Self { inner: signer }
     }
 
     /// Initialize from a raw scalar value (big endian).
-    pub fn from_bytes(bytes: &[u8]) -> Result<Self> {
-        let signing_key = k256::ecdsa::SigningKey::from_bytes(bytes)?;
+    pub fn from_slice(bytes: &[u8]) -> Result<Self> {
+        let signing_key = k256::ecdsa::SigningKey::from_slice(bytes)?;
         Ok(Self::new(Box::new(signing_key)))
     }
 
@@ -77,7 +78,7 @@ impl TryFrom<&[u8]> for SigningKey {
     type Error = ErrorReport;
 
     fn try_from(bytes: &[u8]) -> Result<Self> {
-        Self::from_bytes(bytes)
+        Self::from_slice(bytes)
     }
 }
 
@@ -106,18 +107,6 @@ impl From<&bip32::XPrv> for SigningKey {
 ///
 /// Note that this trait is bounded on [`ecdsa::signature::Signer`], which is
 /// what is actually used to produce a signature for a given message.
-pub trait EcdsaSigner: ecdsa::signature::Signer<Signature> {
-    /// Get the ECDSA/secp256k1 [`VerifyingKey`] (i.e. public key) which
-    /// which corresponds to this signer's private key.
-    fn verifying_key(&self) -> VerifyingKey;
-}
+pub trait EcdsaSigner: Signer<Signature> + Keypair<VerifyingKey = VerifyingKey> {}
 
-impl<T> EcdsaSigner for T
-where
-    T: ecdsa::signature::Signer<Signature>,
-    k256::ecdsa::VerifyingKey: for<'a> From<&'a T>,
-{
-    fn verifying_key(&self) -> VerifyingKey {
-        self.into()
-    }
-}
+impl<T> EcdsaSigner for T where T: Signer<Signature> + Keypair<VerifyingKey = VerifyingKey> {}

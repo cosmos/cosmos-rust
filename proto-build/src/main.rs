@@ -166,19 +166,19 @@ fn run_rustfmt(dir: &Path) {
 
 fn update_submodules() {
     info!("Updating cosmos/cosmos-sdk submodule...");
-    run_git(&["submodule", "update", "--init"]);
-    run_git(&["-C", COSMOS_SDK_DIR, "fetch"]);
-    run_git(&["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_SDK_REV]);
+    run_git(["submodule", "update", "--init"]);
+    run_git(["-C", COSMOS_SDK_DIR, "fetch"]);
+    run_git(["-C", COSMOS_SDK_DIR, "reset", "--hard", COSMOS_SDK_REV]);
 
     info!("Updating cosmos/ibc-go submodule...");
-    run_git(&["submodule", "update", "--init"]);
-    run_git(&["-C", IBC_DIR, "fetch"]);
-    run_git(&["-C", IBC_DIR, "reset", "--hard", IBC_REV]);
+    run_git(["submodule", "update", "--init"]);
+    run_git(["-C", IBC_DIR, "fetch"]);
+    run_git(["-C", IBC_DIR, "reset", "--hard", IBC_REV]);
 
     info!("Updating wasmd submodule...");
-    run_git(&["submodule", "update", "--init"]);
-    run_git(&["-C", WASMD_DIR, "fetch"]);
-    run_git(&["-C", WASMD_DIR, "reset", "--hard", WASMD_REV]);
+    run_git(["submodule", "update", "--init"]);
+    run_git(["-C", WASMD_DIR, "fetch"]);
+    run_git(["-C", WASMD_DIR, "reset", "--hard", WASMD_REV]);
 }
 
 fn output_sdk_version(out_dir: &Path) {
@@ -361,8 +361,8 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
     info!("Copying generated files into '{}'...", to_dir.display());
 
     // Remove old compiled files
-    remove_dir_all(&to_dir).unwrap_or_default();
-    create_dir_all(&to_dir).unwrap();
+    remove_dir_all(to_dir).unwrap_or_default();
+    create_dir_all(to_dir).unwrap();
 
     let mut filenames = Vec::new();
 

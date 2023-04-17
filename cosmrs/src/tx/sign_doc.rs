@@ -65,7 +65,7 @@ impl SignDoc {
         Ok(proto::cosmos::tx::v1beta1::TxRaw {
             body_bytes: self.body_bytes,
             auth_info_bytes: self.auth_info_bytes,
-            signatures: vec![signature.as_ref().to_vec()],
+            signatures: vec![signature.to_vec()],
         }
         .into())
     }
