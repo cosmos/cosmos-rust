@@ -160,7 +160,7 @@ pub mod service_client {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
         {
             let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
@@ -215,11 +215,28 @@ pub mod service_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
         /// GetNodeInfo queries the current node info.
         pub async fn get_node_info(
             &mut self,
             request: impl tonic::IntoRequest<super::GetNodeInfoRequest>,
-        ) -> Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -230,13 +247,19 @@ pub mod service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetNodeInfo",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.tendermint.v1beta1.Service",
+                "GetNodeInfo",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetSyncing queries node syncing.
         pub async fn get_syncing(
             &mut self,
             request: impl tonic::IntoRequest<super::GetSyncingRequest>,
-        ) -> Result<tonic::Response<super::GetSyncingResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetSyncingResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -247,13 +270,19 @@ pub mod service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetSyncing",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.tendermint.v1beta1.Service",
+                "GetSyncing",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetLatestBlock returns the latest block.
         pub async fn get_latest_block(
             &mut self,
             request: impl tonic::IntoRequest<super::GetLatestBlockRequest>,
-        ) -> Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -264,13 +293,19 @@ pub mod service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetLatestBlock",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.tendermint.v1beta1.Service",
+                "GetLatestBlock",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetBlockByHeight queries block for given height.
         pub async fn get_block_by_height(
             &mut self,
             request: impl tonic::IntoRequest<super::GetBlockByHeightRequest>,
-        ) -> Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -281,13 +316,19 @@ pub mod service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetBlockByHeight",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.tendermint.v1beta1.Service",
+                "GetBlockByHeight",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetLatestValidatorSet queries latest validator-set.
         pub async fn get_latest_validator_set(
             &mut self,
             request: impl tonic::IntoRequest<super::GetLatestValidatorSetRequest>,
-        ) -> Result<tonic::Response<super::GetLatestValidatorSetResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetLatestValidatorSetResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -298,14 +339,21 @@ pub mod service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetLatestValidatorSet",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.tendermint.v1beta1.Service",
+                "GetLatestValidatorSet",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetValidatorSetByHeight queries validator-set at a given height.
         pub async fn get_validator_set_by_height(
             &mut self,
             request: impl tonic::IntoRequest<super::GetValidatorSetByHeightRequest>,
-        ) -> Result<tonic::Response<super::GetValidatorSetByHeightResponse>, tonic::Status>
-        {
+        ) -> std::result::Result<
+            tonic::Response<super::GetValidatorSetByHeightResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -316,7 +364,12 @@ pub mod service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetValidatorSetByHeight",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.tendermint.v1beta1.Service",
+                "GetValidatorSetByHeight",
+            ));
+            self.inner.unary(req, path, codec).await
         }
     }
 }
@@ -333,32 +386,35 @@ pub mod service_server {
         async fn get_node_info(
             &self,
             request: tonic::Request<super::GetNodeInfoRequest>,
-        ) -> Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status>;
         /// GetSyncing queries node syncing.
         async fn get_syncing(
             &self,
             request: tonic::Request<super::GetSyncingRequest>,
-        ) -> Result<tonic::Response<super::GetSyncingResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetSyncingResponse>, tonic::Status>;
         /// GetLatestBlock returns the latest block.
         async fn get_latest_block(
             &self,
             request: tonic::Request<super::GetLatestBlockRequest>,
-        ) -> Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status>;
         /// GetBlockByHeight queries block for given height.
         async fn get_block_by_height(
             &self,
             request: tonic::Request<super::GetBlockByHeightRequest>,
-        ) -> Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status>;
         /// GetLatestValidatorSet queries latest validator-set.
         async fn get_latest_validator_set(
             &self,
             request: tonic::Request<super::GetLatestValidatorSetRequest>,
-        ) -> Result<tonic::Response<super::GetLatestValidatorSetResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetLatestValidatorSetResponse>, tonic::Status>;
         /// GetValidatorSetByHeight queries validator-set at a given height.
         async fn get_validator_set_by_height(
             &self,
             request: tonic::Request<super::GetValidatorSetByHeightRequest>,
-        ) -> Result<tonic::Response<super::GetValidatorSetByHeightResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::GetValidatorSetByHeightResponse>,
+            tonic::Status,
+        >;
     }
     /// Service defines the gRPC querier service for tendermint queries.
     #[derive(Debug)]
@@ -366,6 +422,8 @@ pub mod service_server {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
+        max_decoding_message_size: Option<usize>,
+        max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Service> ServiceServer<T> {
@@ -378,6 +436,8 @@ pub mod service_server {
                 inner,
                 accept_compression_encodings: Default::default(),
                 send_compression_encodings: Default::default(),
+                max_decoding_message_size: None,
+                max_encoding_message_size: None,
             }
         }
         pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
@@ -398,6 +458,22 @@ pub mod service_server {
             self.send_compression_encodings.enable(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.max_decoding_message_size = Some(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.max_encoding_message_size = Some(limit);
+            self
+        }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for ServiceServer<T>
     where
@@ -408,7 +484,10 @@ pub mod service_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<std::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -424,22 +503,29 @@ pub mod service_server {
                             &mut self,
                             request: tonic::Request<super::GetNodeInfoRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_node_info(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetNodeInfoSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -455,22 +541,29 @@ pub mod service_server {
                             &mut self,
                             request: tonic::Request<super::GetSyncingRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_syncing(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetSyncingSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -488,22 +581,29 @@ pub mod service_server {
                             &mut self,
                             request: tonic::Request<super::GetLatestBlockRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_latest_block(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetLatestBlockSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -521,22 +621,29 @@ pub mod service_server {
                             &mut self,
                             request: tonic::Request<super::GetBlockByHeightRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_block_by_height(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetBlockByHeightSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -555,7 +662,7 @@ pub mod service_server {
                             &mut self,
                             request: tonic::Request<super::GetLatestValidatorSetRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut =
                                 async move { (*inner).get_latest_validator_set(request).await };
                             Box::pin(fut)
@@ -563,15 +670,22 @@ pub mod service_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetLatestValidatorSetSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -590,7 +704,7 @@ pub mod service_server {
                             &mut self,
                             request: tonic::Request<super::GetValidatorSetByHeightRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut =
                                 async move { (*inner).get_validator_set_by_height(request).await };
                             Box::pin(fut)
@@ -598,15 +712,22 @@ pub mod service_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetValidatorSetByHeightSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -630,12 +751,14 @@ pub mod service_server {
                 inner,
                 accept_compression_encodings: self.accept_compression_encodings,
                 send_compression_encodings: self.send_compression_encodings,
+                max_decoding_message_size: self.max_decoding_message_size,
+                max_encoding_message_size: self.max_encoding_message_size,
             }
         }
     }
     impl<T: Service> Clone for _Inner<T> {
         fn clone(&self) -> Self {
-            Self(self.0.clone())
+            Self(Arc::clone(&self.0))
         }
     }
     impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
