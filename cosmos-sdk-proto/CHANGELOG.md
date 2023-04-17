@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.18.0 (2023-04-17)
+### Added
+- TypeUrl for missing proposal types as well as others ([#360])
+- TypeUrl for some of structs from /cosmos.tx.v1beta1 namespace ([#384])
+
+### Changed
+- Bump `tendermint-proto` to v0.31 ([#385])
+- Bump `tonic` to v0.9 ([#386])
+
+[#360]: https://github.com/cosmos/cosmos-rust/pull/360
+[#384]: https://github.com/cosmos/cosmos-rust/pull/384
+[#385]: https://github.com/cosmos/cosmos-rust/pull/385
+[#386]: https://github.com/cosmos/cosmos-rust/pull/386
+
 ## 0.17.0 (2023-03-21)
 ### Added
 - Support for `wasmd` >=0.29 by generating files via buf ([#358])
