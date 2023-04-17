@@ -158,6 +158,30 @@ impl TypeUrl for cosmos::auth::v1beta1::ModuleAccount {
     const TYPE_URL: &'static str = "/cosmos.auth.v1beta1.ModuleAccount";
 }
 
+impl TypeUrl for cosmos::tx::v1beta1::Tx {
+    const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.Tx";
+}
+
+impl TypeUrl for cosmos::tx::v1beta1::AuthInfo {
+    const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.AuthInfo";
+}
+
+impl TypeUrl for cosmos::tx::v1beta1::Fee {
+    const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.Fee";
+}
+
+impl TypeUrl for cosmos::tx::v1beta1::TxBody {
+    const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.TxBody";
+}
+
+impl TypeUrl for cosmos::tx::v1beta1::SignerInfo {
+    const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.SingerInfo";
+}
+
+impl TypeUrl for cosmos::tx::v1beta1::ModeInfo {
+    const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.ModeInfo";
+}
+
 #[cfg(feature = "cosmwasm")]
 impl TypeUrl for cosmwasm::wasm::v1::MsgStoreCode {
     const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCode";
