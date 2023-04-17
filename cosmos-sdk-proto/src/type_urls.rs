@@ -6,59 +6,6 @@
 
 use crate::{cosmos, ibc, traits::TypeUrl};
 
-#[cfg(feature = "cosmwasm")]
-use crate::cosmwasm;
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MigrateContractProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MigrateContractProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::UpdateInstantiateConfigProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::SudoContractProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.SudoContractProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::ExecuteContractProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.ExecuteContractProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::UpdateAdminProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UpdateAdminProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::ClearAdminProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.ClearAdminProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::PinCodesProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.PinCodesProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::UnpinCodesProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UnpinCodesProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::InstantiateContractProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.InstantiateContractProposal";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::StoreCodeProposal {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.StoreCodeProposal";
-}
-
 impl TypeUrl for ibc::core::client::v1::ClientUpdateProposal {
     const TYPE_URL: &'static str = "/ibc.core.client.v1.ClientUpdateProposal";
 }
@@ -182,66 +129,99 @@ impl TypeUrl for cosmos::tx::v1beta1::ModeInfo {
     const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.ModeInfo";
 }
 
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgStoreCode {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCode";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgInstantiateContract {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgInstantiateContract";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgExecuteContract {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgExecuteContract";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgMigrateContract {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgMigrateContract";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgUpdateAdmin {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgUpdateAdmin";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgClearAdmin {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdmin";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgStoreCodeResponse {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCodeResponse";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgInstantiateContractResponse {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgInstantiateContractResponse";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgExecuteContractResponse {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgExecuteContractResponse";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgMigrateContractResponse {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgMigrateContractResponse";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgUpdateAdminResponse {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgUpdateAdminResponse";
-}
-
-#[cfg(feature = "cosmwasm")]
-impl TypeUrl for cosmwasm::wasm::v1::MsgClearAdminResponse {
-    const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdminResponse";
-}
-
 impl TypeUrl for ibc::applications::transfer::v1::MsgTransfer {
     const TYPE_URL: &'static str = "/ibc.applications.transfer.v1.MsgTransfer";
+}
+
+#[cfg(feature = "cosmwasm")]
+mod wasm {
+    use crate::{cosmwasm, traits::TypeUrl};
+
+    impl TypeUrl for cosmwasm::wasm::v1::MigrateContractProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MigrateContractProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::UpdateInstantiateConfigProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::SudoContractProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.SudoContractProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::ExecuteContractProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.ExecuteContractProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::UpdateAdminProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UpdateAdminProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::ClearAdminProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.ClearAdminProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::PinCodesProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.PinCodesProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::UnpinCodesProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.UnpinCodesProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::InstantiateContractProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.InstantiateContractProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::StoreCodeProposal {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.StoreCodeProposal";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgStoreCode {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCode";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgInstantiateContract {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgInstantiateContract";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgExecuteContract {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgExecuteContract";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgMigrateContract {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgMigrateContract";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgUpdateAdmin {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgUpdateAdmin";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgClearAdmin {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdmin";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgStoreCodeResponse {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgStoreCodeResponse";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgInstantiateContractResponse {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgInstantiateContractResponse";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgExecuteContractResponse {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgExecuteContractResponse";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgMigrateContractResponse {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgMigrateContractResponse";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgUpdateAdminResponse {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgUpdateAdminResponse";
+    }
+
+    impl TypeUrl for cosmwasm::wasm::v1::MsgClearAdminResponse {
+        const TYPE_URL: &'static str = "/cosmwasm.wasm.v1.MsgClearAdminResponse";
+    }
 }
