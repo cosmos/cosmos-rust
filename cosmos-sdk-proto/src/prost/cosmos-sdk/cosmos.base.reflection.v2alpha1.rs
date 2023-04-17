@@ -264,7 +264,7 @@ pub mod reflection_service_client {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
         {
             let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
@@ -319,13 +319,30 @@ pub mod reflection_service_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
         /// GetAuthnDescriptor returns information on how to authenticate transactions in the application
         /// NOTE: this RPC is still experimental and might be subject to breaking changes or removal in
         /// future releases of the cosmos-sdk.
         pub async fn get_authn_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetAuthnDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -336,13 +353,19 @@ pub mod reflection_service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v2alpha1.ReflectionService/GetAuthnDescriptor",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.reflection.v2alpha1.ReflectionService",
+                "GetAuthnDescriptor",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetChainDescriptor returns the description of the chain
         pub async fn get_chain_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetChainDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -353,13 +376,19 @@ pub mod reflection_service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v2alpha1.ReflectionService/GetChainDescriptor",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.reflection.v2alpha1.ReflectionService",
+                "GetChainDescriptor",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetCodecDescriptor returns the descriptor of the codec of the application
         pub async fn get_codec_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetCodecDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -370,14 +399,21 @@ pub mod reflection_service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v2alpha1.ReflectionService/GetCodecDescriptor",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.reflection.v2alpha1.ReflectionService",
+                "GetCodecDescriptor",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetConfigurationDescriptor returns the descriptor for the sdk.Config of the application
         pub async fn get_configuration_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetConfigurationDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetConfigurationDescriptorResponse>, tonic::Status>
-        {
+        ) -> std::result::Result<
+            tonic::Response<super::GetConfigurationDescriptorResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -388,14 +424,21 @@ pub mod reflection_service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v2alpha1.ReflectionService/GetConfigurationDescriptor",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.reflection.v2alpha1.ReflectionService",
+                "GetConfigurationDescriptor",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetQueryServicesDescriptor returns the available gRPC queryable services of the application
         pub async fn get_query_services_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetQueryServicesDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetQueryServicesDescriptorResponse>, tonic::Status>
-        {
+        ) -> std::result::Result<
+            tonic::Response<super::GetQueryServicesDescriptorResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -406,13 +449,19 @@ pub mod reflection_service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v2alpha1.ReflectionService/GetQueryServicesDescriptor",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.reflection.v2alpha1.ReflectionService",
+                "GetQueryServicesDescriptor",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// GetTxDescriptor returns information on the used transaction object and available msgs that can be used
         pub async fn get_tx_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetTxDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -423,7 +472,12 @@ pub mod reflection_service_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.reflection.v2alpha1.ReflectionService/GetTxDescriptor",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.base.reflection.v2alpha1.ReflectionService",
+                "GetTxDescriptor",
+            ));
+            self.inner.unary(req, path, codec).await
         }
     }
 }
@@ -442,32 +496,38 @@ pub mod reflection_service_server {
         async fn get_authn_descriptor(
             &self,
             request: tonic::Request<super::GetAuthnDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status>;
         /// GetChainDescriptor returns the description of the chain
         async fn get_chain_descriptor(
             &self,
             request: tonic::Request<super::GetChainDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status>;
         /// GetCodecDescriptor returns the descriptor of the codec of the application
         async fn get_codec_descriptor(
             &self,
             request: tonic::Request<super::GetCodecDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status>;
         /// GetConfigurationDescriptor returns the descriptor for the sdk.Config of the application
         async fn get_configuration_descriptor(
             &self,
             request: tonic::Request<super::GetConfigurationDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetConfigurationDescriptorResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::GetConfigurationDescriptorResponse>,
+            tonic::Status,
+        >;
         /// GetQueryServicesDescriptor returns the available gRPC queryable services of the application
         async fn get_query_services_descriptor(
             &self,
             request: tonic::Request<super::GetQueryServicesDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetQueryServicesDescriptorResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::GetQueryServicesDescriptorResponse>,
+            tonic::Status,
+        >;
         /// GetTxDescriptor returns information on the used transaction object and available msgs that can be used
         async fn get_tx_descriptor(
             &self,
             request: tonic::Request<super::GetTxDescriptorRequest>,
-        ) -> Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status>;
     }
     /// ReflectionService defines a service for application reflection.
     #[derive(Debug)]
@@ -475,6 +535,8 @@ pub mod reflection_service_server {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
+        max_decoding_message_size: Option<usize>,
+        max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: ReflectionService> ReflectionServiceServer<T> {
@@ -487,6 +549,8 @@ pub mod reflection_service_server {
                 inner,
                 accept_compression_encodings: Default::default(),
                 send_compression_encodings: Default::default(),
+                max_decoding_message_size: None,
+                max_encoding_message_size: None,
             }
         }
         pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
@@ -507,6 +571,22 @@ pub mod reflection_service_server {
             self.send_compression_encodings.enable(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.max_decoding_message_size = Some(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.max_encoding_message_size = Some(limit);
+            self
+        }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for ReflectionServiceServer<T>
     where
@@ -517,7 +597,10 @@ pub mod reflection_service_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<std::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -536,22 +619,29 @@ pub mod reflection_service_server {
                             &mut self,
                             request: tonic::Request<super::GetAuthnDescriptorRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_authn_descriptor(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetAuthnDescriptorSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -570,22 +660,29 @@ pub mod reflection_service_server {
                             &mut self,
                             request: tonic::Request<super::GetChainDescriptorRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_chain_descriptor(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetChainDescriptorSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -604,22 +701,29 @@ pub mod reflection_service_server {
                             &mut self,
                             request: tonic::Request<super::GetCodecDescriptorRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_codec_descriptor(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetCodecDescriptorSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -638,7 +742,7 @@ pub mod reflection_service_server {
                             &mut self,
                             request: tonic::Request<super::GetConfigurationDescriptorRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut =
                                 async move { (*inner).get_configuration_descriptor(request).await };
                             Box::pin(fut)
@@ -646,15 +750,22 @@ pub mod reflection_service_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetConfigurationDescriptorSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -673,7 +784,7 @@ pub mod reflection_service_server {
                             &mut self,
                             request: tonic::Request<super::GetQueryServicesDescriptorRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).get_query_services_descriptor(request).await
                             };
@@ -682,15 +793,22 @@ pub mod reflection_service_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetQueryServicesDescriptorSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -709,22 +827,29 @@ pub mod reflection_service_server {
                             &mut self,
                             request: tonic::Request<super::GetTxDescriptorRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).get_tx_descriptor(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetTxDescriptorSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -748,12 +873,14 @@ pub mod reflection_service_server {
                 inner,
                 accept_compression_encodings: self.accept_compression_encodings,
                 send_compression_encodings: self.send_compression_encodings,
+                max_decoding_message_size: self.max_decoding_message_size,
+                max_encoding_message_size: self.max_encoding_message_size,
             }
         }
     }
     impl<T: ReflectionService> Clone for _Inner<T> {
         fn clone(&self) -> Self {
-            Self(self.0.clone())
+            Self(Arc::clone(&self.0))
         }
     }
     impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {

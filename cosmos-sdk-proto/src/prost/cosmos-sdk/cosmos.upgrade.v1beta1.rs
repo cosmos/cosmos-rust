@@ -160,7 +160,7 @@ pub mod query_client {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
         {
             let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
@@ -215,11 +215,28 @@ pub mod query_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
         /// CurrentPlan queries the current upgrade plan.
         pub async fn current_plan(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryCurrentPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryCurrentPlanResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryCurrentPlanResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -229,13 +246,19 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.upgrade.v1beta1.Query/CurrentPlan");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.upgrade.v1beta1.Query",
+                "CurrentPlan",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// AppliedPlan queries a previously applied upgrade plan by its name.
         pub async fn applied_plan(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAppliedPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryAppliedPlanResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryAppliedPlanResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -245,7 +268,12 @@ pub mod query_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.upgrade.v1beta1.Query/AppliedPlan");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.upgrade.v1beta1.Query",
+                "AppliedPlan",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// UpgradedConsensusState queries the consensus state that will serve
         /// as a trusted kernel for the next version of this chain. It will only be
@@ -256,8 +284,10 @@ pub mod query_client {
         pub async fn upgraded_consensus_state(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryUpgradedConsensusStateRequest>,
-        ) -> Result<tonic::Response<super::QueryUpgradedConsensusStateResponse>, tonic::Status>
-        {
+        ) -> std::result::Result<
+            tonic::Response<super::QueryUpgradedConsensusStateResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -268,7 +298,12 @@ pub mod query_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.upgrade.v1beta1.Query/UpgradedConsensusState",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.upgrade.v1beta1.Query",
+                "UpgradedConsensusState",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         /// ModuleVersions queries the list of module versions from state.
         ///
@@ -276,7 +311,8 @@ pub mod query_client {
         pub async fn module_versions(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryModuleVersionsRequest>,
-        ) -> Result<tonic::Response<super::QueryModuleVersionsResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryModuleVersionsResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -287,7 +323,12 @@ pub mod query_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.upgrade.v1beta1.Query/ModuleVersions",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.upgrade.v1beta1.Query",
+                "ModuleVersions",
+            ));
+            self.inner.unary(req, path, codec).await
         }
     }
 }
@@ -304,12 +345,12 @@ pub mod query_server {
         async fn current_plan(
             &self,
             request: tonic::Request<super::QueryCurrentPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryCurrentPlanResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::QueryCurrentPlanResponse>, tonic::Status>;
         /// AppliedPlan queries a previously applied upgrade plan by its name.
         async fn applied_plan(
             &self,
             request: tonic::Request<super::QueryAppliedPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryAppliedPlanResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::QueryAppliedPlanResponse>, tonic::Status>;
         /// UpgradedConsensusState queries the consensus state that will serve
         /// as a trusted kernel for the next version of this chain. It will only be
         /// stored at the last height of this chain.
@@ -319,14 +360,17 @@ pub mod query_server {
         async fn upgraded_consensus_state(
             &self,
             request: tonic::Request<super::QueryUpgradedConsensusStateRequest>,
-        ) -> Result<tonic::Response<super::QueryUpgradedConsensusStateResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::QueryUpgradedConsensusStateResponse>,
+            tonic::Status,
+        >;
         /// ModuleVersions queries the list of module versions from state.
         ///
         /// Since: cosmos-sdk 0.43
         async fn module_versions(
             &self,
             request: tonic::Request<super::QueryModuleVersionsRequest>,
-        ) -> Result<tonic::Response<super::QueryModuleVersionsResponse>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::QueryModuleVersionsResponse>, tonic::Status>;
     }
     /// Query defines the gRPC upgrade querier service.
     #[derive(Debug)]
@@ -334,6 +378,8 @@ pub mod query_server {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
+        max_decoding_message_size: Option<usize>,
+        max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Query> QueryServer<T> {
@@ -346,6 +392,8 @@ pub mod query_server {
                 inner,
                 accept_compression_encodings: Default::default(),
                 send_compression_encodings: Default::default(),
+                max_decoding_message_size: None,
+                max_encoding_message_size: None,
             }
         }
         pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
@@ -366,6 +414,22 @@ pub mod query_server {
             self.send_compression_encodings.enable(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.max_decoding_message_size = Some(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.max_encoding_message_size = Some(limit);
+            self
+        }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for QueryServer<T>
     where
@@ -376,7 +440,10 @@ pub mod query_server {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+        fn poll_ready(
+            &mut self,
+            _cx: &mut Context<'_>,
+        ) -> Poll<std::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -392,22 +459,29 @@ pub mod query_server {
                             &mut self,
                             request: tonic::Request<super::QueryCurrentPlanRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).current_plan(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = CurrentPlanSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -423,22 +497,29 @@ pub mod query_server {
                             &mut self,
                             request: tonic::Request<super::QueryAppliedPlanRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).applied_plan(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = AppliedPlanSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -457,7 +538,7 @@ pub mod query_server {
                             &mut self,
                             request: tonic::Request<super::QueryUpgradedConsensusStateRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut =
                                 async move { (*inner).upgraded_consensus_state(request).await };
                             Box::pin(fut)
@@ -465,15 +546,22 @@ pub mod query_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = UpgradedConsensusStateSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -491,22 +579,29 @@ pub mod query_server {
                             &mut self,
                             request: tonic::Request<super::QueryModuleVersionsRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).module_versions(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
                         let method = ModuleVersionsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
@@ -530,12 +625,14 @@ pub mod query_server {
                 inner,
                 accept_compression_encodings: self.accept_compression_encodings,
                 send_compression_encodings: self.send_compression_encodings,
+                max_decoding_message_size: self.max_decoding_message_size,
+                max_encoding_message_size: self.max_encoding_message_size,
             }
         }
     }
     impl<T: Query> Clone for _Inner<T> {
         fn clone(&self) -> Self {
-            Self(self.0.clone())
+            Self(Arc::clone(&self.0))
         }
     }
     impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
