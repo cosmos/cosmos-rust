@@ -168,6 +168,22 @@ pub mod service_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn abci_query(
+            &mut self,
+            request: impl tonic::IntoRequest<super::AbciQueryRequest>,
+        ) -> Result<tonic::Response<super::AbciQueryResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.base.tendermint.v1beta1.Service/ABCIQuery",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -203,6 +219,10 @@ pub mod service_server {
             &self,
             request: tonic::Request<super::GetValidatorSetByHeightRequest>,
         ) -> Result<tonic::Response<super::GetValidatorSetByHeightResponse>, tonic::Status>;
+        async fn abci_query(
+            &self,
+            request: tonic::Request<super::AbciQueryRequest>,
+        ) -> Result<tonic::Response<super::AbciQueryResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct ServiceServer<T: Service> {
@@ -445,6 +465,37 @@ pub mod service_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetValidatorSetByHeightSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.base.tendermint.v1beta1.Service/ABCIQuery" => {
+                    #[allow(non_camel_case_types)]
+                    struct ABCIQuerySvc<T: Service>(pub Arc<T>);
+                    impl<T: Service> tonic::server::UnaryService<super::AbciQueryRequest> for ABCIQuerySvc<T> {
+                        type Response = super::AbciQueryResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::AbciQueryRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).abci_query(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = ABCIQuerySvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,

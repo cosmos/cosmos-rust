@@ -37,5 +37,31 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub param: ::core::option::Option<ParamChange>,
 }
+/// QuerySubspacesRequest defines a request type for querying for all registered
+/// subspaces and all keys for a subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySubspacesRequest {}
+/// QuerySubspacesResponse defines the response types for querying for all
+/// registered subspaces and all keys for a subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySubspacesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub subspaces: ::prost::alloc::vec::Vec<Subspace>,
+}
+/// Subspace defines a parameter subspace name and all the keys that exist for
+/// the subspace.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Subspace {
+    #[prost(string, tag = "1")]
+    pub subspace: ::prost::alloc::string::String,
+    #[prost(string, repeated, tag = "2")]
+    pub keys: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
 include!("cosmos.params.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

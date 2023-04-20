@@ -1,22 +1,11 @@
 // @generated
 /// WeightedVoteOption defines a unit of vote for vote split.
-///
-/// Since: cosmos-sdk 0.43
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WeightedVoteOption {
     #[prost(enumeration = "VoteOption", tag = "1")]
     pub option: i32,
     #[prost(string, tag = "2")]
     pub weight: ::prost::alloc::string::String,
-}
-/// TextProposal defines a standard text proposal whose changes need to be
-/// manually updated in case of approval.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TextProposal {
-    #[prost(string, tag = "1")]
-    pub title: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub description: ::prost::alloc::string::String,
 }
 /// Deposit defines an amount deposited by an account address to an active
 /// proposal.
@@ -33,9 +22,9 @@ pub struct Deposit {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Proposal {
     #[prost(uint64, tag = "1")]
-    pub proposal_id: u64,
-    #[prost(message, optional, tag = "2")]
-    pub content: ::core::option::Option<::prost_types::Any>,
+    pub id: u64,
+    #[prost(message, repeated, tag = "2")]
+    pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
     #[prost(enumeration = "ProposalStatus", tag = "3")]
     pub status: i32,
     /// final_tally_result is the final tally result of the proposal. When
@@ -53,18 +42,21 @@ pub struct Proposal {
     pub voting_start_time: ::core::option::Option<::prost_types::Timestamp>,
     #[prost(message, optional, tag = "9")]
     pub voting_end_time: ::core::option::Option<::prost_types::Timestamp>,
+    /// metadata is any arbitrary metadata attached to the proposal.
+    #[prost(string, tag = "10")]
+    pub metadata: ::prost::alloc::string::String,
 }
 /// TallyResult defines a standard tally for a governance proposal.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TallyResult {
     #[prost(string, tag = "1")]
-    pub yes: ::prost::alloc::string::String,
+    pub yes_count: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
-    pub abstain: ::prost::alloc::string::String,
+    pub abstain_count: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
-    pub no: ::prost::alloc::string::String,
+    pub no_count: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
-    pub no_with_veto: ::prost::alloc::string::String,
+    pub no_with_veto_count: ::prost::alloc::string::String,
 }
 /// Vote defines a vote on a governance proposal.
 /// A Vote consists of a proposal ID, the voter, and the vote option.
@@ -74,15 +66,11 @@ pub struct Vote {
     pub proposal_id: u64,
     #[prost(string, tag = "2")]
     pub voter: ::prost::alloc::string::String,
-    /// Deprecated: Prefer to use `options` instead. This field is set in queries
-    /// if and only if `len(options) == 1` and that option has weight 1. In all
-    /// other cases, this field will default to VOTE_OPTION_UNSPECIFIED.
-    #[deprecated]
-    #[prost(enumeration = "VoteOption", tag = "3")]
-    pub option: i32,
-    /// Since: cosmos-sdk 0.43
     #[prost(message, repeated, tag = "4")]
     pub options: ::prost::alloc::vec::Vec<WeightedVoteOption>,
+    /// metadata is any  arbitrary metadata to attached to the vote.
+    #[prost(string, tag = "5")]
+    pub metadata: ::prost::alloc::string::String,
 }
 /// DepositParams defines the params for deposits on governance proposals.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -107,15 +95,15 @@ pub struct VotingParams {
 pub struct TallyParams {
     ///   Minimum percentage of total stake needed to vote for a result to be
     ///   considered valid.
-    #[prost(bytes = "vec", tag = "1")]
-    pub quorum: ::prost::alloc::vec::Vec<u8>,
+    #[prost(string, tag = "1")]
+    pub quorum: ::prost::alloc::string::String,
     ///   Minimum proportion of Yes votes for proposal to pass. Default value: 0.5.
-    #[prost(bytes = "vec", tag = "2")]
-    pub threshold: ::prost::alloc::vec::Vec<u8>,
+    #[prost(string, tag = "2")]
+    pub threshold: ::prost::alloc::string::String,
     ///   Minimum value of Veto votes to Total votes ratio for proposal to be
     ///   vetoed. Default value: 1/3.
-    #[prost(bytes = "vec", tag = "3")]
-    pub veto_threshold: ::prost::alloc::vec::Vec<u8>,
+    #[prost(string, tag = "3")]
+    pub veto_threshold: ::prost::alloc::string::String,
 }
 /// VoteOption enumerates the valid vote options for a given governance proposal.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -361,12 +349,15 @@ pub struct QueryTallyResultResponse {
 /// proposal Content.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposal {
-    #[prost(message, optional, tag = "1")]
-    pub content: ::core::option::Option<::prost_types::Any>,
+    #[prost(message, repeated, tag = "1")]
+    pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
     #[prost(message, repeated, tag = "2")]
     pub initial_deposit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     #[prost(string, tag = "3")]
     pub proposer: ::prost::alloc::string::String,
+    /// metadata is any arbitrary metadata attached to the proposal.
+    #[prost(string, tag = "4")]
+    pub metadata: ::prost::alloc::string::String,
 }
 /// MsgSubmitProposalResponse defines the Msg/SubmitProposal response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -374,6 +365,20 @@ pub struct MsgSubmitProposalResponse {
     #[prost(uint64, tag = "1")]
     pub proposal_id: u64,
 }
+/// MsgExecLegacyContent is used to wrap the legacy content field into a message.
+/// This ensures backwards compatibility with v1beta1.MsgSubmitProposal.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgExecLegacyContent {
+    /// content is the proposal's content.
+    #[prost(message, optional, tag = "1")]
+    pub content: ::core::option::Option<::prost_types::Any>,
+    /// authority must be the gov module address.
+    #[prost(string, tag = "2")]
+    pub authority: ::prost::alloc::string::String,
+}
+/// MsgExecLegacyContentResponse defines the Msg/ExecLegacyContent response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgExecLegacyContentResponse {}
 /// MsgVote defines a message to cast a vote.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVote {
@@ -383,13 +388,13 @@ pub struct MsgVote {
     pub voter: ::prost::alloc::string::String,
     #[prost(enumeration = "VoteOption", tag = "3")]
     pub option: i32,
+    #[prost(string, tag = "4")]
+    pub metadata: ::prost::alloc::string::String,
 }
 /// MsgVoteResponse defines the Msg/Vote response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteResponse {}
 /// MsgVoteWeighted defines a message to cast a vote.
-///
-/// Since: cosmos-sdk 0.43
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteWeighted {
     #[prost(uint64, tag = "1")]
@@ -398,10 +403,10 @@ pub struct MsgVoteWeighted {
     pub voter: ::prost::alloc::string::String,
     #[prost(message, repeated, tag = "3")]
     pub options: ::prost::alloc::vec::Vec<WeightedVoteOption>,
+    #[prost(string, tag = "4")]
+    pub metadata: ::prost::alloc::string::String,
 }
 /// MsgVoteWeightedResponse defines the Msg/VoteWeighted response type.
-///
-/// Since: cosmos-sdk 0.43
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteWeightedResponse {}
 /// MsgDeposit defines a message to submit a deposit to an existing proposal.
@@ -417,5 +422,5 @@ pub struct MsgDeposit {
 /// MsgDepositResponse defines the Msg/Deposit response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDepositResponse {}
-include!("cosmos.gov.v1beta1.tonic.rs");
+include!("cosmos.gov.v1.tonic.rs");
 // @@protoc_insertion_point(module)

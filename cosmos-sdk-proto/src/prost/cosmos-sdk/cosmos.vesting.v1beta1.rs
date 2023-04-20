@@ -1,22 +1,4 @@
 // @generated
-/// MsgCreateVestingAccount defines a message that enables creating a vesting
-/// account.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateVestingAccount {
-    #[prost(string, tag = "1")]
-    pub from_address: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub to_address: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag = "3")]
-    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    #[prost(int64, tag = "4")]
-    pub end_time: i64,
-    #[prost(bool, tag = "5")]
-    pub delayed: bool,
-}
-/// MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct MsgCreateVestingAccountResponse {}
 /// BaseVestingAccount implements the VestingAccount interface. It contains all
 /// the necessary fields needed for any vesting account implementation.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -29,6 +11,7 @@ pub struct BaseVestingAccount {
     pub delegated_free: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     #[prost(message, repeated, tag = "4")]
     pub delegated_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// Vesting end time, as unix timestamp (in seconds).
     #[prost(int64, tag = "5")]
     pub end_time: i64,
 }
@@ -38,6 +21,7 @@ pub struct BaseVestingAccount {
 pub struct ContinuousVestingAccount {
     #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
+    /// Vesting start time, as unix timestamp (in seconds).
     #[prost(int64, tag = "2")]
     pub start_time: i64,
 }
@@ -52,6 +36,7 @@ pub struct DelayedVestingAccount {
 /// Period defines a length of time and amount of coins that will vest.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Period {
+    /// Period duration in seconds.
     #[prost(int64, tag = "1")]
     pub length: i64,
     #[prost(message, repeated, tag = "2")]
@@ -78,5 +63,64 @@ pub struct PermanentLockedAccount {
     #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
 }
+/// MsgCreateVestingAccount defines a message that enables creating a vesting
+/// account.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreateVestingAccount {
+    #[prost(string, tag = "1")]
+    pub from_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub to_address: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// end of vesting as unix time (in seconds).
+    #[prost(int64, tag = "4")]
+    pub end_time: i64,
+    #[prost(bool, tag = "5")]
+    pub delayed: bool,
+}
+/// MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreateVestingAccountResponse {}
+/// MsgCreatePermanentLockedAccount defines a message that enables creating a permanent
+/// locked account.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePermanentLockedAccount {
+    #[prost(string, tag = "1")]
+    pub from_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub to_address: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+}
+/// MsgCreatePermanentLockedAccountResponse defines the Msg/CreatePermanentLockedAccount response type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePermanentLockedAccountResponse {}
+/// MsgCreateVestingAccount defines a message that enables creating a vesting
+/// account.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePeriodicVestingAccount {
+    #[prost(string, tag = "1")]
+    pub from_address: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub to_address: ::prost::alloc::string::String,
+    /// start of vesting as unix time (in seconds).
+    #[prost(int64, tag = "3")]
+    pub start_time: i64,
+    #[prost(message, repeated, tag = "4")]
+    pub vesting_periods: ::prost::alloc::vec::Vec<Period>,
+}
+/// MsgCreateVestingAccountResponse defines the Msg/CreatePeriodicVestingAccount
+/// response type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCreatePeriodicVestingAccountResponse {}
 include!("cosmos.vesting.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

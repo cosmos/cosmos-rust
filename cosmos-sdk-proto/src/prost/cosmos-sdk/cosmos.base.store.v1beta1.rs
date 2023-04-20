@@ -44,4 +44,32 @@ pub struct StoreKvPair {
     #[prost(bytes = "vec", tag = "4")]
     pub value: ::prost::alloc::vec::Vec<u8>,
 }
+/// BlockMetadata contains all the abci event data of a block
+/// the file streamer dump them into files together with the state changes.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct BlockMetadata {
+    #[prost(message, optional, tag = "1")]
+    pub request_begin_block: ::core::option::Option<::tendermint_proto::abci::RequestBeginBlock>,
+    #[prost(message, optional, tag = "2")]
+    pub response_begin_block: ::core::option::Option<::tendermint_proto::abci::ResponseBeginBlock>,
+    #[prost(message, repeated, tag = "3")]
+    pub deliver_txs: ::prost::alloc::vec::Vec<block_metadata::DeliverTx>,
+    #[prost(message, optional, tag = "4")]
+    pub request_end_block: ::core::option::Option<::tendermint_proto::abci::RequestEndBlock>,
+    #[prost(message, optional, tag = "5")]
+    pub response_end_block: ::core::option::Option<::tendermint_proto::abci::ResponseEndBlock>,
+    #[prost(message, optional, tag = "6")]
+    pub response_commit: ::core::option::Option<::tendermint_proto::abci::ResponseCommit>,
+}
+/// Nested message and enum types in `BlockMetadata`.
+pub mod block_metadata {
+    /// DeliverTx encapulate deliver tx request and response.
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct DeliverTx {
+        #[prost(message, optional, tag = "1")]
+        pub request: ::core::option::Option<::tendermint_proto::abci::RequestDeliverTx>,
+        #[prost(message, optional, tag = "2")]
+        pub response: ::core::option::Option<::tendermint_proto::abci::ResponseDeliverTx>,
+    }
+}
 // @@protoc_insertion_point(module)

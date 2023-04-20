@@ -34,6 +34,8 @@ pub struct Plan {
 }
 /// SoftwareUpgradeProposal is a gov Content type for initiating a software
 /// upgrade.
+/// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
+/// proposals, see MsgSoftwareUpgrade.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SoftwareUpgradeProposal {
     #[prost(string, tag = "1")]
@@ -45,6 +47,8 @@ pub struct SoftwareUpgradeProposal {
 }
 /// CancelSoftwareUpgradeProposal is a gov Content type for cancelling a software
 /// upgrade.
+/// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
+/// proposals, see MsgCancelUpgrade.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CancelSoftwareUpgradeProposal {
     #[prost(string, tag = "1")]
@@ -131,5 +135,49 @@ pub struct QueryModuleVersionsResponse {
     #[prost(message, repeated, tag = "1")]
     pub module_versions: ::prost::alloc::vec::Vec<ModuleVersion>,
 }
+/// QueryAuthorityRequest is the request type for Query/Authority
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryAuthorityRequest {}
+/// QueryAuthorityResponse is the response type for Query/Authority
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryAuthorityResponse {
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+}
+/// MsgSoftwareUpgrade is the Msg/SoftwareUpgrade request type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSoftwareUpgrade {
+    /// authority is the address of the governance account.
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// plan is the upgrade plan.
+    #[prost(message, optional, tag = "2")]
+    pub plan: ::core::option::Option<Plan>,
+}
+/// MsgSoftwareUpgradeResponse is the Msg/SoftwareUpgrade response type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSoftwareUpgradeResponse {}
+/// MsgCancelUpgrade is the Msg/CancelUpgrade request type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCancelUpgrade {
+    /// authority is the address of the governance account.
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+}
+/// MsgCancelUpgradeResponse is the Msg/CancelUpgrade response type.
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgCancelUpgradeResponse {}
 include!("cosmos.upgrade.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)
