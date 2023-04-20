@@ -4,6 +4,7 @@ use crate::{
     tx::Msg,
     ErrorReport, Result,
 };
+use eyre::eyre;
 
 /// MsgData defines the data returned in a Result object during message execution.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -73,7 +74,13 @@ impl Msg for TxMsgData {
 impl TryFrom<proto::cosmos::base::abci::v1beta1::TxMsgData> for TxMsgData {
     type Error = ErrorReport;
 
+    #[allow(deprecated)]
     fn try_from(proto: proto::cosmos::base::abci::v1beta1::TxMsgData) -> Result<TxMsgData> {
+        // TODO(tarcieri): parse `msg_responses`
+        if !proto.msg_responses.is_empty() {
+            return Err(eyre!("TxMsgData::msg_responses unsupported"));
+        }
+
         Ok(TxMsgData {
             data: proto
                 .data
@@ -85,9 +92,11 @@ impl TryFrom<proto::cosmos::base::abci::v1beta1::TxMsgData> for TxMsgData {
 }
 
 impl From<TxMsgData> for proto::cosmos::base::abci::v1beta1::TxMsgData {
+    #[allow(deprecated)]
     fn from(tx_msg_data: TxMsgData) -> Self {
         proto::cosmos::base::abci::v1beta1::TxMsgData {
             data: tx_msg_data.data.into_iter().map(Into::into).collect(),
+            msg_responses: vec![] // TODO(tarcieri): serialize responses
         }
     }
 }
