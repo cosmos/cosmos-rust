@@ -1,3 +1,4 @@
+// @generated
 /// PageRequest is to be embedded in gRPC request messages for efficient
 /// pagination. Ex:
 ///
@@ -5,7 +6,6 @@
 ///           Foo some_parameter = 1;
 ///           PageRequest pagination = 2;
 ///   }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PageRequest {
     /// key is a value returned in PageResponse.next_key to begin
@@ -41,7 +41,6 @@ pub struct PageRequest {
 ///           repeated Bar results = 1;
 ///           PageResponse page = 2;
 ///   }
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PageResponse {
     /// next_key is the key to be passed to PageRequest.key to
@@ -53,3 +52,4 @@ pub struct PageResponse {
     #[prost(uint64, tag = "2")]
     pub total: u64,
 }
+// @@protoc_insertion_point(module)
