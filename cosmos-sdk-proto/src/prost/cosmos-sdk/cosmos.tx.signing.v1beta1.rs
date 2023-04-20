@@ -1,5 +1,5 @@
+// @generated
 /// SignatureDescriptors wraps multiple SignatureDescriptor's.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SignatureDescriptors {
     /// signatures are the signature descriptors
@@ -10,7 +10,6 @@ pub struct SignatureDescriptors {
 /// a signature including the public key of the signer, signing modes and the
 /// signature itself. It is primarily used for coordinating signatures between
 /// clients.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SignatureDescriptor {
     /// public_key is the public key of the signer
@@ -27,7 +26,6 @@ pub struct SignatureDescriptor {
 /// Nested message and enum types in `SignatureDescriptor`.
 pub mod signature_descriptor {
     /// Data represents signature data
-    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Data {
         /// sum is the oneof that specifies whether this represents single or multi-signature data
@@ -37,7 +35,6 @@ pub mod signature_descriptor {
     /// Nested message and enum types in `Data`.
     pub mod data {
         /// Single is the signature data for a single signer
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Single {
             /// mode is the signing mode of the single signer
@@ -48,7 +45,6 @@ pub mod signature_descriptor {
             pub signature: ::prost::alloc::vec::Vec<u8>,
         }
         /// Multi is the signature data for a multisig public key
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct Multi {
             /// bitarray specifies which keys within the multisig are signing
@@ -61,7 +57,6 @@ pub mod signature_descriptor {
             pub signatures: ::prost::alloc::vec::Vec<super::Data>,
         }
         /// sum is the oneof that specifies whether this represents single or multi-signature data
-        #[allow(clippy::derive_partial_eq_without_eq)]
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Sum {
             /// single represents a single signer
@@ -116,15 +111,5 @@ impl SignMode {
             SignMode::Eip191 => "SIGN_MODE_EIP_191",
         }
     }
-    /// Creates an enum from field names used in the ProtoBuf definition.
-    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-        match value {
-            "SIGN_MODE_UNSPECIFIED" => Some(Self::Unspecified),
-            "SIGN_MODE_DIRECT" => Some(Self::Direct),
-            "SIGN_MODE_TEXTUAL" => Some(Self::Textual),
-            "SIGN_MODE_LEGACY_AMINO_JSON" => Some(Self::LegacyAminoJson),
-            "SIGN_MODE_EIP_191" => Some(Self::Eip191),
-            _ => None,
-        }
-    }
 }
+// @@protoc_insertion_point(module)

@@ -1,6 +1,6 @@
+// @generated
 /// TxResponse defines a structure containing relevant tx data and metadata. The
 /// tags are stringified and the log is JSON decoded.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TxResponse {
     /// The block height
@@ -52,7 +52,6 @@ pub struct TxResponse {
     pub events: ::prost::alloc::vec::Vec<::tendermint_proto::abci::Event>,
 }
 /// ABCIMessageLog defines a structure containing an indexed tx ABCI message log.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AbciMessageLog {
     #[prost(uint32, tag = "1")]
@@ -66,7 +65,6 @@ pub struct AbciMessageLog {
 }
 /// StringEvent defines en Event object wrapper where all the attributes
 /// contain key/value pairs that are strings instead of raw bytes.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StringEvent {
     #[prost(string, tag = "1")]
@@ -76,7 +74,6 @@ pub struct StringEvent {
 }
 /// Attribute defines an attribute wrapper where the key and value are
 /// strings instead of raw bytes.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Attribute {
     #[prost(string, tag = "1")]
@@ -85,7 +82,6 @@ pub struct Attribute {
     pub value: ::prost::alloc::string::String,
 }
 /// GasInfo defines tx execution gas context.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GasInfo {
     /// GasWanted is the maximum units of work we allow this tx to perform.
@@ -96,7 +92,6 @@ pub struct GasInfo {
     pub gas_used: u64,
 }
 /// Result is the union of ResponseFormat and ResponseCheckTx.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Result {
     /// Data is any data returned from message or handler execution. It MUST be
@@ -113,7 +108,6 @@ pub struct Result {
 }
 /// SimulationResponse defines the response generated when a transaction is
 /// successfully simulated.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SimulationResponse {
     #[prost(message, optional, tag = "1")]
@@ -123,7 +117,6 @@ pub struct SimulationResponse {
 }
 /// MsgData defines the data returned in a Result object during message
 /// execution.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgData {
     #[prost(string, tag = "1")]
@@ -133,14 +126,12 @@ pub struct MsgData {
 }
 /// TxMsgData defines a list of MsgData. A transaction will have a MsgData object
 /// for each message.
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TxMsgData {
     #[prost(message, repeated, tag = "1")]
     pub data: ::prost::alloc::vec::Vec<MsgData>,
 }
 /// SearchTxsResult defines a structure for querying txs pageable
-#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SearchTxsResult {
     /// Count of all txs
@@ -162,3 +153,4 @@ pub struct SearchTxsResult {
     #[prost(message, repeated, tag = "6")]
     pub txs: ::prost::alloc::vec::Vec<TxResponse>,
 }
+// @@protoc_insertion_point(module)
