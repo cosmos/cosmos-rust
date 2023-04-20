@@ -71,10 +71,10 @@ pub mod query_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        pub async fn current_plan(
+        pub async fn proposal(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryCurrentPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryCurrentPlanResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::QueryProposalRequest>,
+        ) -> Result<tonic::Response<super::QueryProposalResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -82,14 +82,13 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.upgrade.v1beta1.Query/CurrentPlan");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/Proposal");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn applied_plan(
+        pub async fn proposals(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryAppliedPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryAppliedPlanResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::QueryProposalsRequest>,
+        ) -> Result<tonic::Response<super::QueryProposalsResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -97,15 +96,13 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.upgrade.v1beta1.Query/AppliedPlan");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/Proposals");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn upgraded_consensus_state(
+        pub async fn vote(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryUpgradedConsensusStateRequest>,
-        ) -> Result<tonic::Response<super::QueryUpgradedConsensusStateResponse>, tonic::Status>
-        {
+            request: impl tonic::IntoRequest<super::QueryVoteRequest>,
+        ) -> Result<tonic::Response<super::QueryVoteResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -113,15 +110,13 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.upgrade.v1beta1.Query/UpgradedConsensusState",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/Vote");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn module_versions(
+        pub async fn votes(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryModuleVersionsRequest>,
-        ) -> Result<tonic::Response<super::QueryModuleVersionsResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::QueryVotesRequest>,
+        ) -> Result<tonic::Response<super::QueryVotesResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -129,15 +124,13 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.upgrade.v1beta1.Query/ModuleVersions",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/Votes");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn authority(
+        pub async fn params(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryAuthorityRequest>,
-        ) -> Result<tonic::Response<super::QueryAuthorityResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::QueryParamsRequest>,
+        ) -> Result<tonic::Response<super::QueryParamsResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -145,8 +138,49 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.upgrade.v1beta1.Query/Authority");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/Params");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn deposit(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryDepositRequest>,
+        ) -> Result<tonic::Response<super::QueryDepositResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/Deposit");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn deposits(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryDepositsRequest>,
+        ) -> Result<tonic::Response<super::QueryDepositsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/Deposits");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn tally_result(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryTallyResultRequest>,
+        ) -> Result<tonic::Response<super::QueryTallyResultResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Query/TallyResult");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -160,26 +194,38 @@ pub mod query_server {
     ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
-        async fn current_plan(
+        async fn proposal(
             &self,
-            request: tonic::Request<super::QueryCurrentPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryCurrentPlanResponse>, tonic::Status>;
-        async fn applied_plan(
+            request: tonic::Request<super::QueryProposalRequest>,
+        ) -> Result<tonic::Response<super::QueryProposalResponse>, tonic::Status>;
+        async fn proposals(
             &self,
-            request: tonic::Request<super::QueryAppliedPlanRequest>,
-        ) -> Result<tonic::Response<super::QueryAppliedPlanResponse>, tonic::Status>;
-        async fn upgraded_consensus_state(
+            request: tonic::Request<super::QueryProposalsRequest>,
+        ) -> Result<tonic::Response<super::QueryProposalsResponse>, tonic::Status>;
+        async fn vote(
             &self,
-            request: tonic::Request<super::QueryUpgradedConsensusStateRequest>,
-        ) -> Result<tonic::Response<super::QueryUpgradedConsensusStateResponse>, tonic::Status>;
-        async fn module_versions(
+            request: tonic::Request<super::QueryVoteRequest>,
+        ) -> Result<tonic::Response<super::QueryVoteResponse>, tonic::Status>;
+        async fn votes(
             &self,
-            request: tonic::Request<super::QueryModuleVersionsRequest>,
-        ) -> Result<tonic::Response<super::QueryModuleVersionsResponse>, tonic::Status>;
-        async fn authority(
+            request: tonic::Request<super::QueryVotesRequest>,
+        ) -> Result<tonic::Response<super::QueryVotesResponse>, tonic::Status>;
+        async fn params(
             &self,
-            request: tonic::Request<super::QueryAuthorityRequest>,
-        ) -> Result<tonic::Response<super::QueryAuthorityResponse>, tonic::Status>;
+            request: tonic::Request<super::QueryParamsRequest>,
+        ) -> Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
+        async fn deposit(
+            &self,
+            request: tonic::Request<super::QueryDepositRequest>,
+        ) -> Result<tonic::Response<super::QueryDepositResponse>, tonic::Status>;
+        async fn deposits(
+            &self,
+            request: tonic::Request<super::QueryDepositsRequest>,
+        ) -> Result<tonic::Response<super::QueryDepositsResponse>, tonic::Status>;
+        async fn tally_result(
+            &self,
+            request: tonic::Request<super::QueryTallyResultRequest>,
+        ) -> Result<tonic::Response<super::QueryTallyResultResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -234,18 +280,18 @@ pub mod query_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.upgrade.v1beta1.Query/CurrentPlan" => {
+                "/cosmos.gov.v1.Query/Proposal" => {
                     #[allow(non_camel_case_types)]
-                    struct CurrentPlanSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryCurrentPlanRequest> for CurrentPlanSvc<T> {
-                        type Response = super::QueryCurrentPlanResponse;
+                    struct ProposalSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryProposalRequest> for ProposalSvc<T> {
+                        type Response = super::QueryProposalResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryCurrentPlanRequest>,
+                            request: tonic::Request<super::QueryProposalRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).current_plan(request).await };
+                            let fut = async move { (*inner).proposal(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -254,7 +300,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = CurrentPlanSvc(inner);
+                        let method = ProposalSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -265,18 +311,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.upgrade.v1beta1.Query/AppliedPlan" => {
+                "/cosmos.gov.v1.Query/Proposals" => {
                     #[allow(non_camel_case_types)]
-                    struct AppliedPlanSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryAppliedPlanRequest> for AppliedPlanSvc<T> {
-                        type Response = super::QueryAppliedPlanResponse;
+                    struct ProposalsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryProposalsRequest> for ProposalsSvc<T> {
+                        type Response = super::QueryProposalsResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAppliedPlanRequest>,
+                            request: tonic::Request<super::QueryProposalsRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).applied_plan(request).await };
+                            let fut = async move { (*inner).proposals(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -285,7 +331,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AppliedPlanSvc(inner);
+                        let method = ProposalsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -296,22 +342,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.upgrade.v1beta1.Query/UpgradedConsensusState" => {
+                "/cosmos.gov.v1.Query/Vote" => {
                     #[allow(non_camel_case_types)]
-                    struct UpgradedConsensusStateSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query>
-                        tonic::server::UnaryService<super::QueryUpgradedConsensusStateRequest>
-                        for UpgradedConsensusStateSvc<T>
-                    {
-                        type Response = super::QueryUpgradedConsensusStateResponse;
+                    struct VoteSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryVoteRequest> for VoteSvc<T> {
+                        type Response = super::QueryVoteResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryUpgradedConsensusStateRequest>,
+                            request: tonic::Request<super::QueryVoteRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut =
-                                async move { (*inner).upgraded_consensus_state(request).await };
+                            let fut = async move { (*inner).vote(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -320,7 +362,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = UpgradedConsensusStateSvc(inner);
+                        let method = VoteSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -331,20 +373,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.upgrade.v1beta1.Query/ModuleVersions" => {
+                "/cosmos.gov.v1.Query/Votes" => {
                     #[allow(non_camel_case_types)]
-                    struct ModuleVersionsSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryModuleVersionsRequest>
-                        for ModuleVersionsSvc<T>
-                    {
-                        type Response = super::QueryModuleVersionsResponse;
+                    struct VotesSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryVotesRequest> for VotesSvc<T> {
+                        type Response = super::QueryVotesResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryModuleVersionsRequest>,
+                            request: tonic::Request<super::QueryVotesRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).module_versions(request).await };
+                            let fut = async move { (*inner).votes(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -353,7 +393,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = ModuleVersionsSvc(inner);
+                        let method = VotesSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -364,18 +404,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.upgrade.v1beta1.Query/Authority" => {
+                "/cosmos.gov.v1.Query/Params" => {
                     #[allow(non_camel_case_types)]
-                    struct AuthoritySvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryAuthorityRequest> for AuthoritySvc<T> {
-                        type Response = super::QueryAuthorityResponse;
+                    struct ParamsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryParamsRequest> for ParamsSvc<T> {
+                        type Response = super::QueryParamsResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAuthorityRequest>,
+                            request: tonic::Request<super::QueryParamsRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).authority(request).await };
+                            let fut = async move { (*inner).params(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -384,7 +424,100 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AuthoritySvc(inner);
+                        let method = ParamsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.gov.v1.Query/Deposit" => {
+                    #[allow(non_camel_case_types)]
+                    struct DepositSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryDepositRequest> for DepositSvc<T> {
+                        type Response = super::QueryDepositResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryDepositRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).deposit(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = DepositSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.gov.v1.Query/Deposits" => {
+                    #[allow(non_camel_case_types)]
+                    struct DepositsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryDepositsRequest> for DepositsSvc<T> {
+                        type Response = super::QueryDepositsResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryDepositsRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).deposits(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = DepositsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.gov.v1.Query/TallyResult" => {
+                    #[allow(non_camel_case_types)]
+                    struct TallyResultSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryTallyResultRequest> for TallyResultSvc<T> {
+                        type Response = super::QueryTallyResultResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryTallyResultRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).tally_result(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = TallyResultSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -427,7 +560,7 @@ pub mod query_server {
         }
     }
     impl<T: Query> tonic::server::NamedService for QueryServer<T> {
-        const NAME: &'static str = "cosmos.upgrade.v1beta1.Query";
+        const NAME: &'static str = "cosmos.gov.v1.Query";
     }
 }
 /// Generated client implementations.
@@ -499,10 +632,10 @@ pub mod msg_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        pub async fn software_upgrade(
+        pub async fn submit_proposal(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgSoftwareUpgrade>,
-        ) -> Result<tonic::Response<super::MsgSoftwareUpgradeResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::MsgSubmitProposal>,
+        ) -> Result<tonic::Response<super::MsgSubmitProposalResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -510,14 +643,13 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.upgrade.v1beta1.Msg/SoftwareUpgrade");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Msg/SubmitProposal");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn cancel_upgrade(
+        pub async fn exec_legacy_content(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgCancelUpgrade>,
-        ) -> Result<tonic::Response<super::MsgCancelUpgradeResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::MsgExecLegacyContent>,
+        ) -> Result<tonic::Response<super::MsgExecLegacyContentResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -525,8 +657,49 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.upgrade.v1beta1.Msg/CancelUpgrade");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Msg/ExecLegacyContent");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn vote(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgVote>,
+        ) -> Result<tonic::Response<super::MsgVoteResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Msg/Vote");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn vote_weighted(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgVoteWeighted>,
+        ) -> Result<tonic::Response<super::MsgVoteWeightedResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Msg/VoteWeighted");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn deposit(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgDeposit>,
+        ) -> Result<tonic::Response<super::MsgDepositResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.gov.v1.Msg/Deposit");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -540,14 +713,26 @@ pub mod msg_server {
     ///Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
-        async fn software_upgrade(
+        async fn submit_proposal(
             &self,
-            request: tonic::Request<super::MsgSoftwareUpgrade>,
-        ) -> Result<tonic::Response<super::MsgSoftwareUpgradeResponse>, tonic::Status>;
-        async fn cancel_upgrade(
+            request: tonic::Request<super::MsgSubmitProposal>,
+        ) -> Result<tonic::Response<super::MsgSubmitProposalResponse>, tonic::Status>;
+        async fn exec_legacy_content(
             &self,
-            request: tonic::Request<super::MsgCancelUpgrade>,
-        ) -> Result<tonic::Response<super::MsgCancelUpgradeResponse>, tonic::Status>;
+            request: tonic::Request<super::MsgExecLegacyContent>,
+        ) -> Result<tonic::Response<super::MsgExecLegacyContentResponse>, tonic::Status>;
+        async fn vote(
+            &self,
+            request: tonic::Request<super::MsgVote>,
+        ) -> Result<tonic::Response<super::MsgVoteResponse>, tonic::Status>;
+        async fn vote_weighted(
+            &self,
+            request: tonic::Request<super::MsgVoteWeighted>,
+        ) -> Result<tonic::Response<super::MsgVoteWeightedResponse>, tonic::Status>;
+        async fn deposit(
+            &self,
+            request: tonic::Request<super::MsgDeposit>,
+        ) -> Result<tonic::Response<super::MsgDepositResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
@@ -602,18 +787,18 @@ pub mod msg_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.upgrade.v1beta1.Msg/SoftwareUpgrade" => {
+                "/cosmos.gov.v1.Msg/SubmitProposal" => {
                     #[allow(non_camel_case_types)]
-                    struct SoftwareUpgradeSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgSoftwareUpgrade> for SoftwareUpgradeSvc<T> {
-                        type Response = super::MsgSoftwareUpgradeResponse;
+                    struct SubmitProposalSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgSubmitProposal> for SubmitProposalSvc<T> {
+                        type Response = super::MsgSubmitProposalResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgSoftwareUpgrade>,
+                            request: tonic::Request<super::MsgSubmitProposal>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).software_upgrade(request).await };
+                            let fut = async move { (*inner).submit_proposal(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -622,7 +807,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = SoftwareUpgradeSvc(inner);
+                        let method = SubmitProposalSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -633,18 +818,18 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.upgrade.v1beta1.Msg/CancelUpgrade" => {
+                "/cosmos.gov.v1.Msg/ExecLegacyContent" => {
                     #[allow(non_camel_case_types)]
-                    struct CancelUpgradeSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgCancelUpgrade> for CancelUpgradeSvc<T> {
-                        type Response = super::MsgCancelUpgradeResponse;
+                    struct ExecLegacyContentSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgExecLegacyContent> for ExecLegacyContentSvc<T> {
+                        type Response = super::MsgExecLegacyContentResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgCancelUpgrade>,
+                            request: tonic::Request<super::MsgExecLegacyContent>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).cancel_upgrade(request).await };
+                            let fut = async move { (*inner).exec_legacy_content(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -653,7 +838,100 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = CancelUpgradeSvc(inner);
+                        let method = ExecLegacyContentSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.gov.v1.Msg/Vote" => {
+                    #[allow(non_camel_case_types)]
+                    struct VoteSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgVote> for VoteSvc<T> {
+                        type Response = super::MsgVoteResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgVote>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).vote(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = VoteSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.gov.v1.Msg/VoteWeighted" => {
+                    #[allow(non_camel_case_types)]
+                    struct VoteWeightedSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgVoteWeighted> for VoteWeightedSvc<T> {
+                        type Response = super::MsgVoteWeightedResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgVoteWeighted>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).vote_weighted(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = VoteWeightedSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.gov.v1.Msg/Deposit" => {
+                    #[allow(non_camel_case_types)]
+                    struct DepositSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgDeposit> for DepositSvc<T> {
+                        type Response = super::MsgDepositResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::MsgDeposit>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).deposit(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = DepositSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -696,6 +974,6 @@ pub mod msg_server {
         }
     }
     impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
-        const NAME: &'static str = "cosmos.upgrade.v1beta1.Msg";
+        const NAME: &'static str = "cosmos.gov.v1.Msg";
     }
 }

@@ -2,17 +2,17 @@
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-pub mod query_client {
+pub mod service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::http::Uri;
     use tonic::codegen::*;
     #[derive(Debug, Clone)]
-    pub struct QueryClient<T> {
+    pub struct ServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     #[cfg(feature = "grpc-transport")]
     #[cfg_attr(docsrs, doc(cfg(feature = "grpc-transport")))]
-    impl QueryClient<tonic::transport::Channel> {
+    impl ServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -23,7 +23,7 @@ pub mod query_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> QueryClient<T>
+    impl<T> ServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -41,7 +41,7 @@ pub mod query_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> QueryClient<InterceptedService<T, F>>
+        ) -> ServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -54,7 +54,7 @@ pub mod query_client {
             <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
                 Into<StdError> + Send + Sync,
         {
-            QueryClient::new(InterceptedService::new(inner, interceptor))
+            ServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -71,24 +71,10 @@ pub mod query_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        pub async fn params(
+        pub async fn config(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryParamsRequest>,
-        ) -> Result<tonic::Response<super::QueryParamsResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static("/cosmos.params.v1beta1.Query/Params");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        pub async fn subspaces(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QuerySubspacesRequest>,
-        ) -> Result<tonic::Response<super::QuerySubspacesResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::ConfigRequest>,
+        ) -> Result<tonic::Response<super::ConfigResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -97,7 +83,7 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path =
-                http::uri::PathAndQuery::from_static("/cosmos.params.v1beta1.Query/Subspaces");
+                http::uri::PathAndQuery::from_static("/cosmos.base.node.v1beta1.Service/Config");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -105,29 +91,25 @@ pub mod query_client {
 /// Generated server implementations.
 #[cfg(feature = "grpc")]
 #[cfg_attr(docsrs, doc(cfg(feature = "grpc")))]
-pub mod query_server {
+pub mod service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
+    ///Generated trait containing gRPC methods that should be implemented for use with ServiceServer.
     #[async_trait]
-    pub trait Query: Send + Sync + 'static {
-        async fn params(
+    pub trait Service: Send + Sync + 'static {
+        async fn config(
             &self,
-            request: tonic::Request<super::QueryParamsRequest>,
-        ) -> Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
-        async fn subspaces(
-            &self,
-            request: tonic::Request<super::QuerySubspacesRequest>,
-        ) -> Result<tonic::Response<super::QuerySubspacesResponse>, tonic::Status>;
+            request: tonic::Request<super::ConfigRequest>,
+        ) -> Result<tonic::Response<super::ConfigResponse>, tonic::Status>;
     }
     #[derive(Debug)]
-    pub struct QueryServer<T: Query> {
+    pub struct ServiceServer<T: Service> {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
-    impl<T: Query> QueryServer<T> {
+    impl<T: Service> ServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -158,9 +140,9 @@ pub mod query_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for QueryServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for ServiceServer<T>
     where
-        T: Query,
+        T: Service,
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
@@ -173,18 +155,18 @@ pub mod query_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.params.v1beta1.Query/Params" => {
+                "/cosmos.base.node.v1beta1.Service/Config" => {
                     #[allow(non_camel_case_types)]
-                    struct ParamsSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryParamsRequest> for ParamsSvc<T> {
-                        type Response = super::QueryParamsResponse;
+                    struct ConfigSvc<T: Service>(pub Arc<T>);
+                    impl<T: Service> tonic::server::UnaryService<super::ConfigRequest> for ConfigSvc<T> {
+                        type Response = super::ConfigResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryParamsRequest>,
+                            request: tonic::Request<super::ConfigRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).params(request).await };
+                            let fut = async move { (*inner).config(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -193,38 +175,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = ParamsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/cosmos.params.v1beta1.Query/Subspaces" => {
-                    #[allow(non_camel_case_types)]
-                    struct SubspacesSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QuerySubspacesRequest> for SubspacesSvc<T> {
-                        type Response = super::QuerySubspacesResponse;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::QuerySubspacesRequest>,
-                        ) -> Self::Future {
-                            let inner = self.0.clone();
-                            let fut = async move { (*inner).subspaces(request).await };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = SubspacesSvc(inner);
+                        let method = ConfigSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -246,7 +197,7 @@ pub mod query_server {
             }
         }
     }
-    impl<T: Query> Clone for QueryServer<T> {
+    impl<T: Service> Clone for ServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -256,7 +207,7 @@ pub mod query_server {
             }
         }
     }
-    impl<T: Query> Clone for _Inner<T> {
+    impl<T: Service> Clone for _Inner<T> {
         fn clone(&self) -> Self {
             Self(self.0.clone())
         }
@@ -266,7 +217,7 @@ pub mod query_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: Query> tonic::server::NamedService for QueryServer<T> {
-        const NAME: &'static str = "cosmos.params.v1beta1.Query";
+    impl<T: Service> tonic::server::NamedService for ServiceServer<T> {
+        const NAME: &'static str = "cosmos.base.node.v1beta1.Service";
     }
 }

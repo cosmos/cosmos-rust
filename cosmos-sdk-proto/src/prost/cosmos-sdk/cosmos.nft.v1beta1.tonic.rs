@@ -71,10 +71,10 @@ pub mod query_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        pub async fn allowance(
+        pub async fn balance(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllowanceRequest>,
-        ) -> Result<tonic::Response<super::QueryAllowanceResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::QueryBalanceRequest>,
+        ) -> Result<tonic::Response<super::QueryBalanceResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -82,14 +82,13 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.feegrant.v1beta1.Query/Allowance");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Query/Balance");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn allowances(
+        pub async fn owner(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllowancesRequest>,
-        ) -> Result<tonic::Response<super::QueryAllowancesResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::QueryOwnerRequest>,
+        ) -> Result<tonic::Response<super::QueryOwnerResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -97,15 +96,13 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.feegrant.v1beta1.Query/Allowances");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Query/Owner");
             self.inner.unary(request.into_request(), path, codec).await
         }
-        pub async fn allowances_by_granter(
+        pub async fn supply(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllowancesByGranterRequest>,
-        ) -> Result<tonic::Response<super::QueryAllowancesByGranterResponse>, tonic::Status>
-        {
+            request: impl tonic::IntoRequest<super::QuerySupplyRequest>,
+        ) -> Result<tonic::Response<super::QuerySupplyResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -113,9 +110,63 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Query/AllowancesByGranter",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Query/Supply");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn nf_ts(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryNfTsRequest>,
+        ) -> Result<tonic::Response<super::QueryNfTsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Query/NFTs");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn nft(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryNftRequest>,
+        ) -> Result<tonic::Response<super::QueryNftResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Query/NFT");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn class(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryClassRequest>,
+        ) -> Result<tonic::Response<super::QueryClassResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Query/Class");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
+        pub async fn classes(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryClassesRequest>,
+        ) -> Result<tonic::Response<super::QueryClassesResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Query/Classes");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -129,18 +180,34 @@ pub mod query_server {
     ///Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
-        async fn allowance(
+        async fn balance(
             &self,
-            request: tonic::Request<super::QueryAllowanceRequest>,
-        ) -> Result<tonic::Response<super::QueryAllowanceResponse>, tonic::Status>;
-        async fn allowances(
+            request: tonic::Request<super::QueryBalanceRequest>,
+        ) -> Result<tonic::Response<super::QueryBalanceResponse>, tonic::Status>;
+        async fn owner(
             &self,
-            request: tonic::Request<super::QueryAllowancesRequest>,
-        ) -> Result<tonic::Response<super::QueryAllowancesResponse>, tonic::Status>;
-        async fn allowances_by_granter(
+            request: tonic::Request<super::QueryOwnerRequest>,
+        ) -> Result<tonic::Response<super::QueryOwnerResponse>, tonic::Status>;
+        async fn supply(
             &self,
-            request: tonic::Request<super::QueryAllowancesByGranterRequest>,
-        ) -> Result<tonic::Response<super::QueryAllowancesByGranterResponse>, tonic::Status>;
+            request: tonic::Request<super::QuerySupplyRequest>,
+        ) -> Result<tonic::Response<super::QuerySupplyResponse>, tonic::Status>;
+        async fn nf_ts(
+            &self,
+            request: tonic::Request<super::QueryNfTsRequest>,
+        ) -> Result<tonic::Response<super::QueryNfTsResponse>, tonic::Status>;
+        async fn nft(
+            &self,
+            request: tonic::Request<super::QueryNftRequest>,
+        ) -> Result<tonic::Response<super::QueryNftResponse>, tonic::Status>;
+        async fn class(
+            &self,
+            request: tonic::Request<super::QueryClassRequest>,
+        ) -> Result<tonic::Response<super::QueryClassResponse>, tonic::Status>;
+        async fn classes(
+            &self,
+            request: tonic::Request<super::QueryClassesRequest>,
+        ) -> Result<tonic::Response<super::QueryClassesResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -195,18 +262,18 @@ pub mod query_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.feegrant.v1beta1.Query/Allowance" => {
+                "/cosmos.nft.v1beta1.Query/Balance" => {
                     #[allow(non_camel_case_types)]
-                    struct AllowanceSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryAllowanceRequest> for AllowanceSvc<T> {
-                        type Response = super::QueryAllowanceResponse;
+                    struct BalanceSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryBalanceRequest> for BalanceSvc<T> {
+                        type Response = super::QueryBalanceResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAllowanceRequest>,
+                            request: tonic::Request<super::QueryBalanceRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).allowance(request).await };
+                            let fut = async move { (*inner).balance(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -215,7 +282,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AllowanceSvc(inner);
+                        let method = BalanceSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -226,18 +293,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.feegrant.v1beta1.Query/Allowances" => {
+                "/cosmos.nft.v1beta1.Query/Owner" => {
                     #[allow(non_camel_case_types)]
-                    struct AllowancesSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryAllowancesRequest> for AllowancesSvc<T> {
-                        type Response = super::QueryAllowancesResponse;
+                    struct OwnerSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryOwnerRequest> for OwnerSvc<T> {
+                        type Response = super::QueryOwnerResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAllowancesRequest>,
+                            request: tonic::Request<super::QueryOwnerRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).allowances(request).await };
+                            let fut = async move { (*inner).owner(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -246,7 +313,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AllowancesSvc(inner);
+                        let method = OwnerSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -257,21 +324,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.feegrant.v1beta1.Query/AllowancesByGranter" => {
+                "/cosmos.nft.v1beta1.Query/Supply" => {
                     #[allow(non_camel_case_types)]
-                    struct AllowancesByGranterSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query>
-                        tonic::server::UnaryService<super::QueryAllowancesByGranterRequest>
-                        for AllowancesByGranterSvc<T>
-                    {
-                        type Response = super::QueryAllowancesByGranterResponse;
+                    struct SupplySvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QuerySupplyRequest> for SupplySvc<T> {
+                        type Response = super::QuerySupplyResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAllowancesByGranterRequest>,
+                            request: tonic::Request<super::QuerySupplyRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).allowances_by_granter(request).await };
+                            let fut = async move { (*inner).supply(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -280,7 +344,131 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AllowancesByGranterSvc(inner);
+                        let method = SupplySvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.nft.v1beta1.Query/NFTs" => {
+                    #[allow(non_camel_case_types)]
+                    struct NFTsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryNfTsRequest> for NFTsSvc<T> {
+                        type Response = super::QueryNfTsResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryNfTsRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).nf_ts(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = NFTsSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.nft.v1beta1.Query/NFT" => {
+                    #[allow(non_camel_case_types)]
+                    struct NFTSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryNftRequest> for NFTSvc<T> {
+                        type Response = super::QueryNftResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryNftRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).nft(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = NFTSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.nft.v1beta1.Query/Class" => {
+                    #[allow(non_camel_case_types)]
+                    struct ClassSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryClassRequest> for ClassSvc<T> {
+                        type Response = super::QueryClassResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryClassRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).class(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = ClassSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.nft.v1beta1.Query/Classes" => {
+                    #[allow(non_camel_case_types)]
+                    struct ClassesSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryClassesRequest> for ClassesSvc<T> {
+                        type Response = super::QueryClassesResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryClassesRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).classes(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = ClassesSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -323,7 +511,7 @@ pub mod query_server {
         }
     }
     impl<T: Query> tonic::server::NamedService for QueryServer<T> {
-        const NAME: &'static str = "cosmos.feegrant.v1beta1.Query";
+        const NAME: &'static str = "cosmos.nft.v1beta1.Query";
     }
 }
 /// Generated client implementations.
@@ -395,10 +583,10 @@ pub mod msg_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
-        pub async fn grant_allowance(
+        pub async fn send(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgGrantAllowance>,
-        ) -> Result<tonic::Response<super::MsgGrantAllowanceResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::MsgSend>,
+        ) -> Result<tonic::Response<super::MsgSendResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -406,24 +594,7 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.feegrant.v1beta1.Msg/GrantAllowance");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        pub async fn revoke_allowance(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgRevokeAllowance>,
-        ) -> Result<tonic::Response<super::MsgRevokeAllowanceResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Msg/RevokeAllowance",
-            );
+            let path = http::uri::PathAndQuery::from_static("/cosmos.nft.v1beta1.Msg/Send");
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
@@ -437,14 +608,10 @@ pub mod msg_server {
     ///Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
-        async fn grant_allowance(
+        async fn send(
             &self,
-            request: tonic::Request<super::MsgGrantAllowance>,
-        ) -> Result<tonic::Response<super::MsgGrantAllowanceResponse>, tonic::Status>;
-        async fn revoke_allowance(
-            &self,
-            request: tonic::Request<super::MsgRevokeAllowance>,
-        ) -> Result<tonic::Response<super::MsgRevokeAllowanceResponse>, tonic::Status>;
+            request: tonic::Request<super::MsgSend>,
+        ) -> Result<tonic::Response<super::MsgSendResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
@@ -499,18 +666,18 @@ pub mod msg_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.feegrant.v1beta1.Msg/GrantAllowance" => {
+                "/cosmos.nft.v1beta1.Msg/Send" => {
                     #[allow(non_camel_case_types)]
-                    struct GrantAllowanceSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgGrantAllowance> for GrantAllowanceSvc<T> {
-                        type Response = super::MsgGrantAllowanceResponse;
+                    struct SendSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgSend> for SendSvc<T> {
+                        type Response = super::MsgSendResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgGrantAllowance>,
+                            request: tonic::Request<super::MsgSend>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
-                            let fut = async move { (*inner).grant_allowance(request).await };
+                            let fut = async move { (*inner).send(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -519,38 +686,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = GrantAllowanceSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
-                            accept_compression_encodings,
-                            send_compression_encodings,
-                        );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/cosmos.feegrant.v1beta1.Msg/RevokeAllowance" => {
-                    #[allow(non_camel_case_types)]
-                    struct RevokeAllowanceSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgRevokeAllowance> for RevokeAllowanceSvc<T> {
-                        type Response = super::MsgRevokeAllowanceResponse;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::MsgRevokeAllowance>,
-                        ) -> Self::Future {
-                            let inner = self.0.clone();
-                            let fut = async move { (*inner).revoke_allowance(request).await };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = RevokeAllowanceSvc(inner);
+                        let method = SendSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,
@@ -593,6 +729,6 @@ pub mod msg_server {
         }
     }
     impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
-        const NAME: &'static str = "cosmos.feegrant.v1beta1.Msg";
+        const NAME: &'static str = "cosmos.nft.v1beta1.Msg";
     }
 }

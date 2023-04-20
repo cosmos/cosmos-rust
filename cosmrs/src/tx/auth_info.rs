@@ -7,6 +7,7 @@ use crate::{
 };
 
 /// [`AuthInfo`] describes the fee and signer modes that are used to sign a transaction.
+// TODO(tarcieri): support for the `tip` field
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct AuthInfo {
     /// Defines the signing modes for the required signers.
@@ -40,6 +41,7 @@ impl TryFrom<proto::cosmos::tx::v1beta1::AuthInfo> for AuthInfo {
     type Error = ErrorReport;
 
     fn try_from(proto: proto::cosmos::tx::v1beta1::AuthInfo) -> Result<AuthInfo> {
+        // TODO(tarcieri): parse tip
         Ok(AuthInfo {
             signer_infos: proto
                 .signer_infos
@@ -59,6 +61,7 @@ impl From<AuthInfo> for proto::cosmos::tx::v1beta1::AuthInfo {
         proto::cosmos::tx::v1beta1::AuthInfo {
             signer_infos: auth_info.signer_infos.into_iter().map(Into::into).collect(),
             fee: Some(auth_info.fee.into()),
+            tip: None,
         }
     }
 }

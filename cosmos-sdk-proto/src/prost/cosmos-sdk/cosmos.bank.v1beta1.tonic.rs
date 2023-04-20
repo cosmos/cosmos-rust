@@ -189,6 +189,21 @@ pub mod query_client {
                 http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/DenomsMetadata");
             self.inner.unary(request.into_request(), path, codec).await
         }
+        pub async fn denom_owners(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryDenomOwnersRequest>,
+        ) -> Result<tonic::Response<super::QueryDenomOwnersResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.bank.v1beta1.Query/DenomOwners");
+            self.inner.unary(request.into_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -232,6 +247,10 @@ pub mod query_server {
             &self,
             request: tonic::Request<super::QueryDenomsMetadataRequest>,
         ) -> Result<tonic::Response<super::QueryDenomsMetadataResponse>, tonic::Status>;
+        async fn denom_owners(
+            &self,
+            request: tonic::Request<super::QueryDenomOwnersRequest>,
+        ) -> Result<tonic::Response<super::QueryDenomOwnersResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -530,6 +549,37 @@ pub mod query_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = DenomsMetadataSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
+                            accept_compression_encodings,
+                            send_compression_encodings,
+                        );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/cosmos.bank.v1beta1.Query/DenomOwners" => {
+                    #[allow(non_camel_case_types)]
+                    struct DenomOwnersSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryDenomOwnersRequest> for DenomOwnersSvc<T> {
+                        type Response = super::QueryDenomOwnersResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::QueryDenomOwnersRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).denom_owners(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = DenomOwnersSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec).apply_compression_config(
                             accept_compression_encodings,

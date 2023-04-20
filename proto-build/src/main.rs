@@ -20,7 +20,7 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.45.4";
+const COSMOS_SDK_REV: &str = "v0.46.12";
 
 /// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
 const IBC_REV: &str = "v3.0.0";
@@ -140,11 +140,10 @@ fn run_cmd(cmd: impl AsRef<OsStr>, args: impl IntoIterator<Item = impl AsRef<OsS
         });
 
     if !exit_status.success() {
-        panic!(
-            "{:?} exited with error code: {:?}",
-            cmd.as_ref(),
-            exit_status.code()
-        );
+        match exit_status.code() {
+            Some(code) => panic!("{:?} exited with error code: {:?}", cmd.as_ref(), code),
+            None => panic!("{:?} exited without error code", cmd.as_ref()),
+        }
     }
 }
 
@@ -225,7 +224,8 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
 
     // Compile all of the proto files, along with grpc service clients
     info!("Compiling proto definitions and clients for GRPC services!");
-    run_buf("buf.sdk.gen.yaml", COSMOS_SDK_DIR, out_dir);
+    let proto_path = Path::new(COSMOS_SDK_DIR).join("proto");
+    run_buf("buf.sdk.gen.yaml", &proto_path, out_dir);
     info!("=> Done!");
 }
 

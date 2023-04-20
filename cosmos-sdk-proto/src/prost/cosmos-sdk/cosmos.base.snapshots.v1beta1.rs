@@ -21,10 +21,12 @@ pub struct Metadata {
     pub chunk_hashes: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// SnapshotItem is an item contained in a rootmulti.Store snapshot.
+///
+/// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotItem {
     /// item is the specific type of snapshot item.
-    #[prost(oneof = "snapshot_item::Item", tags = "1, 2, 3, 4")]
+    #[prost(oneof = "snapshot_item::Item", tags = "1, 2, 3, 4, 5, 6")]
     pub item: ::core::option::Option<snapshot_item::Item>,
 }
 /// Nested message and enum types in `SnapshotItem`.
@@ -40,15 +42,23 @@ pub mod snapshot_item {
         Extension(super::SnapshotExtensionMeta),
         #[prost(message, tag = "4")]
         ExtensionPayload(super::SnapshotExtensionPayload),
+        #[prost(message, tag = "5")]
+        Kv(super::SnapshotKvItem),
+        #[prost(message, tag = "6")]
+        Schema(super::SnapshotSchema),
     }
 }
 /// SnapshotStoreItem contains metadata about a snapshotted store.
+///
+/// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotStoreItem {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
 }
 /// SnapshotIAVLItem is an exported IAVL node.
+///
+/// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotIavlItem {
     #[prost(bytes = "vec", tag = "1")]
@@ -63,6 +73,8 @@ pub struct SnapshotIavlItem {
     pub height: i32,
 }
 /// SnapshotExtensionMeta contains metadata about an external snapshotter.
+///
+/// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotExtensionMeta {
     #[prost(string, tag = "1")]
@@ -71,9 +83,29 @@ pub struct SnapshotExtensionMeta {
     pub format: u32,
 }
 /// SnapshotExtensionPayload contains payloads of an external snapshotter.
+///
+/// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotExtensionPayload {
     #[prost(bytes = "vec", tag = "1")]
     pub payload: ::prost::alloc::vec::Vec<u8>,
+}
+/// SnapshotKVItem is an exported Key/Value Pair
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SnapshotKvItem {
+    #[prost(bytes = "vec", tag = "1")]
+    pub key: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", tag = "2")]
+    pub value: ::prost::alloc::vec::Vec<u8>,
+}
+/// SnapshotSchema is an exported schema of smt store
+///
+/// Since: cosmos-sdk 0.46
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SnapshotSchema {
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub keys: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 // @@protoc_insertion_point(module)
