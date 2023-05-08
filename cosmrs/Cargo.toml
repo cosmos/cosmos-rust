@@ -12,7 +12,8 @@ edition = "2021"
 rust-version = "1.65"
 
 [dependencies]
-cosmos-sdk-proto = { version = "0.19", default-features = false, path = "../cosmos-sdk-proto" }
+# cosmos-sdk-proto = { version = "0.19", default-features = false, path = "../cosmos-sdk-proto" }
+ibc-proto = { version = "0.31.0-alpha.2", default-features = false, git = "https://github.com/octopus-network/ibc-proto-rs.git", branch = "new-proto" }
 ecdsa = { version = "0.16", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.13", features = ["ecdsa", "sha256"] }

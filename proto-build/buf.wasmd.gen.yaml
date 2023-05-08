@@ -1,8 +1,0 @@
-version: v1
-plugins:
-  - remote: buf.build/prost/plugins/prost:v0.2.1-1
-    out: .
-  - remote: buf.build/prost/plugins/tonic:v0.2.1-1
-    out: .
-    opt:
-      - no_server=true
