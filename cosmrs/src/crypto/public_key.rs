@@ -61,11 +61,13 @@ impl PublicKey {
             tendermint::PublicKey::Ed25519(_) => proto::cosmos::crypto::secp256k1::PubKey {
                 key: self.to_bytes(),
             }
-            .to_bytes()?,
+            .to_bytes()
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?,
             tendermint::PublicKey::Secp256k1(_) => proto::cosmos::crypto::secp256k1::PubKey {
                 key: self.to_bytes(),
             }
-            .to_bytes()?,
+            .to_bytes()
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?,
             _ => return Err(Error::Crypto.into()),
         };
 
@@ -106,11 +108,13 @@ impl TryFrom<&Any> for PublicKey {
 
     fn try_from(any: &Any) -> Result<PublicKey> {
         match any.type_url.as_str() {
-            Self::ED25519_TYPE_URL => {
-                proto::cosmos::crypto::ed25519::PubKey::decode(&*any.value)?.try_into()
-            }
+            Self::ED25519_TYPE_URL => proto::cosmos::crypto::ed25519::PubKey::decode(&*any.value)
+                .map_err(|e| eyre::eyre!(format!("{:?}", e)))?
+                .try_into(),
             Self::SECP256K1_TYPE_URL => {
-                proto::cosmos::crypto::secp256k1::PubKey::decode(&*any.value)?.try_into()
+                proto::cosmos::crypto::secp256k1::PubKey::decode(&*any.value)
+                    .map_err(|e| eyre::eyre!(format!("{:?}", e)))?
+                    .try_into()
             }
             other => Err(Error::Crypto)
                 .wrap_err_with(|| format!("invalid type URL for public key: {}", other)),

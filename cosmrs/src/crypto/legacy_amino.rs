@@ -63,7 +63,8 @@ impl TryFrom<&Any> for LegacyAminoMultisig {
             });
         }
 
-        let proto = proto::cosmos::crypto::multisig::LegacyAminoPubKey::decode(&*any.value)?;
+        let proto = proto::cosmos::crypto::multisig::LegacyAminoPubKey::decode(&*any.value)
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?;
         let public_keys = proto
             .public_keys
             .into_iter()

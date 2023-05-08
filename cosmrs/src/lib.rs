@@ -52,8 +52,8 @@ pub use crate::{
     tx::Tx,
 };
 
-pub use cosmos_sdk_proto::{self as proto, Any};
 pub use eyre::Report as ErrorReport;
+pub use ibc_proto::{self as proto, google::protobuf::Any};
 pub use tendermint;
 
 #[cfg(feature = "bip32")]

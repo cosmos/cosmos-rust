@@ -12,8 +12,8 @@ edition = "2021"
 rust-version = "1.65"
 
 [dependencies]
-# cosmos-sdk-proto = { version = "0.19", default-features = false, path = "../cosmos-sdk-proto" }
-ibc-proto = { version = "0.31.0-alpha.2", default-features = false, git = "https://github.com/octopus-network/ibc-proto-rs.git", branch = "new-proto" }
+ibc-proto = { git = "https://github.com/octopus-network/ibc-proto-rs.git", rev = "e9fb075d666bf49e491e3d338e5af98aa7b2b73e" }
+prost = { version = "0.11" }
 ecdsa = { version = "0.16", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.13", features = ["ecdsa", "sha256"] }
@@ -37,10 +37,10 @@ hex-literal = "0.4"
 
 [features]
 default   = ["bip32"]
-cosmwasm  = ["cosmos-sdk-proto/cosmwasm"]
+cosmwasm  = ["ibc-proto/cosmwasm"]
 dev       = ["rpc", "tokio"]
-grpc      = ["cosmos-sdk-proto/grpc-transport", "grpc-core"]
-grpc-core = ["cosmos-sdk-proto/grpc"]
+client    = ["ibc-proto/client"]
+server    = ["ibc-proto/server"]
 rpc       = ["tendermint-rpc"]
 
 [package.metadata.docs.rs]

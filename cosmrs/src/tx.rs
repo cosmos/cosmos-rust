@@ -124,14 +124,15 @@ pub use self::{
     sign_doc::SignDoc,
     signer_info::{SignerInfo, SignerPublicKey},
 };
-pub use crate::{
-    proto::{cosmos::tx::signing::v1beta1::SignMode, traits::MessageExt},
-    ErrorReport,
-};
 
 use crate::{
     proto::{self, traits::Message},
     Error, Gas, Result,
+};
+
+pub use crate::{
+    proto::{cosmos::tx::signing::v1beta1::SignMode, traits::MessageExt},
+    ErrorReport,
 };
 
 #[cfg(feature = "rpc")]
@@ -186,7 +187,9 @@ impl TryFrom<&[u8]> for Tx {
     type Error = ErrorReport;
 
     fn try_from(bytes: &[u8]) -> Result<Tx> {
-        proto::cosmos::tx::v1beta1::Tx::decode(bytes)?.try_into()
+        proto::cosmos::tx::v1beta1::Tx::decode(bytes)
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?
+            .try_into()
     }
 }
 

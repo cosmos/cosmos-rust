@@ -19,7 +19,9 @@ pub trait Msg:
 
     /// Parse this message proto from [`Any`].
     fn from_any(any: &Any) -> Result<Self> {
-        Self::Proto::from_any(any)?.try_into()
+        Self::Proto::from_any(any)
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?
+            .try_into()
     }
 
     /// Serialize this message proto as [`Any`].
@@ -29,6 +31,9 @@ pub trait Msg:
 
     /// Convert this message proto into [`Any`].
     fn into_any(self) -> Result<Any> {
-        Ok(self.into().to_any()?)
+        Ok(self
+            .into()
+            .to_any()
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?)
     }
 }

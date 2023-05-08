@@ -38,7 +38,11 @@ impl TryFrom<proto::cosmos::feegrant::v1beta1::PeriodicAllowance> for PeriodicAl
     ) -> Result<PeriodicAllowance> {
         Ok(PeriodicAllowance {
             basic: proto.basic.map(TryFrom::try_from).transpose()?,
-            period: proto.period.map(TryFrom::try_from).transpose()?,
+            period: proto
+                .period
+                .map(TryFrom::try_from)
+                .transpose()
+                .map_err(|e| eyre::eyre!(format!("{:?}", e)))?,
             period_spend_limit: proto
                 .period_spend_limit
                 .iter()
