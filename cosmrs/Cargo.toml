@@ -14,7 +14,7 @@ rust-version = "1.65"
 [dependencies]
 ibc-proto = { default-features = false, git = "https://github.com/octopus-network/ibc-proto-rs.git", rev = "e9fb075d666bf49e491e3d338e5af98aa7b2b73e" }
 prost = { version = "0.11", default-features = false }
-ecdsa = { version = "0.16", features = ["std"] }
+ecdsa = { version = "0.16", features = ["std"], default-features = false}
 eyre = { version = "0.6", default-features = false }
 k256 = { version = "0.13", features = ["ecdsa", "sha256"], default-features = false}
 rand_core = { version = "0.6", features = ["std"], default-features = false}
@@ -41,11 +41,11 @@ default   = ["std"]
 std = [
     "ibc-proto/std",
     "prost/std",
+    "ecdsa/std",
     "serde/std",
     "serde_json/std",
     "subtle-encoding/std",
     "tendermint/std",
-    "tendermint-proto/std",
     "displaydoc/std",
     "bip32",
 ]
