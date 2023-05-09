@@ -5,7 +5,6 @@ use crate::{
     crypto::{LegacyAminoMultisig, PublicKey},
     proto, Any, Error, ErrorReport, Result,
 };
-use eyre::WrapErr;
 
 /// [`SignerInfo`] describes the public key and signing mode of a single top-level signer.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -158,12 +157,10 @@ impl TryFrom<SignerPublicKey> for PublicKey {
     fn try_from(public_key: SignerPublicKey) -> Result<PublicKey> {
         match public_key {
             SignerPublicKey::Single(pk) => Ok(pk),
-            _ => Err(Error::Crypto).wrap_err_with(|| {
-                format!(
-                    "expected `SignerPublicKey::Single`, got: {}",
-                    public_key.type_url()
-                )
-            }),
+            _ => Err(Error::Crypto.wrap_err(format!(
+                "expected `SignerPublicKey::Single`, got: {}",
+                public_key.type_url()
+            ))),
         }
     }
 }

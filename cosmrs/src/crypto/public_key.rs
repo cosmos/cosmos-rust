@@ -7,7 +7,7 @@ use crate::{
     },
     AccountId, Any, Error, ErrorReport, Result,
 };
-use eyre::WrapErr;
+
 use serde::{Deserialize, Serialize};
 use std::str::FromStr;
 use subtle_encoding::base64;
@@ -116,8 +116,9 @@ impl TryFrom<&Any> for PublicKey {
                     .map_err(|e| eyre::eyre!(format!("{:?}", e)))?
                     .try_into()
             }
-            other => Err(Error::Crypto)
-                .wrap_err_with(|| format!("invalid type URL for public key: {}", other)),
+            other => {
+                Err(Error::Crypto.wrap_err(format!("invalid type URL for public key: {}", other)))
+            }
         }
     }
 }
@@ -221,8 +222,7 @@ impl TryFrom<&PublicKeyJson> for PublicKey {
             Self::ED25519_TYPE_URL => tendermint::PublicKey::from_raw_ed25519(&pk_bytes),
             Self::SECP256K1_TYPE_URL => tendermint::PublicKey::from_raw_secp256k1(&pk_bytes),
             other => {
-                return Err(Error::Crypto)
-                    .wrap_err_with(|| format!("invalid public key @type: {}", other))
+                return Err(Error::Crypto.wrap_err(format!("invalid public key @type: {}", other)))
             }
         };
 

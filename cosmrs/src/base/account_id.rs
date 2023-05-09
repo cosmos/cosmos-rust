@@ -24,8 +24,11 @@ impl AccountId {
         let id = bech32::encode(prefix, bytes);
 
         if !prefix.chars().all(|c| matches!(c, 'a'..='z' | '0'..='9')) {
-            return Err(Error::AccountId { id })
-                .wrap_err("expected prefix to be lowercase alphanumeric characters only");
+            return Err(eyre::eyre!(
+                "{}, {}",
+                Error::AccountId { id },
+                "expected prefix to be lowercase alphanumeric characters only"
+            ));
         }
 
         if matches!(bytes.len(), 1..=Self::MAX_LENGTH) {
@@ -34,13 +37,11 @@ impl AccountId {
                 hrp_length: prefix.len(),
             })
         } else {
-            Err(Error::AccountId { id }).wrap_err_with(|| {
-                format!(
-                    "account ID should be at most {} bytes long, but was {} bytes long",
-                    Self::MAX_LENGTH,
-                    bytes.len()
-                )
-            })
+            Err(Error::AccountId { id }.wrap_err(format!(
+                "account ID should be at most {} bytes long, but was {} bytes long",
+                Self::MAX_LENGTH,
+                bytes.len()
+            )))
         }
     }
 
@@ -110,8 +111,8 @@ impl TryFrom<&AccountId> for tendermint::account::Id {
             Ok(bytes) => Ok(tendermint::account::Id::new(bytes)),
             _ => Err(Error::AccountId {
                 id: id.bech32.clone(),
-            })
-            .wrap_err_with(|| format!("invalid length for account ID: {}", len)),
+            }
+            .wrap_err(format!("invalid length for account ID: {}", len))),
         }
     }
 }

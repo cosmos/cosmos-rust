@@ -205,6 +205,7 @@ name = "cosmrs"
 version = "0.14.0"
 dependencies = [
  "bip32",
+ "displaydoc",
  "ecdsa",
  "eyre",
  "getrandom",
@@ -219,7 +220,6 @@ dependencies = [
  "tendermint",
  "tendermint-proto",
  "tendermint-rpc",
- "thiserror",
  "tokio",
 ]
 
@@ -305,6 +305,17 @@ dependencies = [
  "const-oid",
  "crypto-common",
  "subtle",
+]
+
+[[package]]
+name = "displaydoc"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "487585f4d0c6655fe74905e2504d8ad6908e4db67f744eb140876906c2f3175d"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.15",
 ]
 
 [[package]]

@@ -3,38 +3,34 @@
 pub use eyre::{Report, Result};
 
 use tendermint::Hash;
-use thiserror::Error;
+// use thiserror::Error;
+use displaydoc::Display;
 
 /// Kinds of errors.
-#[derive(Clone, Debug, Eq, Error, PartialEq)]
+#[derive(Clone, Debug, Eq, Display, PartialEq)]
 pub enum Error {
-    /// Invalid account.
-    #[error("invalid account ID: {id:?}")]
+    /// invalid account ID: {id:?}"
     AccountId {
         /// Malformed account ID
         id: String,
     },
 
     /// Cryptographic errors.
-    #[error("cryptographic error")]
     Crypto,
 
-    /// Invalid decimal value.
-    #[error("invalid decimal value: {value:?}")]
+    /// Invalid decimal value: {value:?}
     Decimal {
         /// Invalid decimal value
         value: String,
     },
 
-    /// Invalid denomination.
-    #[error("invalid denomination: {name:?}")]
+    /// Invalid denomination: {name:?}
     Denom {
         /// Invalid name
         name: String,
     },
 
-    /// Invalid value for the given field of an enum.
-    #[error("invalid proto enum value: {name:?}, value: {found_value:?}")]
+    /// Invalid value for the given field of an enum, invalid proto enum value: {name:?}, value: {found_value:?}
     InvalidEnumValue {
         /// Name of the enum field
         name: &'static str,
@@ -43,15 +39,13 @@ pub enum Error {
         found_value: i32,
     },
 
-    /// Protobuf is missing a field.
-    #[error("missing proto field: {name:?}")]
+    /// Protobuf is missing a field, missing proto field: {name:?}
     MissingField {
         /// Name of the missing field
         name: &'static str,
     },
 
-    /// Unexpected message type.
-    #[error("unexpected Msg type: {found:?}, expected {expected:?}")]
+    /// Unexpected message type, unexpected Msg type: {found:?}, expected {expected:?}
     MsgType {
         /// Expected type URL.
         expected: &'static str,
@@ -60,10 +54,22 @@ pub enum Error {
         found: String,
     },
 
-    /// Transaction not found.
-    #[error("transaction not found: {hash:?}")]
+    /// Transaction not found: {hash:?}
     TxNotFound {
         /// Transaction hash that wasn't found.
         hash: Hash,
     },
+}
+
+impl Error {
+    /// wrap error msg
+    pub fn wrap_err(self, err_msg: String) -> eyre::ErrReport {
+        eyre::eyre!(format!("{self}, {err_msg}"))
+    }
+}
+
+impl From<Error> for eyre::ErrReport {
+    fn from(e: Error) -> Self {
+        eyre::eyre!(e)
+    }
 }

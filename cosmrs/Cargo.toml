@@ -23,7 +23,7 @@ serde_json = {version = "1", default-features = false }
 subtle-encoding = { version = "0.5", features = ["bech32-preview"], default-features = false}
 tendermint = { version = "0.32", features = ["secp256k1", "rust-crypto"], default-features = false}
 tendermint-proto = { version = "0.32", default-features = false }
-thiserror = "1"
+displaydoc = { version = "0.2", default-features = false }
 
 # optional dependencies
 bip32 = { version = "0.5", optional = true }
