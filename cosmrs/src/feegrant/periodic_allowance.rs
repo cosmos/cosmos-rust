@@ -92,8 +92,7 @@ impl From<PeriodicAllowance> for proto::cosmos::feegrant::v1beta1::PeriodicAllow
                 // FIXME: shunts like this are necessary due to
                 // https://github.com/informalsystems/tendermint-rs/issues/1053
                 let tpb::Timestamp { seconds, nanos } = v.into();
-                let period_reset = ibc_proto::google::protobuf::Timestamp { seconds, nanos };
-                period_reset
+                ibc_proto::google::protobuf::Timestamp { seconds, nanos }
             }),
         }
     }
