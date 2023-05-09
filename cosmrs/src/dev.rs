@@ -9,7 +9,7 @@ use crate::{
     rpc::{self, Client},
     tx::Tx,
 };
-use std::{ffi::OsStr, panic, process, str, time::Duration};
+use core::{ffi::OsStr, panic, process, str, time::Duration};
 use tendermint::Hash;
 use tokio::time;
 

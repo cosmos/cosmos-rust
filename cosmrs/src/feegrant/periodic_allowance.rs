@@ -1,7 +1,7 @@
 use super::BasicAllowance;
 use crate::{proto, tx::Msg, Coin, ErrorReport, Result};
 use core::convert::TryFrom;
-use std::time::Duration;
+use core::time::Duration;
 use tendermint::time::Time;
 use tendermint_proto::google::protobuf as tpb;
 /// PeriodicAllowance extends Allowance to allow for both a maximum cap,

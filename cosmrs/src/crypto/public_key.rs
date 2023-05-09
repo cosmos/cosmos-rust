@@ -8,8 +8,8 @@ use crate::{
     AccountId, Any, Error, ErrorReport, Result,
 };
 
+use core::str::FromStr;
 use serde::{Deserialize, Serialize};
-use std::str::FromStr;
 use subtle_encoding::base64;
 
 /// Public keys
@@ -26,7 +26,7 @@ impl PublicKey {
 
     /// Parse public key from Cosmos JSON format.
     pub fn from_json(s: &str) -> Result<Self> {
-        Ok(serde_json::from_str::<PublicKey>(s)?)
+        serde_json::from_str::<PublicKey>(s).map_err(|e| eyre::eyre!(e))
     }
 
     /// Serialize public key as Cosmos JSON.
@@ -216,7 +216,7 @@ impl TryFrom<&PublicKeyJson> for PublicKey {
     type Error = ErrorReport;
 
     fn try_from(json: &PublicKeyJson) -> Result<PublicKey> {
-        let pk_bytes = base64::decode(&json.key)?;
+        let pk_bytes = base64::decode(&json.key).map_err(|e| eyre::eyre!(e))?;
 
         let tm_key = match json.type_url.as_str() {
             Self::ED25519_TYPE_URL => tendermint::PublicKey::from_raw_ed25519(&pk_bytes),

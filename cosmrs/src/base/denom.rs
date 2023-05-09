@@ -1,6 +1,6 @@
 use crate::{Error, ErrorReport, Result};
+use core::{fmt, str::FromStr};
 use serde::{de, de::Error as _, ser, Deserialize, Serialize};
-use std::{fmt, str::FromStr};
 
 /// Denomination.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

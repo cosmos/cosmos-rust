@@ -14,19 +14,19 @@ rust-version = "1.65"
 [dependencies]
 ibc-proto = { default-features = false, git = "https://github.com/octopus-network/ibc-proto-rs.git", rev = "e9fb075d666bf49e491e3d338e5af98aa7b2b73e" }
 prost = { version = "0.11", default-features = false }
-ecdsa = { version = "0.16", features = ["std"], default-features = false}
+ecdsa = { version = "0.16", default-features = false}
 eyre = { version = "0.6", default-features = false }
 k256 = { version = "0.13", features = ["ecdsa", "sha256"], default-features = false}
 rand_core = { version = "0.6", features = ["std"], default-features = false}
 serde = { version = "1", features = ["serde_derive"], default-features = false}
 serde_json = {version = "1", default-features = false }
-subtle-encoding = { version = "0.5", features = ["bech32-preview"], default-features = false}
+subtle-encoding = { version = "0.5", default-features = false}
 tendermint = { version = "0.32", features = ["secp256k1", "rust-crypto"], default-features = false}
 tendermint-proto = { version = "0.32", default-features = false }
 displaydoc = { version = "0.2", default-features = false }
 
 # optional dependencies
-bip32 = { version = "0.5", optional = true }
+bip32 = { version = "0.5", features = ["alloc", "secp256k1"], optional = true, default-features = false}
 tendermint-rpc = { version = "0.32", optional = true, features = ["http-client"], default-features = false}
 tokio = { version = "1", optional = true, default-features = false}
 
@@ -47,13 +47,14 @@ std = [
     "subtle-encoding/std",
     "tendermint/std",
     "displaydoc/std",
-    "bip32",
+    "bip32/std",
 ]
 cosmwasm  = ["ibc-proto/cosmwasm"]
 dev       = ["rpc", "tokio"]
 client    = ["ibc-proto/client"]
 server    = ["ibc-proto/server"]
 rpc       = ["tendermint-rpc"]
+bech32-preview = ["subtle-encoding/bech32-preview"]
 
 [package.metadata.docs.rs]
 all-features = true

@@ -35,7 +35,7 @@ impl SigningKey {
 
     /// Initialize from a raw scalar value (big endian).
     pub fn from_slice(bytes: &[u8]) -> Result<Self> {
-        let signing_key = k256::ecdsa::SigningKey::from_slice(bytes)?;
+        let signing_key = k256::ecdsa::SigningKey::from_slice(bytes).map_err(|e| eyre::eyre!(e))?;
         Ok(Self::new(Box::new(signing_key)))
     }
 
@@ -59,7 +59,7 @@ impl SigningKey {
 
     /// Sign the given message, returning a signature.
     pub fn sign(&self, msg: &[u8]) -> Result<Signature> {
-        Ok(self.inner.try_sign(msg)?)
+        self.inner.try_sign(msg).map_err(|e| eyre::eyre!(e))
     }
 
     /// Get the [`PublicKey`] for this [`SigningKey`].

@@ -1,5 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
-use std::convert::TryFrom;
+use core::convert::TryFrom;
 
 /// MsgMigrateContract runs a code upgrade/ downgrade for a smart contract
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

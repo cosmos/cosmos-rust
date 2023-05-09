@@ -1,5 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, Coin, ErrorReport, Result};
-use std::convert::TryFrom;
+use core::convert::TryFrom;
 
 /// MsgExecuteContract submits the given message data to a smart contract
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

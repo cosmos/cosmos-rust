@@ -1,7 +1,6 @@
 use crate::{Error, ErrorReport, Result};
-use eyre::WrapErr;
+use core::{fmt, str::FromStr};
 use serde::{de, de::Error as _, ser, Deserialize, Serialize};
-use std::{fmt, str::FromStr};
 use subtle_encoding::bech32;
 
 /// Account identifiers
@@ -80,7 +79,8 @@ impl FromStr for AccountId {
     type Err = ErrorReport;
 
     fn from_str(s: &str) -> Result<Self> {
-        let (hrp, bytes) = bech32::decode(s).wrap_err(format!("invalid bech32: '{}'", s))?;
+        let (hrp, bytes) = bech32::decode(s)
+            .map_err(|e| eyre::eyre!("{}, {}", e, format!("invalid bech32: '{}'", s)))?;
         Self::new(&hrp, &bytes)
     }
 }

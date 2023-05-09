@@ -103,8 +103,6 @@ dependencies = [
  "bs58",
  "hmac",
  "k256",
- "once_cell",
- "pbkdf2",
  "rand_core",
  "ripemd",
  "sha2 0.10.6",
@@ -934,16 +932,6 @@ checksum = "048f9ac93c1eab514f9470c4bc8d97ca2a0a236b84f45cc19d69a59fc11467f6"
 dependencies = [
  "base64 0.13.1",
  "serde",
-]
-
-[[package]]
-name = "pbkdf2"
-version = "0.12.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0ca0b5a68607598bf3bad68f32227a8164f6254833f84eafaac409cd6746c31"
-dependencies = [
- "digest 0.10.6",
- "hmac",
 ]
 
 [[package]]
