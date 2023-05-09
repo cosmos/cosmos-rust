@@ -72,8 +72,7 @@ impl From<&BasicAllowance> for proto::cosmos::feegrant::v1beta1::BasicAllowance 
                 // FIXME: shunts like this are necessary due to
                 // https://github.com/informalsystems/tendermint-rs/issues/1053
                 let tpb::Timestamp { seconds, nanos } = v.into();
-                let expiration = ibc_proto::google::protobuf::Timestamp { seconds, nanos };
-                expiration
+                ibc_proto::google::protobuf::Timestamp { seconds, nanos }
             }),
         }
     }
