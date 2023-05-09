@@ -2,7 +2,7 @@ use crate::{proto, tx::Msg, AccountId, Any, ErrorReport, Result};
 
 /// MsgGrantAllowance adds permission for Grantee to spend up to Allowance
 /// of fees from the account of Granter.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct MsgGrantAllowance {
     /// granter is the address of the user granting an allowance of their funds.
     pub granter: AccountId,

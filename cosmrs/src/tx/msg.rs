@@ -31,9 +31,8 @@ pub trait Msg:
 
     /// Convert this message proto into [`Any`].
     fn into_any(self) -> Result<Any> {
-        Ok(self
-            .into()
+        self.into()
             .to_any()
-            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?)
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))
     }
 }

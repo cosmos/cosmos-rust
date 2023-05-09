@@ -9,7 +9,7 @@ use tendermint::block;
 /// [`Body`] of a transaction that all signers sign over.
 ///
 /// This type is known as `TxBody` in the Golang cosmos-sdk.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Body {
     /// `messages` is a list of messages to be executed. The required signers of
     /// those messages define the number and order of elements in `AuthInfo`'s
@@ -65,10 +65,9 @@ impl Body {
 
     /// Encode this type using Protocol Buffers.
     pub fn into_bytes(self) -> Result<Vec<u8>> {
-        Ok(self
-            .into_proto()
+        self.into_proto()
             .to_bytes()
-            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?)
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))
     }
 }
 

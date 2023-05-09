@@ -33,10 +33,9 @@ impl AuthInfo {
 
     /// Encode this type using Protocol Buffers.
     pub fn into_bytes(self) -> Result<Vec<u8>> {
-        Ok(self
-            .into_proto()
+        self.into_proto()
             .to_bytes()
-            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?)
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))
     }
 }
 

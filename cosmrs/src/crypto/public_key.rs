@@ -238,7 +238,9 @@ mod tests {
 
     #[test]
     fn json_round_trip() {
-        let example_key = EXAMPLE_JSON.parse::<PublicKey>().unwrap();
+        let example_key = EXAMPLE_JSON
+            .parse::<PublicKey>()
+            .expect("parse PublicKey error");
 
         // test try_from
         let tm_key: tendermint::public_key::PublicKey =

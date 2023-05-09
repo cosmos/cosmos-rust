@@ -29,10 +29,9 @@ impl Raw {
 
     /// Serialize raw transaction as a byte vector.
     pub fn to_bytes(&self) -> Result<Vec<u8>> {
-        Ok(self
-            .0
+        self.0
             .to_bytes()
-            .map_err(|e| eyre::eyre!(format!("{:?}", e)))?)
+            .map_err(|e| eyre::eyre!(format!("{:?}", e)))
     }
 
     /// Broadcast this transaction using the provided RPC client

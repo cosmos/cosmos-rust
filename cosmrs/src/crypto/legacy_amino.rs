@@ -91,7 +91,7 @@ mod tests {
             value: hex!("080312460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a210316eb99be27392e258ded83dc1378e507acf1bb726fa407167e709461b3a631cb12460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a210363deebf13d30a9840f275d01911f3e05f3fb5f88554f52b2ef534dce06b1da5912460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a21032e253cf8214f3d466ed296b9919821ae6681806c91b3c2063a45a8b85ce7e11512460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a210326ffd12bd115f260a371f2f09bf29286e4c9681c7bc109f4604c82ed82d6d23212460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a210343a3b485021493370286c9f4725358a3fd459576f963dcc158cb82c02276b67f").into(),
         };
 
-        let pk = LegacyAminoMultisig::try_from(&any).unwrap();
+        let pk = LegacyAminoMultisig::try_from(&any).expect("Parse LegacyAminoMultisig error");
         assert_eq!(pk.threshold, 3);
         assert_eq!(pk.public_keys.len(), 5);
         assert_eq!(pk.public_keys[0].type_url(), PublicKey::SECP256K1_TYPE_URL);
@@ -100,7 +100,7 @@ mod tests {
             tendermint::PublicKey::from_raw_secp256k1(&hex!(
                 "0316eb99be27392e258ded83dc1378e507acf1bb726fa407167e709461b3a631cb"
             ))
-            .unwrap()
+            .expect("Parse tendermint::PublicKey error")
             .into()
         );
 

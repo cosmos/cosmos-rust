@@ -1,7 +1,7 @@
 use crate::{proto, tx::Msg, Any, ErrorReport, Result};
 
 /// AllowedMsgAllowance creates allowance only for specified message types.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct AllowedMsgAllowance {
     /// allowance can be any of basic and filtered fee allowance.
     pub allowance: Option<Any>,

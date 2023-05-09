@@ -138,21 +138,21 @@ mod tests {
     fn parse() {
         "juno1cma4czt2jnydvrvz3lrc9jvcmhpjxtds95s3c6"
             .parse::<AccountId>()
-            .unwrap();
+            .expect("parse AccountId error");
     }
 
     #[test]
     fn with_digit() {
         "okp41urdh3smlstyafjtyg0d606egllhwp8kvnw0d2f"
             .parse::<AccountId>()
-            .unwrap();
+            .expect("parse AccountId error");
     }
 
     #[test]
     fn to_string() {
         let account_id = "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg"
             .parse::<AccountId>()
-            .unwrap();
+            .expect("parse AccountId error");
 
         let s: String = account_id.into();
         assert_eq!(s, "juno10j9gpw9t4jsz47qgnkvl5n3zlm2fz72k67rxsg".to_string());

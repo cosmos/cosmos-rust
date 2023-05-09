@@ -70,6 +70,6 @@ mod tests {
 
     #[test]
     fn new() {
-        Coin::new(1000, "uatom").unwrap();
+        Coin::new(1000, "uatom").expect("parse Coin error");
     }
 }
