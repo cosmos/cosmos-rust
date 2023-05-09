@@ -45,6 +45,8 @@ std = [
     "serde_json/std",
     "subtle-encoding/std",
     "tendermint/std",
+    "tendermint-proto/std",
+    "displaydoc/std",
     "bip32",
 ]
 cosmwasm  = ["ibc-proto/cosmwasm"]
