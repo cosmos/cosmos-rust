@@ -1,7 +1,9 @@
 use super::BasicAllowance;
 use crate::{proto, tx::Msg, Coin, ErrorReport, Result};
-use std::time::{Duration, SystemTime};
-
+use core::convert::TryFrom;
+use std::time::Duration;
+use tendermint::time::Time;
+use tendermint_proto::google::protobuf as tpb;
 /// PeriodicAllowance extends Allowance to allow for both a maximum cap,
 /// as well as a limit per time period.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -23,7 +25,7 @@ pub struct PeriodicAllowance {
     /// period_reset is the time at which this period resets and a new one begins,
     /// it is calculated from the start time of the first transaction after the
     /// last period ended
-    pub period_reset: Option<SystemTime>,
+    pub period_reset: Option<Time>,
 }
 
 impl Msg for PeriodicAllowance {
@@ -36,6 +38,16 @@ impl TryFrom<proto::cosmos::feegrant::v1beta1::PeriodicAllowance> for PeriodicAl
     fn try_from(
         proto: proto::cosmos::feegrant::v1beta1::PeriodicAllowance,
     ) -> Result<PeriodicAllowance> {
+        let ibc_proto::google::protobuf::Timestamp { seconds, nanos } = proto
+            .period_reset
+            .ok_or(eyre::eyre!("missing period_reset"))?;
+
+        // FIXME: shunts like this are necessary due to
+        // https://github.com/informalsystems/tendermint-rs/issues/1053
+        let proto_period_reset = tpb::Timestamp { seconds, nanos };
+        let period_reset = Time::try_from(proto_period_reset)
+            .map_err(|e| eyre::eyre!(format!("invalid Period reset: {e}")))?;
+
         Ok(PeriodicAllowance {
             basic: proto.basic.map(TryFrom::try_from).transpose()?,
             period: proto
@@ -53,7 +65,7 @@ impl TryFrom<proto::cosmos::feegrant::v1beta1::PeriodicAllowance> for PeriodicAl
                 .iter()
                 .map(TryFrom::try_from)
                 .collect::<Result<_, _>>()?,
-            period_reset: proto.period_reset.map(TryFrom::try_from).transpose()?,
+            period_reset: Some(period_reset),
         })
     }
 }
@@ -73,7 +85,13 @@ impl From<PeriodicAllowance> for proto::cosmos::feegrant::v1beta1::PeriodicAllow
                 .map(Into::into)
                 .collect(),
             period_can_spend: allowance.period_can_spend.iter().map(Into::into).collect(),
-            period_reset: allowance.period_reset.map(Into::into),
+            period_reset: allowance.period_reset.map(|v| {
+                // FIXME: shunts like this are necessary due to
+                // https://github.com/informalsystems/tendermint-rs/issues/1053
+                let tpb::Timestamp { seconds, nanos } = v.into();
+                let period_reset = ibc_proto::google::protobuf::Timestamp { seconds, nanos };
+                period_reset
+            }),
         }
     }
 }
