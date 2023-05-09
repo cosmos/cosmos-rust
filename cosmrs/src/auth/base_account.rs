@@ -4,6 +4,7 @@ use crate::{
     tx::{AccountNumber, SequenceNumber},
     AccountId, ErrorReport, Result,
 };
+use alloc::string::ToString;
 
 /// [`BaseAccount`] defines a base account type.
 ///

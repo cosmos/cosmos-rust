@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// MsgUndelegate represents a message to undelegate coins from a validator.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

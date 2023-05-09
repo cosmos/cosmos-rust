@@ -1,5 +1,6 @@
 use super::MultiSendIo;
 use crate::{proto, tx::Msg, ErrorReport, Result};
+use alloc::vec::Vec;
 
 /// MsgMultiSend represents an arbitrary multi-in, multi-out send message.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

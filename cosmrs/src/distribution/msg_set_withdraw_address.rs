@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// MsgSetWithdrawAddress represents a message to set a withdraw address for staking rewards.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

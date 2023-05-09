@@ -4,6 +4,9 @@ use crate::{
     proto::{self, traits::MessageExt},
     Any, ErrorReport, Result,
 };
+use alloc::format;
+use alloc::string::String;
+use alloc::vec::Vec;
 use tendermint::block;
 
 /// [`Body`] of a transaction that all signers sign over.

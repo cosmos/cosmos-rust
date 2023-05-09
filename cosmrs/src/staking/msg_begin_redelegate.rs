@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// MsgBeginRedelegate represents a message to redelegate coins from one validator to another.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

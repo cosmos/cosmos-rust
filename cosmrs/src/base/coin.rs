@@ -1,7 +1,8 @@
 use super::{Amount, Denom};
 use crate::{proto, ErrorReport, Result};
+use alloc::string::ToString;
+use core::fmt;
 use serde::{Deserialize, Serialize};
-use std::fmt;
 
 /// Coin defines a token with a denomination and an amount.
 #[derive(Serialize, Deserialize, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

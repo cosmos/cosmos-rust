@@ -7,6 +7,7 @@ pub use self::{
     gas_info::GasInfo,
     msg_data::{MsgData, TxMsgData},
 };
+use alloc::vec::Vec;
 
 /// Transaction data.
 pub type Data = Vec<u8>;

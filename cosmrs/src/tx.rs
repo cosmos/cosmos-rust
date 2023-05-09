@@ -124,6 +124,8 @@ pub use self::{
     sign_doc::SignDoc,
     signer_info::{SignerInfo, SignerPublicKey},
 };
+use alloc::format;
+use alloc::vec::Vec;
 
 use crate::{
     proto::{self, traits::Message},

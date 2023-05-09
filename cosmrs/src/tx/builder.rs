@@ -2,6 +2,7 @@
 
 use super::Body;
 use crate::Any;
+use alloc::string::String;
 use tendermint::block;
 
 /// Transaction [`Body`] builder which simplifies incrementally assembling and

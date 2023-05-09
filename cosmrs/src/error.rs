@@ -4,6 +4,8 @@ pub use eyre::{Report, Result};
 
 use tendermint::Hash;
 // use thiserror::Error;
+use alloc::format;
+use alloc::string::String;
 use displaydoc::Display;
 
 /// Kinds of errors.

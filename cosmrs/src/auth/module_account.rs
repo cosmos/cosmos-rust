@@ -1,5 +1,7 @@
 use super::BaseAccount;
 use crate::{proto, ErrorReport, Result};
+use alloc::string::String;
+use alloc::vec::Vec;
 
 /// ModuleAccount defines an account for modules that holds coins on a pool.
 #[derive(Clone, Debug, Eq, PartialEq)]

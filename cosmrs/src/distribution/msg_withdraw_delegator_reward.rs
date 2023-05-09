@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// MsgWithdrawDelegatorReward represents a message to withdraw a delegator's reward from a validator.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

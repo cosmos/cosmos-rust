@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// WithdrawValidatorCommission represents a message to withdraw a validator's staking commission.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

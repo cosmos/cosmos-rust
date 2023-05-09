@@ -1,5 +1,6 @@
 use super::{BaseVestingAccount, Period};
 use crate::{proto, ErrorReport, Result};
+use alloc::vec::Vec;
 
 /// [`PeriodicVestingAccount`] implements the `VestingAccount` interface.
 ///

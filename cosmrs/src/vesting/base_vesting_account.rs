@@ -1,4 +1,5 @@
 use crate::{auth::BaseAccount, proto, Coin, ErrorReport, Result};
+use alloc::vec::Vec;
 
 /// [`BaseVestingAccount`] implements the `VestingAccount` interface.
 ///

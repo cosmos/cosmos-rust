@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, Coin, Error, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// MsgDelegate represents a message to delegate coins to a validator.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

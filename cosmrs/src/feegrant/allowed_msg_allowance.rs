@@ -1,4 +1,6 @@
 use crate::{proto, tx::Msg, Any, ErrorReport, Result};
+use alloc::string::String;
+use alloc::vec::Vec;
 
 /// AllowedMsgAllowance creates allowance only for specified message types.
 #[derive(Clone, Debug, PartialEq, Eq)]

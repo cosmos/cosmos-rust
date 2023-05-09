@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, Any, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// MsgGrantAllowance adds permission for Grantee to spend up to Allowance
 /// of fees from the account of Granter.

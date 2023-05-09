@@ -1,4 +1,6 @@
 use crate::{proto, tx::Msg, AccountId, Coin, ErrorReport, Result};
+use alloc::string::ToString;
+use alloc::vec::Vec;
 
 /// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

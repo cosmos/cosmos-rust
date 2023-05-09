@@ -1,4 +1,7 @@
 use crate::{proto, tx::Msg, AccountId, Coin, ErrorReport, Result};
+use alloc::string::ToString;
+use alloc::vec;
+use alloc::vec::Vec;
 
 /// MsgFundCommunityPool represents a message to send coins from depositor to the community pool.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

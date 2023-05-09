@@ -1,6 +1,7 @@
 //! Compact bit array.
 
 use crate::proto;
+use alloc::vec::Vec;
 
 /// [`CompactBitArray`] is an implementation of a space efficient bit array.
 ///

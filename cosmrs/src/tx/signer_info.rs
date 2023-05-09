@@ -5,6 +5,8 @@ use crate::{
     crypto::{LegacyAminoMultisig, PublicKey},
     proto, Any, Error, ErrorReport, Result,
 };
+use alloc::format;
+use alloc::vec;
 
 /// [`SignerInfo`] describes the public key and signing mode of a single top-level signer.
 #[derive(Clone, Debug, Eq, PartialEq)]

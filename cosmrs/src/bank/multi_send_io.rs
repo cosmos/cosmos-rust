@@ -1,4 +1,6 @@
 use crate::{proto, AccountId, Coin, ErrorReport, Result};
+use alloc::string::ToString;
+use alloc::vec::Vec;
 
 /// Represents a MultiSend Input or Output
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]

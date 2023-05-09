@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "std"), no_std)]
 #![doc = include_str!("../README.md")]
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png"
@@ -25,6 +26,8 @@
 //! - `cosmos-sdk-proto`: re-exported as `cosmrs::proto`
 //! - `tendermint`: re-exported as `cosmrs::tendermint`
 //! - `tendermint-rpc`: re-exported as `cosmrs::rpc` (requires `rpc` crate feature)
+
+extern crate alloc;
 
 pub mod abci;
 pub mod auth;

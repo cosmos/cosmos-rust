@@ -8,6 +8,9 @@ use crate::{
     },
     Any, Error, ErrorReport, Result,
 };
+use alloc::borrow::ToOwned;
+use alloc::format;
+use alloc::vec::Vec;
 
 /// Legacy Amino multisig key.
 #[derive(Clone, Debug, Eq, PartialEq)]

@@ -1,5 +1,7 @@
 //! Raw transaction.
 
+#[cfg(feature = "rpc")]
+use crate::rpc;
 use crate::{
     proto::{
         self,
@@ -7,9 +9,8 @@ use crate::{
     },
     Result,
 };
-
-#[cfg(feature = "rpc")]
-use crate::rpc;
+use alloc::format;
+use alloc::vec::Vec;
 
 /// Response from `/broadcast_tx_commit`
 #[cfg(feature = "rpc")]

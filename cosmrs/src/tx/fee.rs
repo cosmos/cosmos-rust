@@ -5,6 +5,9 @@ use crate::{
     proto::{self, traits::ParseOptional},
     AccountId, Coin, ErrorReport, Result,
 };
+use alloc::string::ToString;
+use alloc::vec;
+use alloc::vec::Vec;
 use serde::{Deserialize, Serialize};
 
 /// Fee includes the amount of coins paid in fees and the maximum gas to be

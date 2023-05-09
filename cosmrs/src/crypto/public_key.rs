@@ -7,7 +7,12 @@ use crate::{
     },
     AccountId, Any, Error, ErrorReport, Result,
 };
+use alloc::borrow::ToOwned;
+use alloc::format;
+use alloc::string::String;
+use alloc::string::ToString;
 
+use alloc::vec::Vec;
 use core::str::FromStr;
 use serde::{Deserialize, Serialize};
 use subtle_encoding::base64;

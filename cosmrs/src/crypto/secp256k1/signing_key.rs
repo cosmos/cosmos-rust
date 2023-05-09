@@ -4,6 +4,7 @@ use crate::{
     crypto::{secp256k1::Signature, PublicKey},
     ErrorReport, Result,
 };
+use alloc::boxed::Box;
 use ecdsa::signature::{Keypair, Signer};
 use k256::ecdsa::VerifyingKey;
 use rand_core::OsRng;

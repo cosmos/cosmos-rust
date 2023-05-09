@@ -4,6 +4,7 @@ use crate::{
     proto::traits::{MessageExt, TypeUrl},
     Any, ErrorReport, Result,
 };
+use alloc::format;
 
 /// Message types.
 ///

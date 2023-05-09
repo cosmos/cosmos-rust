@@ -1,4 +1,5 @@
 use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
+use alloc::string::ToString;
 
 /// MsgRevokeAllowance removes any existing Allowance from Granter to Grantee.
 #[derive(Clone, Debug, Eq, PartialEq)]

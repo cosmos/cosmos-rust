@@ -5,6 +5,8 @@ use crate::{
     proto::{self, traits::MessageExt},
     Error, ErrorReport, Result,
 };
+use alloc::format;
+use alloc::vec::Vec;
 
 /// [`AuthInfo`] describes the fee and signer modes that are used to sign a transaction.
 // TODO(tarcieri): support for the `tip` field

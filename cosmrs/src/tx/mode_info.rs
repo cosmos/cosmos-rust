@@ -2,6 +2,7 @@
 
 use super::SignMode;
 use crate::{crypto::CompactBitArray, proto, Error, ErrorReport, Result};
+use alloc::vec::Vec;
 
 /// [`ModeInfo`] describes the signing mode of a single or nested multisig signer.
 #[derive(Clone, Debug, Eq, PartialEq)]

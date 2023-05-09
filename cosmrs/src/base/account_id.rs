@@ -1,4 +1,7 @@
 use crate::{Error, ErrorReport, Result};
+use alloc::format;
+use alloc::string::String;
+use alloc::vec::Vec;
 use core::{fmt, str::FromStr};
 use serde::{de, de::Error as _, ser, Deserialize, Serialize};
 use subtle_encoding::bech32;

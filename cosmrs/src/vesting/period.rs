@@ -1,4 +1,5 @@
 use crate::{proto, Coin, ErrorReport, Result};
+use alloc::vec::Vec;
 
 /// [`Period`] defines a length of time and amount of coins that will vest.
 #[derive(Clone, Debug, Eq, PartialEq)]
