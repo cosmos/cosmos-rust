@@ -12,7 +12,7 @@ edition = "2021"
 rust-version = "1.65"
 
 [dependencies]
-ibc-proto = { default-features = false, git = "https://github.com/octopus-network/ibc-proto-rs.git", rev = "e9fb075d666bf49e491e3d338e5af98aa7b2b73e" }
+ibc-proto = { version = "0.31.0-alpha.2", features = ["parity-scale-codec", "borsh"], default-features = false, git = "https://github.com/octopus-network/ibc-proto-rs.git", branch = "new-proto" }
 prost = { version = "0.11", default-features = false }
 ecdsa = { version = "0.16", default-features = false}
 eyre = { version = "0.6", default-features = false }
@@ -26,9 +26,9 @@ tendermint-proto = { version = "0.32", default-features = false }
 displaydoc = { version = "0.2", default-features = false }
 
 # optional dependencies
-bip32 = { version = "0.5", features = ["alloc", "secp256k1"], optional = true, default-features = false}
-tendermint-rpc = { version = "0.32", optional = true, features = ["http-client"], default-features = false}
-tokio = { version = "1", optional = true, default-features = false}
+bip32 = { version = "0.5", features = ["alloc", "secp256k1"], optional = true }
+tendermint-rpc = { version = "0.32", optional = true, features = ["http-client"] }
+tokio = { version = "1", optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.2", features = ["js"] }
