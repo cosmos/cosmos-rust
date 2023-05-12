@@ -112,6 +112,7 @@ mod msg;
 mod raw;
 mod sign_doc;
 mod signer_info;
+mod signing;
 
 pub use self::{
     auth_info::AuthInfo,
