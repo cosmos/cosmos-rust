@@ -24,13 +24,11 @@ impl SignatureDescriptors {
     }
 }
 
-impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::SignatureDescriptors>
-    for SignatureDescriptors
-{
+impl TryFrom<proto::cosmos::tx::signing::v1beta1::SignatureDescriptors> for SignatureDescriptors {
     type Error = ErrorReport;
 
     fn try_from(
-        proto: cosmos_sdk_proto::cosmos::tx::signing::v1beta1::SignatureDescriptors,
+        proto: proto::cosmos::tx::signing::v1beta1::SignatureDescriptors,
     ) -> Result<Self, Self::Error> {
         Ok(Self {
             signatures: proto
@@ -42,9 +40,7 @@ impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::SignatureDescriptor
     }
 }
 
-impl From<SignatureDescriptors>
-    for cosmos_sdk_proto::cosmos::tx::signing::v1beta1::SignatureDescriptors
-{
+impl From<SignatureDescriptors> for proto::cosmos::tx::signing::v1beta1::SignatureDescriptors {
     fn from(value: SignatureDescriptors) -> Self {
         Self {
             signatures: value.signatures.into_iter().map(Into::into).collect(),
@@ -79,13 +75,11 @@ impl SignatureDescriptor {
     }
 }
 
-impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::SignatureDescriptor>
-    for SignatureDescriptor
-{
+impl TryFrom<proto::cosmos::tx::signing::v1beta1::SignatureDescriptor> for SignatureDescriptor {
     type Error = ErrorReport;
 
     fn try_from(
-        proto: cosmos_sdk_proto::cosmos::tx::signing::v1beta1::SignatureDescriptor,
+        proto: proto::cosmos::tx::signing::v1beta1::SignatureDescriptor,
     ) -> Result<Self, Self::Error> {
         Ok(Self {
             public_key: proto.public_key.map(TryFrom::try_from).transpose()?,

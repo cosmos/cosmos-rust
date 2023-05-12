@@ -22,11 +22,11 @@ impl Data {
     }
 }
 
-impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::Data> for Data {
+impl TryFrom<proto::cosmos::tx::signing::v1beta1::signature_descriptor::Data> for Data {
     type Error = ErrorReport;
 
     fn try_from(
-        proto: cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::Data,
+        proto: proto::cosmos::tx::signing::v1beta1::signature_descriptor::Data,
     ) -> Result<Self, Self::Error> {
         Ok(Self {
             sum: proto.sum.map(TryInto::try_into).transpose()?,
@@ -34,7 +34,7 @@ impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descripto
     }
 }
 
-impl From<Data> for cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::Data {
+impl From<Data> for proto::cosmos::tx::signing::v1beta1::signature_descriptor::Data {
     fn from(value: Data) -> Self {
         Self {
             sum: value.sum.map(Into::into),
@@ -49,7 +49,7 @@ pub mod data {
         proto::{self, traits::MessageExt},
         ErrorReport, Result,
     };
-    use cosmos_sdk_proto::cosmos::tx::signing::v1beta1::SignMode;
+    use proto::cosmos::tx::signing::v1beta1::SignMode;
 
     /// Single is the signature data for a single signer
     #[derive(Clone, Debug, Eq, PartialEq)]
@@ -74,12 +74,10 @@ pub mod data {
         }
     }
 
-    impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Single>
-        for Single
-    {
+    impl TryFrom<proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Single> for Single {
         type Error = ErrorReport;
         fn try_from(
-            proto: cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Single,
+            proto: proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Single,
         ) -> Result<Self, Self::Error> {
             let mode = match proto.mode {
                 0 => SignMode::Unspecified,
@@ -97,9 +95,7 @@ pub mod data {
         }
     }
 
-    impl From<Single>
-        for cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Single
-    {
+    impl From<Single> for proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Single {
         fn from(value: Single) -> Self {
             let mode = match value.mode {
                 SignMode::Unspecified => 0,
@@ -138,13 +134,11 @@ pub mod data {
         }
     }
 
-    impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Multi>
-        for Multi
-    {
+    impl TryFrom<proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Multi> for Multi {
         type Error = ErrorReport;
 
         fn try_from(
-            proto: cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Multi,
+            proto: proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Multi,
         ) -> Result<Self, Self::Error> {
             Ok(Self {
                 bitarray: proto.bitarray.map(TryInto::try_into).transpose()?,
@@ -157,9 +151,7 @@ pub mod data {
         }
     }
 
-    impl From<Multi>
-        for cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Multi
-    {
+    impl From<Multi> for proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Multi {
         fn from(value: Multi) -> Self {
             Self {
                 bitarray: value.bitarray.map(Into::into),
@@ -177,21 +169,23 @@ pub mod data {
         Multi(Multi),
     }
 
-    impl TryFrom<cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum>
-        for Sum
-    {
+    impl TryFrom<proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum> for Sum {
         type Error = eyre::ErrReport;
         fn try_from(
-            proto: cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum,
+            proto: proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum,
         ) -> Result<Self, Self::Error> {
             match proto {
-                cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum::Single(single) => Ok(Sum::Single(single.try_into()?)),
-                cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum::Multi(multi) => Ok(Sum::Multi(multi.try_into()?))
+                proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum::Single(
+                    single,
+                ) => Ok(Sum::Single(single.try_into()?)),
+                proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum::Multi(
+                    multi,
+                ) => Ok(Sum::Multi(multi.try_into()?)),
             }
         }
     }
 
-    impl From<Sum> for cosmos_sdk_proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum {
+    impl From<Sum> for proto::cosmos::tx::signing::v1beta1::signature_descriptor::data::Sum {
         fn from(value: Sum) -> Self {
             match value {
                 Sum::Single(v) => Self::Single(v.into()),
