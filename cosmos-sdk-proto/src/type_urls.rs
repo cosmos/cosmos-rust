@@ -129,6 +129,26 @@ impl TypeUrl for cosmos::tx::v1beta1::ModeInfo {
     const TYPE_URL: &'static str = "/cosmos.tx.v1beta1.ModeInfo";
 }
 
+impl TypeUrl for cosmos::tx::signing::v1beta1::SignatureDescriptors {
+    const TYPE_URL: &'static str = "/cosmos.tx.signing.v1beta1.SignatureDescriptors";
+}
+
+impl TypeUrl for cosmos::tx::signing::v1beta1::SignatureDescriptor {
+    const TYPE_URL: &'static str = "/cosmos.tx.signing.v1beta1.SignatureDescriptor";
+}
+
+impl TypeUrl for cosmos::tx::signing::v1beta1::signature_descriptor::Data {
+    const TYPE_URL: &'static str = "/cosmos.tx.signing.v1beta1.signature_descriptor.Data";
+}
+
+impl TypeUrl for cosmos::tx::signing::v1beta1::signature_descriptor::data::Single {
+    const TYPE_URL: &'static str = "/cosmos.tx.signing.v1beta1.signature_descriptor.data.Single";
+}
+
+impl TypeUrl for cosmos::tx::signing::v1beta1::signature_descriptor::data::Multi {
+    const TYPE_URL: &'static str = "/cosmos.tx.signing.v1beta1.signature_descriptor.data.Multi";
+}
+
 impl TypeUrl for ibc::applications::transfer::v1::MsgTransfer {
     const TYPE_URL: &'static str = "/ibc.applications.transfer.v1.MsgTransfer";
 }
