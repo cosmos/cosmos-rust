@@ -58,7 +58,7 @@ impl PublicKey {
     /// Convert this [`PublicKey`] to a Protobuf [`Any`] type.
     pub fn to_any(&self) -> Result<Any> {
         let value = match self.0 {
-            tendermint::PublicKey::Ed25519(_) => proto::cosmos::crypto::secp256k1::PubKey {
+            tendermint::PublicKey::Ed25519(_) => proto::cosmos::crypto::ed25519::PubKey {
                 key: self.to_bytes(),
             }
             .to_bytes()?,
