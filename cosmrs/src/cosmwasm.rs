@@ -22,10 +22,12 @@ pub use self::{
     code_info_response::CodeInfoResponse,
     contract_code_history_entry::ContractCodeHistoryEntry,
     contract_info::ContractInfo,
+    msg_clear_admin::{MsgClearAdmin, MsgClearAdminResponse},
     msg_execute_contract::{MsgExecuteContract, MsgExecuteContractResponse},
     msg_initiate_contract::{MsgInstantiateContract, MsgInstantiateContractResponse},
     msg_migrate_contract::{MsgMigrateContract, MsgMigrateContractResponse},
     msg_store_code::{MsgStoreCode, MsgStoreCodeResponse},
+    msg_update_admin::{MsgUpdateAdmin, MsgUpdateAdminResponse},
     query_code_response::QueryCodeResponse,
 };
 pub use crate::proto::cosmwasm::wasm::v1::AccessType;
