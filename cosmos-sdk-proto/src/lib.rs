@@ -166,6 +166,9 @@ pub mod cosmos {
         pub mod v1beta1 {
             include!("prost/cosmos-sdk/cosmos.gov.v1beta1.rs");
         }
+         pub mod v1 {
+            include!("prost/cosmos-sdk/cosmos.gov.v1.rs");
+        }
     }
 
     /// Messages and services handling minting
