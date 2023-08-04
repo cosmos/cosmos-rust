@@ -1,6 +1,7 @@
 // @generated
 /// Member represents a group member with an account address,
 /// non-zero weight, metadata and added_at timestamp.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Member {
     /// address is the member's account address.
@@ -19,6 +20,7 @@ pub struct Member {
 /// MemberRequest represents a group member to be used in Msg server requests.
 /// Contrary to `Member`, it doesn't have any `added_at` field
 /// since this field cannot be set as part of requests.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MemberRequest {
     /// address is the member's account address.
@@ -37,6 +39,7 @@ pub struct MemberRequest {
 ///     `threshold`.
 /// 2. The voting and execution periods of the proposal respect the parameters
 ///     given by `windows`.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ThresholdDecisionPolicy {
     /// threshold is the minimum weighted sum of `YES` votes that must be met or
@@ -53,6 +56,7 @@ pub struct ThresholdDecisionPolicy {
 ///     is greater or equal than the given `percentage`.
 /// 2. The voting and execution periods of the proposal respect the parameters
 ///     given by `windows`.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PercentageDecisionPolicy {
     /// percentage is the minimum percentage the weighted sum of `YES` votes must
@@ -64,6 +68,7 @@ pub struct PercentageDecisionPolicy {
     pub windows: ::core::option::Option<DecisionPolicyWindows>,
 }
 /// DecisionPolicyWindows defines the different windows for voting and execution.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DecisionPolicyWindows {
     /// voting_period is the duration from submission of a proposal to the end of voting period
@@ -89,6 +94,7 @@ pub struct DecisionPolicyWindows {
 //
 
 /// GroupInfo represents the high-level on-chain information for a group.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupInfo {
     /// id is the unique ID of the group.
@@ -114,6 +120,7 @@ pub struct GroupInfo {
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// GroupMember represents the relationship between a group and a member.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupMember {
     /// group_id is the unique ID of the group.
@@ -124,6 +131,7 @@ pub struct GroupMember {
     pub member: ::core::option::Option<Member>,
 }
 /// GroupPolicyInfo represents the high-level on-chain information for a group policy.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GroupPolicyInfo {
     /// address is the account address of group policy.
@@ -153,6 +161,7 @@ pub struct GroupPolicyInfo {
 /// for a group policy to decide upon.
 /// A proposal consists of a set of `sdk.Msg`s that will be executed if the proposal
 /// passes as well as some optional metadata associated with the proposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Proposal {
     /// id is the unique id of the proposal.
@@ -204,6 +213,7 @@ pub struct Proposal {
     pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
 }
 /// TallyResult represents the sum of weighted votes for each vote option.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TallyResult {
     /// yes_count is the weighted sum of yes votes.
@@ -220,6 +230,7 @@ pub struct TallyResult {
     pub no_with_veto_count: ::prost::alloc::string::String,
 }
 /// Vote represents a vote for a proposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Vote {
     /// proposal is the unique ID of the proposal.
@@ -268,6 +279,17 @@ impl VoteOption {
             VoteOption::NoWithVeto => "VOTE_OPTION_NO_WITH_VETO",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "VOTE_OPTION_UNSPECIFIED" => Some(Self::Unspecified),
+            "VOTE_OPTION_YES" => Some(Self::Yes),
+            "VOTE_OPTION_ABSTAIN" => Some(Self::Abstain),
+            "VOTE_OPTION_NO" => Some(Self::No),
+            "VOTE_OPTION_NO_WITH_VETO" => Some(Self::NoWithVeto),
+            _ => None,
+        }
+    }
 }
 /// ProposalStatus defines proposal statuses.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -305,6 +327,18 @@ impl ProposalStatus {
             ProposalStatus::Withdrawn => "PROPOSAL_STATUS_WITHDRAWN",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "PROPOSAL_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
+            "PROPOSAL_STATUS_SUBMITTED" => Some(Self::Submitted),
+            "PROPOSAL_STATUS_ACCEPTED" => Some(Self::Accepted),
+            "PROPOSAL_STATUS_REJECTED" => Some(Self::Rejected),
+            "PROPOSAL_STATUS_ABORTED" => Some(Self::Aborted),
+            "PROPOSAL_STATUS_WITHDRAWN" => Some(Self::Withdrawn),
+            _ => None,
+        }
+    }
 }
 /// ProposalExecutorResult defines types of proposal executor results.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -332,8 +366,19 @@ impl ProposalExecutorResult {
             ProposalExecutorResult::Failure => "PROPOSAL_EXECUTOR_RESULT_FAILURE",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED" => Some(Self::Unspecified),
+            "PROPOSAL_EXECUTOR_RESULT_NOT_RUN" => Some(Self::NotRun),
+            "PROPOSAL_EXECUTOR_RESULT_SUCCESS" => Some(Self::Success),
+            "PROPOSAL_EXECUTOR_RESULT_FAILURE" => Some(Self::Failure),
+            _ => None,
+        }
+    }
 }
 /// EventCreateGroup is an event emitted when a group is created.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventCreateGroup {
     /// group_id is the unique ID of the group.
@@ -341,6 +386,7 @@ pub struct EventCreateGroup {
     pub group_id: u64,
 }
 /// EventUpdateGroup is an event emitted when a group is updated.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventUpdateGroup {
     /// group_id is the unique ID of the group.
@@ -348,6 +394,7 @@ pub struct EventUpdateGroup {
     pub group_id: u64,
 }
 /// EventCreateGroupPolicy is an event emitted when a group policy is created.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventCreateGroupPolicy {
     /// address is the account address of the group policy.
@@ -355,6 +402,7 @@ pub struct EventCreateGroupPolicy {
     pub address: ::prost::alloc::string::String,
 }
 /// EventUpdateGroupPolicy is an event emitted when a group policy is updated.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventUpdateGroupPolicy {
     /// address is the account address of the group policy.
@@ -362,6 +410,7 @@ pub struct EventUpdateGroupPolicy {
     pub address: ::prost::alloc::string::String,
 }
 /// EventSubmitProposal is an event emitted when a proposal is created.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventSubmitProposal {
     /// proposal_id is the unique ID of the proposal.
@@ -369,6 +418,7 @@ pub struct EventSubmitProposal {
     pub proposal_id: u64,
 }
 /// EventWithdrawProposal is an event emitted when a proposal is withdrawn.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventWithdrawProposal {
     /// proposal_id is the unique ID of the proposal.
@@ -376,6 +426,7 @@ pub struct EventWithdrawProposal {
     pub proposal_id: u64,
 }
 /// EventVote is an event emitted when a voter votes on a proposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventVote {
     /// proposal_id is the unique ID of the proposal.
@@ -383,6 +434,7 @@ pub struct EventVote {
     pub proposal_id: u64,
 }
 /// EventExec is an event emitted when a proposal is executed.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventExec {
     /// proposal_id is the unique ID of the proposal.
@@ -396,6 +448,7 @@ pub struct EventExec {
     pub logs: ::prost::alloc::string::String,
 }
 /// EventLeaveGroup is an event emitted when group member leaves the group.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventLeaveGroup {
     /// group_id is the unique ID of the group.
@@ -406,6 +459,7 @@ pub struct EventLeaveGroup {
     pub address: ::prost::alloc::string::String,
 }
 /// GenesisState defines the group module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// group_seq is the group table orm.Sequence,
@@ -437,6 +491,7 @@ pub struct GenesisState {
     pub votes: ::prost::alloc::vec::Vec<Vote>,
 }
 /// QueryGroupInfoRequest is the Query/GroupInfo request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupInfoRequest {
     /// group_id is the unique ID of the group.
@@ -444,6 +499,7 @@ pub struct QueryGroupInfoRequest {
     pub group_id: u64,
 }
 /// QueryGroupInfoResponse is the Query/GroupInfo response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupInfoResponse {
     /// info is the GroupInfo for the group.
@@ -451,6 +507,7 @@ pub struct QueryGroupInfoResponse {
     pub info: ::core::option::Option<GroupInfo>,
 }
 /// QueryGroupPolicyInfoRequest is the Query/GroupPolicyInfo request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPolicyInfoRequest {
     /// address is the account address of the group policy.
@@ -458,6 +515,7 @@ pub struct QueryGroupPolicyInfoRequest {
     pub address: ::prost::alloc::string::String,
 }
 /// QueryGroupPolicyInfoResponse is the Query/GroupPolicyInfo response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPolicyInfoResponse {
     /// info is the GroupPolicyInfo for the group policy.
@@ -465,6 +523,7 @@ pub struct QueryGroupPolicyInfoResponse {
     pub info: ::core::option::Option<GroupPolicyInfo>,
 }
 /// QueryGroupMembersRequest is the Query/GroupMembers request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupMembersRequest {
     /// group_id is the unique ID of the group.
@@ -475,6 +534,7 @@ pub struct QueryGroupMembersRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupMembersResponse is the Query/GroupMembersResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupMembersResponse {
     /// members are the members of the group with given group_id.
@@ -485,6 +545,7 @@ pub struct QueryGroupMembersResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupsByAdminRequest is the Query/GroupsByAdmin request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByAdminRequest {
     /// admin is the account address of a group's admin.
@@ -495,6 +556,7 @@ pub struct QueryGroupsByAdminRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupsByAdminResponse is the Query/GroupsByAdminResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByAdminResponse {
     /// groups are the groups info with the provided admin.
@@ -505,6 +567,7 @@ pub struct QueryGroupsByAdminResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupPoliciesByGroupRequest is the Query/GroupPoliciesByGroup request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByGroupRequest {
     /// group_id is the unique ID of the group policy's group.
@@ -515,6 +578,7 @@ pub struct QueryGroupPoliciesByGroupRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupPoliciesByGroupResponse is the Query/GroupPoliciesByGroup response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByGroupResponse {
     /// group_policies are the group policies info associated with the provided group.
@@ -525,6 +589,7 @@ pub struct QueryGroupPoliciesByGroupResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupPoliciesByAdminRequest is the Query/GroupPoliciesByAdmin request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByAdminRequest {
     /// admin is the admin address of the group policy.
@@ -535,6 +600,7 @@ pub struct QueryGroupPoliciesByAdminRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupPoliciesByAdminResponse is the Query/GroupPoliciesByAdmin response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupPoliciesByAdminResponse {
     /// group_policies are the group policies info with provided admin.
@@ -545,6 +611,7 @@ pub struct QueryGroupPoliciesByAdminResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryProposalRequest is the Query/Proposal request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalRequest {
     /// proposal_id is the unique ID of a proposal.
@@ -552,6 +619,7 @@ pub struct QueryProposalRequest {
     pub proposal_id: u64,
 }
 /// QueryProposalResponse is the Query/Proposal response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalResponse {
     /// proposal is the proposal info.
@@ -559,6 +627,7 @@ pub struct QueryProposalResponse {
     pub proposal: ::core::option::Option<Proposal>,
 }
 /// QueryProposalsByGroupPolicyRequest is the Query/ProposalByGroupPolicy request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalsByGroupPolicyRequest {
     /// address is the account address of the group policy related to proposals.
@@ -569,6 +638,7 @@ pub struct QueryProposalsByGroupPolicyRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryProposalsByGroupPolicyResponse is the Query/ProposalByGroupPolicy response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalsByGroupPolicyResponse {
     /// proposals are the proposals with given group policy.
@@ -579,6 +649,7 @@ pub struct QueryProposalsByGroupPolicyResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryVoteByProposalVoterRequest is the Query/VoteByProposalVoter request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVoteByProposalVoterRequest {
     /// proposal_id is the unique ID of a proposal.
@@ -589,6 +660,7 @@ pub struct QueryVoteByProposalVoterRequest {
     pub voter: ::prost::alloc::string::String,
 }
 /// QueryVoteByProposalVoterResponse is the Query/VoteByProposalVoter response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVoteByProposalVoterResponse {
     /// vote is the vote with given proposal_id and voter.
@@ -596,6 +668,7 @@ pub struct QueryVoteByProposalVoterResponse {
     pub vote: ::core::option::Option<Vote>,
 }
 /// QueryVotesByProposalRequest is the Query/VotesByProposal request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByProposalRequest {
     /// proposal_id is the unique ID of a proposal.
@@ -606,6 +679,7 @@ pub struct QueryVotesByProposalRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryVotesByProposalResponse is the Query/VotesByProposal response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByProposalResponse {
     /// votes are the list of votes for given proposal_id.
@@ -616,6 +690,7 @@ pub struct QueryVotesByProposalResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryVotesByVoterRequest is the Query/VotesByVoter request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByVoterRequest {
     /// voter is a proposal voter account address.
@@ -626,6 +701,7 @@ pub struct QueryVotesByVoterRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryVotesByVoterResponse is the Query/VotesByVoter response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesByVoterResponse {
     /// votes are the list of votes by given voter.
@@ -636,6 +712,7 @@ pub struct QueryVotesByVoterResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryGroupsByMemberRequest is the Query/GroupsByMember request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByMemberRequest {
     /// address is the group member address.
@@ -646,6 +723,7 @@ pub struct QueryGroupsByMemberRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryGroupsByMemberResponse is the Query/GroupsByMember response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsByMemberResponse {
     /// groups are the groups info with the provided group member.
@@ -656,6 +734,7 @@ pub struct QueryGroupsByMemberResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryTallyResultRequest is the Query/TallyResult request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTallyResultRequest {
     /// proposal_id is the unique id of a proposal.
@@ -663,6 +742,7 @@ pub struct QueryTallyResultRequest {
     pub proposal_id: u64,
 }
 /// QueryTallyResultResponse is the Query/TallyResult response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTallyResultResponse {
     /// tally defines the requested tally.
@@ -672,6 +752,7 @@ pub struct QueryTallyResultResponse {
 /// QueryGroupsRequest is the Query/Groups request type.
 ///
 /// Since: cosmos-sdk 0.47.1
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsRequest {
     /// pagination defines an optional pagination for the request.
@@ -681,6 +762,7 @@ pub struct QueryGroupsRequest {
 /// QueryGroupsResponse is the Query/Groups response type.
 ///
 /// Since: cosmos-sdk 0.47.1
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsResponse {
     /// `groups` is all the groups present in state.
@@ -695,6 +777,7 @@ pub struct QueryGroupsResponse {
 //
 
 /// MsgCreateGroup is the Msg/CreateGroup request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroup {
     /// admin is the account address of the group admin.
@@ -708,6 +791,7 @@ pub struct MsgCreateGroup {
     pub metadata: ::prost::alloc::string::String,
 }
 /// MsgCreateGroupResponse is the Msg/CreateGroup response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupResponse {
     /// group_id is the unique ID of the newly created group.
@@ -715,6 +799,7 @@ pub struct MsgCreateGroupResponse {
     pub group_id: u64,
 }
 /// MsgUpdateGroupMembers is the Msg/UpdateGroupMembers request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupMembers {
     /// admin is the account address of the group admin.
@@ -729,9 +814,11 @@ pub struct MsgUpdateGroupMembers {
     pub member_updates: ::prost::alloc::vec::Vec<MemberRequest>,
 }
 /// MsgUpdateGroupMembersResponse is the Msg/UpdateGroupMembers response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupMembersResponse {}
 /// MsgUpdateGroupAdmin is the Msg/UpdateGroupAdmin request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupAdmin {
     /// admin is the current account address of the group admin.
@@ -745,9 +832,11 @@ pub struct MsgUpdateGroupAdmin {
     pub new_admin: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupAdminResponse is the Msg/UpdateGroupAdmin response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupAdminResponse {}
 /// MsgUpdateGroupMetadata is the Msg/UpdateGroupMetadata request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupMetadata {
     /// admin is the account address of the group admin.
@@ -761,6 +850,7 @@ pub struct MsgUpdateGroupMetadata {
     pub metadata: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupMetadataResponse is the Msg/UpdateGroupMetadata response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupMetadataResponse {}
 //
@@ -768,6 +858,7 @@ pub struct MsgUpdateGroupMetadataResponse {}
 //
 
 /// MsgCreateGroupPolicy is the Msg/CreateGroupPolicy request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupPolicy {
     /// admin is the account address of the group admin.
@@ -784,6 +875,7 @@ pub struct MsgCreateGroupPolicy {
     pub decision_policy: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgCreateGroupPolicyResponse is the Msg/CreateGroupPolicy response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupPolicyResponse {
     /// address is the account address of the newly created group policy.
@@ -791,6 +883,7 @@ pub struct MsgCreateGroupPolicyResponse {
     pub address: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupPolicyAdmin is the Msg/UpdateGroupPolicyAdmin request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyAdmin {
     /// admin is the account address of the group admin.
@@ -804,6 +897,7 @@ pub struct MsgUpdateGroupPolicyAdmin {
     pub new_admin: ::prost::alloc::string::String,
 }
 /// MsgCreateGroupWithPolicy is the Msg/CreateGroupWithPolicy request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupWithPolicy {
     /// admin is the account address of the group and group policy admin.
@@ -827,6 +921,7 @@ pub struct MsgCreateGroupWithPolicy {
     pub decision_policy: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgCreateGroupWithPolicyResponse is the Msg/CreateGroupWithPolicy response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateGroupWithPolicyResponse {
     /// group_id is the unique ID of the newly created group with policy.
@@ -837,9 +932,11 @@ pub struct MsgCreateGroupWithPolicyResponse {
     pub group_policy_address: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupPolicyAdminResponse is the Msg/UpdateGroupPolicyAdmin response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyAdminResponse {}
 /// MsgUpdateGroupPolicyDecisionPolicy is the Msg/UpdateGroupPolicyDecisionPolicy request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyDecisionPolicy {
     /// admin is the account address of the group admin.
@@ -853,9 +950,11 @@ pub struct MsgUpdateGroupPolicyDecisionPolicy {
     pub decision_policy: ::core::option::Option<::prost_types::Any>,
 }
 /// MsgUpdateGroupPolicyDecisionPolicyResponse is the Msg/UpdateGroupPolicyDecisionPolicy response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyDecisionPolicyResponse {}
 /// MsgUpdateGroupPolicyMetadata is the Msg/UpdateGroupPolicyMetadata request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyMetadata {
     /// admin is the account address of the group admin.
@@ -869,9 +968,11 @@ pub struct MsgUpdateGroupPolicyMetadata {
     pub metadata: ::prost::alloc::string::String,
 }
 /// MsgUpdateGroupPolicyMetadataResponse is the Msg/UpdateGroupPolicyMetadata response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateGroupPolicyMetadataResponse {}
 /// MsgSubmitProposal is the Msg/SubmitProposal request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposal {
     /// group_policy_address is the account address of group policy.
@@ -894,6 +995,7 @@ pub struct MsgSubmitProposal {
     pub exec: i32,
 }
 /// MsgSubmitProposalResponse is the Msg/SubmitProposal response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposalResponse {
     /// proposal is the unique ID of the proposal.
@@ -901,6 +1003,7 @@ pub struct MsgSubmitProposalResponse {
     pub proposal_id: u64,
 }
 /// MsgWithdrawProposal is the Msg/WithdrawProposal request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgWithdrawProposal {
     /// proposal is the unique ID of the proposal.
@@ -911,9 +1014,11 @@ pub struct MsgWithdrawProposal {
     pub address: ::prost::alloc::string::String,
 }
 /// MsgWithdrawProposalResponse is the Msg/WithdrawProposal response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgWithdrawProposalResponse {}
 /// MsgVote is the Msg/Vote request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVote {
     /// proposal is the unique ID of the proposal.
@@ -934,9 +1039,11 @@ pub struct MsgVote {
     pub exec: i32,
 }
 /// MsgVoteResponse is the Msg/Vote response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteResponse {}
 /// MsgExec is the Msg/Exec request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExec {
     /// proposal is the unique ID of the proposal.
@@ -947,6 +1054,7 @@ pub struct MsgExec {
     pub executor: ::prost::alloc::string::String,
 }
 /// MsgExecResponse is the Msg/Exec request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgExecResponse {
     /// result is the final result of the proposal execution.
@@ -954,6 +1062,7 @@ pub struct MsgExecResponse {
     pub result: i32,
 }
 /// MsgLeaveGroup is the Msg/LeaveGroup request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgLeaveGroup {
     /// address is the account address of the group member.
@@ -964,6 +1073,7 @@ pub struct MsgLeaveGroup {
     pub group_id: u64,
 }
 /// MsgLeaveGroupResponse is the Msg/LeaveGroup response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgLeaveGroupResponse {}
 //
@@ -992,6 +1102,14 @@ impl Exec {
         match self {
             Exec::Unspecified => "EXEC_UNSPECIFIED",
             Exec::Try => "EXEC_TRY",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "EXEC_UNSPECIFIED" => Some(Self::Unspecified),
+            "EXEC_TRY" => Some(Self::Try),
+            _ => None,
         }
     }
 }

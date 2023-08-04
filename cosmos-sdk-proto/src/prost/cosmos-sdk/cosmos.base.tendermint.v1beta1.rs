@@ -1,23 +1,25 @@
 // @generated
 /// Block is tendermint type Block, with the Header proposer address
 /// field converted to bech32 string.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Block {
     #[prost(message, optional, tag = "1")]
     pub header: ::core::option::Option<Header>,
     #[prost(message, optional, tag = "2")]
-    pub data: ::core::option::Option<::tendermint_proto::types::Data>,
+    pub data: ::core::option::Option<tendermint_proto::types::Data>,
     #[prost(message, optional, tag = "3")]
-    pub evidence: ::core::option::Option<::tendermint_proto::types::EvidenceList>,
+    pub evidence: ::core::option::Option<tendermint_proto::types::EvidenceList>,
     #[prost(message, optional, tag = "4")]
-    pub last_commit: ::core::option::Option<::tendermint_proto::types::Commit>,
+    pub last_commit: ::core::option::Option<tendermint_proto::types::Commit>,
 }
 /// Header defines the structure of a Tendermint block header.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Header {
     /// basic block info
     #[prost(message, optional, tag = "1")]
-    pub version: ::core::option::Option<::tendermint_proto::version::Consensus>,
+    pub version: ::core::option::Option<tendermint_proto::version::Consensus>,
     #[prost(string, tag = "2")]
     pub chain_id: ::prost::alloc::string::String,
     #[prost(int64, tag = "3")]
@@ -26,7 +28,7 @@ pub struct Header {
     pub time: ::core::option::Option<::prost_types::Timestamp>,
     /// prev block info
     #[prost(message, optional, tag = "5")]
-    pub last_block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
+    pub last_block_id: ::core::option::Option<tendermint_proto::types::BlockId>,
     /// hashes of block data
     ///
     /// commit from validators from the last block
@@ -67,6 +69,7 @@ pub struct Header {
 }
 /// GetValidatorSetByHeightRequest is the request type for the
 /// Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetValidatorSetByHeightRequest {
     #[prost(int64, tag = "1")]
@@ -77,6 +80,7 @@ pub struct GetValidatorSetByHeightRequest {
 }
 /// GetValidatorSetByHeightResponse is the response type for the
 /// Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetValidatorSetByHeightResponse {
     #[prost(int64, tag = "1")]
@@ -89,6 +93,7 @@ pub struct GetValidatorSetByHeightResponse {
 }
 /// GetLatestValidatorSetRequest is the request type for the
 /// Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestValidatorSetRequest {
     /// pagination defines an pagination for the request.
@@ -97,6 +102,7 @@ pub struct GetLatestValidatorSetRequest {
 }
 /// GetLatestValidatorSetResponse is the response type for the
 /// Query/GetValidatorSetByHeight RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestValidatorSetResponse {
     #[prost(int64, tag = "1")]
@@ -108,6 +114,7 @@ pub struct GetLatestValidatorSetResponse {
     pub pagination: ::core::option::Option<super::super::query::v1beta1::PageResponse>,
 }
 /// Validator is the type for the validator-set.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Validator {
     #[prost(string, tag = "1")]
@@ -121,6 +128,7 @@ pub struct Validator {
 }
 /// GetBlockByHeightRequest is the request type for the Query/GetBlockByHeight
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockByHeightRequest {
     #[prost(int64, tag = "1")]
@@ -128,56 +136,64 @@ pub struct GetBlockByHeightRequest {
 }
 /// GetBlockByHeightResponse is the response type for the Query/GetBlockByHeight
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockByHeightResponse {
     #[prost(message, optional, tag = "1")]
-    pub block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
+    pub block_id: ::core::option::Option<tendermint_proto::types::BlockId>,
     /// Deprecated: please use `sdk_block` instead
     #[prost(message, optional, tag = "2")]
-    pub block: ::core::option::Option<::tendermint_proto::types::Block>,
+    pub block: ::core::option::Option<tendermint_proto::types::Block>,
     /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "3")]
     pub sdk_block: ::core::option::Option<Block>,
 }
 /// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestBlockRequest {}
 /// GetLatestBlockResponse is the response type for the Query/GetLatestBlock RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestBlockResponse {
     #[prost(message, optional, tag = "1")]
-    pub block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
+    pub block_id: ::core::option::Option<tendermint_proto::types::BlockId>,
     /// Deprecated: please use `sdk_block` instead
     #[prost(message, optional, tag = "2")]
-    pub block: ::core::option::Option<::tendermint_proto::types::Block>,
+    pub block: ::core::option::Option<tendermint_proto::types::Block>,
     /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "3")]
     pub sdk_block: ::core::option::Option<Block>,
 }
 /// GetSyncingRequest is the request type for the Query/GetSyncing RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSyncingRequest {}
 /// GetSyncingResponse is the response type for the Query/GetSyncing RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSyncingResponse {
     #[prost(bool, tag = "1")]
     pub syncing: bool,
 }
 /// GetNodeInfoRequest is the request type for the Query/GetNodeInfo RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetNodeInfoRequest {}
 /// GetNodeInfoResponse is the response type for the Query/GetNodeInfo RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetNodeInfoResponse {
     #[prost(message, optional, tag = "1")]
-    pub default_node_info: ::core::option::Option<::tendermint_proto::p2p::DefaultNodeInfo>,
+    pub default_node_info: ::core::option::Option<tendermint_proto::p2p::DefaultNodeInfo>,
     #[prost(message, optional, tag = "2")]
     pub application_version: ::core::option::Option<VersionInfo>,
 }
 /// VersionInfo is the type for the GetNodeInfoResponse message.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VersionInfo {
     #[prost(string, tag = "1")]
@@ -199,6 +215,7 @@ pub struct VersionInfo {
     pub cosmos_sdk_version: ::prost::alloc::string::String,
 }
 /// Module is the type for VersionInfo
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Module {
     /// module path
@@ -212,6 +229,7 @@ pub struct Module {
     pub sum: ::prost::alloc::string::String,
 }
 /// ABCIQueryRequest defines the request structure for the ABCIQuery gRPC query.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AbciQueryRequest {
     #[prost(bytes = "vec", tag = "1")]
@@ -228,6 +246,7 @@ pub struct AbciQueryRequest {
 ///
 /// Note: This type is a duplicate of the ResponseQuery proto type defined in
 /// Tendermint.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AbciQueryResponse {
     #[prost(uint32, tag = "1")]
@@ -257,6 +276,7 @@ pub struct AbciQueryResponse {
 ///
 /// Note: This type is a duplicate of the ProofOp proto type defined in
 /// Tendermint.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProofOp {
     #[prost(string, tag = "1")]
@@ -270,6 +290,7 @@ pub struct ProofOp {
 ///
 /// Note: This type is a duplicate of the ProofOps proto type defined in
 /// Tendermint.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProofOps {
     #[prost(message, repeated, tag = "1")]

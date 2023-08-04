@@ -1,6 +1,7 @@
 // @generated
 /// ValidatorSigningInfo defines a validator's signing info for monitoring their
 /// liveness activity.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValidatorSigningInfo {
     #[prost(string, tag = "1")]
@@ -26,6 +27,7 @@ pub struct ValidatorSigningInfo {
     pub missed_blocks_counter: i64,
 }
 /// Params represents the parameters used for by the slashing module.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
     #[prost(int64, tag = "1")]
@@ -40,6 +42,7 @@ pub struct Params {
     pub slash_fraction_downtime: ::prost::alloc::vec::Vec<u8>,
 }
 /// GenesisState defines the slashing module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// params defines all the paramaters of related to deposit.
@@ -55,6 +58,7 @@ pub struct GenesisState {
     pub missed_blocks: ::prost::alloc::vec::Vec<ValidatorMissedBlocks>,
 }
 /// SigningInfo stores validator signing info of corresponding address.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SigningInfo {
     /// address is the validator address.
@@ -66,6 +70,7 @@ pub struct SigningInfo {
 }
 /// ValidatorMissedBlocks contains array of missed blocks of corresponding
 /// address.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValidatorMissedBlocks {
     /// address is the validator address.
@@ -76,6 +81,7 @@ pub struct ValidatorMissedBlocks {
     pub missed_blocks: ::prost::alloc::vec::Vec<MissedBlock>,
 }
 /// MissedBlock contains height and missed status as boolean.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MissedBlock {
     /// index is the height at which the block was missed.
@@ -86,9 +92,11 @@ pub struct MissedBlock {
     pub missed: bool,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for the Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
@@ -96,6 +104,7 @@ pub struct QueryParamsResponse {
 }
 /// QuerySigningInfoRequest is the request type for the Query/SigningInfo RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySigningInfoRequest {
     /// cons_address is the address to query signing info of
@@ -104,6 +113,7 @@ pub struct QuerySigningInfoRequest {
 }
 /// QuerySigningInfoResponse is the response type for the Query/SigningInfo RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySigningInfoResponse {
     /// val_signing_info is the signing info of requested val cons address
@@ -112,6 +122,7 @@ pub struct QuerySigningInfoResponse {
 }
 /// QuerySigningInfosRequest is the request type for the Query/SigningInfos RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySigningInfosRequest {
     #[prost(message, optional, tag = "1")]
@@ -119,6 +130,7 @@ pub struct QuerySigningInfosRequest {
 }
 /// QuerySigningInfosResponse is the response type for the Query/SigningInfos RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySigningInfosResponse {
     /// info is the signing info of all validators
@@ -128,12 +140,14 @@ pub struct QuerySigningInfosResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// MsgUnjail defines the Msg/Unjail request type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUnjail {
     #[prost(string, tag = "1")]
     pub validator_addr: ::prost::alloc::string::String,
 }
 /// MsgUnjailResponse defines the Msg/Unjail response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUnjailResponse {}
 include!("cosmos.slashing.v1beta1.tonic.rs");

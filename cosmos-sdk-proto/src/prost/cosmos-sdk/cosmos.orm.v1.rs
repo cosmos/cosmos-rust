@@ -1,5 +1,6 @@
 // @generated
 /// TableDescriptor describes an ORM table.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TableDescriptor {
     /// primary_key defines the primary key for the table.
@@ -15,6 +16,7 @@ pub struct TableDescriptor {
     pub id: u32,
 }
 /// PrimaryKeyDescriptor describes a table primary key.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PrimaryKeyDescriptor {
     /// fields is a comma-separated list of fields in the primary key. Spaces are
@@ -56,6 +58,7 @@ pub struct PrimaryKeyDescriptor {
     pub auto_increment: bool,
 }
 /// PrimaryKeyDescriptor describes a table secondary index.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SecondaryIndexDescriptor {
     /// fields is a comma-separated list of fields in the index. The supported
@@ -79,6 +82,7 @@ pub struct SecondaryIndexDescriptor {
     pub unique: bool,
 }
 /// TableDescriptor describes an ORM singleton table which has at most one instance.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SingletonDescriptor {
     /// id is a non-zero integer ID that must be unique within the

@@ -2,6 +2,7 @@
 /// WeightedVoteOption defines a unit of vote for vote split.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WeightedVoteOption {
     #[prost(enumeration = "VoteOption", tag = "1")]
@@ -11,6 +12,7 @@ pub struct WeightedVoteOption {
 }
 /// TextProposal defines a standard text proposal whose changes need to be
 /// manually updated in case of approval.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TextProposal {
     #[prost(string, tag = "1")]
@@ -20,6 +22,7 @@ pub struct TextProposal {
 }
 /// Deposit defines an amount deposited by an account address to an active
 /// proposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Deposit {
     #[prost(uint64, tag = "1")]
@@ -30,6 +33,7 @@ pub struct Deposit {
     pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// Proposal defines the core field members of a governance proposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Proposal {
     #[prost(uint64, tag = "1")]
@@ -55,6 +59,7 @@ pub struct Proposal {
     pub voting_end_time: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// TallyResult defines a standard tally for a governance proposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TallyResult {
     #[prost(string, tag = "1")]
@@ -68,6 +73,7 @@ pub struct TallyResult {
 }
 /// Vote defines a vote on a governance proposal.
 /// A Vote consists of a proposal ID, the voter, and the vote option.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Vote {
     #[prost(uint64, tag = "1")]
@@ -85,6 +91,7 @@ pub struct Vote {
     pub options: ::prost::alloc::vec::Vec<WeightedVoteOption>,
 }
 /// DepositParams defines the params for deposits on governance proposals.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DepositParams {
     ///   Minimum deposit for a proposal to enter voting period.
@@ -96,6 +103,7 @@ pub struct DepositParams {
     pub max_deposit_period: ::core::option::Option<::prost_types::Duration>,
 }
 /// VotingParams defines the params for voting on governance proposals.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VotingParams {
     ///   Length of the voting period.
@@ -103,6 +111,7 @@ pub struct VotingParams {
     pub voting_period: ::core::option::Option<::prost_types::Duration>,
 }
 /// TallyParams defines the params for tallying votes on governance proposals.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TallyParams {
     ///   Minimum percentage of total stake needed to vote for a result to be
@@ -146,6 +155,17 @@ impl VoteOption {
             VoteOption::NoWithVeto => "VOTE_OPTION_NO_WITH_VETO",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "VOTE_OPTION_UNSPECIFIED" => Some(Self::Unspecified),
+            "VOTE_OPTION_YES" => Some(Self::Yes),
+            "VOTE_OPTION_ABSTAIN" => Some(Self::Abstain),
+            "VOTE_OPTION_NO" => Some(Self::No),
+            "VOTE_OPTION_NO_WITH_VETO" => Some(Self::NoWithVeto),
+            _ => None,
+        }
+    }
 }
 /// ProposalStatus enumerates the valid statuses of a proposal.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -184,8 +204,21 @@ impl ProposalStatus {
             ProposalStatus::Failed => "PROPOSAL_STATUS_FAILED",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "PROPOSAL_STATUS_UNSPECIFIED" => Some(Self::Unspecified),
+            "PROPOSAL_STATUS_DEPOSIT_PERIOD" => Some(Self::DepositPeriod),
+            "PROPOSAL_STATUS_VOTING_PERIOD" => Some(Self::VotingPeriod),
+            "PROPOSAL_STATUS_PASSED" => Some(Self::Passed),
+            "PROPOSAL_STATUS_REJECTED" => Some(Self::Rejected),
+            "PROPOSAL_STATUS_FAILED" => Some(Self::Failed),
+            _ => None,
+        }
+    }
 }
 /// GenesisState defines the gov module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// starting_proposal_id is the ID of the starting proposal.
@@ -211,6 +244,7 @@ pub struct GenesisState {
     pub tally_params: ::core::option::Option<TallyParams>,
 }
 /// QueryProposalRequest is the request type for the Query/Proposal RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalRequest {
     /// proposal_id defines the unique id of the proposal.
@@ -218,12 +252,14 @@ pub struct QueryProposalRequest {
     pub proposal_id: u64,
 }
 /// QueryProposalResponse is the response type for the Query/Proposal RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalResponse {
     #[prost(message, optional, tag = "1")]
     pub proposal: ::core::option::Option<Proposal>,
 }
 /// QueryProposalsRequest is the request type for the Query/Proposals RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalsRequest {
     /// proposal_status defines the status of the proposals.
@@ -241,6 +277,7 @@ pub struct QueryProposalsRequest {
 }
 /// QueryProposalsResponse is the response type for the Query/Proposals RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryProposalsResponse {
     #[prost(message, repeated, tag = "1")]
@@ -250,6 +287,7 @@ pub struct QueryProposalsResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryVoteRequest is the request type for the Query/Vote RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVoteRequest {
     /// proposal_id defines the unique id of the proposal.
@@ -260,6 +298,7 @@ pub struct QueryVoteRequest {
     pub voter: ::prost::alloc::string::String,
 }
 /// QueryVoteResponse is the response type for the Query/Vote RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVoteResponse {
     /// vote defined the queried vote.
@@ -267,6 +306,7 @@ pub struct QueryVoteResponse {
     pub vote: ::core::option::Option<Vote>,
 }
 /// QueryVotesRequest is the request type for the Query/Votes RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesRequest {
     /// proposal_id defines the unique id of the proposal.
@@ -277,6 +317,7 @@ pub struct QueryVotesRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryVotesResponse is the response type for the Query/Votes RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryVotesResponse {
     /// votes defined the queried votes.
@@ -287,6 +328,7 @@ pub struct QueryVotesResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {
     /// params_type defines which parameters to query for, can be one of "voting",
@@ -295,6 +337,7 @@ pub struct QueryParamsRequest {
     pub params_type: ::prost::alloc::string::String,
 }
 /// QueryParamsResponse is the response type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsResponse {
     /// voting_params defines the parameters related to voting.
@@ -308,6 +351,7 @@ pub struct QueryParamsResponse {
     pub tally_params: ::core::option::Option<TallyParams>,
 }
 /// QueryDepositRequest is the request type for the Query/Deposit RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDepositRequest {
     /// proposal_id defines the unique id of the proposal.
@@ -318,6 +362,7 @@ pub struct QueryDepositRequest {
     pub depositor: ::prost::alloc::string::String,
 }
 /// QueryDepositResponse is the response type for the Query/Deposit RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDepositResponse {
     /// deposit defines the requested deposit.
@@ -325,6 +370,7 @@ pub struct QueryDepositResponse {
     pub deposit: ::core::option::Option<Deposit>,
 }
 /// QueryDepositsRequest is the request type for the Query/Deposits RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDepositsRequest {
     /// proposal_id defines the unique id of the proposal.
@@ -335,6 +381,7 @@ pub struct QueryDepositsRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryDepositsResponse is the response type for the Query/Deposits RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryDepositsResponse {
     #[prost(message, repeated, tag = "1")]
@@ -344,6 +391,7 @@ pub struct QueryDepositsResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryTallyResultRequest is the request type for the Query/Tally RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTallyResultRequest {
     /// proposal_id defines the unique id of the proposal.
@@ -351,6 +399,7 @@ pub struct QueryTallyResultRequest {
     pub proposal_id: u64,
 }
 /// QueryTallyResultResponse is the response type for the Query/Tally RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryTallyResultResponse {
     /// tally defines the requested tally.
@@ -359,6 +408,7 @@ pub struct QueryTallyResultResponse {
 }
 /// MsgSubmitProposal defines an sdk.Msg type that supports submitting arbitrary
 /// proposal Content.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposal {
     #[prost(message, optional, tag = "1")]
@@ -369,12 +419,14 @@ pub struct MsgSubmitProposal {
     pub proposer: ::prost::alloc::string::String,
 }
 /// MsgSubmitProposalResponse defines the Msg/SubmitProposal response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposalResponse {
     #[prost(uint64, tag = "1")]
     pub proposal_id: u64,
 }
 /// MsgVote defines a message to cast a vote.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVote {
     #[prost(uint64, tag = "1")]
@@ -385,11 +437,13 @@ pub struct MsgVote {
     pub option: i32,
 }
 /// MsgVoteResponse defines the Msg/Vote response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteResponse {}
 /// MsgVoteWeighted defines a message to cast a vote.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteWeighted {
     #[prost(uint64, tag = "1")]
@@ -402,9 +456,11 @@ pub struct MsgVoteWeighted {
 /// MsgVoteWeightedResponse defines the Msg/VoteWeighted response type.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteWeightedResponse {}
 /// MsgDeposit defines a message to submit a deposit to an existing proposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDeposit {
     #[prost(uint64, tag = "1")]
@@ -415,6 +471,7 @@ pub struct MsgDeposit {
     pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
 /// MsgDepositResponse defines the Msg/Deposit response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDepositResponse {}
 include!("cosmos.gov.v1beta1.tonic.rs");

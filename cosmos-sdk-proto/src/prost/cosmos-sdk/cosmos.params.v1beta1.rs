@@ -1,5 +1,6 @@
 // @generated
 /// ParameterChangeProposal defines a proposal to change one or more parameters.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ParameterChangeProposal {
     #[prost(string, tag = "1")]
@@ -11,6 +12,7 @@ pub struct ParameterChangeProposal {
 }
 /// ParamChange defines an individual parameter change, for use in
 /// ParameterChangeProposal.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ParamChange {
     #[prost(string, tag = "1")]
@@ -21,6 +23,7 @@ pub struct ParamChange {
     pub value: ::prost::alloc::string::String,
 }
 /// QueryParamsRequest is request type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {
     /// subspace defines the module to query the parameter for.
@@ -31,6 +34,7 @@ pub struct QueryParamsRequest {
     pub key: ::prost::alloc::string::String,
 }
 /// QueryParamsResponse is response type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsResponse {
     /// param defines the queried parameter.
@@ -41,12 +45,14 @@ pub struct QueryParamsResponse {
 /// subspaces and all keys for a subspace.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySubspacesRequest {}
 /// QuerySubspacesResponse defines the response types for querying for all
 /// registered subspaces and all keys for a subspace.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySubspacesResponse {
     #[prost(message, repeated, tag = "1")]
@@ -56,6 +62,7 @@ pub struct QuerySubspacesResponse {
 /// the subspace.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Subspace {
     #[prost(string, tag = "1")]

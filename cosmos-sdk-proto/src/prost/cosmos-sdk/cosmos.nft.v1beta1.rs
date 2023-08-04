@@ -1,5 +1,6 @@
 // @generated
 /// EventSend is emitted on Msg/Send
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventSend {
     #[prost(string, tag = "1")]
@@ -12,6 +13,7 @@ pub struct EventSend {
     pub receiver: ::prost::alloc::string::String,
 }
 /// EventMint is emitted on Mint
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventMint {
     #[prost(string, tag = "1")]
@@ -22,6 +24,7 @@ pub struct EventMint {
     pub owner: ::prost::alloc::string::String,
 }
 /// EventBurn is emitted on Burn
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventBurn {
     #[prost(string, tag = "1")]
@@ -32,6 +35,7 @@ pub struct EventBurn {
     pub owner: ::prost::alloc::string::String,
 }
 /// Class defines the class of the nft type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Class {
     /// id defines the unique identifier of the NFT classification, similar to the contract address of ERC721
@@ -57,6 +61,7 @@ pub struct Class {
     pub data: ::core::option::Option<::prost_types::Any>,
 }
 /// NFT defines the NFT.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Nft {
     /// class_id associated with the NFT, similar to the contract address of ERC721
@@ -76,6 +81,7 @@ pub struct Nft {
     pub data: ::core::option::Option<::prost_types::Any>,
 }
 /// GenesisState defines the nft module's genesis state.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     /// class defines the class of the nft type.
@@ -85,6 +91,7 @@ pub struct GenesisState {
     pub entries: ::prost::alloc::vec::Vec<Entry>,
 }
 /// Entry Defines all nft owned by a person
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Entry {
     /// owner is the owner address of the following nft
@@ -95,6 +102,7 @@ pub struct Entry {
     pub nfts: ::prost::alloc::vec::Vec<Nft>,
 }
 /// QueryBalanceRequest is the request type for the Query/Balance RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceRequest {
     #[prost(string, tag = "1")]
@@ -103,12 +111,14 @@ pub struct QueryBalanceRequest {
     pub owner: ::prost::alloc::string::String,
 }
 /// QueryBalanceResponse is the response type for the Query/Balance RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceResponse {
     #[prost(uint64, tag = "1")]
     pub amount: u64,
 }
 /// QueryOwnerRequest is the request type for the Query/Owner RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryOwnerRequest {
     #[prost(string, tag = "1")]
@@ -117,24 +127,28 @@ pub struct QueryOwnerRequest {
     pub id: ::prost::alloc::string::String,
 }
 /// QueryOwnerResponse is the response type for the Query/Owner RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryOwnerResponse {
     #[prost(string, tag = "1")]
     pub owner: ::prost::alloc::string::String,
 }
 /// QuerySupplyRequest is the request type for the Query/Supply RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyRequest {
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
 }
 /// QuerySupplyResponse is the response type for the Query/Supply RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyResponse {
     #[prost(uint64, tag = "1")]
     pub amount: u64,
 }
 /// QueryNFTstRequest is the request type for the Query/NFTs RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNfTsRequest {
     #[prost(string, tag = "1")]
@@ -145,6 +159,7 @@ pub struct QueryNfTsRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryNFTsResponse is the response type for the Query/NFTs RPC methods
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNfTsResponse {
     #[prost(message, repeated, tag = "1")]
@@ -153,6 +168,7 @@ pub struct QueryNfTsResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryNFTRequest is the request type for the Query/NFT RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNftRequest {
     #[prost(string, tag = "1")]
@@ -161,24 +177,28 @@ pub struct QueryNftRequest {
     pub id: ::prost::alloc::string::String,
 }
 /// QueryNFTResponse is the response type for the Query/NFT RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNftResponse {
     #[prost(message, optional, tag = "1")]
     pub nft: ::core::option::Option<Nft>,
 }
 /// QueryClassRequest is the request type for the Query/Class RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassRequest {
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
 }
 /// QueryClassResponse is the response type for the Query/Class RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassResponse {
     #[prost(message, optional, tag = "1")]
     pub class: ::core::option::Option<Class>,
 }
 /// QueryClassesRequest is the request type for the Query/Classes RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassesRequest {
     /// pagination defines an optional pagination for the request.
@@ -186,6 +206,7 @@ pub struct QueryClassesRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryClassesResponse is the response type for the Query/Classes RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassesResponse {
     #[prost(message, repeated, tag = "1")]
@@ -194,6 +215,7 @@ pub struct QueryClassesResponse {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// MsgSend represents a message to send a nft from one account to another account.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSend {
     /// class_id defines the unique identifier of the nft classification, similar to the contract address of ERC721
@@ -210,6 +232,7 @@ pub struct MsgSend {
     pub receiver: ::prost::alloc::string::String,
 }
 /// MsgSendResponse defines the Msg/Send response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSendResponse {}
 include!("cosmos.nft.v1beta1.tonic.rs");
