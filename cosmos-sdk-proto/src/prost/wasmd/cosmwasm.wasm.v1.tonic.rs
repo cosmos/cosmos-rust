@@ -16,7 +16,7 @@ pub mod msg_client {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
         {
             let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
@@ -68,10 +68,27 @@ pub mod msg_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
         pub async fn store_code(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgStoreCode>,
-        ) -> Result<tonic::Response<super::MsgStoreCodeResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::MsgStoreCodeResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -80,12 +97,18 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/StoreCode");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Msg", "StoreCode"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn instantiate_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgInstantiateContract>,
-        ) -> Result<tonic::Response<super::MsgInstantiateContractResponse>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<super::MsgInstantiateContractResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -95,13 +118,20 @@ pub mod msg_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/InstantiateContract");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmwasm.wasm.v1.Msg",
+                "InstantiateContract",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn instantiate_contract2(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgInstantiateContract2>,
-        ) -> Result<tonic::Response<super::MsgInstantiateContract2Response>, tonic::Status>
-        {
+        ) -> std::result::Result<
+            tonic::Response<super::MsgInstantiateContract2Response>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -111,12 +141,18 @@ pub mod msg_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/InstantiateContract2");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmwasm.wasm.v1.Msg",
+                "InstantiateContract2",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn execute_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgExecuteContract>,
-        ) -> Result<tonic::Response<super::MsgExecuteContractResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::MsgExecuteContractResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -126,12 +162,16 @@ pub mod msg_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/ExecuteContract");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Msg", "ExecuteContract"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn migrate_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgMigrateContract>,
-        ) -> Result<tonic::Response<super::MsgMigrateContractResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::MsgMigrateContractResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -141,12 +181,16 @@ pub mod msg_client {
             let codec = tonic::codec::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/MigrateContract");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Msg", "MigrateContract"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn update_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateAdmin>,
-        ) -> Result<tonic::Response<super::MsgUpdateAdminResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::MsgUpdateAdminResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -155,12 +199,16 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/UpdateAdmin");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Msg", "UpdateAdmin"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn clear_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgClearAdmin>,
-        ) -> Result<tonic::Response<super::MsgClearAdminResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::MsgClearAdminResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -169,7 +217,10 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/ClearAdmin");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Msg", "ClearAdmin"));
+            self.inner.unary(req, path, codec).await
         }
     }
 }
@@ -190,7 +241,7 @@ pub mod query_client {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
         {
             let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
@@ -245,10 +296,27 @@ pub mod query_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
         pub async fn contract_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractInfoRequest>,
-        ) -> Result<tonic::Response<super::QueryContractInfoResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryContractInfoResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -257,72 +325,15 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractInfo");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "ContractInfo"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn contract_history(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractHistoryRequest>,
-        ) -> Result<tonic::Response<super::QueryContractHistoryResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractHistory");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        pub async fn contracts_by_code(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryContractsByCodeRequest>,
-        ) -> Result<tonic::Response<super::QueryContractsByCodeResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractsByCode");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        pub async fn all_contract_state(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllContractStateRequest>,
-        ) -> Result<tonic::Response<super::QueryAllContractStateResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/AllContractState");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        pub async fn raw_contract_state(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryRawContractStateRequest>,
-        ) -> Result<tonic::Response<super::QueryRawContractStateResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/RawContractState");
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        pub async fn smart_contract_state(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QuerySmartContractStateRequest>,
-        ) -> Result<tonic::Response<super::QuerySmartContractStateResponse>, tonic::Status>
+        ) -> std::result::Result<tonic::Response<super::QueryContractHistoryResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -332,13 +343,100 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractHistory");
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "ContractHistory"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn contracts_by_code(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryContractsByCodeRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryContractsByCodeResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractsByCode");
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "ContractsByCode"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn all_contract_state(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryAllContractStateRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryAllContractStateResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/AllContractState");
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmwasm.wasm.v1.Query",
+                "AllContractState",
+            ));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn raw_contract_state(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryRawContractStateRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryRawContractStateResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/RawContractState");
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmwasm.wasm.v1.Query",
+                "RawContractState",
+            ));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn smart_contract_state(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QuerySmartContractStateRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::QuerySmartContractStateResponse>,
+            tonic::Status,
+        > {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/SmartContractState");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmwasm.wasm.v1.Query",
+                "SmartContractState",
+            ));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn code(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryCodeRequest>,
-        ) -> Result<tonic::Response<super::QueryCodeResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryCodeResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -347,12 +445,16 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Code");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "Code"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn codes(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryCodesRequest>,
-        ) -> Result<tonic::Response<super::QueryCodesResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryCodesResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -361,12 +463,16 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Codes");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "Codes"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn pinned_codes(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPinnedCodesRequest>,
-        ) -> Result<tonic::Response<super::QueryPinnedCodesResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryPinnedCodesResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -375,12 +481,16 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/PinnedCodes");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "PinnedCodes"));
+            self.inner.unary(req, path, codec).await
         }
         pub async fn params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryParamsRequest>,
-        ) -> Result<tonic::Response<super::QueryParamsResponse>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -389,7 +499,10 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Params");
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "Params"));
+            self.inner.unary(req, path, codec).await
         }
     }
 }
