@@ -225,7 +225,7 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
     // Compile all of the proto files, along with grpc service clients
     info!("Compiling proto definitions and clients for GRPC services!");
     let proto_path = Path::new(COSMOS_SDK_DIR).join("proto");
-    run_buf("buf.sdk.gen.yaml", &proto_path, out_dir);
+    run_buf("buf.sdk.gen.yaml", proto_path, out_dir);
     info!("=> Done!");
 }
 
