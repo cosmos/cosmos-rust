@@ -111,7 +111,7 @@ pub mod reflection_service_client {
 pub mod reflection_service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    ///Generated trait containing gRPC methods that should be implemented for use with ReflectionServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with ReflectionServiceServer.
     #[async_trait]
     pub trait ReflectionService: Send + Sync + 'static {
         async fn list_all_interfaces(
