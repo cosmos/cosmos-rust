@@ -71,7 +71,7 @@ impl AuthorizationType {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HistoricalInfo {
     #[prost(message, optional, tag = "1")]
-    pub header: ::core::option::Option<::tendermint_proto::types::Header>,
+    pub header: ::core::option::Option<::tendermint_proto::v0_34::types::Header>,
     #[prost(message, repeated, tag = "2")]
     pub valset: ::prost::alloc::vec::Vec<Validator>,
 }

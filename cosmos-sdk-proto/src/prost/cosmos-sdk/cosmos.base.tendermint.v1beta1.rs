@@ -6,18 +6,18 @@ pub struct Block {
     #[prost(message, optional, tag = "1")]
     pub header: ::core::option::Option<Header>,
     #[prost(message, optional, tag = "2")]
-    pub data: ::core::option::Option<::tendermint_proto::types::Data>,
+    pub data: ::core::option::Option<::tendermint_proto::v0_34::types::Data>,
     #[prost(message, optional, tag = "3")]
-    pub evidence: ::core::option::Option<::tendermint_proto::types::EvidenceList>,
+    pub evidence: ::core::option::Option<::tendermint_proto::v0_34::types::EvidenceList>,
     #[prost(message, optional, tag = "4")]
-    pub last_commit: ::core::option::Option<::tendermint_proto::types::Commit>,
+    pub last_commit: ::core::option::Option<::tendermint_proto::v0_34::types::Commit>,
 }
 /// Header defines the structure of a Tendermint block header.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Header {
     /// basic block info
     #[prost(message, optional, tag = "1")]
-    pub version: ::core::option::Option<::tendermint_proto::version::Consensus>,
+    pub version: ::core::option::Option<::tendermint_proto::v0_34::version::Consensus>,
     #[prost(string, tag = "2")]
     pub chain_id: ::prost::alloc::string::String,
     #[prost(int64, tag = "3")]
@@ -26,7 +26,7 @@ pub struct Header {
     pub time: ::core::option::Option<::prost_types::Timestamp>,
     /// prev block info
     #[prost(message, optional, tag = "5")]
-    pub last_block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
+    pub last_block_id: ::core::option::Option<::tendermint_proto::v0_34::types::BlockId>,
     /// hashes of block data
     ///
     /// commit from validators from the last block
@@ -131,10 +131,10 @@ pub struct GetBlockByHeightRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetBlockByHeightResponse {
     #[prost(message, optional, tag = "1")]
-    pub block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
+    pub block_id: ::core::option::Option<::tendermint_proto::v0_34::types::BlockId>,
     /// Deprecated: please use `sdk_block` instead
     #[prost(message, optional, tag = "2")]
-    pub block: ::core::option::Option<::tendermint_proto::types::Block>,
+    pub block: ::core::option::Option<::tendermint_proto::v0_34::types::Block>,
     /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "3")]
     pub sdk_block: ::core::option::Option<Block>,
@@ -148,10 +148,10 @@ pub struct GetLatestBlockRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetLatestBlockResponse {
     #[prost(message, optional, tag = "1")]
-    pub block_id: ::core::option::Option<::tendermint_proto::types::BlockId>,
+    pub block_id: ::core::option::Option<::tendermint_proto::v0_34::types::BlockId>,
     /// Deprecated: please use `sdk_block` instead
     #[prost(message, optional, tag = "2")]
-    pub block: ::core::option::Option<::tendermint_proto::types::Block>,
+    pub block: ::core::option::Option<::tendermint_proto::v0_34::types::Block>,
     /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "3")]
     pub sdk_block: ::core::option::Option<Block>,
@@ -173,7 +173,7 @@ pub struct GetNodeInfoRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetNodeInfoResponse {
     #[prost(message, optional, tag = "1")]
-    pub default_node_info: ::core::option::Option<::tendermint_proto::p2p::DefaultNodeInfo>,
+    pub default_node_info: ::core::option::Option<::tendermint_proto::v0_34::p2p::DefaultNodeInfo>,
     #[prost(message, optional, tag = "2")]
     pub application_version: ::core::option::Option<VersionInfo>,
 }

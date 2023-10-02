@@ -1,6 +1,6 @@
 [package]
 name = "cosmrs"
-version = "0.14.0"
+version = "0.15.0-pre"
 authors = ["Tony Arcieri <tony@iqlusion.io>"]
 license = "Apache-2.0"
 repository = "https://github.com/cosmos/cosmos-rust/tree/main/cosmrs"
@@ -12,7 +12,7 @@ edition = "2021"
 rust-version = "1.72"
 
 [dependencies]
-cosmos-sdk-proto = { version = "0.19", default-features = false, path = "../cosmos-sdk-proto" }
+cosmos-sdk-proto = { version = "=0.20.0-pre", default-features = false, path = "../cosmos-sdk-proto" }
 ecdsa = { version = "0.16", features = ["std"] }
 eyre = "0.6"
 k256 = { version = "0.13", features = ["ecdsa", "sha256"] }
@@ -20,12 +20,12 @@ rand_core = { version = "0.6", features = ["std"] }
 serde = { version = "1", features = ["serde_derive"] }
 serde_json = "1"
 subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
-tendermint = { version = "0.32", features = ["secp256k1"] }
+tendermint = { version = "0.34", features = ["secp256k1"] }
 thiserror = "1"
 
 # optional dependencies
 bip32 = { version = "0.5", optional = true }
-tendermint-rpc = { version = "0.32", optional = true, features = ["http-client"] }
+tendermint-rpc = { version = "0.34", optional = true, features = ["http-client"] }
 tokio = { version = "1", optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]

@@ -49,17 +49,20 @@ pub struct StoreKvPair {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BlockMetadata {
     #[prost(message, optional, tag = "1")]
-    pub request_begin_block: ::core::option::Option<::tendermint_proto::abci::RequestBeginBlock>,
+    pub request_begin_block:
+        ::core::option::Option<::tendermint_proto::v0_34::abci::RequestBeginBlock>,
     #[prost(message, optional, tag = "2")]
-    pub response_begin_block: ::core::option::Option<::tendermint_proto::abci::ResponseBeginBlock>,
+    pub response_begin_block:
+        ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseBeginBlock>,
     #[prost(message, repeated, tag = "3")]
     pub deliver_txs: ::prost::alloc::vec::Vec<block_metadata::DeliverTx>,
     #[prost(message, optional, tag = "4")]
-    pub request_end_block: ::core::option::Option<::tendermint_proto::abci::RequestEndBlock>,
+    pub request_end_block: ::core::option::Option<::tendermint_proto::v0_34::abci::RequestEndBlock>,
     #[prost(message, optional, tag = "5")]
-    pub response_end_block: ::core::option::Option<::tendermint_proto::abci::ResponseEndBlock>,
+    pub response_end_block:
+        ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseEndBlock>,
     #[prost(message, optional, tag = "6")]
-    pub response_commit: ::core::option::Option<::tendermint_proto::abci::ResponseCommit>,
+    pub response_commit: ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseCommit>,
 }
 /// Nested message and enum types in `BlockMetadata`.
 pub mod block_metadata {
@@ -67,9 +70,9 @@ pub mod block_metadata {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct DeliverTx {
         #[prost(message, optional, tag = "1")]
-        pub request: ::core::option::Option<::tendermint_proto::abci::RequestDeliverTx>,
+        pub request: ::core::option::Option<::tendermint_proto::v0_34::abci::RequestDeliverTx>,
         #[prost(message, optional, tag = "2")]
-        pub response: ::core::option::Option<::tendermint_proto::abci::ResponseDeliverTx>,
+        pub response: ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseDeliverTx>,
     }
 }
 // @@protoc_insertion_point(module)

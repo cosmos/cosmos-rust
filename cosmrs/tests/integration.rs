@@ -88,8 +88,8 @@ fn msg_send() {
                 panic!("check_tx failed: {:?}", tx_commit_response.check_tx);
             }
 
-            if tx_commit_response.deliver_tx.code.is_err() {
-                panic!("deliver_tx failed: {:?}", tx_commit_response.deliver_tx);
+            if tx_commit_response.tx_result.code.is_err() {
+                panic!("tx_result error: {:?}", tx_commit_response.tx_result);
             }
 
             let tx = dev::poll_for_tx(&rpc_client, tx_commit_response.hash).await;
