@@ -1,7 +1,7 @@
 //! Transaction messages
 
 use crate::{
-    proto::traits::{MessageExt, TypeUrl},
+    proto::traits::{MessageExt, Name},
     Any, ErrorReport, Result,
 };
 
@@ -15,7 +15,7 @@ pub trait Msg:
     Clone + Sized + TryFrom<Self::Proto, Error = ErrorReport> + Into<Self::Proto>
 {
     /// Protocol Buffers type
-    type Proto: Default + MessageExt + Sized + TypeUrl;
+    type Proto: Default + MessageExt + Name + Sized;
 
     /// Parse this message proto from [`Any`].
     fn from_any(any: &Any) -> Result<Self> {

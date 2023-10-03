@@ -1,46 +1,27 @@
 //! Support traits for Cosmos SDK protobufs.
 
-pub use prost::Message;
+pub use prost::{Message, Name};
 
 use crate::Any;
 use prost::{DecodeError, EncodeError};
 use std::str::FromStr;
-
-/// Associate a type URL with a given proto.
-pub trait TypeUrl: Message {
-    /// Type URL value
-    const TYPE_URL: &'static str;
-}
 
 /// Extension trait for [`Message`].
 pub trait MessageExt: Message {
     /// Parse this message proto from [`Any`].
     fn from_any(any: &Any) -> Result<Self, DecodeError>
     where
-        Self: Default + Sized + TypeUrl,
+        Self: Default + Name + Sized,
     {
-        if any.type_url == Self::TYPE_URL {
-            Ok(Self::decode(&*any.value)?)
-        } else {
-            let mut err = DecodeError::new(format!(
-                "expected type URL: \"{}\" (got: \"{}\")",
-                Self::TYPE_URL,
-                &any.type_url
-            ));
-            err.push("unexpected type URL", "type_url");
-            Err(err)
-        }
+        any.to_msg()
     }
 
     /// Serialize this message proto as [`Any`].
     fn to_any(&self) -> Result<Any, EncodeError>
     where
-        Self: TypeUrl,
+        Self: Name + Sized,
     {
-        self.to_bytes().map(|bytes| Any {
-            type_url: Self::TYPE_URL.to_owned(),
-            value: bytes,
-        })
+        Any::from_msg(self)
     }
 
     /// Serialize this protobuf message as a byte vector.
