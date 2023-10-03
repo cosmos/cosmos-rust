@@ -21,7 +21,8 @@
 //! The following example illustrates how to build, sign, and parse
 //! a Cosmos SDK transaction:
 //!
-//! ```
+#![cfg_attr(feature = "getrandom", doc = " ```ignore")]
+#![cfg_attr(not(feature = "getrandom"), doc = " ```ignore")]
 //! # fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
 //! use cosmrs::{
 //!     bank::MsgSend,
