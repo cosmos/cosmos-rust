@@ -27,8 +27,8 @@ impl TryFrom<proto::cosmwasm::wasm::v1::ContractCodeHistoryEntry> for ContractCo
         proto: proto::cosmwasm::wasm::v1::ContractCodeHistoryEntry,
     ) -> Result<ContractCodeHistoryEntry> {
         Ok(ContractCodeHistoryEntry {
-            operation: ContractCodeHistoryOperationType::from_i32(proto.operation).ok_or(
-                Error::InvalidEnumValue {
+            operation: ContractCodeHistoryOperationType::try_from(proto.operation).map_err(
+                |_| Error::InvalidEnumValue {
                     name: "operation",
                     found_value: proto.operation,
                 },

@@ -23,10 +23,11 @@ impl TryFrom<&proto::cosmwasm::wasm::v1::AccessConfig> for AccessConfig {
     type Error = ErrorReport;
 
     fn try_from(proto: &proto::cosmwasm::wasm::v1::AccessConfig) -> Result<AccessConfig> {
-        let permission = AccessType::from_i32(proto.permission).ok_or(Error::InvalidEnumValue {
-            name: "permission",
-            found_value: proto.permission,
-        })?;
+        let permission =
+            AccessType::try_from(proto.permission).map_err(|_| Error::InvalidEnumValue {
+                name: "permission",
+                found_value: proto.permission,
+            })?;
 
         let mut addresses = Vec::with_capacity(proto.addresses.len());
 
