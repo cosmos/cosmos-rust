@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.20.0 (2023-10-03)
+### Added
+- Expose `gov::v1` module ([#437])
+
+### Changed
+- Migrate to `neoeinstein-prost`/`neoeinstein-tonic` ([#429])
+- Bump `tendermint-proto` dependency to v0.34 ([#431])
+- Replace `TypeUrl` trait with `prost::Name` trait ([#432])
+- Bump `COSMOS_SDK_REV` to v0.46.15 ([#439])
+
+[#429]: https://github.com/cosmos/cosmos-rust/pull/429
+[#431]: https://github.com/cosmos/cosmos-rust/pull/431
+[#432]: https://github.com/cosmos/cosmos-rust/pull/432
+[#437]: https://github.com/cosmos/cosmos-rust/pull/437
+[#439]: https://github.com/cosmos/cosmos-rust/pull/439
+
 ## 0.19.0 (2023-05-03)
 ### Changed
 - Use `buf` to generate Cosmos SDK protos ([#393])
