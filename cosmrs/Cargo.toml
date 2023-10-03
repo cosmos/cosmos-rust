@@ -19,6 +19,7 @@ k256 = { version = "0.13", default-features = false, features = ["ecdsa", "sha25
 rand_core = { version = "0.6", default-features = false }
 serde = { version = "1", features = ["serde_derive"] }
 serde_json = "1"
+signature = { version = "2", features = ["std"] }
 subtle-encoding = { version = "0.5", features = ["bech32-preview"] }
 tendermint = { version = "0.34", features = ["secp256k1"] }
 thiserror = "1"
