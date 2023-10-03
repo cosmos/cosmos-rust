@@ -285,6 +285,7 @@ dependencies = [
  "rand_core",
  "serde",
  "serde_json",
+ "signature",
  "subtle-encoding",
  "tendermint",
  "tendermint-rpc",
