@@ -9,6 +9,7 @@ use std::str::FromStr;
 /// Extension trait for [`Message`].
 pub trait MessageExt: Message {
     /// Parse this message proto from [`Any`].
+    #[deprecated(since = "0.20.0", note = "use Any::to_msg instead")]
     fn from_any(any: &Any) -> Result<Self, DecodeError>
     where
         Self: Default + Name + Sized,
@@ -17,6 +18,7 @@ pub trait MessageExt: Message {
     }
 
     /// Serialize this message proto as [`Any`].
+    #[deprecated(since = "0.20.0", note = "use Any::from_msg instead")]
     fn to_any(&self) -> Result<Any, EncodeError>
     where
         Self: Name + Sized,
