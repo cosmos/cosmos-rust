@@ -1,8 +1,7 @@
-//! Registry of type URLs associated with various protobuf types defined in
-//! this crate.
+//! Type name registry: used to compute type URLs.
 
-// TODO(tarcieri): leverage first-class support for type URLs in prost?
-// See: https://github.com/tokio-rs/prost/issues/299
+// TODO(tarcieri): generate these automatically using `prost-build`
+// See: https://github.com/tokio-rs/prost/issues/926
 
 use crate::{cosmos, ibc, traits::Name};
 
@@ -500,8 +499,7 @@ mod wasm {
     }
 }
 
-/// Workaround until tokio-rs/prost#923 is released
-// TODO(tarcieri): remove this before final release
+// TODO(tarcieri): remove this when tokio-rs/prost#923 is released (v0.12.1?)
 fn full_name<T: Name>() -> String {
     format!("{}.{}", T::PACKAGE, T::NAME)
 }
