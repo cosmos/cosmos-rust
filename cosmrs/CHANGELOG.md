@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.15.0 (2023-10-03)
+### Added
+- Export `msg_clear_admin` and `msg_update_admin` types ([#419])
+- `getrandom` feature ([#434])
+
+### Changed
+- Bound `EcdsaSigner` trait on `Sync + Send` ([#410])
+- MSRV 1.72 ([#428])
+- Bump `tendermint`/`tendermint-rpc` dependencies to v0.34 ([#431])
+- Replace `TypeUrl` with `Name` trait ([#432])
+- Bump `cosmos-sdk-proto` to v0.20 ([#440])
+
+### Fixed
+- `PublicKey::to_any` ([#406])
+
+[#406]: https://github.com/cosmos/cosmos-rust/pull/406
+[#410]: https://github.com/cosmos/cosmos-rust/pull/410
+[#419]: https://github.com/cosmos/cosmos-rust/pull/419
+[#428]: https://github.com/cosmos/cosmos-rust/pull/428
+[#431]: https://github.com/cosmos/cosmos-rust/pull/431
+[#432]: https://github.com/cosmos/cosmos-rust/pull/432
+[#434]: https://github.com/cosmos/cosmos-rust/pull/434
+[#440]: https://github.com/cosmos/cosmos-rust/pull/440
+
 ## 0.14.0 (2023-05-03)
 ### Changed
 - Bump `tendermint`/`tendermint-rpc` to v0.32 ([#400])

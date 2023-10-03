@@ -30,7 +30,7 @@ and message passing.
 
 ## Minimum Supported Rust Version
 
-This crate is supported on Rust **1.63** or newer.
+This crate is supported on Rust **1.72** or newer.
 
 [//]: # "badges"
 [crate-image]: https://buildstats.info/crate/cosmrs
@@ -41,7 +41,7 @@ This crate is supported on Rust **1.63** or newer.
 [build-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/cosmrs.yml
 [license-image]: https://img.shields.io/badge/license-Apache2.0-blue.svg
 [license-link]: https://github.com/cosmos/cosmos-rust/blob/master/LICENSE
-[rustc-image]: https://img.shields.io/badge/rustc-1.63+-blue.svg
+[rustc-image]: https://img.shields.io/badge/rustc-1.72+-blue.svg
 
 [//]: # "general links"
 [Cosmos]: https://cosmos.network/
