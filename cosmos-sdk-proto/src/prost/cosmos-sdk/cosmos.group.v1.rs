@@ -405,6 +405,19 @@ pub struct EventLeaveGroup {
     #[prost(string, tag = "2")]
     pub address: ::prost::alloc::string::String,
 }
+/// EventProposalPruned is an event emitted when a proposal is pruned.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventProposalPruned {
+    /// proposal_id is the unique ID of the proposal.
+    #[prost(uint64, tag = "1")]
+    pub proposal_id: u64,
+    /// status is the proposal status (UNSPECIFIED, SUBMITTED, ACCEPTED, REJECTED, ABORTED, WITHDRAWN).
+    #[prost(enumeration = "ProposalStatus", tag = "2")]
+    pub status: i32,
+    /// tally_result is the proposal tally result (when applicable).
+    #[prost(message, optional, tag = "3")]
+    pub tally_result: ::core::option::Option<TallyResult>,
+}
 /// GenesisState defines the group module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
