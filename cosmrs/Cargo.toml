@@ -12,7 +12,7 @@ edition = "2021"
 rust-version = "1.72"
 
 [dependencies]
-cosmos-sdk-proto = { version = "=0.20.0-pre", default-features = false, path = "../cosmos-sdk-proto" }
+cosmos-sdk-proto = { version = "0.20", default-features = false, path = "../cosmos-sdk-proto" }
 ecdsa = "0.16"
 eyre = "0.6"
 k256 = { version = "0.13", default-features = false, features = ["ecdsa", "sha256"] }
