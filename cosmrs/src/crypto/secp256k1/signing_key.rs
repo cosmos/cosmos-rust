@@ -107,6 +107,12 @@ impl From<&bip32::XPrv> for SigningKey {
 ///
 /// Note that this trait is bounded on [`ecdsa::signature::Signer`], which is
 /// what is actually used to produce a signature for a given message.
-pub trait EcdsaSigner: Signer<Signature> + Keypair<VerifyingKey = VerifyingKey> {}
+pub trait EcdsaSigner:
+    Signer<Signature> + Keypair<VerifyingKey = VerifyingKey> + Sync + Send
+{
+}
 
-impl<T> EcdsaSigner for T where T: Signer<Signature> + Keypair<VerifyingKey = VerifyingKey> {}
+impl<T> EcdsaSigner for T where
+    T: Signer<Signature> + Keypair<VerifyingKey = VerifyingKey> + Sync + Send
+{
+}
