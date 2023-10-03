@@ -163,6 +163,9 @@ pub mod cosmos {
 
     /// Messages and services handling governance
     pub mod gov {
+        pub mod v1 {
+            include!("prost/cosmos-sdk/cosmos.gov.v1.rs");
+        }
         pub mod v1beta1 {
             include!("prost/cosmos-sdk/cosmos.gov.v1beta1.rs");
         }
