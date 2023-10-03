@@ -5,7 +5,10 @@ use crate::{
     ErrorReport, Result,
 };
 use ecdsa::signature::{Keypair, Signer};
+use eyre::eyre;
 use k256::ecdsa::VerifyingKey;
+
+#[cfg(feature = "getrandom")]
 use rand_core::OsRng;
 
 /// ECDSA/secp256k1 signing key (i.e. private key)
@@ -35,11 +38,13 @@ impl SigningKey {
 
     /// Initialize from a raw scalar value (big endian).
     pub fn from_slice(bytes: &[u8]) -> Result<Self> {
-        let signing_key = k256::ecdsa::SigningKey::from_slice(bytes)?;
+        let signing_key =
+            k256::ecdsa::SigningKey::from_slice(bytes).map_err(|_| eyre!("invalid signing key"))?;
         Ok(Self::new(Box::new(signing_key)))
     }
 
     /// Generate a random signing key.
+    #[cfg(feature = "getrandom")]
     pub fn random() -> Self {
         Self::new(Box::new(k256::ecdsa::SigningKey::random(&mut OsRng)))
     }
@@ -58,7 +63,9 @@ impl SigningKey {
 
     /// Sign the given message, returning a signature.
     pub fn sign(&self, msg: &[u8]) -> Result<Signature> {
-        Ok(self.inner.try_sign(msg)?)
+        self.inner
+            .try_sign(msg)
+            .map_err(|_| eyre!("signing failure"))
     }
 
     /// Get the [`PublicKey`] for this [`SigningKey`].
