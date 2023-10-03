@@ -172,7 +172,6 @@ impl Tx {
 
     /// Use RPC to find a transaction by its hash.
     #[cfg(feature = "rpc")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "rpc")))]
     pub async fn find_by_hash<C>(rpc_client: &C, tx_hash: Hash) -> Result<Tx>
     where
         C: rpc::Client + Send + Sync,

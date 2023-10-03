@@ -2,7 +2,7 @@
 #![doc(
     html_logo_url = "https://raw.githubusercontent.com/cosmos/cosmos-rust/main/.images/cosmos.png"
 )]
-#![cfg_attr(docsrs, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![allow(
     rustdoc::bare_urls,
     rustdoc::broken_intra_doc_links,
@@ -227,7 +227,6 @@ pub mod cosmos {
 
 /// CosmWasm protobuf definitions.
 #[cfg(feature = "cosmwasm")]
-#[cfg_attr(docsrs, doc(cfg(feature = "cosmwasm")))]
 pub mod cosmwasm {
     /// Messages and services handling CosmWasm.
     pub mod wasm {

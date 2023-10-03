@@ -356,22 +356,19 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
         (
             "/// Generated client implementations.",
             "/// Generated client implementations.\n\
-             #[cfg(feature = \"grpc\")]\n\
-             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
+             #[cfg(feature = \"grpc\")]",
         ),
         // Feature-gate gRPC impls which use `tonic::transport`
         (
             "impl(.+)tonic::transport(.+)",
             "#[cfg(feature = \"grpc-transport\")]\n    \
-             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
              impl${1}tonic::transport${2}",
         ),
         // Feature-gate gRPC server modules
         (
             "/// Generated server implementations.",
             "/// Generated server implementations.\n\
-             #[cfg(feature = \"grpc\")]\n\
-             #[cfg_attr(docsrs, doc(cfg(feature = \"grpc\")))]",
+             #[cfg(feature = \"grpc\")]",
         ),
     ];
 

@@ -49,7 +49,6 @@ impl SigningKey {
     /// Note that [`bip32::DerivationPath`] impls [`std::str::FromStr`] and
     /// therefore you can use `parse()` to parse it from a string.
     #[cfg(feature = "bip32")]
-    #[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
     pub fn derive_from_path(
         seed: impl AsRef<[u8]>,
         path: &bip32::DerivationPath,
@@ -83,7 +82,6 @@ impl TryFrom<&[u8]> for SigningKey {
 }
 
 #[cfg(feature = "bip32")]
-#[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
 impl From<bip32::XPrv> for SigningKey {
     fn from(xprv: bip32::XPrv) -> SigningKey {
         SigningKey::from(&xprv)
@@ -91,7 +89,6 @@ impl From<bip32::XPrv> for SigningKey {
 }
 
 #[cfg(feature = "bip32")]
-#[cfg_attr(docsrs, doc(cfg(feature = "bip32")))]
 impl From<&bip32::XPrv> for SigningKey {
     fn from(xprv: &bip32::XPrv) -> SigningKey {
         Self {
