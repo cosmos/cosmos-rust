@@ -14,6 +14,24 @@ impl Name for ibc::core::client::v1::ClientUpdateProposal {
     }
 }
 
+impl Name for ibc::core::client::v1::MsgUpdateClient {
+    const NAME: &'static str = "MsgUpdateClient";
+    const PACKAGE: &'static str = "ibc.core.client.v1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
+impl Name for ibc::core::channel::v1::MsgRecvPacket {
+    const NAME: &'static str = "MsgRecvPacket";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
 impl Name for cosmos::upgrade::v1beta1::SoftwareUpgradeProposal {
     const NAME: &'static str = "SoftwareUpgradeProposal";
     const PACKAGE: &'static str = "cosmos.upgrade.v1beta1";
@@ -49,6 +67,33 @@ impl Name for cosmos::gov::v1beta1::TextProposal {
         full_name::<Self>()
     }
 }
+
+impl Name for cosmos::gov::v1beta1::MsgSubmitProposal {
+    const NAME: &'static str = "MsgSubmitProposal";
+    const PACKAGE: &'static str = "cosmos.gov.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+impl Name for cosmos::gov::v1beta1::MsgDeposit {
+    const NAME: &'static str = "MsgDeposit";
+    const PACKAGE: &'static str = "cosmos.gov.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
+impl Name for cosmos::gov::v1beta1::MsgVote {
+    const NAME: &'static str = "MsgVote";
+    const PACKAGE: &'static str = "cosmos.gov.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
 
 impl Name for cosmos::crypto::secp256k1::PubKey {
     const NAME: &'static str = "PubKey";
@@ -161,6 +206,51 @@ impl Name for cosmos::feegrant::v1beta1::PeriodicAllowance {
 impl Name for cosmos::feegrant::v1beta1::AllowedMsgAllowance {
     const NAME: &'static str = "AllowedMsgAllowance";
     const PACKAGE: &'static str = "cosmos.feegrant.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
+impl Name for cosmos::staking::v1beta1::MsgCreateValidator {
+    const NAME: &'static str = "MsgCreateValidator";
+    const PACKAGE: &'static str = "cosmos.staking.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
+impl Name for cosmos::staking::v1beta1::MsgCreateValidatorResponse {
+    const NAME: &'static str = "MsgCreateValidatorResponse";
+    const PACKAGE: &'static str = "cosmos.staking.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
+impl Name for cosmos::staking::v1beta1::MsgEditValidator {
+    const NAME: &'static str = "MsgEditValidator";
+    const PACKAGE: &'static str = "cosmos.staking.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
+impl Name for cosmos::staking::v1beta1::MsgEditValidatorResponse {
+    const NAME: &'static str = "MsgEditValidatorResponse";
+    const PACKAGE: &'static str = "cosmos.staking.v1beta1";
+
+    fn full_name() -> String {
+        full_name::<Self>()
+    }
+}
+
+impl Name for cosmos::staking::v1beta1::MsgDelegateResponse {
+    const NAME: &'static str = "MsgDelegateResponse";
+    const PACKAGE: &'static str = "cosmos.staking.v1beta1";
 
     fn full_name() -> String {
         full_name::<Self>()
