@@ -94,7 +94,6 @@ impl Name for cosmos::gov::v1beta1::MsgVote {
     }
 }
 
-
 impl Name for cosmos::crypto::secp256k1::PubKey {
     const NAME: &'static str = "PubKey";
     const PACKAGE: &'static str = "cosmos.crypto.secp256k1";
