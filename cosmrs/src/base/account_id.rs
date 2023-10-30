@@ -79,12 +79,11 @@ impl FromStr for AccountId {
     type Err = ErrorReport;
 
     fn from_str(s: &str) -> Result<Self> {
-        if s.starts_with(|c: char| c.is_uppercase()) {
-            let (hrp, bytes) =
-                bech32::decode_upper(s).wrap_err(format!("invalid uppercase bech32: '{}'", s))?;
-            return Self::new(&hrp, &bytes);
-        }
-        let (hrp, bytes) = bech32::decode(s).wrap_err(format!("invalid bech32: '{}'", s))?;
+        let (hrp, bytes) = if s.starts_with(|c: char| c.is_uppercase()) {
+            bech32::decode_upper(s)
+        } else
+            bech32::decode(s)
+        }.wrap_err(format!("invalid uppercase bech32: '{}'", s))?;
         Self::new(&hrp, &bytes)
     }
 }
