@@ -83,7 +83,8 @@ impl FromStr for AccountId {
             bech32::decode_upper(s)
         } else {
             bech32::decode(s)
-        }.wrap_err(format!("invalid bech32: '{}'", s))?;
+        }
+        .wrap_err(format!("invalid bech32: '{}'", s))?;
         Self::new(&hrp, &bytes)
     }
 }
