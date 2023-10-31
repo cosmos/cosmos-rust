@@ -81,7 +81,7 @@ impl FromStr for AccountId {
     fn from_str(s: &str) -> Result<Self> {
         let (hrp, bytes) = if s.starts_with(|c: char| c.is_uppercase()) {
             bech32::decode_upper(s)
-        } else
+        } else {
             bech32::decode(s)
         }.wrap_err(format!("invalid uppercase bech32: '{}'", s))?;
         Self::new(&hrp, &bytes)
