@@ -265,6 +265,16 @@ mod wasm {
     const COSMWASM_PACKAGE: &str = "cosmwasm.wasm.v1";
 
     impl_name!(
+        cosmwasm::wasm::v1::AccessConfigUpdate,
+        COSMWASM_PACKAGE,
+        "AccessConfigUpdate"
+    );
+    impl_name!(
+        cosmwasm::wasm::v1::AccessConfig,
+        COSMWASM_PACKAGE,
+        "AccessConfig"
+    );
+    impl_name!(
         cosmwasm::wasm::v1::MigrateContractProposal,
         COSMWASM_PACKAGE,
         "MigrateContractProposal"
