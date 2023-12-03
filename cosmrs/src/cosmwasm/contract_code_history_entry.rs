@@ -34,8 +34,8 @@ impl TryFrom<proto::cosmwasm::wasm::v1::ContractCodeHistoryEntry> for ContractCo
                 },
             )?,
             code_id: proto.code_id,
-            updated: None,
-            msg: vec![],
+            updated: proto.updated.map(TryFrom::try_from).transpose()?,
+            msg: proto.msg,
         })
     }
 }
