@@ -15,7 +15,7 @@ pub mod traits;
 mod type_names;
 
 pub use prost;
-pub use prost_types::Any;
+pub use prost_types::{Any, Timestamp};
 pub use tendermint_proto as tendermint;
 
 /// The version (commit hash) of the Cosmos SDK used when generating this library.

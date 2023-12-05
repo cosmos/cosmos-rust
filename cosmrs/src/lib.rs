@@ -32,6 +32,7 @@ pub mod bank;
 pub mod crypto;
 pub mod distribution;
 pub mod feegrant;
+pub mod slashing;
 pub mod staking;
 pub mod tx;
 pub mod vesting;
