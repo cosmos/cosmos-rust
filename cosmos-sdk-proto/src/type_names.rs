@@ -170,6 +170,77 @@ impl_name!(
 );
 
 impl_name!(
+    cosmos::slashing::v1beta1::GenesisState,
+    "cosmos.slashing.v1beta1",
+    "MissedBlocks"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::MissedBlock,
+    "cosmos.slashing.v1beta1",
+    "MissedBlock"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::MsgUnjail,
+    "cosmos.slashing.v1beta1",
+    "MsgUnjail"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::MsgUnjailResponse,
+    "cosmos.slashing.v1beta1",
+    "MsgUnjailResponse"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::Params,
+    "cosmos.slashing.v1beta1",
+    "Params"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::QueryParamsRequest,
+    "cosmos.slashing.v1beta1",
+    "QueryParamsRequest"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::QueryParamsResponse,
+    "cosmos.slashing.v1beta1",
+    "QueryParamsResponse"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::QuerySigningInfoRequest,
+    "cosmos.slashing.v1beta1",
+    "QuerySigningInfoRequest"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::QuerySigningInfoResponse,
+    "cosmos.slashing.v1beta1",
+    "QuerySigningInfoResponse"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::QuerySigningInfosRequest,
+    "cosmos.slashing.v1beta1",
+    "QuerySigningInfosRequest"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::QuerySigningInfosResponse,
+    "cosmos.slashing.v1beta1",
+    "QuerySigningInfosResponse"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::SigningInfo,
+    "cosmos.slashing.v1beta1",
+    "SigningInfo"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::ValidatorMissedBlocks,
+    "cosmos.slashing.v1beta1",
+    "ValidatorMissedBlocks"
+);
+impl_name!(
+    cosmos::slashing::v1beta1::ValidatorSigningInfo,
+    "cosmos.slashing.v1beta1",
+    "ValidatorSigningInfo"
+);
+
+impl_name!(
     cosmos::staking::v1beta1::MsgEditValidatorResponse,
     "cosmos.staking.v1beta1",
     "MsgEditValidatorResponse"
