@@ -1,5 +1,6 @@
+use crate::crypto::PublicKey;
 use crate::staking::{Commission, Description};
-use crate::{proto, Any, ErrorReport, Result};
+use crate::{proto, AccountId, ErrorReport, Result};
 use cosmos_sdk_proto::Timestamp;
 use tendermint::Time;
 
@@ -13,11 +14,11 @@ use tendermint::Time;
 /// multiplied by exchange rate.
 #[derive(Clone, Debug, PartialEq)]
 pub struct Validator {
-    /// operator_address defines the address of the validator's operator; bech encoded in JSON.
-    pub operator_address: String,
+    /// operator_address defines the address of the validator's operator;
+    pub operator_address: AccountId,
 
-    /// consensus_pubkey is the consensus public key of the validator, as a Protobuf Any.
-    pub consensus_pubkey: Option<Any>,
+    /// consensus_pubkey is the consensus public key of the validator.
+    pub consensus_pubkey: Option<PublicKey>,
 
     /// jailed defined whether the validator has been jailed from bonded status or not.
     pub jailed: bool,
@@ -53,8 +54,8 @@ impl TryFrom<proto::cosmos::staking::v1beta1::Validator> for Validator {
 
     fn try_from(proto: cosmos_sdk_proto::cosmos::staking::v1beta1::Validator) -> Result<Self> {
         Ok(Validator {
-            operator_address: proto.operator_address,
-            consensus_pubkey: proto.consensus_pubkey,
+            operator_address: proto.operator_address.parse()?,
+            consensus_pubkey: proto.consensus_pubkey.map(TryInto::try_into).transpose()?,
             jailed: proto.jailed,
             status: proto.status,
             tokens: proto.tokens,
@@ -80,8 +81,8 @@ impl TryFrom<proto::cosmos::staking::v1beta1::Validator> for Validator {
 impl From<Validator> for proto::cosmos::staking::v1beta1::Validator {
     fn from(validator: Validator) -> Self {
         proto::cosmos::staking::v1beta1::Validator {
-            operator_address: validator.operator_address,
-            consensus_pubkey: validator.consensus_pubkey,
+            operator_address: validator.operator_address.to_string(),
+            consensus_pubkey: validator.consensus_pubkey.map(Into::into),
             jailed: validator.jailed,
             status: validator.status,
             tokens: validator.tokens,
