@@ -50,6 +50,11 @@ impl_name!(
     "ClientUpdateProposal"
 );
 impl_name!(
+    ibc::core::client::v1::MsgCreateClient,
+    "ibc.core.client.v1",
+    "MsgCreateClient"
+);
+impl_name!(
     ibc::core::client::v1::MsgUpdateClient,
     "ibc.core.client.v1",
     "MsgUpdateClient"
@@ -133,6 +138,11 @@ impl_name!(
     cosmos::gov::v1beta1::MsgDeposit,
     "cosmos.gov.v1beta1",
     "MsgDeposit"
+);
+impl_name!(
+    cosmos::gov::v1::MsgVote,
+    "cosmos.gov.v1",
+    "MsgVote"
 );
 impl_name!(
     cosmos::gov::v1beta1::MsgVote,
@@ -349,6 +359,11 @@ impl_name!(
     "ModuleAccount"
 );
 
+impl_name!(
+    cosmos::authz::v1beta1::MsgGrant,
+    "cosmos.authz.v1beta1",
+    "MsgGrant"
+);
 impl_name!(
     cosmos::authz::v1beta1::MsgExec,
     "cosmos.authz.v1beta1",
