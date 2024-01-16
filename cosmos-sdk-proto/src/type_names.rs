@@ -28,11 +28,20 @@ impl_name!(
     "ibc.core.client.v1",
     "MsgUpdateClient"
 );
-
+impl_name!(
+    ibc::core::channel::v1::MsgChannelCloseConfirm,
+    "ibc.core.channel.v1",
+    "MsgChannelCloseConfirm"
+);
 impl_name!(
     ibc::core::channel::v1::MsgChannelOpenConfirm,
     "ibc.core.channel.v1",
     "MsgChannelOpenConfirm"
+);
+impl_name!(
+    ibc::core::channel::v1::MsgChannelOpenTry,
+    "ibc.core.channel.v1",
+    "MsgChannelOpenTry"
 );
 impl_name!(
     ibc::core::channel::v1::MsgAcknowledgement,
@@ -73,6 +82,21 @@ impl_name!(
     "ParameterChangeProposal"
 );
 
+impl_name!(
+    cosmos::gov::v1::MsgSubmitProposal,
+    "cosmos.gov.v1",
+    "MsgSubmitProposal"
+);
+impl_name!(
+    cosmos::gov::v1::MsgDeposit,
+    "cosmos.gov.v1",
+    "MsgDeposit"
+);
+impl_name!(
+    cosmos::gov::v1::MsgVoteWeighted,
+    "cosmos.gov.v1",
+    "MsgVoteWeighted"
+);
 impl_name!(
     cosmos::gov::v1beta1::TextProposal,
     "cosmos.gov.v1beta1",
