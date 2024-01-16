@@ -1,6 +1,6 @@
 //! Error types
 
-pub use eyre::{Result};
+pub use eyre::Result;
 
 use tendermint::Hash;
 use thiserror::Error;
