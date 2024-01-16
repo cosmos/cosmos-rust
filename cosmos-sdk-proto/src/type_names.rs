@@ -19,6 +19,27 @@ macro_rules! impl_name {
 }
 
 impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenInit,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenInit"
+);
+impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenAck,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenAck"
+);
+impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenConfirm,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenConfirm"
+);
+impl_name!(
+    ibc::core::channel::v1::MsgChannelOpenInit,
+    "ibc.core.channel.v1",
+    "MsgChannelOpenInit"
+);
+
+impl_name!(
     ibc::core::client::v1::ClientUpdateProposal,
     "ibc.core.client.v1",
     "ClientUpdateProposal"
