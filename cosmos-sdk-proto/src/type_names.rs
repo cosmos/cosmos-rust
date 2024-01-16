@@ -19,6 +19,11 @@ macro_rules! impl_name {
 }
 
 impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenTry,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenTry"
+);
+impl_name!(
     ibc::core::connection::v1::MsgConnectionOpenInit,
     "ibc.core.connection.v1",
     "MsgConnectionOpenInit"
