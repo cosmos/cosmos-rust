@@ -87,11 +87,7 @@ impl_name!(
     "cosmos.gov.v1",
     "MsgSubmitProposal"
 );
-impl_name!(
-    cosmos::gov::v1::MsgDeposit,
-    "cosmos.gov.v1",
-    "MsgDeposit"
-);
+impl_name!(cosmos::gov::v1::MsgDeposit, "cosmos.gov.v1", "MsgDeposit");
 impl_name!(
     cosmos::gov::v1::MsgVoteWeighted,
     "cosmos.gov.v1",
