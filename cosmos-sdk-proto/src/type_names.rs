@@ -139,11 +139,7 @@ impl_name!(
     "cosmos.gov.v1beta1",
     "MsgDeposit"
 );
-impl_name!(
-    cosmos::gov::v1::MsgVote,
-    "cosmos.gov.v1",
-    "MsgVote"
-);
+impl_name!(cosmos::gov::v1::MsgVote, "cosmos.gov.v1", "MsgVote");
 impl_name!(
     cosmos::gov::v1beta1::MsgVote,
     "cosmos.gov.v1beta1",
