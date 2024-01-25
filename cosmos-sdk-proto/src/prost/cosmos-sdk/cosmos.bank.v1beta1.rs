@@ -7,10 +7,22 @@
 pub struct SendAuthorization {
     #[prost(message, repeated, tag = "1")]
     pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
+    /// allow_list specifies an optional list of addresses to whom the grantee can send tokens on behalf of the
+    /// granter. If omitted, any recipient is allowed.
+    ///
+    /// Since: cosmos-sdk 0.47
+    #[prost(string, repeated, tag = "2")]
+    pub allow_list: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Params defines the parameters for the bank module.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
+    /// Deprecated: Use of SendEnabled in params is deprecated.
+    /// For genesis, use the newly added send_enabled field in the genesis object.
+    /// Storage, lookup, and manipulation of this information is now in the keeper.
+    ///
+    /// As of cosmos-sdk 0.47, this only exists for backwards compatibility of genesis files.
+    #[deprecated]
     #[prost(message, repeated, tag = "1")]
     pub send_enabled: ::prost::alloc::vec::Vec<SendEnabled>,
     #[prost(bool, tag = "2")]
@@ -109,7 +121,7 @@ pub struct Metadata {
 /// GenesisState defines the bank module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
-    /// params defines all the paramaters of the module.
+    /// params defines all the parameters of the module.
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
     /// balances is an array containing the balances of all the accounts.
@@ -119,9 +131,14 @@ pub struct GenesisState {
     /// balances. Otherwise, it will be used to validate that the sum of the balances equals this amount.
     #[prost(message, repeated, tag = "3")]
     pub supply: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    /// denom_metadata defines the metadata of the differents coins.
+    /// denom_metadata defines the metadata of the different coins.
     #[prost(message, repeated, tag = "4")]
     pub denom_metadata: ::prost::alloc::vec::Vec<Metadata>,
+    /// send_enabled defines the denoms where send is enabled or disabled.
+    ///
+    /// Since: cosmos-sdk 0.47
+    #[prost(message, repeated, tag = "5")]
+    pub send_enabled: ::prost::alloc::vec::Vec<SendEnabled>,
 }
 /// Balance defines an account address and balance pair used in the bank module's
 /// genesis state.
@@ -197,6 +214,29 @@ pub struct QuerySpendableBalancesResponse {
     /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
+}
+/// QuerySpendableBalanceByDenomRequest defines the gRPC request structure for
+/// querying an account's spendable balance for a specific denom.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySpendableBalanceByDenomRequest {
+    /// address is the address to query balances for.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+    /// denom is the coin denom to query balances for.
+    #[prost(string, tag = "2")]
+    pub denom: ::prost::alloc::string::String,
+}
+/// QuerySpendableBalanceByDenomResponse defines the gRPC response structure for
+/// querying an account's spendable balance for a specific denom.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySpendableBalanceByDenomResponse {
+    /// balance is the balance of the coin.
+    #[prost(message, optional, tag = "1")]
+    pub balance: ::core::option::Option<super::super::base::v1beta1::Coin>,
 }
 /// QueryTotalSupplyRequest is the request type for the Query/TotalSupply RPC
 /// method.
@@ -314,6 +354,31 @@ pub struct QueryDenomOwnersResponse {
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
+/// QuerySendEnabledRequest defines the RPC request for looking up SendEnabled entries.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySendEnabledRequest {
+    /// denoms is the specific denoms you want look up. Leave empty to get all entries.
+    #[prost(string, repeated, tag = "1")]
+    pub denoms: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// pagination defines an optional pagination for the request. This field is
+    /// only read if the denoms field is empty.
+    #[prost(message, optional, tag = "99")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
+}
+/// QuerySendEnabledResponse defines the RPC response of a SendEnable query.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QuerySendEnabledResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub send_enabled: ::prost::alloc::vec::Vec<SendEnabled>,
+    /// pagination defines the pagination in the response. This field is only
+    /// populated if the denoms field in the request is empty.
+    #[prost(message, optional, tag = "99")]
+    pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
+}
 /// MsgSend represents a message to send coins from one account to another.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSend {
@@ -330,6 +395,8 @@ pub struct MsgSendResponse {}
 /// MsgMultiSend represents an arbitrary multi-in, multi-out send message.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgMultiSend {
+    /// Inputs, despite being `repeated`, only allows one sender input. This is
+    /// checked in MsgMultiSend's ValidateBasic.
     #[prost(message, repeated, tag = "1")]
     pub inputs: ::prost::alloc::vec::Vec<Input>,
     #[prost(message, repeated, tag = "2")]
@@ -338,5 +405,51 @@ pub struct MsgMultiSend {
 /// MsgMultiSendResponse defines the Msg/MultiSend response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgMultiSendResponse {}
+/// MsgUpdateParams is the Msg/UpdateParams request type.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParams {
+    /// authority is the address that controls the module (defaults to x/gov unless overwritten).
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// params defines the x/bank parameters to update.
+    ///
+    /// NOTE: All parameters must be supplied.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
+/// MsgUpdateParamsResponse defines the response structure for executing a
+/// MsgUpdateParams message.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParamsResponse {}
+/// MsgSetSendEnabled is the Msg/SetSendEnabled request type.
+///
+/// Only entries to add/update/delete need to be included.
+/// Existing SendEnabled entries that are not included in this
+/// message are left unchanged.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSetSendEnabled {
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// send_enabled is the list of entries to add or update.
+    #[prost(message, repeated, tag = "2")]
+    pub send_enabled: ::prost::alloc::vec::Vec<SendEnabled>,
+    /// use_default_for is a list of denoms that should use the params.default_send_enabled value.
+    /// Denoms listed here will have their SendEnabled entries deleted.
+    /// If a denom is included that doesn't have a SendEnabled entry,
+    /// it will be ignored.
+    #[prost(string, repeated, tag = "3")]
+    pub use_default_for: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+/// MsgSetSendEnabledResponse defines the Msg/SetSendEnabled response type.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgSetSendEnabledResponse {}
 include!("cosmos.bank.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

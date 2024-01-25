@@ -1,16 +1,16 @@
 // @generated
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
-pub mod msg_client {
+pub mod query_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::http::Uri;
     use tonic::codegen::*;
     #[derive(Debug, Clone)]
-    pub struct MsgClient<T> {
+    pub struct QueryClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     #[cfg(feature = "grpc-transport")]
-    impl MsgClient<tonic::transport::Channel> {
+    impl QueryClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -21,7 +21,7 @@ pub mod msg_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MsgClient<T>
+    impl<T> QueryClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -36,7 +36,10 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::with_origin(inner, origin);
             Self { inner }
         }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> QueryClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -49,7 +52,7 @@ pub mod msg_client {
             <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
                 Into<StdError> + Send + Sync,
         {
-            MsgClient::new(InterceptedService::new(inner, interceptor))
+            QueryClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -82,10 +85,10 @@ pub mod msg_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn verify_invariant(
+        pub async fn app_options(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgVerifyInvariant>,
-        ) -> std::result::Result<tonic::Response<super::MsgVerifyInvariantResponse>, tonic::Status>
+            request: impl tonic::IntoRequest<super::AppOptionsRequest>,
+        ) -> std::result::Result<tonic::Response<super::AppOptionsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -94,55 +97,29 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.crisis.v1beta1.Msg/VerifyInvariant");
-            let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.crisis.v1beta1.Msg",
-                "VerifyInvariant",
-            ));
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn update_params(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.crisis.v1beta1.Msg/UpdateParams");
+            let path = http::uri::PathAndQuery::from_static("/cosmos.autocli.v1.Query/AppOptions");
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("cosmos.crisis.v1beta1.Msg", "UpdateParams"));
+                .insert(GrpcMethod::new("cosmos.autocli.v1.Query", "AppOptions"));
             self.inner.unary(req, path, codec).await
         }
     }
 }
 /// Generated server implementations.
 #[cfg(feature = "grpc")]
-pub mod msg_server {
+pub mod query_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
-    pub trait Msg: Send + Sync + 'static {
-        async fn verify_invariant(
+    pub trait Query: Send + Sync + 'static {
+        async fn app_options(
             &self,
-            request: tonic::Request<super::MsgVerifyInvariant>,
-        ) -> std::result::Result<tonic::Response<super::MsgVerifyInvariantResponse>, tonic::Status>;
-        async fn update_params(
-            &self,
-            request: tonic::Request<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
+            request: tonic::Request<super::AppOptionsRequest>,
+        ) -> std::result::Result<tonic::Response<super::AppOptionsResponse>, tonic::Status>;
     }
     #[derive(Debug)]
-    pub struct MsgServer<T: Msg> {
+    pub struct QueryServer<T: Query> {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
@@ -150,7 +127,7 @@ pub mod msg_server {
         max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
-    impl<T: Msg> MsgServer<T> {
+    impl<T: Query> QueryServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -199,9 +176,9 @@ pub mod msg_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for MsgServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for QueryServer<T>
     where
-        T: Msg,
+        T: Query,
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
@@ -217,18 +194,18 @@ pub mod msg_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.crisis.v1beta1.Msg/VerifyInvariant" => {
+                "/cosmos.autocli.v1.Query/AppOptions" => {
                     #[allow(non_camel_case_types)]
-                    struct VerifyInvariantSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgVerifyInvariant> for VerifyInvariantSvc<T> {
-                        type Response = super::MsgVerifyInvariantResponse;
+                    struct AppOptionsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::AppOptionsRequest> for AppOptionsSvc<T> {
+                        type Response = super::AppOptionsResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgVerifyInvariant>,
+                            request: tonic::Request<super::AppOptionsRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).verify_invariant(request).await };
+                            let fut = async move { (*inner).app_options(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -239,45 +216,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = VerifyInvariantSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/cosmos.crisis.v1beta1.Msg/UpdateParams" => {
-                    #[allow(non_camel_case_types)]
-                    struct UpdateParamsSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgUpdateParams> for UpdateParamsSvc<T> {
-                        type Response = super::MsgUpdateParamsResponse;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::MsgUpdateParams>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).update_params(request).await };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = UpdateParamsSvc(inner);
+                        let method = AppOptionsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -304,7 +243,7 @@ pub mod msg_server {
             }
         }
     }
-    impl<T: Msg> Clone for MsgServer<T> {
+    impl<T: Query> Clone for QueryServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -316,7 +255,7 @@ pub mod msg_server {
             }
         }
     }
-    impl<T: Msg> Clone for _Inner<T> {
+    impl<T: Query> Clone for _Inner<T> {
         fn clone(&self) -> Self {
             Self(Arc::clone(&self.0))
         }
@@ -326,7 +265,7 @@ pub mod msg_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
-        const NAME: &'static str = "cosmos.crisis.v1beta1.Msg";
+    impl<T: Query> tonic::server::NamedService for QueryServer<T> {
+        const NAME: &'static str = "cosmos.autocli.v1.Query";
     }
 }

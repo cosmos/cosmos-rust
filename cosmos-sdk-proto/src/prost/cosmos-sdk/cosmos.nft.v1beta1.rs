@@ -2,32 +2,42 @@
 /// EventSend is emitted on Msg/Send
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventSend {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the nft
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
+    /// sender is the address of the owner of nft
     #[prost(string, tag = "3")]
     pub sender: ::prost::alloc::string::String,
+    /// receiver is the receiver address of nft
     #[prost(string, tag = "4")]
     pub receiver: ::prost::alloc::string::String,
 }
 /// EventMint is emitted on Mint
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventMint {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the nft
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "3")]
     pub owner: ::prost::alloc::string::String,
 }
 /// EventBurn is emitted on Burn
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventBurn {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the nft
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "3")]
     pub owner: ::prost::alloc::string::String,
 }
@@ -81,6 +91,7 @@ pub struct GenesisState {
     /// class defines the class of the nft type.
     #[prost(message, repeated, tag = "1")]
     pub classes: ::prost::alloc::vec::Vec<Class>,
+    /// entry defines all nft owned by a person.
     #[prost(message, repeated, tag = "2")]
     pub entries: ::prost::alloc::vec::Vec<Entry>,
 }
@@ -97,84 +108,102 @@ pub struct Entry {
 /// QueryBalanceRequest is the request type for the Query/Balance RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "2")]
     pub owner: ::prost::alloc::string::String,
 }
 /// QueryBalanceResponse is the response type for the Query/Balance RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceResponse {
+    /// amount is the number of all NFTs of a given class owned by the owner
     #[prost(uint64, tag = "1")]
     pub amount: u64,
 }
 /// QueryOwnerRequest is the request type for the Query/Owner RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryOwnerRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the NFT
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
 }
 /// QueryOwnerResponse is the response type for the Query/Owner RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryOwnerResponse {
+    /// owner is the owner address of the nft
     #[prost(string, tag = "1")]
     pub owner: ::prost::alloc::string::String,
 }
 /// QuerySupplyRequest is the request type for the Query/Supply RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
 }
 /// QuerySupplyResponse is the response type for the Query/Supply RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyResponse {
+    /// amount is the number of all NFTs from the given class
     #[prost(uint64, tag = "1")]
     pub amount: u64,
 }
 /// QueryNFTstRequest is the request type for the Query/NFTs RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNfTsRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "2")]
     pub owner: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "3")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryNFTsResponse is the response type for the Query/NFTs RPC methods
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNfTsResponse {
+    /// NFT defines the NFT
     #[prost(message, repeated, tag = "1")]
     pub nfts: ::prost::alloc::vec::Vec<Nft>,
+    /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
 /// QueryNFTRequest is the request type for the Query/NFT RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNftRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the NFT
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
 }
 /// QueryNFTResponse is the response type for the Query/NFT RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNftResponse {
+    /// owner is the owner address of the nft
     #[prost(message, optional, tag = "1")]
     pub nft: ::core::option::Option<Nft>,
 }
 /// QueryClassRequest is the request type for the Query/Class RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
 }
 /// QueryClassResponse is the response type for the Query/Class RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassResponse {
+    /// class defines the class of the nft type.
     #[prost(message, optional, tag = "1")]
     pub class: ::core::option::Option<Class>,
 }
@@ -188,8 +217,10 @@ pub struct QueryClassesRequest {
 /// QueryClassesResponse is the response type for the Query/Classes RPC method
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassesResponse {
+    /// class defines the class of the nft type.
     #[prost(message, repeated, tag = "1")]
     pub classes: ::prost::alloc::vec::Vec<Class>,
+    /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }

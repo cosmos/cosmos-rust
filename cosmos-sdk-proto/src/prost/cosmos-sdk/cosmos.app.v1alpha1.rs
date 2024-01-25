@@ -88,6 +88,11 @@ pub struct Config {
     /// modules are the module configurations for the app.
     #[prost(message, repeated, tag = "1")]
     pub modules: ::prost::alloc::vec::Vec<ModuleConfig>,
+    /// golang_bindings specifies explicit interface to implementation type bindings which
+    /// depinject uses to resolve interface inputs to provider functions.  The scope of this
+    /// field's configuration is global (not module specific).
+    #[prost(message, repeated, tag = "2")]
+    pub golang_bindings: ::prost::alloc::vec::Vec<GolangBinding>,
 }
 /// ModuleConfig is a module configuration for an app.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -108,6 +113,21 @@ pub struct ModuleConfig {
     /// define a ModuleDescriptor using the cosmos.app.v1alpha1.is_module extension.
     #[prost(message, optional, tag = "2")]
     pub config: ::core::option::Option<::prost_types::Any>,
+    /// golang_bindings specifies explicit interface to implementation type bindings which
+    /// depinject uses to resolve interface inputs to provider functions.  The scope of this
+    /// field's configuration is module specific.
+    #[prost(message, repeated, tag = "3")]
+    pub golang_bindings: ::prost::alloc::vec::Vec<GolangBinding>,
+}
+/// GolangBinding is an explicit interface type to implementing type binding for dependency injection.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GolangBinding {
+    /// interface_type is the interface type which will be bound to a specific implementation type
+    #[prost(string, tag = "1")]
+    pub interface_type: ::prost::alloc::string::String,
+    /// implementation is the implementing type which will be supplied when an input of type interface is requested
+    #[prost(string, tag = "2")]
+    pub implementation: ::prost::alloc::string::String,
 }
 /// QueryConfigRequest is the Query/Config request type.
 #[derive(Clone, PartialEq, ::prost::Message)]

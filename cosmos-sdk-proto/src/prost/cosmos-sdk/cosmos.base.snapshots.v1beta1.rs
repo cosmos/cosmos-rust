@@ -93,6 +93,7 @@ pub struct SnapshotExtensionPayload {
 /// SnapshotKVItem is an exported Key/Value Pair
 ///
 /// Since: cosmos-sdk 0.46
+/// Deprecated: This message was part of store/v2alpha1 which has been deleted from v0.47.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotKvItem {
     #[prost(bytes = "vec", tag = "1")]
@@ -103,6 +104,7 @@ pub struct SnapshotKvItem {
 /// SnapshotSchema is an exported schema of smt store
 ///
 /// Since: cosmos-sdk 0.46
+/// Deprecated: This message was part of store/v2alpha1 which has been deleted from v0.47.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotSchema {
     #[prost(bytes = "vec", repeated, tag = "1")]

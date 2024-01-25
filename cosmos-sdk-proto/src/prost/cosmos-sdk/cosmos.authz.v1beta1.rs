@@ -157,7 +157,7 @@ pub struct MsgExecResponse {
 pub struct MsgExec {
     #[prost(string, tag = "1")]
     pub grantee: ::prost::alloc::string::String,
-    /// Authorization Msg requests to execute. Each msg must implement Authorization interface
+    /// Execute Msg.
     /// The x/authz will try to find a grant matching (msg.signers\[0\], grantee, MsgTypeURL(msg))
     /// triple and validate it.
     #[prost(message, repeated, tag = "2")]

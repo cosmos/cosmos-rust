@@ -1,16 +1,19 @@
 // @generated
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
-pub mod msg_client {
+pub mod reflection_service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::http::Uri;
     use tonic::codegen::*;
+    /** Package cosmos.reflection.v1 provides support for inspecting protobuf
+     file descriptors.
+    */
     #[derive(Debug, Clone)]
-    pub struct MsgClient<T> {
+    pub struct ReflectionServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     #[cfg(feature = "grpc-transport")]
-    impl MsgClient<tonic::transport::Channel> {
+    impl ReflectionServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -21,7 +24,7 @@ pub mod msg_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> MsgClient<T>
+    impl<T> ReflectionServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -36,7 +39,10 @@ pub mod msg_client {
             let inner = tonic::client::Grpc::with_origin(inner, origin);
             Self { inner }
         }
-        pub fn with_interceptor<F>(inner: T, interceptor: F) -> MsgClient<InterceptedService<T, F>>
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> ReflectionServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -49,7 +55,7 @@ pub mod msg_client {
             <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
                 Into<StdError> + Send + Sync,
         {
-            MsgClient::new(InterceptedService::new(inner, interceptor))
+            ReflectionServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -82,10 +88,13 @@ pub mod msg_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn verify_invariant(
+        /** FileDescriptors queries all the file descriptors in the app in order
+         to enable easier generation of dynamic clients.
+        */
+        pub async fn file_descriptors(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgVerifyInvariant>,
-        ) -> std::result::Result<tonic::Response<super::MsgVerifyInvariantResponse>, tonic::Status>
+            request: impl tonic::IntoRequest<super::FileDescriptorsRequest>,
+        ) -> std::result::Result<tonic::Response<super::FileDescriptorsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -94,55 +103,39 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.crisis.v1beta1.Msg/VerifyInvariant");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.reflection.v1.ReflectionService/FileDescriptors",
+            );
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.crisis.v1beta1.Msg",
-                "VerifyInvariant",
+                "cosmos.reflection.v1.ReflectionService",
+                "FileDescriptors",
             ));
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn update_params(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.crisis.v1beta1.Msg/UpdateParams");
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("cosmos.crisis.v1beta1.Msg", "UpdateParams"));
             self.inner.unary(req, path, codec).await
         }
     }
 }
 /// Generated server implementations.
 #[cfg(feature = "grpc")]
-pub mod msg_server {
+pub mod reflection_service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with ReflectionServiceServer.
     #[async_trait]
-    pub trait Msg: Send + Sync + 'static {
-        async fn verify_invariant(
+    pub trait ReflectionService: Send + Sync + 'static {
+        /** FileDescriptors queries all the file descriptors in the app in order
+         to enable easier generation of dynamic clients.
+        */
+        async fn file_descriptors(
             &self,
-            request: tonic::Request<super::MsgVerifyInvariant>,
-        ) -> std::result::Result<tonic::Response<super::MsgVerifyInvariantResponse>, tonic::Status>;
-        async fn update_params(
-            &self,
-            request: tonic::Request<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
+            request: tonic::Request<super::FileDescriptorsRequest>,
+        ) -> std::result::Result<tonic::Response<super::FileDescriptorsResponse>, tonic::Status>;
     }
+    /** Package cosmos.reflection.v1 provides support for inspecting protobuf
+     file descriptors.
+    */
     #[derive(Debug)]
-    pub struct MsgServer<T: Msg> {
+    pub struct ReflectionServiceServer<T: ReflectionService> {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
@@ -150,7 +143,7 @@ pub mod msg_server {
         max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
-    impl<T: Msg> MsgServer<T> {
+    impl<T: ReflectionService> ReflectionServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -199,9 +192,9 @@ pub mod msg_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for MsgServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for ReflectionServiceServer<T>
     where
-        T: Msg,
+        T: ReflectionService,
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
@@ -217,18 +210,21 @@ pub mod msg_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.crisis.v1beta1.Msg/VerifyInvariant" => {
+                "/cosmos.reflection.v1.ReflectionService/FileDescriptors" => {
                     #[allow(non_camel_case_types)]
-                    struct VerifyInvariantSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgVerifyInvariant> for VerifyInvariantSvc<T> {
-                        type Response = super::MsgVerifyInvariantResponse;
+                    struct FileDescriptorsSvc<T: ReflectionService>(pub Arc<T>);
+                    impl<T: ReflectionService>
+                        tonic::server::UnaryService<super::FileDescriptorsRequest>
+                        for FileDescriptorsSvc<T>
+                    {
+                        type Response = super::FileDescriptorsResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgVerifyInvariant>,
+                            request: tonic::Request<super::FileDescriptorsRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).verify_invariant(request).await };
+                            let fut = async move { (*inner).file_descriptors(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -239,45 +235,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = VerifyInvariantSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/cosmos.crisis.v1beta1.Msg/UpdateParams" => {
-                    #[allow(non_camel_case_types)]
-                    struct UpdateParamsSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgUpdateParams> for UpdateParamsSvc<T> {
-                        type Response = super::MsgUpdateParamsResponse;
-                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::MsgUpdateParams>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).update_params(request).await };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = UpdateParamsSvc(inner);
+                        let method = FileDescriptorsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -304,7 +262,7 @@ pub mod msg_server {
             }
         }
     }
-    impl<T: Msg> Clone for MsgServer<T> {
+    impl<T: ReflectionService> Clone for ReflectionServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -316,7 +274,7 @@ pub mod msg_server {
             }
         }
     }
-    impl<T: Msg> Clone for _Inner<T> {
+    impl<T: ReflectionService> Clone for _Inner<T> {
         fn clone(&self) -> Self {
             Self(Arc::clone(&self.0))
         }
@@ -326,7 +284,7 @@ pub mod msg_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
-        const NAME: &'static str = "cosmos.crisis.v1beta1.Msg";
+    impl<T: ReflectionService> tonic::server::NamedService for ReflectionServiceServer<T> {
+        const NAME: &'static str = "cosmos.reflection.v1.ReflectionService";
     }
 }

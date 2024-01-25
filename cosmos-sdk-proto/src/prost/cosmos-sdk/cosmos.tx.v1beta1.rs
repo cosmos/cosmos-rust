@@ -400,6 +400,82 @@ pub struct GetBlockWithTxsResponse {
     #[prost(message, optional, tag = "4")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
+/// TxDecodeRequest is the request type for the Service.TxDecode
+/// RPC method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxDecodeRequest {
+    /// tx_bytes is the raw transaction.
+    #[prost(bytes = "vec", tag = "1")]
+    pub tx_bytes: ::prost::alloc::vec::Vec<u8>,
+}
+/// TxDecodeResponse is the response type for the
+/// Service.TxDecode method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxDecodeResponse {
+    /// tx is the decoded transaction.
+    #[prost(message, optional, tag = "1")]
+    pub tx: ::core::option::Option<Tx>,
+}
+/// TxEncodeRequest is the request type for the Service.TxEncode
+/// RPC method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxEncodeRequest {
+    /// tx is the transaction to encode.
+    #[prost(message, optional, tag = "1")]
+    pub tx: ::core::option::Option<Tx>,
+}
+/// TxEncodeResponse is the response type for the
+/// Service.TxEncode method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxEncodeResponse {
+    /// tx_bytes is the encoded transaction bytes.
+    #[prost(bytes = "vec", tag = "1")]
+    pub tx_bytes: ::prost::alloc::vec::Vec<u8>,
+}
+/// TxEncodeAminoRequest is the request type for the Service.TxEncodeAmino
+/// RPC method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxEncodeAminoRequest {
+    #[prost(string, tag = "1")]
+    pub amino_json: ::prost::alloc::string::String,
+}
+/// TxEncodeAminoResponse is the response type for the Service.TxEncodeAmino
+/// RPC method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxEncodeAminoResponse {
+    #[prost(bytes = "vec", tag = "1")]
+    pub amino_binary: ::prost::alloc::vec::Vec<u8>,
+}
+/// TxDecodeAminoRequest is the request type for the Service.TxDecodeAmino
+/// RPC method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxDecodeAminoRequest {
+    #[prost(bytes = "vec", tag = "1")]
+    pub amino_binary: ::prost::alloc::vec::Vec<u8>,
+}
+/// TxDecodeAminoResponse is the response type for the Service.TxDecodeAmino
+/// RPC method.
+///
+/// Since: cosmos-sdk 0.47
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct TxDecodeAminoResponse {
+    #[prost(string, tag = "1")]
+    pub amino_json: ::prost::alloc::string::String,
+}
 /// OrderBy defines the sorting order
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
@@ -430,8 +506,8 @@ impl OrderBy {
 pub enum BroadcastMode {
     /// zero-value for mode ordering
     Unspecified = 0,
-    /// BROADCAST_MODE_BLOCK defines a tx broadcasting mode where the client waits for
-    /// the tx to be committed in a block.
+    /// DEPRECATED: use BROADCAST_MODE_SYNC instead,
+    /// BROADCAST_MODE_BLOCK is not supported by the SDK from v0.47.x onwards.
     Block = 1,
     /// BROADCAST_MODE_SYNC defines a tx broadcasting mode where the client waits for
     /// a CheckTx execution response only.
