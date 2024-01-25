@@ -226,6 +226,13 @@ pub mod cosmos {
             include!("prost/cosmos-sdk/cosmos.vesting.v1beta1.rs");
         }
     }
+
+    /// ICS23 definitions, re-exportred from the `ics23` crate.
+    pub mod ics23 {
+        pub mod v1 {
+            pub use ics23::*;
+        }
+    }
 }
 
 /// CosmWasm protobuf definitions.
@@ -237,106 +244,4 @@ pub mod cosmwasm {
             include!("prost/wasmd/cosmwasm.wasm.v1.rs");
         }
     }
-}
-
-/// IBC protobuf definitions.
-pub mod ibc {
-    /// IBC applications.
-    pub mod applications {
-        /// Interchain accounts support.
-        pub mod interchain_accounts {
-            pub mod controller {
-                pub mod v1 {
-                    include!("prost/ibc-go/ibc.applications.interchain_accounts.controller.v1.rs");
-                }
-            }
-
-            pub mod host {
-                pub mod v1 {
-                    include!("prost/ibc-go/ibc.applications.interchain_accounts.host.v1.rs");
-                }
-            }
-
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.applications.interchain_accounts.v1.rs");
-            }
-        }
-
-        /// Transfer support.
-        pub mod transfer {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.applications.transfer.v1.rs");
-            }
-
-            pub mod v2 {
-                include!("prost/ibc-go/ibc.applications.transfer.v2.rs");
-            }
-        }
-    }
-
-    /// IBC core.
-    pub mod core {
-        /// IBC channels.
-        pub mod channel {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.core.channel.v1.rs");
-            }
-        }
-
-        /// IBC client.
-        pub mod client {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.core.client.v1.rs");
-            }
-        }
-
-        /// IBC commitments.
-        pub mod commitment {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.core.commitment.v1.rs");
-            }
-        }
-
-        /// IBC connections.
-        pub mod connection {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.core.connection.v1.rs");
-            }
-        }
-
-        /// IBC types.
-        pub mod types {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.core.types.v1.rs");
-            }
-        }
-    }
-
-    /// IBC light clients.
-    pub mod lightclients {
-        pub mod localhost {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.lightclients.localhost.v1.rs");
-            }
-        }
-        pub mod solomachine {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.lightclients.solomachine.v1.rs");
-            }
-
-            pub mod v2 {
-                include!("prost/ibc-go/ibc.lightclients.solomachine.v2.rs");
-            }
-        }
-        pub mod tendermint {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.lightclients.tendermint.v1.rs");
-            }
-        }
-    }
-}
-
-/// ICS23 protobuf definitions.
-pub mod ics23 {
-    include!("prost/ibc-go/ics23.rs");
 }
