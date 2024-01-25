@@ -5,3 +5,6 @@ members = [
     "cosmos-sdk-proto",
     "cosmrs"
 ]
+
+[patch.crates-io]
+ics23 = { git = "https://github.com/cosmos/ics23", branch = "romac/rust/update-pbjson" }
