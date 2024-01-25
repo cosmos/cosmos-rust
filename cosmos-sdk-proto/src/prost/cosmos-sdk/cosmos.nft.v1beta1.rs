@@ -64,7 +64,7 @@ pub struct Class {
     pub uri_hash: ::prost::alloc::string::String,
     /// data is the app specific metadata of the NFT class. Optional
     #[prost(message, optional, tag = "7")]
-    pub data: ::core::option::Option<::prost_types::Any>,
+    pub data: ::core::option::Option<::prost_wkt_types::Any>,
 }
 /// NFT defines the NFT.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -83,7 +83,7 @@ pub struct Nft {
     pub uri_hash: ::prost::alloc::string::String,
     /// data is an app specific data of the NFT. Optional
     #[prost(message, optional, tag = "10")]
-    pub data: ::core::option::Option<::prost_types::Any>,
+    pub data: ::core::option::Option<::prost_wkt_types::Any>,
 }
 /// GenesisState defines the nft module's genesis state.
 #[derive(Clone, PartialEq, ::prost::Message)]

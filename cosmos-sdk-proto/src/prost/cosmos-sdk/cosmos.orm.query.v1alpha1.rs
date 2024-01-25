@@ -22,7 +22,7 @@ pub struct GetResponse {
     /// result is the result of the get query. If no value is found, the gRPC
     /// status code NOT_FOUND will be returned.
     #[prost(message, optional, tag = "1")]
-    pub result: ::core::option::Option<::prost_types::Any>,
+    pub result: ::core::option::Option<::prost_wkt_types::Any>,
 }
 /// ListRequest is the Query/List request type.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -86,7 +86,7 @@ pub mod list_request {
 pub struct ListResponse {
     /// results are the results of the query.
     #[prost(message, repeated, tag = "1")]
-    pub results: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub results: ::prost::alloc::vec::Vec<::prost_wkt_types::Any>,
     /// pagination is the pagination response.
     #[prost(message, optional, tag = "5")]
     pub pagination: ::core::option::Option<super::super::super::base::query::v1beta1::PageResponse>,
@@ -125,10 +125,10 @@ pub mod index_value {
         Bool(bool),
         /// timestamp specifies a value for a timestamp index field.
         #[prost(message, tag = "7")]
-        Timestamp(::prost_types::Timestamp),
+        Timestamp(::prost_wkt_types::Timestamp),
         /// duration specifies a value for a duration index field.
         #[prost(message, tag = "8")]
-        Duration(::prost_types::Duration),
+        Duration(::prost_wkt_types::Duration),
     }
 }
 include!("cosmos.orm.query.v1alpha1.tonic.rs");

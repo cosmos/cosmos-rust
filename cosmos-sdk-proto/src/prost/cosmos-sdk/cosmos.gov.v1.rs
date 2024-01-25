@@ -31,7 +31,7 @@ pub struct Proposal {
     pub id: u64,
     /// messages are the arbitrary messages to be executed if the proposal passes.
     #[prost(message, repeated, tag = "2")]
-    pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub messages: ::prost::alloc::vec::Vec<::prost_wkt_types::Any>,
     /// status defines the proposal status.
     #[prost(enumeration = "ProposalStatus", tag = "3")]
     pub status: i32,
@@ -42,19 +42,19 @@ pub struct Proposal {
     pub final_tally_result: ::core::option::Option<TallyResult>,
     /// submit_time is the time of proposal submission.
     #[prost(message, optional, tag = "5")]
-    pub submit_time: ::core::option::Option<::prost_types::Timestamp>,
+    pub submit_time: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// deposit_end_time is the end time for deposition.
     #[prost(message, optional, tag = "6")]
-    pub deposit_end_time: ::core::option::Option<::prost_types::Timestamp>,
+    pub deposit_end_time: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// total_deposit is the total deposit on the proposal.
     #[prost(message, repeated, tag = "7")]
     pub total_deposit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     /// voting_start_time is the starting time to vote on a proposal.
     #[prost(message, optional, tag = "8")]
-    pub voting_start_time: ::core::option::Option<::prost_types::Timestamp>,
+    pub voting_start_time: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// voting_end_time is the end time of voting on a proposal.
     #[prost(message, optional, tag = "9")]
-    pub voting_end_time: ::core::option::Option<::prost_types::Timestamp>,
+    pub voting_end_time: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// metadata is any arbitrary metadata attached to the proposal.
     #[prost(string, tag = "10")]
     pub metadata: ::prost::alloc::string::String,
@@ -116,14 +116,14 @@ pub struct DepositParams {
     /// Maximum period for Atom holders to deposit on a proposal. Initial value: 2
     /// months.
     #[prost(message, optional, tag = "2")]
-    pub max_deposit_period: ::core::option::Option<::prost_types::Duration>,
+    pub max_deposit_period: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// VotingParams defines the params for voting on governance proposals.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct VotingParams {
     /// Duration of the voting period.
     #[prost(message, optional, tag = "1")]
-    pub voting_period: ::core::option::Option<::prost_types::Duration>,
+    pub voting_period: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// TallyParams defines the params for tallying votes on governance proposals.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -151,10 +151,10 @@ pub struct Params {
     /// Maximum period for Atom holders to deposit on a proposal. Initial value: 2
     /// months.
     #[prost(message, optional, tag = "2")]
-    pub max_deposit_period: ::core::option::Option<::prost_types::Duration>,
+    pub max_deposit_period: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Duration of the voting period.
     #[prost(message, optional, tag = "3")]
-    pub voting_period: ::core::option::Option<::prost_types::Duration>,
+    pub voting_period: ::core::option::Option<::prost_wkt_types::Duration>,
     ///   Minimum percentage of total stake needed to vote for a result to be
     ///   considered valid.
     #[prost(string, tag = "4")]
@@ -450,7 +450,7 @@ pub struct QueryTallyResultResponse {
 pub struct MsgSubmitProposal {
     /// messages are the arbitrary messages to be executed if proposal passes.
     #[prost(message, repeated, tag = "1")]
-    pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub messages: ::prost::alloc::vec::Vec<::prost_wkt_types::Any>,
     /// initial_deposit is the deposit value that must be paid at proposal submission.
     #[prost(message, repeated, tag = "2")]
     pub initial_deposit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
@@ -484,7 +484,7 @@ pub struct MsgSubmitProposalResponse {
 pub struct MsgExecLegacyContent {
     /// content is the proposal's content.
     #[prost(message, optional, tag = "1")]
-    pub content: ::core::option::Option<::prost_types::Any>,
+    pub content: ::core::option::Option<::prost_wkt_types::Any>,
     /// authority must be the gov module address.
     #[prost(string, tag = "2")]
     pub authority: ::prost::alloc::string::String,

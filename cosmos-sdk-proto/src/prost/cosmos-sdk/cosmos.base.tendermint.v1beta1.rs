@@ -23,7 +23,7 @@ pub struct Header {
     #[prost(int64, tag = "3")]
     pub height: i64,
     #[prost(message, optional, tag = "4")]
-    pub time: ::core::option::Option<::prost_types::Timestamp>,
+    pub time: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// prev block info
     #[prost(message, optional, tag = "5")]
     pub last_block_id: ::core::option::Option<::tendermint_proto::v0_34::types::BlockId>,
@@ -109,7 +109,7 @@ pub struct Validator {
     #[prost(string, tag = "1")]
     pub address: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub pub_key: ::core::option::Option<::prost_types::Any>,
+    pub pub_key: ::core::option::Option<::prost_wkt_types::Any>,
     #[prost(int64, tag = "3")]
     pub voting_power: i64,
     #[prost(int64, tag = "4")]

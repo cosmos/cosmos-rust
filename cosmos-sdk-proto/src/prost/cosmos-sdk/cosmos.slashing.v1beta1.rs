@@ -15,7 +15,7 @@ pub struct ValidatorSigningInfo {
     pub index_offset: i64,
     /// Timestamp until which the validator is jailed due to liveness downtime.
     #[prost(message, optional, tag = "4")]
-    pub jailed_until: ::core::option::Option<::prost_types::Timestamp>,
+    pub jailed_until: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
     /// once the validator commits an equivocation or for any other configured misbehiavor.
     #[prost(bool, tag = "5")]
@@ -33,7 +33,7 @@ pub struct Params {
     #[prost(bytes = "vec", tag = "2")]
     pub min_signed_per_window: ::prost::alloc::vec::Vec<u8>,
     #[prost(message, optional, tag = "3")]
-    pub downtime_jail_duration: ::core::option::Option<::prost_types::Duration>,
+    pub downtime_jail_duration: ::core::option::Option<::prost_wkt_types::Duration>,
     #[prost(bytes = "vec", tag = "4")]
     pub slash_fraction_double_sign: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "5")]

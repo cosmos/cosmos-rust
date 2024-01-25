@@ -90,7 +90,7 @@ fn main() {
 
     if is_github() {
         println!(
-            "Rebuild protos with proto-build (cosmos-sdk rev: {},  wasmd rev: {}))",
+            "Rebuild protos with proto-build (cosmos-sdk rev: {}, wasmd rev: {}))",
             COSMOS_SDK_REV, WASMD_REV
         );
     }
@@ -150,6 +150,20 @@ fn run_buf(config: &str, proto_path: impl AsRef<Path>, out_dir: impl AsRef<Path>
             &proto_path.as_ref().display().to_string(),
         ],
     );
+
+    run_cmd(
+        "buf",
+        [
+            "build",
+            "-o",
+            &out_dir
+                .as_ref()
+                .join("proto_descriptor.binpb")
+                .display()
+                .to_string(),
+            &proto_path.as_ref().display().to_string(),
+        ],
+    );
 }
 
 fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
@@ -167,6 +181,12 @@ fn run_rustfmt(dir: &Path) {
             .into_iter()
             .filter_map(|e| e.ok())
             .filter(|e| e.file_type().is_file() && e.path().extension() == Some(OsStr::new("rs")))
+            .filter(|e| {
+                !e.path()
+                    .file_name()
+                    .map(|name| name.to_string_lossy())
+                    .map_or(true, |name| name.ends_with(".serde.rs"))
+            })
             .map(|e| e.into_path())
             .map(Into::into),
     );
@@ -207,6 +227,8 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
     let proto_path = Path::new(COSMOS_SDK_DIR).join("proto");
     run_buf("buf.sdk.gen.yaml", proto_path, out_dir);
     info!("=> Done!");
+
+    generate_pbjson_impls(&[".cosmos", ".google"], out_dir);
 }
 
 fn compile_wasmd_proto_and_services(out_dir: &Path) {
@@ -222,6 +244,24 @@ fn compile_wasmd_proto_and_services(out_dir: &Path) {
     info!("Compiling wasmd proto clients for GRPC services!");
     run_buf("buf.wasmd.gen.yaml", proto_path, out_dir);
     info!("=> Done!");
+
+    generate_pbjson_impls(&[".cosmwasm", ".google"], out_dir);
+}
+
+fn generate_pbjson_impls(prefixes: &[&str], out_dir: &Path) {
+    println!("[info ] Generating pbjson Serialize, Deserialize impls...");
+
+    let descriptor_set_path = out_dir.join("proto_descriptor.binpb");
+    let descriptor_set = std::fs::read(&descriptor_set_path).unwrap();
+    std::fs::remove_file(descriptor_set_path).unwrap();
+
+    pbjson_build::Builder::new()
+        .register_descriptors(&descriptor_set)
+        .unwrap()
+        .out_dir(out_dir)
+        .emit_fields()
+        .build(prefixes)
+        .unwrap();
 }
 
 /// collect_protos walks every path in `proto_paths` and recursively locates all .proto
@@ -279,6 +319,8 @@ fn copy_generated_files(from_dir: &Path, to_dir: &Path) {
 fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<()> {
     /// Regex substitutions to apply to the prost-generated output
     const REPLACEMENTS: &[(&str, &str)] = &[
+        // Use `prost-wkt-types` proto definitions
+        ("prost_types::", "prost_wkt_types::"),
         // Use `tendermint-proto` proto definitions
         ("(super::)+tendermint", "tendermint_proto"),
         // Feature-gate gRPC client modules

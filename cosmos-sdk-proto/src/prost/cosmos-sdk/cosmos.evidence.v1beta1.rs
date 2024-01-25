@@ -8,7 +8,7 @@ pub struct Equivocation {
     pub height: i64,
     /// time is the equivocation time.
     #[prost(message, optional, tag = "2")]
-    pub time: ::core::option::Option<::prost_types::Timestamp>,
+    pub time: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// power is the equivocation validator power.
     #[prost(int64, tag = "3")]
     pub power: i64,
@@ -21,7 +21,7 @@ pub struct Equivocation {
 pub struct GenesisState {
     /// evidence defines all the evidence at genesis.
     #[prost(message, repeated, tag = "1")]
-    pub evidence: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub evidence: ::prost::alloc::vec::Vec<::prost_wkt_types::Any>,
 }
 /// QueryEvidenceRequest is the request type for the Query/Evidence RPC method.
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -42,7 +42,7 @@ pub struct QueryEvidenceRequest {
 pub struct QueryEvidenceResponse {
     /// evidence returns the requested evidence.
     #[prost(message, optional, tag = "1")]
-    pub evidence: ::core::option::Option<::prost_types::Any>,
+    pub evidence: ::core::option::Option<::prost_wkt_types::Any>,
 }
 /// QueryEvidenceRequest is the request type for the Query/AllEvidence RPC
 /// method.
@@ -58,7 +58,7 @@ pub struct QueryAllEvidenceRequest {
 pub struct QueryAllEvidenceResponse {
     /// evidence returns all evidences.
     #[prost(message, repeated, tag = "1")]
-    pub evidence: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub evidence: ::prost::alloc::vec::Vec<::prost_wkt_types::Any>,
     /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
@@ -72,7 +72,7 @@ pub struct MsgSubmitEvidence {
     pub submitter: ::prost::alloc::string::String,
     /// evidence defines the evidence of misbehavior.
     #[prost(message, optional, tag = "2")]
-    pub evidence: ::core::option::Option<::prost_types::Any>,
+    pub evidence: ::core::option::Option<::prost_wkt_types::Any>,
 }
 /// MsgSubmitEvidenceResponse defines the Msg/SubmitEvidence response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
