@@ -6982,10 +6982,10 @@ impl serde::Serialize for StakeAuthorization {
         }
         if let Some(v) = self.validators.as_ref() {
             match v {
-                stake_authorization::Validators::AllowList(v) => {
+                stake_authorization::Policy::AllowList(v) => {
                     struct_ser.serialize_field("allowList", v)?;
                 }
-                stake_authorization::Validators::DenyList(v) => {
+                stake_authorization::Policy::DenyList(v) => {
                     struct_ser.serialize_field("denyList", v)?;
                 }
             }
@@ -7081,14 +7081,14 @@ impl<'de> serde::Deserialize<'de> for StakeAuthorization {
                             if validators__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("allowList"));
                             }
-                            validators__ = map_.next_value::<::core::option::Option<_>>()?.map(stake_authorization::Validators::AllowList)
+                            validators__ = map_.next_value::<::core::option::Option<_>>()?.map(stake_authorization::Policy::AllowList)
 ;
                         }
                         GeneratedField::DenyList => {
                             if validators__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denyList"));
                             }
-                            validators__ = map_.next_value::<::core::option::Option<_>>()?.map(stake_authorization::Validators::DenyList)
+                            validators__ = map_.next_value::<::core::option::Option<_>>()?.map(stake_authorization::Policy::DenyList)
 ;
                         }
                     }

@@ -372,18 +372,34 @@ fn patch_file(path: impl AsRef<Path>, pattern: &Regex, replacement: &str) -> io:
 
 /// Fix clashing type names in prost-generated code. See cosmos/cosmos-rust#154.
 fn apply_patches(proto_dir: &Path) {
-    for (pattern, replacement) in [
-        ("enum Validators", "enum Policy"),
+    const PATCHES: &[(&str, &[(&str, &str)])] = &[
         (
-            "stake_authorization::Validators",
-            "stake_authorization::Policy",
+            "cosmos-sdk/cosmos.staking.v1beta1.rs",
+            &[
+                ("enum Validators", "enum Policy"),
+                (
+                    "stake_authorization::Validators",
+                    "stake_authorization::Policy",
+                ),
+            ],
         ),
-    ] {
-        patch_file(
-            &proto_dir.join("cosmos-sdk/cosmos.staking.v1beta1.rs"),
-            &Regex::new(pattern).unwrap(),
-            replacement,
-        )
-        .expect("error patching cosmos.staking.v1beta1.rs");
+        (
+            "cosmos-sdk/cosmos.staking.v1beta1.serde.rs",
+            &[(
+                "stake_authorization::Validators::",
+                "stake_authorization::Policy::",
+            )],
+        ),
+    ];
+
+    for (file, patches) in PATCHES {
+        for (pattern, replacement) in patches.iter() {
+            patch_file(
+                &proto_dir.join(file),
+                &Regex::new(pattern).unwrap(),
+                replacement,
+            )
+            .unwrap_or_else(|e| panic!("error patching {}: {}", file, e));
+        }
     }
 }
