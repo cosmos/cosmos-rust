@@ -3,7 +3,7 @@
 // TODO(tarcieri): generate these automatically using `prost-build`
 // See: https://github.com/tokio-rs/prost/issues/926
 
-use crate::{cosmos, ibc, traits::Name};
+use crate::{cosmos, traits::Name};
 
 macro_rules! impl_name {
     ($type:ty, $package:expr, $name:expr) => {
@@ -17,49 +17,6 @@ macro_rules! impl_name {
         }
     };
 }
-
-impl_name!(
-    ibc::core::client::v1::ClientUpdateProposal,
-    "ibc.core.client.v1",
-    "ClientUpdateProposal"
-);
-impl_name!(
-    ibc::core::client::v1::MsgUpdateClient,
-    "ibc.core.client.v1",
-    "MsgUpdateClient"
-);
-
-impl_name!(
-    ibc::core::channel::v1::MsgChannelOpenConfirm,
-    "ibc.core.channel.v1",
-    "MsgChannelOpenConfirm"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgAcknowledgement,
-    "ibc.core.channel.v1",
-    "MsgAcknowledgement"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgChannelOpenAck,
-    "ibc.core.channel.v1",
-    "MsgChannelOpenAck"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgTimeout,
-    "ibc.core.channel.v1",
-    "MsgTimeout"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgRecvPacket,
-    "ibc.core.channel.v1",
-    "MsgRecvPacket"
-);
-
-impl_name!(
-    ibc::applications::transfer::v1::MsgTransfer,
-    "ibc.applications.transfer.v1",
-    "MsgTransfer"
-);
 
 impl_name!(
     cosmos::upgrade::v1beta1::SoftwareUpgradeProposal,
