@@ -7,7 +7,7 @@ pub struct Record {
     pub name: ::prost::alloc::string::String,
     /// pub_key represents a public key in any format
     #[prost(message, optional, tag = "2")]
-    pub pub_key: ::core::option::Option<::prost_types::Any>,
+    pub pub_key: ::core::option::Option<::prost_wkt_types::Any>,
     /// Record contains one of the following items
     #[prost(oneof = "record::Item", tags = "3, 4, 5, 6")]
     pub item: ::core::option::Option<record::Item>,
@@ -19,7 +19,7 @@ pub mod record {
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Local {
         #[prost(message, optional, tag = "1")]
-        pub priv_key: ::core::option::Option<::prost_types::Any>,
+        pub priv_key: ::core::option::Option<::prost_wkt_types::Any>,
     }
     /// Ledger item
     #[derive(Clone, PartialEq, ::prost::Message)]

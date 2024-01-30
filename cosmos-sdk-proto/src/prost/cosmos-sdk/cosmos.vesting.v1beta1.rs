@@ -11,7 +11,6 @@ pub struct BaseVestingAccount {
     pub delegated_free: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     #[prost(message, repeated, tag = "4")]
     pub delegated_vesting: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    /// Vesting end time, as unix timestamp (in seconds).
     #[prost(int64, tag = "5")]
     pub end_time: i64,
 }
@@ -21,7 +20,6 @@ pub struct BaseVestingAccount {
 pub struct ContinuousVestingAccount {
     #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
-    /// Vesting start time, as unix timestamp (in seconds).
     #[prost(int64, tag = "2")]
     pub start_time: i64,
 }
@@ -36,7 +34,6 @@ pub struct DelayedVestingAccount {
 /// Period defines a length of time and amount of coins that will vest.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Period {
-    /// Period duration in seconds.
     #[prost(int64, tag = "1")]
     pub length: i64,
     #[prost(message, repeated, tag = "2")]
@@ -73,7 +70,6 @@ pub struct MsgCreateVestingAccount {
     pub to_address: ::prost::alloc::string::String,
     #[prost(message, repeated, tag = "3")]
     pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
-    /// end of vesting as unix time (in seconds).
     #[prost(int64, tag = "4")]
     pub end_time: i64,
     #[prost(bool, tag = "5")]
@@ -110,7 +106,6 @@ pub struct MsgCreatePeriodicVestingAccount {
     pub from_address: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub to_address: ::prost::alloc::string::String,
-    /// start of vesting as unix time (in seconds).
     #[prost(int64, tag = "3")]
     pub start_time: i64,
     #[prost(message, repeated, tag = "4")]
