@@ -7,5 +7,4 @@ members = [
 ]
 
 [patch.crates-io]
-ics23 = { git = "https://github.com/cosmos/ics23", branch = "romac/rust/update-pbjson" }
 tendermint-proto = { git = "https://github.com/informalsystems/tendermint-rs", branch = "romac/missing-serde-proto" }

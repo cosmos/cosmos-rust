@@ -865,8 +865,9 @@ dependencies = [
 
 [[package]]
 name = "ics23"
-version = "0.11.0"
-source = "git+https://github.com/cosmos/ics23?branch=romac/rust/update-pbjson#829d232f6ab55c0a5b15c846dd8a3b00ba04969f"
+version = "0.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dc3b8be84e7285c73b88effdc3294b552277d6b0ec728ee016c861b7b9a2c19c"
 dependencies = [
  "anyhow",
  "blake2",
