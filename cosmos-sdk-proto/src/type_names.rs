@@ -19,20 +19,60 @@ macro_rules! impl_name {
 }
 
 impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenTry,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenTry"
+);
+impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenInit,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenInit"
+);
+impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenAck,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenAck"
+);
+impl_name!(
+    ibc::core::connection::v1::MsgConnectionOpenConfirm,
+    "ibc.core.connection.v1",
+    "MsgConnectionOpenConfirm"
+);
+impl_name!(
+    ibc::core::channel::v1::MsgChannelOpenInit,
+    "ibc.core.channel.v1",
+    "MsgChannelOpenInit"
+);
+
+impl_name!(
     ibc::core::client::v1::ClientUpdateProposal,
     "ibc.core.client.v1",
     "ClientUpdateProposal"
+);
+impl_name!(
+    ibc::core::client::v1::MsgCreateClient,
+    "ibc.core.client.v1",
+    "MsgCreateClient"
 );
 impl_name!(
     ibc::core::client::v1::MsgUpdateClient,
     "ibc.core.client.v1",
     "MsgUpdateClient"
 );
-
+impl_name!(
+    ibc::core::channel::v1::MsgChannelCloseConfirm,
+    "ibc.core.channel.v1",
+    "MsgChannelCloseConfirm"
+);
 impl_name!(
     ibc::core::channel::v1::MsgChannelOpenConfirm,
     "ibc.core.channel.v1",
     "MsgChannelOpenConfirm"
+);
+impl_name!(
+    ibc::core::channel::v1::MsgChannelOpenTry,
+    "ibc.core.channel.v1",
+    "MsgChannelOpenTry"
 );
 impl_name!(
     ibc::core::channel::v1::MsgAcknowledgement,
@@ -74,6 +114,17 @@ impl_name!(
 );
 
 impl_name!(
+    cosmos::gov::v1::MsgSubmitProposal,
+    "cosmos.gov.v1",
+    "MsgSubmitProposal"
+);
+impl_name!(cosmos::gov::v1::MsgDeposit, "cosmos.gov.v1", "MsgDeposit");
+impl_name!(
+    cosmos::gov::v1::MsgVoteWeighted,
+    "cosmos.gov.v1",
+    "MsgVoteWeighted"
+);
+impl_name!(
     cosmos::gov::v1beta1::TextProposal,
     "cosmos.gov.v1beta1",
     "TextProposal"
@@ -88,6 +139,7 @@ impl_name!(
     "cosmos.gov.v1beta1",
     "MsgDeposit"
 );
+impl_name!(cosmos::gov::v1::MsgVote, "cosmos.gov.v1", "MsgVote");
 impl_name!(
     cosmos::gov::v1beta1::MsgVote,
     "cosmos.gov.v1beta1",
@@ -303,6 +355,11 @@ impl_name!(
     "ModuleAccount"
 );
 
+impl_name!(
+    cosmos::authz::v1beta1::MsgGrant,
+    "cosmos.authz.v1beta1",
+    "MsgGrant"
+);
 impl_name!(
     cosmos::authz::v1beta1::MsgExec,
     "cosmos.authz.v1beta1",
