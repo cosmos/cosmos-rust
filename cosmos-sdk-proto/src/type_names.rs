@@ -332,6 +332,61 @@ impl_name!(
     "cosmos.staking.v1beta1",
     "MsgDelegateResponse"
 );
+impl_name!(
+    cosmos::staking::v1beta1::CommissionRates,
+    "cosmos.staking.v1beta1",
+    "CommissionRates"
+);
+impl_name!(
+    cosmos::staking::v1beta1::Commission,
+    "cosmos.staking.v1beta1",
+    "Commission"
+);
+impl_name!(
+    cosmos::staking::v1beta1::Description,
+    "cosmos.staking.v1beta1",
+    "Description"
+);
+impl_name!(
+    cosmos::staking::v1beta1::HistoricalInfo,
+    "cosmos.staking.v1beta1",
+    "HistoricalInfo"
+);
+impl_name!(
+    cosmos::staking::v1beta1::QueryHistoricalInfoRequest,
+    "cosmos.staking.v1beta1",
+    "QueryHistoricalInfoRequest"
+);
+impl_name!(
+    cosmos::staking::v1beta1::QueryHistoricalInfoResponse,
+    "cosmos.staking.v1beta1",
+    "QueryHistoricalInfoResponse"
+);
+impl_name!(
+    cosmos::staking::v1beta1::QueryValidatorRequest,
+    "cosmos.staking.v1beta1",
+    "QueryValidatorRequest"
+);
+impl_name!(
+    cosmos::staking::v1beta1::QueryValidatorResponse,
+    "cosmos.staking.v1beta1",
+    "QueryValidatorResponse"
+);
+impl_name!(
+    cosmos::staking::v1beta1::QueryValidatorsRequest,
+    "cosmos.staking.v1beta1",
+    "QueryValidatorsRequest"
+);
+impl_name!(
+    cosmos::staking::v1beta1::QueryValidatorsResponse,
+    "cosmos.staking.v1beta1",
+    "QueryValidatorsResponse"
+);
+impl_name!(
+    cosmos::staking::v1beta1::Validator,
+    "cosmos.staking.v1beta1",
+    "Validator"
+);
 
 impl_name!(
     cosmos::base::abci::v1beta1::MsgData,
