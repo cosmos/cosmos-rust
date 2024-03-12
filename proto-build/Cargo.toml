@@ -8,7 +8,7 @@ publish = false
 [dependencies]
 prost = "0.12"
 prost-build = "0.12"
-tonic = "0.10"
-tonic-build = "0.10"
+tonic = "0.11"
+tonic-build = "0.11"
 regex = "1"
 walkdir = "2"
