@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.16.0 (2024-03-15)
+### Added
+- Support for uppercase Bech32 ([#444])
+- Support for `slashing` module ([#452])
+- Support for validator-related queries in `staking` module ([#453])
+- Expose `base::query` module and pagination types ([#454])
+
+### Changed
+- Bump `tendermint`/`tendermint-rpc` dependencies to v0.35 ([#461])
+- Bump `cosmos-sdk-proto` to v0.21.0 ([#463])
+
+### Fixed
+- Correctly populate `updated` and `msg` fields from proto responses ([#451])
+
+[#444]: https://github.com/cosmos/cosmos-rust/pull/444
+[#451]: https://github.com/cosmos/cosmos-rust/pull/451
+[#452]: https://github.com/cosmos/cosmos-rust/pull/452
+[#453]: https://github.com/cosmos/cosmos-rust/pull/453
+[#454]: https://github.com/cosmos/cosmos-rust/pull/454
+[#461]: https://github.com/cosmos/cosmos-rust/pull/461
+[#463]: https://github.com/cosmos/cosmos-rust/pull/463
+
 ## 0.15.0 (2023-10-03)
 ### Added
 - Export `msg_clear_admin` and `msg_update_admin` types ([#419])
