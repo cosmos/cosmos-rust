@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased (0.21.0)
+## 0.21.0 (2024-03-15)
 ### Changed
-- Update `tonic` to v0.11
+- Update `tonic` to v0.11 ([#460])
+- Bump `tendermint-proto` dependency to v0.35 ([#461])
+- Use `prost-build` to gen IBC `Name` impls ([#462])
+
+[#460]: https://github.com/cosmos/cosmos-rust/pull/460
+[#461]: https://github.com/cosmos/cosmos-rust/pull/461
+[#462]: https://github.com/cosmos/cosmos-rust/pull/462
 
 ## 0.20.0 (2023-10-03)
 ### Added
