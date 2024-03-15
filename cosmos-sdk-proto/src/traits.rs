@@ -2,30 +2,11 @@
 
 pub use prost::{Message, Name};
 
-use crate::Any;
-use prost::{DecodeError, EncodeError};
+use prost::EncodeError;
 use std::str::FromStr;
 
 /// Extension trait for [`Message`].
 pub trait MessageExt: Message {
-    /// Parse this message proto from [`Any`].
-    #[deprecated(since = "0.20.0", note = "use Any::to_msg instead")]
-    fn from_any(any: &Any) -> Result<Self, DecodeError>
-    where
-        Self: Default + Name + Sized,
-    {
-        any.to_msg()
-    }
-
-    /// Serialize this message proto as [`Any`].
-    #[deprecated(since = "0.20.0", note = "use Any::from_msg instead")]
-    fn to_any(&self) -> Result<Any, EncodeError>
-    where
-        Self: Name + Sized,
-    {
-        Any::from_msg(self)
-    }
-
     /// Serialize this protobuf message as a byte vector.
     fn to_bytes(&self) -> Result<Vec<u8>, EncodeError>;
 }
