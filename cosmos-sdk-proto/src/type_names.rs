@@ -3,103 +3,16 @@
 // TODO(tarcieri): generate these automatically using `prost-build`
 // See: https://github.com/tokio-rs/prost/issues/926
 
-use crate::{cosmos, ibc, traits::Name};
+use crate::{cosmos, traits::Name};
 
 macro_rules! impl_name {
     ($type:ty, $package:expr, $name:expr) => {
         impl Name for $type {
             const NAME: &'static str = $name;
             const PACKAGE: &'static str = $package;
-
-            fn full_name() -> String {
-                full_name::<Self>()
-            }
         }
     };
 }
-
-impl_name!(
-    ibc::core::connection::v1::MsgConnectionOpenTry,
-    "ibc.core.connection.v1",
-    "MsgConnectionOpenTry"
-);
-impl_name!(
-    ibc::core::connection::v1::MsgConnectionOpenInit,
-    "ibc.core.connection.v1",
-    "MsgConnectionOpenInit"
-);
-impl_name!(
-    ibc::core::connection::v1::MsgConnectionOpenAck,
-    "ibc.core.connection.v1",
-    "MsgConnectionOpenAck"
-);
-impl_name!(
-    ibc::core::connection::v1::MsgConnectionOpenConfirm,
-    "ibc.core.connection.v1",
-    "MsgConnectionOpenConfirm"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgChannelOpenInit,
-    "ibc.core.channel.v1",
-    "MsgChannelOpenInit"
-);
-
-impl_name!(
-    ibc::core::client::v1::ClientUpdateProposal,
-    "ibc.core.client.v1",
-    "ClientUpdateProposal"
-);
-impl_name!(
-    ibc::core::client::v1::MsgCreateClient,
-    "ibc.core.client.v1",
-    "MsgCreateClient"
-);
-impl_name!(
-    ibc::core::client::v1::MsgUpdateClient,
-    "ibc.core.client.v1",
-    "MsgUpdateClient"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgChannelCloseConfirm,
-    "ibc.core.channel.v1",
-    "MsgChannelCloseConfirm"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgChannelOpenConfirm,
-    "ibc.core.channel.v1",
-    "MsgChannelOpenConfirm"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgChannelOpenTry,
-    "ibc.core.channel.v1",
-    "MsgChannelOpenTry"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgAcknowledgement,
-    "ibc.core.channel.v1",
-    "MsgAcknowledgement"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgChannelOpenAck,
-    "ibc.core.channel.v1",
-    "MsgChannelOpenAck"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgTimeout,
-    "ibc.core.channel.v1",
-    "MsgTimeout"
-);
-impl_name!(
-    ibc::core::channel::v1::MsgRecvPacket,
-    "ibc.core.channel.v1",
-    "MsgRecvPacket"
-);
-
-impl_name!(
-    ibc::applications::transfer::v1::MsgTransfer,
-    "ibc.applications.transfer.v1",
-    "MsgTransfer"
-);
 
 impl_name!(
     cosmos::upgrade::v1beta1::SoftwareUpgradeProposal,
@@ -442,7 +355,6 @@ impl_name!(
 
 #[cfg(feature = "cosmwasm")]
 mod wasm {
-    use super::full_name;
     use crate::{cosmwasm, traits::Name};
 
     const COSMWASM_PACKAGE: &str = "cosmwasm.wasm.v1";
@@ -572,9 +484,4 @@ mod wasm {
         COSMWASM_PACKAGE,
         "MsgClearAdminResponse"
     );
-}
-
-// TODO(tarcieri): remove this when tokio-rs/prost#923 is released (v0.12.1?)
-fn full_name<T: Name>() -> String {
-    format!("{}.{}", T::PACKAGE, T::NAME)
 }

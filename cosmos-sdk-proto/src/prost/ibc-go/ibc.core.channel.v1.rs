@@ -21,6 +21,13 @@ pub struct Channel {
     #[prost(string, tag = "5")]
     pub version: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Channel {
+    const NAME: &'static str = "Channel";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// IdentifiedChannel defines a channel with additional port and channel
 /// identifier fields.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -49,6 +56,13 @@ pub struct IdentifiedChannel {
     #[prost(string, tag = "7")]
     pub channel_id: ::prost::alloc::string::String,
 }
+impl ::prost::Name for IdentifiedChannel {
+    const NAME: &'static str = "IdentifiedChannel";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// Counterparty defines a channel end counterparty
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -59,6 +73,13 @@ pub struct Counterparty {
     /// channel end on the counterparty chain
     #[prost(string, tag = "2")]
     pub channel_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for Counterparty {
+    const NAME: &'static str = "Counterparty";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// Packet defines a type that carries data across different chains through IBC
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -91,6 +112,13 @@ pub struct Packet {
     #[prost(uint64, tag = "8")]
     pub timeout_timestamp: u64,
 }
+impl ::prost::Name for Packet {
+    const NAME: &'static str = "Packet";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// PacketState defines the generic type necessary to retrieve and store
 /// packet commitments, acknowledgements, and receipts.
 /// Caller is responsible for knowing the context necessary to interpret this
@@ -110,6 +138,13 @@ pub struct PacketState {
     /// embedded data that represents packet state.
     #[prost(bytes = "vec", tag = "4")]
     pub data: ::prost::alloc::vec::Vec<u8>,
+}
+impl ::prost::Name for PacketState {
+    const NAME: &'static str = "PacketState";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// Acknowledgement is the recommended acknowledgement format to be used by
 /// app-specific protocols.
@@ -135,6 +170,13 @@ pub mod acknowledgement {
         Result(::prost::alloc::vec::Vec<u8>),
         #[prost(string, tag = "22")]
         Error(::prost::alloc::string::String),
+    }
+}
+impl ::prost::Name for Acknowledgement {
+    const NAME: &'static str = "Acknowledgement";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
     }
 }
 /// State defines if a channel is in one of the following states:
@@ -227,12 +269,26 @@ pub struct MsgChannelOpenInit {
     #[prost(string, tag = "3")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgChannelOpenInit {
+    const NAME: &'static str = "MsgChannelOpenInit";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelOpenInitResponse defines the Msg/ChannelOpenInit response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenInitResponse {
     #[prost(string, tag = "1")]
     pub channel_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for MsgChannelOpenInitResponse {
+    const NAME: &'static str = "MsgChannelOpenInitResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// MsgChannelOpenInit defines a msg sent by a Relayer to try to open a channel
 /// on Chain B. The version field within the Channel field has been deprecated. Its
@@ -258,10 +314,24 @@ pub struct MsgChannelOpenTry {
     #[prost(string, tag = "7")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgChannelOpenTry {
+    const NAME: &'static str = "MsgChannelOpenTry";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenTryResponse {}
+impl ::prost::Name for MsgChannelOpenTryResponse {
+    const NAME: &'static str = "MsgChannelOpenTryResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelOpenAck defines a msg sent by a Relayer to Chain A to acknowledge
 /// the change of channel state to TRYOPEN on Chain B.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -282,10 +352,24 @@ pub struct MsgChannelOpenAck {
     #[prost(string, tag = "7")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgChannelOpenAck {
+    const NAME: &'static str = "MsgChannelOpenAck";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelOpenAckResponse defines the Msg/ChannelOpenAck response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenAckResponse {}
+impl ::prost::Name for MsgChannelOpenAckResponse {
+    const NAME: &'static str = "MsgChannelOpenAckResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelOpenConfirm defines a msg sent by a Relayer to Chain B to
 /// acknowledge the change of channel state to OPEN on Chain A.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -302,11 +386,25 @@ pub struct MsgChannelOpenConfirm {
     #[prost(string, tag = "5")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgChannelOpenConfirm {
+    const NAME: &'static str = "MsgChannelOpenConfirm";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelOpenConfirmResponse defines the Msg/ChannelOpenConfirm response
 /// type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelOpenConfirmResponse {}
+impl ::prost::Name for MsgChannelOpenConfirmResponse {
+    const NAME: &'static str = "MsgChannelOpenConfirmResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelCloseInit defines a msg sent by a Relayer to Chain A
 /// to close a channel with Chain B.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -319,10 +417,24 @@ pub struct MsgChannelCloseInit {
     #[prost(string, tag = "3")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgChannelCloseInit {
+    const NAME: &'static str = "MsgChannelCloseInit";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelCloseInitResponse defines the Msg/ChannelCloseInit response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelCloseInitResponse {}
+impl ::prost::Name for MsgChannelCloseInitResponse {
+    const NAME: &'static str = "MsgChannelCloseInitResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelCloseConfirm defines a msg sent by a Relayer to Chain B
 /// to acknowledge the change of channel state to CLOSED on Chain A.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -339,11 +451,25 @@ pub struct MsgChannelCloseConfirm {
     #[prost(string, tag = "5")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgChannelCloseConfirm {
+    const NAME: &'static str = "MsgChannelCloseConfirm";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgChannelCloseConfirmResponse defines the Msg/ChannelCloseConfirm response
 /// type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgChannelCloseConfirmResponse {}
+impl ::prost::Name for MsgChannelCloseConfirmResponse {
+    const NAME: &'static str = "MsgChannelCloseConfirmResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgRecvPacket receives incoming IBC packet
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -357,12 +483,26 @@ pub struct MsgRecvPacket {
     #[prost(string, tag = "4")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgRecvPacket {
+    const NAME: &'static str = "MsgRecvPacket";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgRecvPacketResponse defines the Msg/RecvPacket response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRecvPacketResponse {
     #[prost(enumeration = "ResponseResultType", tag = "1")]
     pub result: i32,
+}
+impl ::prost::Name for MsgRecvPacketResponse {
+    const NAME: &'static str = "MsgRecvPacketResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// MsgTimeout receives timed-out packet
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -379,12 +519,26 @@ pub struct MsgTimeout {
     #[prost(string, tag = "5")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgTimeout {
+    const NAME: &'static str = "MsgTimeout";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgTimeoutResponse defines the Msg/Timeout response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgTimeoutResponse {
     #[prost(enumeration = "ResponseResultType", tag = "1")]
     pub result: i32,
+}
+impl ::prost::Name for MsgTimeoutResponse {
+    const NAME: &'static str = "MsgTimeoutResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// MsgTimeoutOnClose timed-out packet upon counterparty channel closure.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -403,12 +557,26 @@ pub struct MsgTimeoutOnClose {
     #[prost(string, tag = "6")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgTimeoutOnClose {
+    const NAME: &'static str = "MsgTimeoutOnClose";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgTimeoutOnCloseResponse defines the Msg/TimeoutOnClose response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgTimeoutOnCloseResponse {
     #[prost(enumeration = "ResponseResultType", tag = "1")]
     pub result: i32,
+}
+impl ::prost::Name for MsgTimeoutOnCloseResponse {
+    const NAME: &'static str = "MsgTimeoutOnCloseResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// MsgAcknowledgement receives incoming IBC acknowledgement
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -425,12 +593,26 @@ pub struct MsgAcknowledgement {
     #[prost(string, tag = "5")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgAcknowledgement {
+    const NAME: &'static str = "MsgAcknowledgement";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// MsgAcknowledgementResponse defines the Msg/Acknowledgement response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgAcknowledgementResponse {
     #[prost(enumeration = "ResponseResultType", tag = "1")]
     pub result: i32,
+}
+impl ::prost::Name for MsgAcknowledgementResponse {
+    const NAME: &'static str = "MsgAcknowledgementResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// ResponseResultType defines the possible outcomes of the execution of a message
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -774,6 +956,13 @@ pub struct QueryChannelRequest {
     #[prost(string, tag = "2")]
     pub channel_id: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryChannelRequest {
+    const NAME: &'static str = "QueryChannelRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryChannelResponse is the response type for the Query/Channel RPC method.
 /// Besides the Channel end, it includes a proof and the height from which the
 /// proof was retrieved.
@@ -790,6 +979,13 @@ pub struct QueryChannelResponse {
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryChannelResponse {
+    const NAME: &'static str = "QueryChannelResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryChannelsRequest is the request type for the Query/Channels RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -799,6 +995,13 @@ pub struct QueryChannelsRequest {
     pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
+}
+impl ::prost::Name for QueryChannelsRequest {
+    const NAME: &'static str = "QueryChannelsRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryChannelsResponse is the response type for the Query/Channels RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -816,6 +1019,13 @@ pub struct QueryChannelsResponse {
     #[prost(message, optional, tag = "3")]
     pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryChannelsResponse {
+    const NAME: &'static str = "QueryChannelsResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryConnectionChannelsRequest is the request type for the
 /// Query/QueryConnectionChannels RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -829,6 +1039,13 @@ pub struct QueryConnectionChannelsRequest {
     pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
+}
+impl ::prost::Name for QueryConnectionChannelsRequest {
+    const NAME: &'static str = "QueryConnectionChannelsRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryConnectionChannelsResponse is the Response type for the
 /// Query/QueryConnectionChannels RPC method
@@ -847,6 +1064,13 @@ pub struct QueryConnectionChannelsResponse {
     #[prost(message, optional, tag = "3")]
     pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryConnectionChannelsResponse {
+    const NAME: &'static str = "QueryConnectionChannelsResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryChannelClientStateRequest is the request type for the Query/ClientState
 /// RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -858,6 +1082,13 @@ pub struct QueryChannelClientStateRequest {
     /// channel unique identifier
     #[prost(string, tag = "2")]
     pub channel_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for QueryChannelClientStateRequest {
+    const NAME: &'static str = "QueryChannelClientStateRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryChannelClientStateResponse is the Response type for the
 /// Query/QueryChannelClientState RPC method
@@ -874,6 +1105,13 @@ pub struct QueryChannelClientStateResponse {
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
+}
+impl ::prost::Name for QueryChannelClientStateResponse {
+    const NAME: &'static str = "QueryChannelClientStateResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryChannelConsensusStateRequest is the request type for the
 /// Query/ConsensusState RPC method
@@ -893,6 +1131,13 @@ pub struct QueryChannelConsensusStateRequest {
     #[prost(uint64, tag = "4")]
     pub revision_height: u64,
 }
+impl ::prost::Name for QueryChannelConsensusStateRequest {
+    const NAME: &'static str = "QueryChannelConsensusStateRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryChannelClientStateResponse is the Response type for the
 /// Query/QueryChannelClientState RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -911,6 +1156,13 @@ pub struct QueryChannelConsensusStateResponse {
     #[prost(message, optional, tag = "4")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryChannelConsensusStateResponse {
+    const NAME: &'static str = "QueryChannelConsensusStateResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryPacketCommitmentRequest is the request type for the
 /// Query/PacketCommitment RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -925,6 +1177,13 @@ pub struct QueryPacketCommitmentRequest {
     /// packet sequence
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
+}
+impl ::prost::Name for QueryPacketCommitmentRequest {
+    const NAME: &'static str = "QueryPacketCommitmentRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryPacketCommitmentResponse defines the client query response for a packet
 /// which also includes a proof and the height from which the proof was
@@ -941,6 +1200,13 @@ pub struct QueryPacketCommitmentResponse {
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
+}
+impl ::prost::Name for QueryPacketCommitmentResponse {
+    const NAME: &'static str = "QueryPacketCommitmentResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryPacketCommitmentsRequest is the request type for the
 /// Query/QueryPacketCommitments RPC method
@@ -959,6 +1225,13 @@ pub struct QueryPacketCommitmentsRequest {
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
 }
+impl ::prost::Name for QueryPacketCommitmentsRequest {
+    const NAME: &'static str = "QueryPacketCommitmentsRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryPacketCommitmentsResponse is the request type for the
 /// Query/QueryPacketCommitments RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -975,6 +1248,13 @@ pub struct QueryPacketCommitmentsResponse {
     #[prost(message, optional, tag = "3")]
     pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryPacketCommitmentsResponse {
+    const NAME: &'static str = "QueryPacketCommitmentsResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryPacketReceiptRequest is the request type for the
 /// Query/PacketReceipt RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -989,6 +1269,13 @@ pub struct QueryPacketReceiptRequest {
     /// packet sequence
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
+}
+impl ::prost::Name for QueryPacketReceiptRequest {
+    const NAME: &'static str = "QueryPacketReceiptRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryPacketReceiptResponse defines the client query response for a packet
 /// receipt which also includes a proof, and the height from which the proof was
@@ -1006,6 +1293,13 @@ pub struct QueryPacketReceiptResponse {
     #[prost(message, optional, tag = "4")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryPacketReceiptResponse {
+    const NAME: &'static str = "QueryPacketReceiptResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryPacketAcknowledgementRequest is the request type for the
 /// Query/PacketAcknowledgement RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1020,6 +1314,13 @@ pub struct QueryPacketAcknowledgementRequest {
     /// packet sequence
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
+}
+impl ::prost::Name for QueryPacketAcknowledgementRequest {
+    const NAME: &'static str = "QueryPacketAcknowledgementRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryPacketAcknowledgementResponse defines the client query response for a
 /// packet which also includes a proof and the height from which the
@@ -1036,6 +1337,13 @@ pub struct QueryPacketAcknowledgementResponse {
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
+}
+impl ::prost::Name for QueryPacketAcknowledgementResponse {
+    const NAME: &'static str = "QueryPacketAcknowledgementResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryPacketAcknowledgementsRequest is the request type for the
 /// Query/QueryPacketCommitments RPC method
@@ -1057,6 +1365,13 @@ pub struct QueryPacketAcknowledgementsRequest {
     #[prost(uint64, repeated, tag = "4")]
     pub packet_commitment_sequences: ::prost::alloc::vec::Vec<u64>,
 }
+impl ::prost::Name for QueryPacketAcknowledgementsRequest {
+    const NAME: &'static str = "QueryPacketAcknowledgementsRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryPacketAcknowledgemetsResponse is the request type for the
 /// Query/QueryPacketAcknowledgements RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1073,6 +1388,13 @@ pub struct QueryPacketAcknowledgementsResponse {
     #[prost(message, optional, tag = "3")]
     pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryPacketAcknowledgementsResponse {
+    const NAME: &'static str = "QueryPacketAcknowledgementsResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryUnreceivedPacketsRequest is the request type for the
 /// Query/UnreceivedPackets RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1088,6 +1410,13 @@ pub struct QueryUnreceivedPacketsRequest {
     #[prost(uint64, repeated, tag = "3")]
     pub packet_commitment_sequences: ::prost::alloc::vec::Vec<u64>,
 }
+impl ::prost::Name for QueryUnreceivedPacketsRequest {
+    const NAME: &'static str = "QueryUnreceivedPacketsRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryUnreceivedPacketsResponse is the response type for the
 /// Query/UnreceivedPacketCommitments RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1099,6 +1428,13 @@ pub struct QueryUnreceivedPacketsResponse {
     /// query block height
     #[prost(message, optional, tag = "2")]
     pub height: ::core::option::Option<super::super::client::v1::Height>,
+}
+impl ::prost::Name for QueryUnreceivedPacketsResponse {
+    const NAME: &'static str = "QueryUnreceivedPacketsResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QueryUnreceivedAcks is the request type for the
 /// Query/UnreceivedAcks RPC method
@@ -1115,6 +1451,13 @@ pub struct QueryUnreceivedAcksRequest {
     #[prost(uint64, repeated, tag = "3")]
     pub packet_ack_sequences: ::prost::alloc::vec::Vec<u64>,
 }
+impl ::prost::Name for QueryUnreceivedAcksRequest {
+    const NAME: &'static str = "QueryUnreceivedAcksRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryUnreceivedAcksResponse is the response type for the
 /// Query/UnreceivedAcks RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1127,6 +1470,13 @@ pub struct QueryUnreceivedAcksResponse {
     #[prost(message, optional, tag = "2")]
     pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryUnreceivedAcksResponse {
+    const NAME: &'static str = "QueryUnreceivedAcksResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// QueryNextSequenceReceiveRequest is the request type for the
 /// Query/QueryNextSequenceReceiveRequest RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1138,6 +1488,13 @@ pub struct QueryNextSequenceReceiveRequest {
     /// channel unique identifier
     #[prost(string, tag = "2")]
     pub channel_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for QueryNextSequenceReceiveRequest {
+    const NAME: &'static str = "QueryNextSequenceReceiveRequest";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// QuerySequenceResponse is the request type for the
 /// Query/QueryNextSequenceReceiveResponse RPC method
@@ -1153,6 +1510,13 @@ pub struct QueryNextSequenceReceiveResponse {
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
+}
+impl ::prost::Name for QueryNextSequenceReceiveResponse {
+    const NAME: &'static str = "QueryNextSequenceReceiveResponse";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
@@ -1577,6 +1941,13 @@ pub struct GenesisState {
     #[prost(uint64, tag = "8")]
     pub next_channel_sequence: u64,
 }
+impl ::prost::Name for GenesisState {
+    const NAME: &'static str = "GenesisState";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
+}
 /// PacketSequence defines the genesis type necessary to retrieve and store
 /// next send and receive sequences.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1588,4 +1959,11 @@ pub struct PacketSequence {
     pub channel_id: ::prost::alloc::string::String,
     #[prost(uint64, tag = "3")]
     pub sequence: u64,
+}
+impl ::prost::Name for PacketSequence {
+    const NAME: &'static str = "PacketSequence";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.channel.v1.{}", Self::NAME)
+    }
 }

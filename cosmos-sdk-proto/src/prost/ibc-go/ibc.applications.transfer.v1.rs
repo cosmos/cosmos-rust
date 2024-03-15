@@ -28,10 +28,24 @@ pub struct MsgTransfer {
     #[prost(uint64, tag = "7")]
     pub timeout_timestamp: u64,
 }
+impl ::prost::Name for MsgTransfer {
+    const NAME: &'static str = "MsgTransfer";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// MsgTransferResponse defines the Msg/Transfer response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgTransferResponse {}
+impl ::prost::Name for MsgTransferResponse {
+    const NAME: &'static str = "MsgTransferResponse";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 pub mod msg_client {
@@ -153,6 +167,13 @@ pub struct DenomTrace {
     #[prost(string, tag = "2")]
     pub base_denom: ::prost::alloc::string::String,
 }
+impl ::prost::Name for DenomTrace {
+    const NAME: &'static str = "DenomTrace";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// Params defines the set of IBC transfer parameters.
 /// NOTE: To prevent a single token from being transferred, set the
 /// TransfersEnabled parameter to true and then set the bank module's SendEnabled
@@ -169,6 +190,13 @@ pub struct Params {
     #[prost(bool, tag = "2")]
     pub receive_enabled: bool,
 }
+impl ::prost::Name for Params {
+    const NAME: &'static str = "Params";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// QueryDenomTraceRequest is the request type for the Query/DenomTrace RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -178,6 +206,13 @@ pub struct QueryDenomTraceRequest {
     #[prost(string, tag = "1")]
     pub hash: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryDenomTraceRequest {
+    const NAME: &'static str = "QueryDenomTraceRequest";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// QueryDenomTraceResponse is the response type for the Query/DenomTrace RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -186,6 +221,13 @@ pub struct QueryDenomTraceResponse {
     /// denom_trace returns the requested denomination trace information.
     #[prost(message, optional, tag = "1")]
     pub denom_trace: ::core::option::Option<DenomTrace>,
+}
+impl ::prost::Name for QueryDenomTraceResponse {
+    const NAME: &'static str = "QueryDenomTraceResponse";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
 }
 /// QueryConnectionsRequest is the request type for the Query/DenomTraces RPC
 /// method
@@ -197,6 +239,13 @@ pub struct QueryDenomTracesRequest {
     pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
+}
+impl ::prost::Name for QueryDenomTracesRequest {
+    const NAME: &'static str = "QueryDenomTracesRequest";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
 }
 /// QueryConnectionsResponse is the response type for the Query/DenomTraces RPC
 /// method.
@@ -212,10 +261,24 @@ pub struct QueryDenomTracesResponse {
         super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
     >,
 }
+impl ::prost::Name for QueryDenomTracesResponse {
+    const NAME: &'static str = "QueryDenomTracesResponse";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {}
+impl ::prost::Name for QueryParamsRequest {
+    const NAME: &'static str = "QueryParamsRequest";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// QueryParamsResponse is the response type for the Query/Params RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -223,6 +286,13 @@ pub struct QueryParamsResponse {
     /// params defines the parameters of the module.
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
+}
+impl ::prost::Name for QueryParamsResponse {
+    const NAME: &'static str = "QueryParamsResponse";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
 }
 /// QueryDenomHashRequest is the request type for the Query/DenomHash RPC
 /// method
@@ -233,6 +303,13 @@ pub struct QueryDenomHashRequest {
     #[prost(string, tag = "1")]
     pub trace: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryDenomHashRequest {
+    const NAME: &'static str = "QueryDenomHashRequest";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
+}
 /// QueryDenomHashResponse is the response type for the Query/DenomHash RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -241,6 +318,13 @@ pub struct QueryDenomHashResponse {
     /// hash (in hex format) of the denomination trace information.
     #[prost(string, tag = "1")]
     pub hash: ::prost::alloc::string::String,
+}
+impl ::prost::Name for QueryDenomHashResponse {
+    const NAME: &'static str = "QueryDenomHashResponse";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
 }
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
@@ -432,4 +516,11 @@ pub struct GenesisState {
     pub denom_traces: ::prost::alloc::vec::Vec<DenomTrace>,
     #[prost(message, optional, tag = "3")]
     pub params: ::core::option::Option<Params>,
+}
+impl ::prost::Name for GenesisState {
+    const NAME: &'static str = "GenesisState";
+    const PACKAGE: &'static str = "ibc.applications.transfer.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.transfer.v1.{}", Self::NAME)
+    }
 }

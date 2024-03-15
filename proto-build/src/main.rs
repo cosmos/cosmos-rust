@@ -276,11 +276,16 @@ fn compile_ibc_protos_and_services(out_dir: &Path) {
         format!("{}/proto/ibc/lightclients/solomachine", ibc_dir.display()),
         format!("{}/proto/ibc/lightclients/tendermint", ibc_dir.display()),
     ];
+
     // List available proto files
     let mut protos: Vec<PathBuf> = vec![];
     collect_protos(&proto_paths, &mut protos);
 
     let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
+
+    // Enable generation of `prost::Name` annotations for all types
+    let mut config = prost_build::Config::new();
+    config.enable_type_names();
 
     // Compile all of the proto files, along with the grpc service clients
     info!("Compiling proto definitions and clients for GRPC services!");
@@ -289,7 +294,7 @@ fn compile_ibc_protos_and_services(out_dir: &Path) {
         .build_server(false)
         .out_dir(out_dir)
         .extern_path(".tendermint", "::tendermint_proto")
-        .compile(&protos, &includes)
+        .compile_with_config(config, &protos, &includes)
         .unwrap();
 
     info!("=> Done!");

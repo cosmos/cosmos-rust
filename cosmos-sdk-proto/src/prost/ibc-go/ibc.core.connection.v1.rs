@@ -24,6 +24,13 @@ pub struct ConnectionEnd {
     #[prost(uint64, tag = "5")]
     pub delay_period: u64,
 }
+impl ::prost::Name for ConnectionEnd {
+    const NAME: &'static str = "ConnectionEnd";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// IdentifiedConnection defines a connection with additional connection
 /// identifier field.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -49,6 +56,13 @@ pub struct IdentifiedConnection {
     #[prost(uint64, tag = "6")]
     pub delay_period: u64,
 }
+impl ::prost::Name for IdentifiedConnection {
+    const NAME: &'static str = "IdentifiedConnection";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// Counterparty defines the counterparty chain associated with a connection end.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -65,6 +79,13 @@ pub struct Counterparty {
     #[prost(message, optional, tag = "3")]
     pub prefix: ::core::option::Option<super::super::commitment::v1::MerklePrefix>,
 }
+impl ::prost::Name for Counterparty {
+    const NAME: &'static str = "Counterparty";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// ClientPaths define all the connection paths for a client state.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -72,6 +93,13 @@ pub struct ClientPaths {
     /// list of connection paths
     #[prost(string, repeated, tag = "1")]
     pub paths: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for ClientPaths {
+    const NAME: &'static str = "ClientPaths";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// ConnectionPaths define all the connection paths for a given client state.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -83,6 +111,13 @@ pub struct ConnectionPaths {
     /// list of connection paths
     #[prost(string, repeated, tag = "2")]
     pub paths: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+impl ::prost::Name for ConnectionPaths {
+    const NAME: &'static str = "ConnectionPaths";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// Version defines the versioning scheme used to negotiate the IBC verison in
 /// the connection handshake.
@@ -96,6 +131,13 @@ pub struct Version {
     #[prost(string, repeated, tag = "2")]
     pub features: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for Version {
+    const NAME: &'static str = "Version";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// Params defines the set of Connection parameters.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -105,6 +147,13 @@ pub struct Params {
     /// conditions. A safe choice is 3-5x the expected time per block.
     #[prost(uint64, tag = "1")]
     pub max_expected_time_per_block: u64,
+}
+impl ::prost::Name for Params {
+    const NAME: &'static str = "Params";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// State defines if a connection is in one of the following states:
 /// INIT, TRYOPEN, OPEN or UNINITIALIZED.
@@ -161,11 +210,25 @@ pub struct MsgConnectionOpenInit {
     #[prost(string, tag = "5")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgConnectionOpenInit {
+    const NAME: &'static str = "MsgConnectionOpenInit";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// MsgConnectionOpenInitResponse defines the Msg/ConnectionOpenInit response
 /// type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenInitResponse {}
+impl ::prost::Name for MsgConnectionOpenInitResponse {
+    const NAME: &'static str = "MsgConnectionOpenInitResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// MsgConnectionOpenTry defines a msg sent by a Relayer to try to open a
 /// connection on Chain B.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -202,10 +265,24 @@ pub struct MsgConnectionOpenTry {
     #[prost(string, tag = "12")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgConnectionOpenTry {
+    const NAME: &'static str = "MsgConnectionOpenTry";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// MsgConnectionOpenTryResponse defines the Msg/ConnectionOpenTry response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenTryResponse {}
+impl ::prost::Name for MsgConnectionOpenTryResponse {
+    const NAME: &'static str = "MsgConnectionOpenTryResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// MsgConnectionOpenAck defines a msg sent by a Relayer to Chain A to
 /// acknowledge the change of connection state to TRYOPEN on Chain B.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -236,10 +313,24 @@ pub struct MsgConnectionOpenAck {
     #[prost(string, tag = "10")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgConnectionOpenAck {
+    const NAME: &'static str = "MsgConnectionOpenAck";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// MsgConnectionOpenAckResponse defines the Msg/ConnectionOpenAck response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenAckResponse {}
+impl ::prost::Name for MsgConnectionOpenAckResponse {
+    const NAME: &'static str = "MsgConnectionOpenAckResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// MsgConnectionOpenConfirm defines a msg sent by a Relayer to Chain B to
 /// acknowledge the change of connection state to OPEN on Chain A.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -255,11 +346,25 @@ pub struct MsgConnectionOpenConfirm {
     #[prost(string, tag = "4")]
     pub signer: ::prost::alloc::string::String,
 }
+impl ::prost::Name for MsgConnectionOpenConfirm {
+    const NAME: &'static str = "MsgConnectionOpenConfirm";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// MsgConnectionOpenConfirmResponse defines the Msg/ConnectionOpenConfirm
 /// response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgConnectionOpenConfirmResponse {}
+impl ::prost::Name for MsgConnectionOpenConfirmResponse {
+    const NAME: &'static str = "MsgConnectionOpenConfirmResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 pub mod msg_client {
@@ -450,6 +555,13 @@ pub struct QueryConnectionRequest {
     #[prost(string, tag = "1")]
     pub connection_id: ::prost::alloc::string::String,
 }
+impl ::prost::Name for QueryConnectionRequest {
+    const NAME: &'static str = "QueryConnectionRequest";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// QueryConnectionResponse is the response type for the Query/Connection RPC
 /// method. Besides the connection end, it includes a proof and the height from
 /// which the proof was retrieved.
@@ -466,6 +578,13 @@ pub struct QueryConnectionResponse {
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryConnectionResponse {
+    const NAME: &'static str = "QueryConnectionResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// QueryConnectionsRequest is the request type for the Query/Connections RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -475,6 +594,13 @@ pub struct QueryConnectionsRequest {
     pub pagination: ::core::option::Option<
         super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
     >,
+}
+impl ::prost::Name for QueryConnectionsRequest {
+    const NAME: &'static str = "QueryConnectionsRequest";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// QueryConnectionsResponse is the response type for the Query/Connections RPC
 /// method.
@@ -493,6 +619,13 @@ pub struct QueryConnectionsResponse {
     #[prost(message, optional, tag = "3")]
     pub height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryConnectionsResponse {
+    const NAME: &'static str = "QueryConnectionsResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// QueryClientConnectionsRequest is the request type for the
 /// Query/ClientConnections RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -501,6 +634,13 @@ pub struct QueryClientConnectionsRequest {
     /// client identifier associated with a connection
     #[prost(string, tag = "1")]
     pub client_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for QueryClientConnectionsRequest {
+    const NAME: &'static str = "QueryClientConnectionsRequest";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// QueryClientConnectionsResponse is the response type for the
 /// Query/ClientConnections RPC method
@@ -517,6 +657,13 @@ pub struct QueryClientConnectionsResponse {
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryClientConnectionsResponse {
+    const NAME: &'static str = "QueryClientConnectionsResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// QueryConnectionClientStateRequest is the request type for the
 /// Query/ConnectionClientState RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -525,6 +672,13 @@ pub struct QueryConnectionClientStateRequest {
     /// connection identifier
     #[prost(string, tag = "1")]
     pub connection_id: ::prost::alloc::string::String,
+}
+impl ::prost::Name for QueryConnectionClientStateRequest {
+    const NAME: &'static str = "QueryConnectionClientStateRequest";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// QueryConnectionClientStateResponse is the response type for the
 /// Query/ConnectionClientState RPC method
@@ -542,6 +696,13 @@ pub struct QueryConnectionClientStateResponse {
     #[prost(message, optional, tag = "3")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
 }
+impl ::prost::Name for QueryConnectionClientStateResponse {
+    const NAME: &'static str = "QueryConnectionClientStateResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
+}
 /// QueryConnectionConsensusStateRequest is the request type for the
 /// Query/ConnectionConsensusState RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -554,6 +715,13 @@ pub struct QueryConnectionConsensusStateRequest {
     pub revision_number: u64,
     #[prost(uint64, tag = "3")]
     pub revision_height: u64,
+}
+impl ::prost::Name for QueryConnectionConsensusStateRequest {
+    const NAME: &'static str = "QueryConnectionConsensusStateRequest";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// QueryConnectionConsensusStateResponse is the response type for the
 /// Query/ConnectionConsensusState RPC method
@@ -572,6 +740,13 @@ pub struct QueryConnectionConsensusStateResponse {
     /// height at which the proof was retrieved
     #[prost(message, optional, tag = "4")]
     pub proof_height: ::core::option::Option<super::super::client::v1::Height>,
+}
+impl ::prost::Name for QueryConnectionConsensusStateResponse {
+    const NAME: &'static str = "QueryConnectionConsensusStateResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
@@ -797,4 +972,11 @@ pub struct GenesisState {
     pub next_connection_sequence: u64,
     #[prost(message, optional, tag = "4")]
     pub params: ::core::option::Option<Params>,
+}
+impl ::prost::Name for GenesisState {
+    const NAME: &'static str = "GenesisState";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.core.connection.v1.{}", Self::NAME)
+    }
 }

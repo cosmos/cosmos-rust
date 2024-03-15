@@ -16,7 +16,7 @@ edition = "2021"
 rust-version = "1.72"
 
 [dependencies]
-prost = "0.12"
+prost = "0.12.3"
 prost-types = "0.12"
 tendermint-proto = "0.35"
 

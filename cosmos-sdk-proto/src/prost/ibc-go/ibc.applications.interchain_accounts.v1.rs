@@ -8,6 +8,13 @@ pub struct InterchainAccount {
     #[prost(string, tag = "2")]
     pub account_owner: ::prost::alloc::string::String,
 }
+impl ::prost::Name for InterchainAccount {
+    const NAME: &'static str = "InterchainAccount";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
+}
 /// InterchainAccountPacketData is comprised of a raw transaction, type of transaction and optional memo field.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -19,12 +26,26 @@ pub struct InterchainAccountPacketData {
     #[prost(string, tag = "3")]
     pub memo: ::prost::alloc::string::String,
 }
+impl ::prost::Name for InterchainAccountPacketData {
+    const NAME: &'static str = "InterchainAccountPacketData";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
+}
 /// CosmosTx contains a list of sdk.Msg's. It should be used when sending transactions to an SDK host chain.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CosmosTx {
     #[prost(message, repeated, tag = "1")]
     pub messages: ::prost::alloc::vec::Vec<::prost_types::Any>,
+}
+impl ::prost::Name for CosmosTx {
+    const NAME: &'static str = "CosmosTx";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
 }
 /// Type defines a classification of message issued from a controller chain to its associated interchain accounts
 /// host
@@ -81,6 +102,13 @@ pub struct Metadata {
     #[prost(string, tag = "6")]
     pub tx_type: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Metadata {
+    const NAME: &'static str = "Metadata";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
+}
 /// GenesisState defines the interchain accounts genesis state
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -89,6 +117,13 @@ pub struct GenesisState {
     pub controller_genesis_state: ::core::option::Option<ControllerGenesisState>,
     #[prost(message, optional, tag = "2")]
     pub host_genesis_state: ::core::option::Option<HostGenesisState>,
+}
+impl ::prost::Name for GenesisState {
+    const NAME: &'static str = "GenesisState";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
 }
 /// ControllerGenesisState defines the interchain accounts controller genesis state
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -103,6 +138,13 @@ pub struct ControllerGenesisState {
     #[prost(message, optional, tag = "4")]
     pub params: ::core::option::Option<super::controller::v1::Params>,
 }
+impl ::prost::Name for ControllerGenesisState {
+    const NAME: &'static str = "ControllerGenesisState";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
+}
 /// HostGenesisState defines the interchain accounts host genesis state
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -116,6 +158,13 @@ pub struct HostGenesisState {
     #[prost(message, optional, tag = "4")]
     pub params: ::core::option::Option<super::host::v1::Params>,
 }
+impl ::prost::Name for HostGenesisState {
+    const NAME: &'static str = "HostGenesisState";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
+}
 /// ActiveChannel contains a connection ID, port ID and associated active channel ID
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -127,6 +176,13 @@ pub struct ActiveChannel {
     #[prost(string, tag = "3")]
     pub channel_id: ::prost::alloc::string::String,
 }
+impl ::prost::Name for ActiveChannel {
+    const NAME: &'static str = "ActiveChannel";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
+}
 /// RegisteredInterchainAccount contains a connection ID, port ID and associated interchain account address
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -137,4 +193,11 @@ pub struct RegisteredInterchainAccount {
     pub port_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub account_address: ::prost::alloc::string::String,
+}
+impl ::prost::Name for RegisteredInterchainAccount {
+    const NAME: &'static str = "RegisteredInterchainAccount";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.applications.interchain_accounts.v1.{}", Self::NAME)
+    }
 }
