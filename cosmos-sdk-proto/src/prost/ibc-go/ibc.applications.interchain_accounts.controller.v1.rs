@@ -7,10 +7,30 @@ pub struct Params {
     #[prost(bool, tag = "1")]
     pub controller_enabled: bool,
 }
+impl ::prost::Name for Params {
+    const NAME: &'static str = "Params";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.controller.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!(
+            "ibc.applications.interchain_accounts.controller.v1.{}",
+            Self::NAME
+        )
+    }
+}
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryParamsRequest {}
+impl ::prost::Name for QueryParamsRequest {
+    const NAME: &'static str = "QueryParamsRequest";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.controller.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!(
+            "ibc.applications.interchain_accounts.controller.v1.{}",
+            Self::NAME
+        )
+    }
+}
 /// QueryParamsResponse is the response type for the Query/Params RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -18,6 +38,16 @@ pub struct QueryParamsResponse {
     /// params defines the parameters of the module.
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
+}
+impl ::prost::Name for QueryParamsResponse {
+    const NAME: &'static str = "QueryParamsResponse";
+    const PACKAGE: &'static str = "ibc.applications.interchain_accounts.controller.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!(
+            "ibc.applications.interchain_accounts.controller.v1.{}",
+            Self::NAME
+        )
+    }
 }
 /// Generated client implementations.
 #[cfg(feature = "grpc")]

@@ -24,6 +24,13 @@ pub struct Plan {
     #[prost(string, tag = "4")]
     pub info: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Plan {
+    const NAME: &'static str = "Plan";
+    const PACKAGE: &'static str = "cosmos.upgrade.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.upgrade.v1beta1.{}", Self::NAME)
+    }
+}
 /// SoftwareUpgradeProposal is a gov Content type for initiating a software
 /// upgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -36,6 +43,13 @@ pub struct SoftwareUpgradeProposal {
     #[prost(message, optional, tag = "3")]
     pub plan: ::core::option::Option<Plan>,
 }
+impl ::prost::Name for SoftwareUpgradeProposal {
+    const NAME: &'static str = "SoftwareUpgradeProposal";
+    const PACKAGE: &'static str = "cosmos.upgrade.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.upgrade.v1beta1.{}", Self::NAME)
+    }
+}
 /// CancelSoftwareUpgradeProposal is a gov Content type for cancelling a software
 /// upgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -45,4 +59,11 @@ pub struct CancelSoftwareUpgradeProposal {
     pub title: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub description: ::prost::alloc::string::String,
+}
+impl ::prost::Name for CancelSoftwareUpgradeProposal {
+    const NAME: &'static str = "CancelSoftwareUpgradeProposal";
+    const PACKAGE: &'static str = "cosmos.upgrade.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.upgrade.v1beta1.{}", Self::NAME)
+    }
 }

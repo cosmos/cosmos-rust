@@ -10,3 +10,10 @@ pub struct ClientState {
     #[prost(message, optional, tag = "2")]
     pub height: ::core::option::Option<super::super::super::core::client::v1::Height>,
 }
+impl ::prost::Name for ClientState {
+    const NAME: &'static str = "ClientState";
+    const PACKAGE: &'static str = "ibc.lightclients.localhost.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("ibc.lightclients.localhost.v1.{}", Self::NAME)
+    }
+}
