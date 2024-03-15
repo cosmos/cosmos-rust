@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.20.0"
+version = "0.21.0-pre"
 authors = [
     "Justin Kilpatrick <justin@althea.net>",
     "Greg Szabo <greg@informal.systems>",
@@ -18,7 +18,7 @@ rust-version = "1.72"
 [dependencies]
 prost = "0.12"
 prost-types = "0.12"
-tendermint-proto = "0.34"
+tendermint-proto = "0.35"
 
 # Optional dependencies
 tonic = { version = "0.11", optional = true, default-features = false, features = ["codegen", "prost"] }
