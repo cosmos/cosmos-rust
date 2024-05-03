@@ -24,7 +24,7 @@ impl FromStr for Denom {
     fn from_str(s: &str) -> Result<Self> {
         // TODO(tarcieri): ensure this is the proper validation for a denom name
         if s.chars()
-            .all(|c| matches!(c, 'A'..='Z' | 'a'..='z' | '0'..='9' | '/'))
+            .all(|c| matches!(c, 'A'..='Z' | 'a'..='z' | '0'..='9' | '/' | '.'))
         {
             Ok(Denom(s.to_owned()))
         } else {
