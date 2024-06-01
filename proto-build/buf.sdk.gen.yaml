@@ -4,6 +4,10 @@ plugins:
     out: .
     opt:
       - extern_path=.tendermint=::tendermint_proto::v0_34
+  - plugin: buf.build/community/neoeinstein-prost-serde:v0.2.3
+    out: .
+    opt:
+      - extern_path=.tendermint=::tendermint_proto::v0_34
   - plugin: buf.build/community/neoeinstein-tonic:v0.3.0
     out: .
     opt:

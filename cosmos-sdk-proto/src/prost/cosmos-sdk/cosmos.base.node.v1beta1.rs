@@ -8,5 +8,6 @@ pub struct ConfigResponse {
     #[prost(string, tag = "1")]
     pub minimum_gas_price: ::prost::alloc::string::String,
 }
+include!("cosmos.base.node.v1beta1.serde.rs");
 include!("cosmos.base.node.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

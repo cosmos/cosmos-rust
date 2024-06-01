@@ -168,4 +168,5 @@ pub struct SearchTxsResult {
     #[prost(message, repeated, tag = "6")]
     pub txs: ::prost::alloc::vec::Vec<TxResponse>,
 }
+include!("cosmos.base.abci.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

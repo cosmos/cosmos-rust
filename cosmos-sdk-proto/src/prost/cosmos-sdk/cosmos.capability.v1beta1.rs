@@ -43,4 +43,5 @@ pub struct GenesisState {
     #[prost(message, repeated, tag = "2")]
     pub owners: ::prost::alloc::vec::Vec<GenesisOwners>,
 }
+include!("cosmos.capability.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

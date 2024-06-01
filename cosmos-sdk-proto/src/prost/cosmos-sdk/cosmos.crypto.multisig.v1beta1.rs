@@ -18,4 +18,5 @@ pub struct CompactBitArray {
     #[prost(bytes = "vec", tag = "2")]
     pub elems: ::prost::alloc::vec::Vec<u8>,
 }
+include!("cosmos.crypto.multisig.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

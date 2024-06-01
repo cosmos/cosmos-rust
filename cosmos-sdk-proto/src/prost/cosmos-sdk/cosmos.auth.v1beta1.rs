@@ -181,5 +181,6 @@ pub struct QueryAccountAddressByIdResponse {
     #[prost(string, tag = "1")]
     pub account_address: ::prost::alloc::string::String,
 }
+include!("cosmos.auth.v1beta1.serde.rs");
 include!("cosmos.auth.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

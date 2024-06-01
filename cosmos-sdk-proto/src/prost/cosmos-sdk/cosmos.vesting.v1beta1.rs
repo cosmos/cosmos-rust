@@ -122,5 +122,6 @@ pub struct MsgCreatePeriodicVestingAccount {
 /// Since: cosmos-sdk 0.46
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePeriodicVestingAccountResponse {}
+include!("cosmos.vesting.v1beta1.serde.rs");
 include!("cosmos.vesting.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

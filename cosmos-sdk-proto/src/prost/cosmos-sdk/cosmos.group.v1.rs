@@ -1008,5 +1008,6 @@ impl Exec {
         }
     }
 }
+include!("cosmos.group.v1.serde.rs");
 include!("cosmos.group.v1.tonic.rs");
 // @@protoc_insertion_point(module)

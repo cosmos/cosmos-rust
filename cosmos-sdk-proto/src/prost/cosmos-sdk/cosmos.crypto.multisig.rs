@@ -9,4 +9,5 @@ pub struct LegacyAminoPubKey {
     #[prost(message, repeated, tag = "2")]
     pub public_keys: ::prost::alloc::vec::Vec<::prost_types::Any>,
 }
+include!("cosmos.crypto.multisig.serde.rs");
 // @@protoc_insertion_point(module)

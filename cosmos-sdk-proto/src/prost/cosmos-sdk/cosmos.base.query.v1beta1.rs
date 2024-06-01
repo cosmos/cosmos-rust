@@ -53,4 +53,5 @@ pub struct PageResponse {
     #[prost(uint64, tag = "2")]
     pub total: u64,
 }
+include!("cosmos.base.query.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

@@ -20,5 +20,6 @@ pub struct MsgVerifyInvariant {
 /// MsgVerifyInvariantResponse defines the Msg/VerifyInvariant response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVerifyInvariantResponse {}
+include!("cosmos.crisis.v1beta1.serde.rs");
 include!("cosmos.crisis.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

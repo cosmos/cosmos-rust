@@ -154,5 +154,6 @@ pub struct MsgRevokeAllowance {
 /// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevokeAllowanceResponse {}
+include!("cosmos.feegrant.v1beta1.serde.rs");
 include!("cosmos.feegrant.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

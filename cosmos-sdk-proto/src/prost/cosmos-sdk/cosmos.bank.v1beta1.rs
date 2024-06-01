@@ -338,5 +338,6 @@ pub struct MsgMultiSend {
 /// MsgMultiSendResponse defines the Msg/MultiSend response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgMultiSendResponse {}
+include!("cosmos.bank.v1beta1.serde.rs");
 include!("cosmos.bank.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

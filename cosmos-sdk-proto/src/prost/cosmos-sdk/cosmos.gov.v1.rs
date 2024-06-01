@@ -422,5 +422,6 @@ pub struct MsgDeposit {
 /// MsgDepositResponse defines the Msg/Deposit response type.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDepositResponse {}
+include!("cosmos.gov.v1.serde.rs");
 include!("cosmos.gov.v1.tonic.rs");
 // @@protoc_insertion_point(module)

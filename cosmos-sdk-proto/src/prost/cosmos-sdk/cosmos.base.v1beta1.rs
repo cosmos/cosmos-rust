@@ -33,4 +33,5 @@ pub struct DecProto {
     #[prost(string, tag = "1")]
     pub dec: ::prost::alloc::string::String,
 }
+include!("cosmos.base.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

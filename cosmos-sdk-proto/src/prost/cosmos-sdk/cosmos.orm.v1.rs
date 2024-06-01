@@ -87,4 +87,5 @@ pub struct SingletonDescriptor {
     #[prost(uint32, tag = "1")]
     pub id: u32,
 }
+include!("cosmos.orm.v1.serde.rs");
 // @@protoc_insertion_point(module)
