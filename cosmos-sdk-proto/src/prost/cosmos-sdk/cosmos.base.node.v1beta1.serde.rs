@@ -58,12 +58,12 @@ impl<'de> serde::Deserialize<'de> for ConfigRequest {
                 formatter.write_str("struct cosmos.base.node.v1beta1.ConfigRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<ConfigRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ConfigRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(ConfigRequest {})
             }
@@ -147,18 +147,18 @@ impl<'de> serde::Deserialize<'de> for ConfigResponse {
                 formatter.write_str("struct cosmos.base.node.v1beta1.ConfigResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<ConfigResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ConfigResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut minimum_gas_price__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::MinimumGasPrice => {
                             if minimum_gas_price__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("minimumGasPrice"));
                             }
-                            minimum_gas_price__ = Some(map.next_value()?);
+                            minimum_gas_price__ = Some(map_.next_value()?);
                         }
                     }
                 }

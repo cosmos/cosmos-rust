@@ -1,5 +1,6 @@
 // @generated
 /// ModuleSchemaDescriptor describe's a module's ORM schema.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleSchemaDescriptor {
     #[prost(message, repeated, tag = "1")]
@@ -12,6 +13,7 @@ pub struct ModuleSchemaDescriptor {
 /// Nested message and enum types in `ModuleSchemaDescriptor`.
 pub mod module_schema_descriptor {
     /// FileEntry describes an ORM file used in a module.
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct FileEntry {
         /// id is a prefix that will be varint encoded and prepended to all the
@@ -76,6 +78,17 @@ impl StorageType {
             StorageType::Transient => "STORAGE_TYPE_TRANSIENT",
             StorageType::Index => "STORAGE_TYPE_INDEX",
             StorageType::Commitment => "STORAGE_TYPE_COMMITMENT",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "STORAGE_TYPE_DEFAULT_UNSPECIFIED" => Some(Self::DefaultUnspecified),
+            "STORAGE_TYPE_MEMORY" => Some(Self::Memory),
+            "STORAGE_TYPE_TRANSIENT" => Some(Self::Transient),
+            "STORAGE_TYPE_INDEX" => Some(Self::Index),
+            "STORAGE_TYPE_COMMITMENT" => Some(Self::Commitment),
+            _ => None,
         }
     }
 }

@@ -19,6 +19,7 @@ impl serde::Serialize for ModuleSchemaDescriptor {
             struct_ser.serialize_field("schemaFile", &self.schema_file)?;
         }
         if !self.prefix.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "prefix",
                 pbjson::private::base64::encode(&self.prefix).as_str(),
@@ -82,27 +83,27 @@ impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ModuleSchemaDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut schema_file__ = None;
                 let mut prefix__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::SchemaFile => {
                             if schema_file__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("schemaFile"));
                             }
-                            schema_file__ = Some(map.next_value()?);
+                            schema_file__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Prefix => {
                             if prefix__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("prefix"));
                             }
                             prefix__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -147,7 +148,7 @@ impl serde::Serialize for module_schema_descriptor::FileEntry {
             struct_ser.serialize_field("protoFileName", &self.proto_file_name)?;
         }
         if self.storage_type != 0 {
-            let v = StorageType::from_i32(self.storage_type).ok_or_else(|| {
+            let v = StorageType::try_from(self.storage_type).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.storage_type))
             })?;
             struct_ser.serialize_field("storageType", &v)?;
@@ -220,7 +221,7 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<module_schema_descriptor::FileEntry, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -228,14 +229,14 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
                 let mut id__ = None;
                 let mut proto_file_name__ = None;
                 let mut storage_type__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
                             id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -243,13 +244,13 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
                             if proto_file_name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("protoFileName"));
                             }
-                            proto_file_name__ = Some(map.next_value()?);
+                            proto_file_name__ = Some(map_.next_value()?);
                         }
                         GeneratedField::StorageType => {
                             if storage_type__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("storageType"));
                             }
-                            storage_type__ = Some(map.next_value::<StorageType>()? as i32);
+                            storage_type__ = Some(map_.next_value::<StorageType>()? as i32);
                         }
                     }
                 }
@@ -310,10 +311,9 @@ impl<'de> serde::Deserialize<'de> for StorageType {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(StorageType::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
                     })
@@ -323,10 +323,9 @@ impl<'de> serde::Deserialize<'de> for StorageType {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(StorageType::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
                     })

@@ -125,7 +125,7 @@ impl<'de> serde::Deserialize<'de> for Class {
                 formatter.write_str("struct cosmos.nft.v1beta1.Class")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Class, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Class, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -136,49 +136,49 @@ impl<'de> serde::Deserialize<'de> for Class {
                 let mut uri__ = None;
                 let mut uri_hash__ = None;
                 let mut data__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Name => {
                             if name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("name"));
                             }
-                            name__ = Some(map.next_value()?);
+                            name__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Symbol => {
                             if symbol__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("symbol"));
                             }
-                            symbol__ = Some(map.next_value()?);
+                            symbol__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Description => {
                             if description__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("description"));
                             }
-                            description__ = Some(map.next_value()?);
+                            description__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Uri => {
                             if uri__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("uri"));
                             }
-                            uri__ = Some(map.next_value()?);
+                            uri__ = Some(map_.next_value()?);
                         }
                         GeneratedField::UriHash => {
                             if uri_hash__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("uriHash"));
                             }
-                            uri_hash__ = Some(map.next_value()?);
+                            uri_hash__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Data => {
                             if data__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("data"));
                             }
-                            data__ = map.next_value()?;
+                            data__ = map_.next_value()?;
                         }
                     }
                 }
@@ -273,25 +273,25 @@ impl<'de> serde::Deserialize<'de> for Entry {
                 formatter.write_str("struct cosmos.nft.v1beta1.Entry")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Entry, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Entry, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut owner__ = None;
                 let mut nfts__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Owner => {
                             if owner__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owner"));
                             }
-                            owner__ = Some(map.next_value()?);
+                            owner__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Nfts => {
                             if nfts__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("nfts"));
                             }
-                            nfts__ = Some(map.next_value()?);
+                            nfts__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -389,32 +389,32 @@ impl<'de> serde::Deserialize<'de> for EventBurn {
                 formatter.write_str("struct cosmos.nft.v1beta1.EventBurn")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventBurn, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventBurn, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
                 let mut id__ = None;
                 let mut owner__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Owner => {
                             if owner__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owner"));
                             }
-                            owner__ = Some(map.next_value()?);
+                            owner__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -513,32 +513,32 @@ impl<'de> serde::Deserialize<'de> for EventMint {
                 formatter.write_str("struct cosmos.nft.v1beta1.EventMint")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventMint, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventMint, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
                 let mut id__ = None;
                 let mut owner__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Owner => {
                             if owner__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owner"));
                             }
-                            owner__ = Some(map.next_value()?);
+                            owner__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -645,7 +645,7 @@ impl<'de> serde::Deserialize<'de> for EventSend {
                 formatter.write_str("struct cosmos.nft.v1beta1.EventSend")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventSend, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventSend, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -653,31 +653,31 @@ impl<'de> serde::Deserialize<'de> for EventSend {
                 let mut id__ = None;
                 let mut sender__ = None;
                 let mut receiver__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Sender => {
                             if sender__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("sender"));
                             }
-                            sender__ = Some(map.next_value()?);
+                            sender__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Receiver => {
                             if receiver__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("receiver"));
                             }
-                            receiver__ = Some(map.next_value()?);
+                            receiver__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -769,25 +769,25 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.nft.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut classes__ = None;
                 let mut entries__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Classes => {
                             if classes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classes"));
                             }
-                            classes__ = Some(map.next_value()?);
+                            classes__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Entries => {
                             if entries__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("entries"));
                             }
-                            entries__ = Some(map.next_value()?);
+                            entries__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -893,7 +893,7 @@ impl<'de> serde::Deserialize<'de> for MsgSend {
                 formatter.write_str("struct cosmos.nft.v1beta1.MsgSend")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgSend, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSend, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -901,31 +901,31 @@ impl<'de> serde::Deserialize<'de> for MsgSend {
                 let mut id__ = None;
                 let mut sender__ = None;
                 let mut receiver__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Sender => {
                             if sender__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("sender"));
                             }
-                            sender__ = Some(map.next_value()?);
+                            sender__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Receiver => {
                             if receiver__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("receiver"));
                             }
-                            receiver__ = Some(map.next_value()?);
+                            receiver__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -998,12 +998,12 @@ impl<'de> serde::Deserialize<'de> for MsgSendResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.MsgSendResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgSendResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSendResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgSendResponse {})
             }
@@ -1118,7 +1118,7 @@ impl<'de> serde::Deserialize<'de> for Nft {
                 formatter.write_str("struct cosmos.nft.v1beta1.NFT")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Nft, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Nft, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1127,37 +1127,37 @@ impl<'de> serde::Deserialize<'de> for Nft {
                 let mut uri__ = None;
                 let mut uri_hash__ = None;
                 let mut data__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Uri => {
                             if uri__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("uri"));
                             }
-                            uri__ = Some(map.next_value()?);
+                            uri__ = Some(map_.next_value()?);
                         }
                         GeneratedField::UriHash => {
                             if uri_hash__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("uriHash"));
                             }
-                            uri_hash__ = Some(map.next_value()?);
+                            uri_hash__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Data => {
                             if data__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("data"));
                             }
-                            data__ = map.next_value()?;
+                            data__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1251,25 +1251,25 @@ impl<'de> serde::Deserialize<'de> for QueryBalanceRequest {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryBalanceRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryBalanceRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryBalanceRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
                 let mut owner__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Owner => {
                             if owner__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owner"));
                             }
-                            owner__ = Some(map.next_value()?);
+                            owner__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1300,6 +1300,7 @@ impl serde::Serialize for QueryBalanceResponse {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.nft.v1beta1.QueryBalanceResponse", len)?;
         if self.amount != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("amount", ToString::to_string(&self.amount).as_str())?;
         }
         struct_ser.end()
@@ -1356,19 +1357,22 @@ impl<'de> serde::Deserialize<'de> for QueryBalanceResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryBalanceResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryBalanceResponse, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryBalanceResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut amount__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
                             amount__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1456,18 +1460,18 @@ impl<'de> serde::Deserialize<'de> for QueryClassRequest {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryClassRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryClassRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryClassRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1553,18 +1557,18 @@ impl<'de> serde::Deserialize<'de> for QueryClassResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryClassResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryClassResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryClassResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Class => {
                             if class__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("class"));
                             }
-                            class__ = map.next_value()?;
+                            class__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1648,18 +1652,18 @@ impl<'de> serde::Deserialize<'de> for QueryClassesRequest {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryClassesRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryClassesRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryClassesRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1753,25 +1757,28 @@ impl<'de> serde::Deserialize<'de> for QueryClassesResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryClassesResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryClassesResponse, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryClassesResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut classes__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Classes => {
                             if classes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classes"));
                             }
-                            classes__ = Some(map.next_value()?);
+                            classes__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1866,25 +1873,25 @@ impl<'de> serde::Deserialize<'de> for QueryNftRequest {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryNFTRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryNftRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryNftRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
                 let mut id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1971,18 +1978,18 @@ impl<'de> serde::Deserialize<'de> for QueryNftResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryNFTResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryNftResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryNftResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut nft__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Nft => {
                             if nft__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("nft"));
                             }
-                            nft__ = map.next_value()?;
+                            nft__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2082,32 +2089,32 @@ impl<'de> serde::Deserialize<'de> for QueryNfTsRequest {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryNFTsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryNfTsRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryNfTsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
                 let mut owner__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Owner => {
                             if owner__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owner"));
                             }
-                            owner__ = Some(map.next_value()?);
+                            owner__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2203,25 +2210,25 @@ impl<'de> serde::Deserialize<'de> for QueryNfTsResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryNFTsResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryNfTsResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryNfTsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut nfts__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Nfts => {
                             if nfts__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("nfts"));
                             }
-                            nfts__ = Some(map.next_value()?);
+                            nfts__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2316,25 +2323,25 @@ impl<'de> serde::Deserialize<'de> for QueryOwnerRequest {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryOwnerRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryOwnerRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryOwnerRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
                 let mut id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
-                            id__ = Some(map.next_value()?);
+                            id__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2421,18 +2428,18 @@ impl<'de> serde::Deserialize<'de> for QueryOwnerResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.QueryOwnerResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryOwnerResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryOwnerResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut owner__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Owner => {
                             if owner__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owner"));
                             }
-                            owner__ = Some(map.next_value()?);
+                            owner__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2518,18 +2525,18 @@ impl<'de> serde::Deserialize<'de> for QuerySupplyRequest {
                 formatter.write_str("struct cosmos.nft.v1beta1.QuerySupplyRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QuerySupplyRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QuerySupplyRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut class_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClassId => {
                             if class_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("classId"));
                             }
-                            class_id__ = Some(map.next_value()?);
+                            class_id__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2559,6 +2566,7 @@ impl serde::Serialize for QuerySupplyResponse {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.nft.v1beta1.QuerySupplyResponse", len)?;
         if self.amount != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("amount", ToString::to_string(&self.amount).as_str())?;
         }
         struct_ser.end()
@@ -2615,19 +2623,19 @@ impl<'de> serde::Deserialize<'de> for QuerySupplyResponse {
                 formatter.write_str("struct cosmos.nft.v1beta1.QuerySupplyResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QuerySupplyResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QuerySupplyResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut amount__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
                             amount__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }

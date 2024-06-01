@@ -13,6 +13,7 @@ impl serde::Serialize for AddressBytesToStringRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.auth.v1beta1.AddressBytesToStringRequest", len)?;
         if !self.address_bytes.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "addressBytes",
                 pbjson::private::base64::encode(&self.address_bytes).as_str(),
@@ -74,20 +75,20 @@ impl<'de> serde::Deserialize<'de> for AddressBytesToStringRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<AddressBytesToStringRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address_bytes__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AddressBytes => {
                             if address_bytes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("addressBytes"));
                             }
                             address_bytes__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -177,19 +178,19 @@ impl<'de> serde::Deserialize<'de> for AddressBytesToStringResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<AddressBytesToStringResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address_string__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AddressString => {
                             if address_string__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("addressString"));
                             }
-                            address_string__ = Some(map.next_value()?);
+                            address_string__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -277,19 +278,19 @@ impl<'de> serde::Deserialize<'de> for AddressStringToBytesRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<AddressStringToBytesRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address_string__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AddressString => {
                             if address_string__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("addressString"));
                             }
-                            address_string__ = Some(map.next_value()?);
+                            address_string__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -319,6 +320,7 @@ impl serde::Serialize for AddressStringToBytesResponse {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.auth.v1beta1.AddressStringToBytesResponse", len)?;
         if !self.address_bytes.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "addressBytes",
                 pbjson::private::base64::encode(&self.address_bytes).as_str(),
@@ -380,20 +382,20 @@ impl<'de> serde::Deserialize<'de> for AddressStringToBytesResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<AddressStringToBytesResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address_bytes__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AddressBytes => {
                             if address_bytes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("addressBytes"));
                             }
                             address_bytes__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -439,12 +441,14 @@ impl serde::Serialize for BaseAccount {
             struct_ser.serialize_field("pubKey", v)?;
         }
         if self.account_number != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "accountNumber",
                 ToString::to_string(&self.account_number).as_str(),
             )?;
         }
         if self.sequence != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("sequence", ToString::to_string(&self.sequence).as_str())?;
         }
         struct_ser.end()
@@ -514,7 +518,7 @@ impl<'de> serde::Deserialize<'de> for BaseAccount {
                 formatter.write_str("struct cosmos.auth.v1beta1.BaseAccount")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<BaseAccount, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<BaseAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -522,26 +526,26 @@ impl<'de> serde::Deserialize<'de> for BaseAccount {
                 let mut pub_key__ = None;
                 let mut account_number__ = None;
                 let mut sequence__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::PubKey => {
                             if pub_key__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pubKey"));
                             }
-                            pub_key__ = map.next_value()?;
+                            pub_key__ = map_.next_value()?;
                         }
                         GeneratedField::AccountNumber => {
                             if account_number__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("accountNumber"));
                             }
                             account_number__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -550,7 +554,7 @@ impl<'de> serde::Deserialize<'de> for BaseAccount {
                                 return Err(serde::de::Error::duplicate_field("sequence"));
                             }
                             sequence__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -626,12 +630,12 @@ impl<'de> serde::Deserialize<'de> for Bech32PrefixRequest {
                 formatter.write_str("struct cosmos.auth.v1beta1.Bech32PrefixRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Bech32PrefixRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Bech32PrefixRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(Bech32PrefixRequest {})
             }
@@ -713,18 +717,21 @@ impl<'de> serde::Deserialize<'de> for Bech32PrefixResponse {
                 formatter.write_str("struct cosmos.auth.v1beta1.Bech32PrefixResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Bech32PrefixResponse, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<Bech32PrefixResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut bech32_prefix__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Bech32Prefix => {
                             if bech32_prefix__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("bech32Prefix"));
                             }
-                            bech32_prefix__ = Some(map.next_value()?);
+                            bech32_prefix__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -818,25 +825,25 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.auth.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut params__ = None;
                 let mut accounts__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                         GeneratedField::Accounts => {
                             if accounts__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("accounts"));
                             }
-                            accounts__ = Some(map.next_value()?);
+                            accounts__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -939,32 +946,32 @@ impl<'de> serde::Deserialize<'de> for ModuleAccount {
                 formatter.write_str("struct cosmos.auth.v1beta1.ModuleAccount")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<ModuleAccount, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ModuleAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut base_account__ = None;
                 let mut name__ = None;
                 let mut permissions__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::BaseAccount => {
                             if base_account__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("baseAccount"));
                             }
-                            base_account__ = map.next_value()?;
+                            base_account__ = map_.next_value()?;
                         }
                         GeneratedField::Name => {
                             if name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("name"));
                             }
-                            name__ = Some(map.next_value()?);
+                            name__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Permissions => {
                             if permissions__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("permissions"));
                             }
-                            permissions__ = Some(map.next_value()?);
+                            permissions__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1007,30 +1014,35 @@ impl serde::Serialize for Params {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.auth.v1beta1.Params", len)?;
         if self.max_memo_characters != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "maxMemoCharacters",
                 ToString::to_string(&self.max_memo_characters).as_str(),
             )?;
         }
         if self.tx_sig_limit != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "txSigLimit",
                 ToString::to_string(&self.tx_sig_limit).as_str(),
             )?;
         }
         if self.tx_size_cost_per_byte != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "txSizeCostPerByte",
                 ToString::to_string(&self.tx_size_cost_per_byte).as_str(),
             )?;
         }
         if self.sig_verify_cost_ed25519 != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "sigVerifyCostEd25519",
                 ToString::to_string(&self.sig_verify_cost_ed25519).as_str(),
             )?;
         }
         if self.sig_verify_cost_secp256k1 != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "sigVerifyCostSecp256k1",
                 ToString::to_string(&self.sig_verify_cost_secp256k1).as_str(),
@@ -1117,7 +1129,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                 formatter.write_str("struct cosmos.auth.v1beta1.Params")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Params, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Params, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1126,14 +1138,14 @@ impl<'de> serde::Deserialize<'de> for Params {
                 let mut tx_size_cost_per_byte__ = None;
                 let mut sig_verify_cost_ed25519__ = None;
                 let mut sig_verify_cost_secp256k1__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::MaxMemoCharacters => {
                             if max_memo_characters__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("maxMemoCharacters"));
                             }
                             max_memo_characters__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1142,7 +1154,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                 return Err(serde::de::Error::duplicate_field("txSigLimit"));
                             }
                             tx_sig_limit__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1151,7 +1163,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                 return Err(serde::de::Error::duplicate_field("txSizeCostPerByte"));
                             }
                             tx_size_cost_per_byte__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1162,7 +1174,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                 ));
                             }
                             sig_verify_cost_ed25519__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1173,7 +1185,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                 ));
                             }
                             sig_verify_cost_secp256k1__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1205,6 +1217,7 @@ impl serde::Serialize for QueryAccountAddressByIdRequest {
         let mut struct_ser = serializer
             .serialize_struct("cosmos.auth.v1beta1.QueryAccountAddressByIDRequest", len)?;
         if self.id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("id", ToString::to_string(&self.id).as_str())?;
         }
         struct_ser.end()
@@ -1263,20 +1276,20 @@ impl<'de> serde::Deserialize<'de> for QueryAccountAddressByIdRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAccountAddressByIdRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
                             id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1368,19 +1381,19 @@ impl<'de> serde::Deserialize<'de> for QueryAccountAddressByIdResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAccountAddressByIdResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut account_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AccountAddress => {
                             if account_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("accountAddress"));
                             }
-                            account_address__ = Some(map.next_value()?);
+                            account_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1466,18 +1479,18 @@ impl<'de> serde::Deserialize<'de> for QueryAccountRequest {
                 formatter.write_str("struct cosmos.auth.v1beta1.QueryAccountRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryAccountRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryAccountRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1563,18 +1576,21 @@ impl<'de> serde::Deserialize<'de> for QueryAccountResponse {
                 formatter.write_str("struct cosmos.auth.v1beta1.QueryAccountResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryAccountResponse, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryAccountResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut account__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Account => {
                             if account__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("account"));
                             }
-                            account__ = map.next_value()?;
+                            account__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1658,18 +1674,21 @@ impl<'de> serde::Deserialize<'de> for QueryAccountsRequest {
                 formatter.write_str("struct cosmos.auth.v1beta1.QueryAccountsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryAccountsRequest, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryAccountsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1765,26 +1784,26 @@ impl<'de> serde::Deserialize<'de> for QueryAccountsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAccountsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut accounts__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Accounts => {
                             if accounts__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("accounts"));
                             }
-                            accounts__ = Some(map.next_value()?);
+                            accounts__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1873,19 +1892,19 @@ impl<'de> serde::Deserialize<'de> for QueryModuleAccountByNameRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryModuleAccountByNameRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut name__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Name => {
                             if name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("name"));
                             }
-                            name__ = Some(map.next_value()?);
+                            name__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1973,19 +1992,19 @@ impl<'de> serde::Deserialize<'de> for QueryModuleAccountByNameResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryModuleAccountByNameResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut account__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Account => {
                             if account__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("account"));
                             }
-                            account__ = map.next_value()?;
+                            account__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2060,13 +2079,13 @@ impl<'de> serde::Deserialize<'de> for QueryModuleAccountsRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryModuleAccountsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryModuleAccountsRequest {})
             }
@@ -2150,19 +2169,19 @@ impl<'de> serde::Deserialize<'de> for QueryModuleAccountsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryModuleAccountsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut accounts__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Accounts => {
                             if accounts__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("accounts"));
                             }
-                            accounts__ = Some(map.next_value()?);
+                            accounts__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2237,12 +2256,12 @@ impl<'de> serde::Deserialize<'de> for QueryParamsRequest {
                 formatter.write_str("struct cosmos.auth.v1beta1.QueryParamsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryParamsRequest {})
             }
@@ -2324,18 +2343,18 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
                 formatter.write_str("struct cosmos.auth.v1beta1.QueryParamsResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut params__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                     }
                 }

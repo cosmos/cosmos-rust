@@ -1,5 +1,6 @@
 // @generated
 /// Snapshot contains Tendermint state sync snapshot info.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Snapshot {
     #[prost(uint64, tag = "1")]
@@ -14,6 +15,7 @@ pub struct Snapshot {
     pub metadata: ::core::option::Option<Metadata>,
 }
 /// Metadata contains SDK-specific snapshot metadata.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Metadata {
     /// SHA-256 chunk hashes
@@ -23,6 +25,7 @@ pub struct Metadata {
 /// SnapshotItem is an item contained in a rootmulti.Store snapshot.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotItem {
     /// item is the specific type of snapshot item.
@@ -32,6 +35,7 @@ pub struct SnapshotItem {
 /// Nested message and enum types in `SnapshotItem`.
 pub mod snapshot_item {
     /// item is the specific type of snapshot item.
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Item {
         #[prost(message, tag = "1")]
@@ -51,6 +55,7 @@ pub mod snapshot_item {
 /// SnapshotStoreItem contains metadata about a snapshotted store.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotStoreItem {
     #[prost(string, tag = "1")]
@@ -59,6 +64,7 @@ pub struct SnapshotStoreItem {
 /// SnapshotIAVLItem is an exported IAVL node.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotIavlItem {
     #[prost(bytes = "vec", tag = "1")]
@@ -75,6 +81,7 @@ pub struct SnapshotIavlItem {
 /// SnapshotExtensionMeta contains metadata about an external snapshotter.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotExtensionMeta {
     #[prost(string, tag = "1")]
@@ -85,6 +92,7 @@ pub struct SnapshotExtensionMeta {
 /// SnapshotExtensionPayload contains payloads of an external snapshotter.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotExtensionPayload {
     #[prost(bytes = "vec", tag = "1")]
@@ -93,6 +101,7 @@ pub struct SnapshotExtensionPayload {
 /// SnapshotKVItem is an exported Key/Value Pair
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotKvItem {
     #[prost(bytes = "vec", tag = "1")]
@@ -103,6 +112,7 @@ pub struct SnapshotKvItem {
 /// SnapshotSchema is an exported schema of smt store
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotSchema {
     #[prost(bytes = "vec", repeated, tag = "1")]

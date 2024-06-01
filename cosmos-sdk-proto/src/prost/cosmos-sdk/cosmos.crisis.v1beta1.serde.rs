@@ -69,18 +69,18 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.crisis.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut constant_fee__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ConstantFee => {
                             if constant_fee__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("constantFee"));
                             }
-                            constant_fee__ = map.next_value()?;
+                            constant_fee__ = map_.next_value()?;
                         }
                     }
                 }
@@ -192,20 +192,20 @@ impl<'de> serde::Deserialize<'de> for MsgVerifyInvariant {
                 formatter.write_str("struct cosmos.crisis.v1beta1.MsgVerifyInvariant")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgVerifyInvariant, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgVerifyInvariant, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut sender__ = None;
                 let mut invariant_module_name__ = None;
                 let mut invariant_route__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Sender => {
                             if sender__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("sender"));
                             }
-                            sender__ = Some(map.next_value()?);
+                            sender__ = Some(map_.next_value()?);
                         }
                         GeneratedField::InvariantModuleName => {
                             if invariant_module_name__.is_some() {
@@ -213,13 +213,13 @@ impl<'de> serde::Deserialize<'de> for MsgVerifyInvariant {
                                     "invariantModuleName",
                                 ));
                             }
-                            invariant_module_name__ = Some(map.next_value()?);
+                            invariant_module_name__ = Some(map_.next_value()?);
                         }
                         GeneratedField::InvariantRoute => {
                             if invariant_route__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("invariantRoute"));
                             }
-                            invariant_route__ = Some(map.next_value()?);
+                            invariant_route__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -298,13 +298,13 @@ impl<'de> serde::Deserialize<'de> for MsgVerifyInvariantResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgVerifyInvariantResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgVerifyInvariantResponse {})
             }

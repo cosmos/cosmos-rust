@@ -76,19 +76,19 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.genutil.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut gen_txs__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GenTxs => {
                             if gen_txs__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("genTxs"));
                             }
                             gen_txs__ = Some(
-                                map.next_value::<Vec<::pbjson::private::BytesDeserialize<_>>>()?
+                                map_.next_value::<Vec<::pbjson::private::BytesDeserialize<_>>>()?
                                     .into_iter()
                                     .map(|x| x.0)
                                     .collect(),

@@ -1,5 +1,6 @@
 // @generated
 /// Plan specifies information about a planned upgrade and when it should occur.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Plan {
     /// Sets the name for the upgrade. This name will be used by the upgraded
@@ -36,6 +37,7 @@ pub struct Plan {
 /// upgrade.
 /// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
 /// proposals, see MsgSoftwareUpgrade.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SoftwareUpgradeProposal {
     #[prost(string, tag = "1")]
@@ -49,6 +51,7 @@ pub struct SoftwareUpgradeProposal {
 /// upgrade.
 /// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
 /// proposals, see MsgCancelUpgrade.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CancelSoftwareUpgradeProposal {
     #[prost(string, tag = "1")]
@@ -59,6 +62,7 @@ pub struct CancelSoftwareUpgradeProposal {
 /// ModuleVersion specifies a module and its consensus version.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleVersion {
     /// name of the app module
@@ -70,10 +74,12 @@ pub struct ModuleVersion {
 }
 /// QueryCurrentPlanRequest is the request type for the Query/CurrentPlan RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryCurrentPlanRequest {}
 /// QueryCurrentPlanResponse is the response type for the Query/CurrentPlan RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryCurrentPlanResponse {
     /// plan is the current upgrade plan.
@@ -82,6 +88,7 @@ pub struct QueryCurrentPlanResponse {
 }
 /// QueryCurrentPlanRequest is the request type for the Query/AppliedPlan RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAppliedPlanRequest {
     /// name is the name of the applied plan to query for.
@@ -90,6 +97,7 @@ pub struct QueryAppliedPlanRequest {
 }
 /// QueryAppliedPlanResponse is the response type for the Query/AppliedPlan RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAppliedPlanResponse {
     /// height is the block height at which the plan was applied.
@@ -98,6 +106,7 @@ pub struct QueryAppliedPlanResponse {
 }
 /// QueryUpgradedConsensusStateRequest is the request type for the Query/UpgradedConsensusState
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUpgradedConsensusStateRequest {
     /// last height of the current chain must be sent in request
@@ -107,6 +116,7 @@ pub struct QueryUpgradedConsensusStateRequest {
 }
 /// QueryUpgradedConsensusStateResponse is the response type for the Query/UpgradedConsensusState
 /// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUpgradedConsensusStateResponse {
     /// Since: cosmos-sdk 0.43
@@ -117,6 +127,7 @@ pub struct QueryUpgradedConsensusStateResponse {
 /// RPC method.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleVersionsRequest {
     /// module_name is a field to query a specific module
@@ -129,6 +140,7 @@ pub struct QueryModuleVersionsRequest {
 /// RPC method.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleVersionsResponse {
     /// module_versions is a list of module names with their consensus versions.
@@ -138,11 +150,13 @@ pub struct QueryModuleVersionsResponse {
 /// QueryAuthorityRequest is the request type for Query/Authority
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAuthorityRequest {}
 /// QueryAuthorityResponse is the response type for Query/Authority
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAuthorityResponse {
     #[prost(string, tag = "1")]
@@ -151,6 +165,7 @@ pub struct QueryAuthorityResponse {
 /// MsgSoftwareUpgrade is the Msg/SoftwareUpgrade request type.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSoftwareUpgrade {
     /// authority is the address of the governance account.
@@ -163,11 +178,13 @@ pub struct MsgSoftwareUpgrade {
 /// MsgSoftwareUpgradeResponse is the Msg/SoftwareUpgrade response type.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSoftwareUpgradeResponse {}
 /// MsgCancelUpgrade is the Msg/CancelUpgrade request type.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelUpgrade {
     /// authority is the address of the governance account.
@@ -177,6 +194,7 @@ pub struct MsgCancelUpgrade {
 /// MsgCancelUpgradeResponse is the Msg/CancelUpgrade response type.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelUpgradeResponse {}
 include!("cosmos.upgrade.v1beta1.serde.rs");

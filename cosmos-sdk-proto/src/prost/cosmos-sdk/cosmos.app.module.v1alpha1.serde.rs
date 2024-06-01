@@ -57,12 +57,12 @@ impl<'de> serde::Deserialize<'de> for Module {
                 formatter.write_str("struct cosmos.app.module.v1alpha1.Module")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Module, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Module, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(Module {})
             }

@@ -86,20 +86,20 @@ impl<'de> serde::Deserialize<'de> for DecisionPolicyWindows {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<DecisionPolicyWindows, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut voting_period__ = None;
                 let mut min_execution_period__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::VotingPeriod => {
                             if voting_period__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("votingPeriod"));
                             }
-                            voting_period__ = map.next_value()?;
+                            voting_period__ = map_.next_value()?;
                         }
                         GeneratedField::MinExecutionPeriod => {
                             if min_execution_period__.is_some() {
@@ -107,7 +107,7 @@ impl<'de> serde::Deserialize<'de> for DecisionPolicyWindows {
                                     "minExecutionPeriod",
                                 ));
                             }
-                            min_execution_period__ = map.next_value()?;
+                            min_execution_period__ = map_.next_value()?;
                         }
                     }
                 }
@@ -138,6 +138,7 @@ impl serde::Serialize for EventCreateGroup {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.EventCreateGroup", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         struct_ser.end()
@@ -194,19 +195,19 @@ impl<'de> serde::Deserialize<'de> for EventCreateGroup {
                 formatter.write_str("struct cosmos.group.v1.EventCreateGroup")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventCreateGroup, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventCreateGroup, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -296,19 +297,19 @@ impl<'de> serde::Deserialize<'de> for EventCreateGroupPolicy {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<EventCreateGroupPolicy, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -343,13 +344,14 @@ impl serde::Serialize for EventExec {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.EventExec", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
             )?;
         }
         if self.result != 0 {
-            let v = ProposalExecutorResult::from_i32(self.result).ok_or_else(|| {
+            let v = ProposalExecutorResult::try_from(self.result).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.result))
             })?;
             struct_ser.serialize_field("result", &v)?;
@@ -415,21 +417,21 @@ impl<'de> serde::Deserialize<'de> for EventExec {
                 formatter.write_str("struct cosmos.group.v1.EventExec")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventExec, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventExec, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
                 let mut result__ = None;
                 let mut logs__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -437,13 +439,13 @@ impl<'de> serde::Deserialize<'de> for EventExec {
                             if result__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("result"));
                             }
-                            result__ = Some(map.next_value::<ProposalExecutorResult>()? as i32);
+                            result__ = Some(map_.next_value::<ProposalExecutorResult>()? as i32);
                         }
                         GeneratedField::Logs => {
                             if logs__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("logs"));
                             }
-                            logs__ = Some(map.next_value()?);
+                            logs__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -473,6 +475,7 @@ impl serde::Serialize for EventLeaveGroup {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.EventLeaveGroup", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if !self.address.is_empty() {
@@ -534,20 +537,20 @@ impl<'de> serde::Deserialize<'de> for EventLeaveGroup {
                 formatter.write_str("struct cosmos.group.v1.EventLeaveGroup")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventLeaveGroup, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventLeaveGroup, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
                 let mut address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -555,7 +558,7 @@ impl<'de> serde::Deserialize<'de> for EventLeaveGroup {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -588,13 +591,14 @@ impl serde::Serialize for EventProposalPruned {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.EventProposalPruned", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
             )?;
         }
         if self.status != 0 {
-            let v = ProposalStatus::from_i32(self.status).ok_or_else(|| {
+            let v = ProposalStatus::try_from(self.status).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.status))
             })?;
             struct_ser.serialize_field("status", &v)?;
@@ -666,21 +670,21 @@ impl<'de> serde::Deserialize<'de> for EventProposalPruned {
                 formatter.write_str("struct cosmos.group.v1.EventProposalPruned")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventProposalPruned, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventProposalPruned, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
                 let mut status__ = None;
                 let mut tally_result__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -688,13 +692,13 @@ impl<'de> serde::Deserialize<'de> for EventProposalPruned {
                             if status__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("status"));
                             }
-                            status__ = Some(map.next_value::<ProposalStatus>()? as i32);
+                            status__ = Some(map_.next_value::<ProposalStatus>()? as i32);
                         }
                         GeneratedField::TallyResult => {
                             if tally_result__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("tallyResult"));
                             }
-                            tally_result__ = map.next_value()?;
+                            tally_result__ = map_.next_value()?;
                         }
                     }
                 }
@@ -726,6 +730,7 @@ impl serde::Serialize for EventSubmitProposal {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.EventSubmitProposal", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -785,19 +790,19 @@ impl<'de> serde::Deserialize<'de> for EventSubmitProposal {
                 formatter.write_str("struct cosmos.group.v1.EventSubmitProposal")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventSubmitProposal, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventSubmitProposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -829,6 +834,7 @@ impl serde::Serialize for EventUpdateGroup {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.EventUpdateGroup", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         struct_ser.end()
@@ -885,19 +891,19 @@ impl<'de> serde::Deserialize<'de> for EventUpdateGroup {
                 formatter.write_str("struct cosmos.group.v1.EventUpdateGroup")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventUpdateGroup, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventUpdateGroup, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -987,19 +993,19 @@ impl<'de> serde::Deserialize<'de> for EventUpdateGroupPolicy {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<EventUpdateGroupPolicy, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1028,6 +1034,7 @@ impl serde::Serialize for EventVote {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.EventVote", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -1087,19 +1094,19 @@ impl<'de> serde::Deserialize<'de> for EventVote {
                 formatter.write_str("struct cosmos.group.v1.EventVote")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<EventVote, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<EventVote, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1127,6 +1134,7 @@ impl serde::Serialize for EventWithdrawProposal {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.EventWithdrawProposal", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -1188,20 +1196,20 @@ impl<'de> serde::Deserialize<'de> for EventWithdrawProposal {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<EventWithdrawProposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1253,10 +1261,9 @@ impl<'de> serde::Deserialize<'de> for Exec {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(Exec::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
                     })
@@ -1266,10 +1273,9 @@ impl<'de> serde::Deserialize<'de> for Exec {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(Exec::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
                     })
@@ -1323,6 +1329,7 @@ impl serde::Serialize for GenesisState {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.GenesisState", len)?;
         if self.group_seq != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser
                 .serialize_field("groupSeq", ToString::to_string(&self.group_seq).as_str())?;
         }
@@ -1333,6 +1340,7 @@ impl serde::Serialize for GenesisState {
             struct_ser.serialize_field("groupMembers", &self.group_members)?;
         }
         if self.group_policy_seq != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "groupPolicySeq",
                 ToString::to_string(&self.group_policy_seq).as_str(),
@@ -1342,6 +1350,7 @@ impl serde::Serialize for GenesisState {
             struct_ser.serialize_field("groupPolicies", &self.group_policies)?;
         }
         if self.proposal_seq != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalSeq",
                 ToString::to_string(&self.proposal_seq).as_str(),
@@ -1437,7 +1446,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.group.v1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1449,14 +1458,14 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 let mut proposal_seq__ = None;
                 let mut proposals__ = None;
                 let mut votes__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupSeq => {
                             if group_seq__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupSeq"));
                             }
                             group_seq__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1464,20 +1473,20 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             if groups__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groups"));
                             }
-                            groups__ = Some(map.next_value()?);
+                            groups__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupMembers => {
                             if group_members__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupMembers"));
                             }
-                            group_members__ = Some(map.next_value()?);
+                            group_members__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupPolicySeq => {
                             if group_policy_seq__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupPolicySeq"));
                             }
                             group_policy_seq__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1485,14 +1494,14 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             if group_policies__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupPolicies"));
                             }
-                            group_policies__ = Some(map.next_value()?);
+                            group_policies__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ProposalSeq => {
                             if proposal_seq__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalSeq"));
                             }
                             proposal_seq__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1500,13 +1509,13 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             if proposals__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposals"));
                             }
-                            proposals__ = Some(map.next_value()?);
+                            proposals__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Votes => {
                             if votes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("votes"));
                             }
-                            votes__ = Some(map.next_value()?);
+                            votes__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1553,6 +1562,7 @@ impl serde::Serialize for GroupInfo {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.GroupInfo", len)?;
         if self.id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("id", ToString::to_string(&self.id).as_str())?;
         }
         if !self.admin.is_empty() {
@@ -1562,6 +1572,7 @@ impl serde::Serialize for GroupInfo {
             struct_ser.serialize_field("metadata", &self.metadata)?;
         }
         if self.version != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("version", ToString::to_string(&self.version).as_str())?;
         }
         if !self.total_weight.is_empty() {
@@ -1643,7 +1654,7 @@ impl<'de> serde::Deserialize<'de> for GroupInfo {
                 formatter.write_str("struct cosmos.group.v1.GroupInfo")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GroupInfo, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GroupInfo, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1653,14 +1664,14 @@ impl<'de> serde::Deserialize<'de> for GroupInfo {
                 let mut version__ = None;
                 let mut total_weight__ = None;
                 let mut created_at__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
                             id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1668,20 +1679,20 @@ impl<'de> serde::Deserialize<'de> for GroupInfo {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Version => {
                             if version__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("version"));
                             }
                             version__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1689,13 +1700,13 @@ impl<'de> serde::Deserialize<'de> for GroupInfo {
                             if total_weight__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("totalWeight"));
                             }
-                            total_weight__ = Some(map.next_value()?);
+                            total_weight__ = Some(map_.next_value()?);
                         }
                         GeneratedField::CreatedAt => {
                             if created_at__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("createdAt"));
                             }
-                            created_at__ = map.next_value()?;
+                            created_at__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1728,6 +1739,7 @@ impl serde::Serialize for GroupMember {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.GroupMember", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if let Some(v) = self.member.as_ref() {
@@ -1789,20 +1801,20 @@ impl<'de> serde::Deserialize<'de> for GroupMember {
                 formatter.write_str("struct cosmos.group.v1.GroupMember")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GroupMember, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GroupMember, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
                 let mut member__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1810,7 +1822,7 @@ impl<'de> serde::Deserialize<'de> for GroupMember {
                             if member__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("member"));
                             }
-                            member__ = map.next_value()?;
+                            member__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1857,6 +1869,7 @@ impl serde::Serialize for GroupPolicyInfo {
             struct_ser.serialize_field("address", &self.address)?;
         }
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if !self.admin.is_empty() {
@@ -1866,6 +1879,7 @@ impl serde::Serialize for GroupPolicyInfo {
             struct_ser.serialize_field("metadata", &self.metadata)?;
         }
         if self.version != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("version", ToString::to_string(&self.version).as_str())?;
         }
         if let Some(v) = self.decision_policy.as_ref() {
@@ -1953,7 +1967,7 @@ impl<'de> serde::Deserialize<'de> for GroupPolicyInfo {
                 formatter.write_str("struct cosmos.group.v1.GroupPolicyInfo")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GroupPolicyInfo, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GroupPolicyInfo, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1964,20 +1978,20 @@ impl<'de> serde::Deserialize<'de> for GroupPolicyInfo {
                 let mut version__ = None;
                 let mut decision_policy__ = None;
                 let mut created_at__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -1985,20 +1999,20 @@ impl<'de> serde::Deserialize<'de> for GroupPolicyInfo {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Version => {
                             if version__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("version"));
                             }
                             version__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -2006,13 +2020,13 @@ impl<'de> serde::Deserialize<'de> for GroupPolicyInfo {
                             if decision_policy__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("decisionPolicy"));
                             }
-                            decision_policy__ = map.next_value()?;
+                            decision_policy__ = map_.next_value()?;
                         }
                         GeneratedField::CreatedAt => {
                             if created_at__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("createdAt"));
                             }
-                            created_at__ = map.next_value()?;
+                            created_at__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2123,7 +2137,7 @@ impl<'de> serde::Deserialize<'de> for Member {
                 formatter.write_str("struct cosmos.group.v1.Member")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Member, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Member, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -2131,31 +2145,31 @@ impl<'de> serde::Deserialize<'de> for Member {
                 let mut weight__ = None;
                 let mut metadata__ = None;
                 let mut added_at__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Weight => {
                             if weight__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("weight"));
                             }
-                            weight__ = Some(map.next_value()?);
+                            weight__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::AddedAt => {
                             if added_at__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("addedAt"));
                             }
-                            added_at__ = map.next_value()?;
+                            added_at__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2255,32 +2269,32 @@ impl<'de> serde::Deserialize<'de> for MemberRequest {
                 formatter.write_str("struct cosmos.group.v1.MemberRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MemberRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MemberRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut weight__ = None;
                 let mut metadata__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Weight => {
                             if weight__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("weight"));
                             }
-                            weight__ = Some(map.next_value()?);
+                            weight__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2379,32 +2393,32 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroup {
                 formatter.write_str("struct cosmos.group.v1.MsgCreateGroup")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgCreateGroup, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgCreateGroup, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut admin__ = None;
                 let mut members__ = None;
                 let mut metadata__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Members => {
                             if members__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("members"));
                             }
-                            members__ = Some(map.next_value()?);
+                            members__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2444,6 +2458,7 @@ impl serde::Serialize for MsgCreateGroupPolicy {
             struct_ser.serialize_field("admin", &self.admin)?;
         }
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if !self.metadata.is_empty() {
@@ -2521,7 +2536,10 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupPolicy {
                 formatter.write_str("struct cosmos.group.v1.MsgCreateGroupPolicy")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgCreateGroupPolicy, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgCreateGroupPolicy, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -2529,20 +2547,20 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupPolicy {
                 let mut group_id__ = None;
                 let mut metadata__ = None;
                 let mut decision_policy__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -2550,13 +2568,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupPolicy {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::DecisionPolicy => {
                             if decision_policy__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("decisionPolicy"));
                             }
-                            decision_policy__ = map.next_value()?;
+                            decision_policy__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2647,19 +2665,19 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupPolicyResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgCreateGroupPolicyResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2689,6 +2707,7 @@ impl serde::Serialize for MsgCreateGroupResponse {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.MsgCreateGroupResponse", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         struct_ser.end()
@@ -2747,20 +2766,20 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgCreateGroupResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -2907,7 +2926,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupWithPolicy {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgCreateGroupWithPolicy, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -2918,25 +2937,25 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupWithPolicy {
                 let mut group_policy_metadata__ = None;
                 let mut group_policy_as_admin__ = None;
                 let mut decision_policy__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Members => {
                             if members__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("members"));
                             }
-                            members__ = Some(map.next_value()?);
+                            members__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupMetadata => {
                             if group_metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupMetadata"));
                             }
-                            group_metadata__ = Some(map.next_value()?);
+                            group_metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupPolicyMetadata => {
                             if group_policy_metadata__.is_some() {
@@ -2944,7 +2963,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupWithPolicy {
                                     "groupPolicyMetadata",
                                 ));
                             }
-                            group_policy_metadata__ = Some(map.next_value()?);
+                            group_policy_metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupPolicyAsAdmin => {
                             if group_policy_as_admin__.is_some() {
@@ -2952,13 +2971,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupWithPolicy {
                                     "groupPolicyAsAdmin",
                                 ));
                             }
-                            group_policy_as_admin__ = Some(map.next_value()?);
+                            group_policy_as_admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::DecisionPolicy => {
                             if decision_policy__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("decisionPolicy"));
                             }
-                            decision_policy__ = map.next_value()?;
+                            decision_policy__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2996,6 +3015,7 @@ impl serde::Serialize for MsgCreateGroupWithPolicyResponse {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.MsgCreateGroupWithPolicyResponse", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if !self.group_policy_address.is_empty() {
@@ -3066,21 +3086,21 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupWithPolicyResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgCreateGroupWithPolicyResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
                 let mut group_policy_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -3090,7 +3110,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateGroupWithPolicyResponse {
                                     "groupPolicyAddress",
                                 ));
                             }
-                            group_policy_address__ = Some(map.next_value()?);
+                            group_policy_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3123,6 +3143,7 @@ impl serde::Serialize for MsgExec {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.MsgExec", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -3187,20 +3208,20 @@ impl<'de> serde::Deserialize<'de> for MsgExec {
                 formatter.write_str("struct cosmos.group.v1.MsgExec")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgExec, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgExec, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
                 let mut executor__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -3208,7 +3229,7 @@ impl<'de> serde::Deserialize<'de> for MsgExec {
                             if executor__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("executor"));
                             }
-                            executor__ = Some(map.next_value()?);
+                            executor__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3234,7 +3255,7 @@ impl serde::Serialize for MsgExecResponse {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.MsgExecResponse", len)?;
         if self.result != 0 {
-            let v = ProposalExecutorResult::from_i32(self.result).ok_or_else(|| {
+            let v = ProposalExecutorResult::try_from(self.result).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.result))
             })?;
             struct_ser.serialize_field("result", &v)?;
@@ -3293,18 +3314,18 @@ impl<'de> serde::Deserialize<'de> for MsgExecResponse {
                 formatter.write_str("struct cosmos.group.v1.MsgExecResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgExecResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgExecResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut result__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Result => {
                             if result__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("result"));
                             }
-                            result__ = Some(map.next_value::<ProposalExecutorResult>()? as i32);
+                            result__ = Some(map_.next_value::<ProposalExecutorResult>()? as i32);
                         }
                     }
                 }
@@ -3335,6 +3356,7 @@ impl serde::Serialize for MsgLeaveGroup {
             struct_ser.serialize_field("address", &self.address)?;
         }
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         struct_ser.end()
@@ -3393,26 +3415,26 @@ impl<'de> serde::Deserialize<'de> for MsgLeaveGroup {
                 formatter.write_str("struct cosmos.group.v1.MsgLeaveGroup")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgLeaveGroup, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgLeaveGroup, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut group_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -3488,13 +3510,13 @@ impl<'de> serde::Deserialize<'de> for MsgLeaveGroupResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgLeaveGroupResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgLeaveGroupResponse {})
             }
@@ -3544,9 +3566,8 @@ impl serde::Serialize for MsgSubmitProposal {
             struct_ser.serialize_field("messages", &self.messages)?;
         }
         if self.exec != 0 {
-            let v = Exec::from_i32(self.exec).ok_or_else(|| {
-                serde::ser::Error::custom(format!("Invalid variant {}", self.exec))
-            })?;
+            let v = Exec::try_from(self.exec)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.exec)))?;
             struct_ser.serialize_field("exec", &v)?;
         }
         struct_ser.end()
@@ -3620,7 +3641,7 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
                 formatter.write_str("struct cosmos.group.v1.MsgSubmitProposal")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgSubmitProposal, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSubmitProposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -3629,7 +3650,7 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
                 let mut metadata__ = None;
                 let mut messages__ = None;
                 let mut exec__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupPolicyAddress => {
                             if group_policy_address__.is_some() {
@@ -3637,31 +3658,31 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
                                     "groupPolicyAddress",
                                 ));
                             }
-                            group_policy_address__ = Some(map.next_value()?);
+                            group_policy_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Proposers => {
                             if proposers__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposers"));
                             }
-                            proposers__ = Some(map.next_value()?);
+                            proposers__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Messages => {
                             if messages__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("messages"));
                             }
-                            messages__ = Some(map.next_value()?);
+                            messages__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Exec => {
                             if exec__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("exec"));
                             }
-                            exec__ = Some(map.next_value::<Exec>()? as i32);
+                            exec__ = Some(map_.next_value::<Exec>()? as i32);
                         }
                     }
                 }
@@ -3695,6 +3716,7 @@ impl serde::Serialize for MsgSubmitProposalResponse {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.MsgSubmitProposalResponse", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -3756,20 +3778,20 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposalResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgSubmitProposalResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -3810,6 +3832,7 @@ impl serde::Serialize for MsgUpdateGroupAdmin {
             struct_ser.serialize_field("admin", &self.admin)?;
         }
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if !self.new_admin.is_empty() {
@@ -3873,27 +3896,27 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupAdmin {
                 formatter.write_str("struct cosmos.group.v1.MsgUpdateGroupAdmin")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgUpdateGroupAdmin, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUpdateGroupAdmin, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut admin__ = None;
                 let mut group_id__ = None;
                 let mut new_admin__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -3901,7 +3924,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupAdmin {
                             if new_admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("newAdmin"));
                             }
-                            new_admin__ = Some(map.next_value()?);
+                            new_admin__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3980,13 +4003,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupAdminResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupAdminResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgUpdateGroupAdminResponse {})
             }
@@ -4021,6 +4044,7 @@ impl serde::Serialize for MsgUpdateGroupMembers {
             struct_ser.serialize_field("admin", &self.admin)?;
         }
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if !self.member_updates.is_empty() {
@@ -4092,7 +4116,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMembers {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupMembers, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -4100,20 +4124,20 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMembers {
                 let mut admin__ = None;
                 let mut group_id__ = None;
                 let mut member_updates__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -4121,7 +4145,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMembers {
                             if member_updates__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("memberUpdates"));
                             }
-                            member_updates__ = Some(map.next_value()?);
+                            member_updates__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -4200,13 +4224,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMembersResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupMembersResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgUpdateGroupMembersResponse {})
             }
@@ -4241,6 +4265,7 @@ impl serde::Serialize for MsgUpdateGroupMetadata {
             struct_ser.serialize_field("admin", &self.admin)?;
         }
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if !self.metadata.is_empty() {
@@ -4306,7 +4331,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMetadata {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupMetadata, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -4314,20 +4339,20 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMetadata {
                 let mut admin__ = None;
                 let mut group_id__ = None;
                 let mut metadata__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -4335,7 +4360,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMetadata {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -4414,13 +4439,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupMetadataResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupMetadataResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgUpdateGroupMetadataResponse {})
             }
@@ -4528,7 +4553,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyAdmin {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupPolicyAdmin, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -4536,13 +4561,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyAdmin {
                 let mut admin__ = None;
                 let mut group_policy_address__ = None;
                 let mut new_admin__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupPolicyAddress => {
                             if group_policy_address__.is_some() {
@@ -4550,13 +4575,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyAdmin {
                                     "groupPolicyAddress",
                                 ));
                             }
-                            group_policy_address__ = Some(map.next_value()?);
+                            group_policy_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::NewAdmin => {
                             if new_admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("newAdmin"));
                             }
-                            new_admin__ = Some(map.next_value()?);
+                            new_admin__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -4635,13 +4660,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyAdminResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupPolicyAdminResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgUpdateGroupPolicyAdminResponse {})
             }
@@ -4751,7 +4776,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyDecisionPolicy {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupPolicyDecisionPolicy, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -4759,13 +4784,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyDecisionPolicy {
                 let mut admin__ = None;
                 let mut group_policy_address__ = None;
                 let mut decision_policy__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupPolicyAddress => {
                             if group_policy_address__.is_some() {
@@ -4773,13 +4798,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyDecisionPolicy {
                                     "groupPolicyAddress",
                                 ));
                             }
-                            group_policy_address__ = Some(map.next_value()?);
+                            group_policy_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::DecisionPolicy => {
                             if decision_policy__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("decisionPolicy"));
                             }
-                            decision_policy__ = map.next_value()?;
+                            decision_policy__ = map_.next_value()?;
                         }
                     }
                 }
@@ -4861,13 +4886,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyDecisionPolicyResponse
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupPolicyDecisionPolicyResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgUpdateGroupPolicyDecisionPolicyResponse {})
             }
@@ -4974,7 +4999,7 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyMetadata {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupPolicyMetadata, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -4982,13 +5007,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyMetadata {
                 let mut admin__ = None;
                 let mut group_policy_address__ = None;
                 let mut metadata__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GroupPolicyAddress => {
                             if group_policy_address__.is_some() {
@@ -4996,13 +5021,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyMetadata {
                                     "groupPolicyAddress",
                                 ));
                             }
-                            group_policy_address__ = Some(map.next_value()?);
+                            group_policy_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -5081,13 +5106,13 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateGroupPolicyMetadataResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgUpdateGroupPolicyMetadataResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgUpdateGroupPolicyMetadataResponse {})
             }
@@ -5124,6 +5149,7 @@ impl serde::Serialize for MsgVote {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.MsgVote", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -5133,7 +5159,7 @@ impl serde::Serialize for MsgVote {
             struct_ser.serialize_field("voter", &self.voter)?;
         }
         if self.option != 0 {
-            let v = VoteOption::from_i32(self.option).ok_or_else(|| {
+            let v = VoteOption::try_from(self.option).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.option))
             })?;
             struct_ser.serialize_field("option", &v)?;
@@ -5142,9 +5168,8 @@ impl serde::Serialize for MsgVote {
             struct_ser.serialize_field("metadata", &self.metadata)?;
         }
         if self.exec != 0 {
-            let v = Exec::from_i32(self.exec).ok_or_else(|| {
-                serde::ser::Error::custom(format!("Invalid variant {}", self.exec))
-            })?;
+            let v = Exec::try_from(self.exec)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.exec)))?;
             struct_ser.serialize_field("exec", &v)?;
         }
         struct_ser.end()
@@ -5216,7 +5241,7 @@ impl<'de> serde::Deserialize<'de> for MsgVote {
                 formatter.write_str("struct cosmos.group.v1.MsgVote")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgVote, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgVote, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -5225,14 +5250,14 @@ impl<'de> serde::Deserialize<'de> for MsgVote {
                 let mut option__ = None;
                 let mut metadata__ = None;
                 let mut exec__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5240,25 +5265,25 @@ impl<'de> serde::Deserialize<'de> for MsgVote {
                             if voter__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("voter"));
                             }
-                            voter__ = Some(map.next_value()?);
+                            voter__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Option => {
                             if option__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("option"));
                             }
-                            option__ = Some(map.next_value::<VoteOption>()? as i32);
+                            option__ = Some(map_.next_value::<VoteOption>()? as i32);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Exec => {
                             if exec__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("exec"));
                             }
-                            exec__ = Some(map.next_value::<Exec>()? as i32);
+                            exec__ = Some(map_.next_value::<Exec>()? as i32);
                         }
                     }
                 }
@@ -5332,12 +5357,12 @@ impl<'de> serde::Deserialize<'de> for MsgVoteResponse {
                 formatter.write_str("struct cosmos.group.v1.MsgVoteResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgVoteResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgVoteResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgVoteResponse {})
             }
@@ -5362,6 +5387,7 @@ impl serde::Serialize for MsgWithdrawProposal {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.MsgWithdrawProposal", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -5426,20 +5452,20 @@ impl<'de> serde::Deserialize<'de> for MsgWithdrawProposal {
                 formatter.write_str("struct cosmos.group.v1.MsgWithdrawProposal")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgWithdrawProposal, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgWithdrawProposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
                 let mut address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5447,7 +5473,7 @@ impl<'de> serde::Deserialize<'de> for MsgWithdrawProposal {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -5525,13 +5551,13 @@ impl<'de> serde::Deserialize<'de> for MsgWithdrawProposalResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgWithdrawProposalResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgWithdrawProposalResponse {})
             }
@@ -5623,26 +5649,26 @@ impl<'de> serde::Deserialize<'de> for PercentageDecisionPolicy {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<PercentageDecisionPolicy, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut percentage__ = None;
                 let mut windows__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Percentage => {
                             if percentage__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("percentage"));
                             }
-                            percentage__ = Some(map.next_value()?);
+                            percentage__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Windows => {
                             if windows__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("windows"));
                             }
-                            windows__ = map.next_value()?;
+                            windows__ = map_.next_value()?;
                         }
                     }
                 }
@@ -5705,6 +5731,7 @@ impl serde::Serialize for Proposal {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.Proposal", len)?;
         if self.id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("id", ToString::to_string(&self.id).as_str())?;
         }
         if !self.group_policy_address.is_empty() {
@@ -5720,19 +5747,21 @@ impl serde::Serialize for Proposal {
             struct_ser.serialize_field("submitTime", v)?;
         }
         if self.group_version != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "groupVersion",
                 ToString::to_string(&self.group_version).as_str(),
             )?;
         }
         if self.group_policy_version != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "groupPolicyVersion",
                 ToString::to_string(&self.group_policy_version).as_str(),
             )?;
         }
         if self.status != 0 {
-            let v = ProposalStatus::from_i32(self.status).ok_or_else(|| {
+            let v = ProposalStatus::try_from(self.status).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.status))
             })?;
             struct_ser.serialize_field("status", &v)?;
@@ -5744,7 +5773,7 @@ impl serde::Serialize for Proposal {
             struct_ser.serialize_field("votingPeriodEnd", v)?;
         }
         if self.executor_result != 0 {
-            let v = ProposalExecutorResult::from_i32(self.executor_result).ok_or_else(|| {
+            let v = ProposalExecutorResult::try_from(self.executor_result).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.executor_result))
             })?;
             struct_ser.serialize_field("executorResult", &v)?;
@@ -5858,7 +5887,7 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                 formatter.write_str("struct cosmos.group.v1.Proposal")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Proposal, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Proposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -5874,14 +5903,14 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                 let mut voting_period_end__ = None;
                 let mut executor_result__ = None;
                 let mut messages__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
                             id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5891,32 +5920,32 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                                     "groupPolicyAddress",
                                 ));
                             }
-                            group_policy_address__ = Some(map.next_value()?);
+                            group_policy_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Proposers => {
                             if proposers__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposers"));
                             }
-                            proposers__ = Some(map.next_value()?);
+                            proposers__ = Some(map_.next_value()?);
                         }
                         GeneratedField::SubmitTime => {
                             if submit_time__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("submitTime"));
                             }
-                            submit_time__ = map.next_value()?;
+                            submit_time__ = map_.next_value()?;
                         }
                         GeneratedField::GroupVersion => {
                             if group_version__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupVersion"));
                             }
                             group_version__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5927,7 +5956,7 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                                 ));
                             }
                             group_policy_version__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5935,32 +5964,32 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                             if status__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("status"));
                             }
-                            status__ = Some(map.next_value::<ProposalStatus>()? as i32);
+                            status__ = Some(map_.next_value::<ProposalStatus>()? as i32);
                         }
                         GeneratedField::FinalTallyResult => {
                             if final_tally_result__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("finalTallyResult"));
                             }
-                            final_tally_result__ = map.next_value()?;
+                            final_tally_result__ = map_.next_value()?;
                         }
                         GeneratedField::VotingPeriodEnd => {
                             if voting_period_end__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("votingPeriodEnd"));
                             }
-                            voting_period_end__ = map.next_value()?;
+                            voting_period_end__ = map_.next_value()?;
                         }
                         GeneratedField::ExecutorResult => {
                             if executor_result__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("executorResult"));
                             }
                             executor_result__ =
-                                Some(map.next_value::<ProposalExecutorResult>()? as i32);
+                                Some(map_.next_value::<ProposalExecutorResult>()? as i32);
                         }
                         GeneratedField::Messages => {
                             if messages__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("messages"));
                             }
-                            messages__ = Some(map.next_value()?);
+                            messages__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -6024,10 +6053,9 @@ impl<'de> serde::Deserialize<'de> for ProposalExecutorResult {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(ProposalExecutorResult::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
                     })
@@ -6037,10 +6065,9 @@ impl<'de> serde::Deserialize<'de> for ProposalExecutorResult {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(ProposalExecutorResult::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
                     })
@@ -6109,10 +6136,9 @@ impl<'de> serde::Deserialize<'de> for ProposalStatus {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(ProposalStatus::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
                     })
@@ -6122,10 +6148,9 @@ impl<'de> serde::Deserialize<'de> for ProposalStatus {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(ProposalStatus::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
                     })
@@ -6163,6 +6188,7 @@ impl serde::Serialize for QueryGroupInfoRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.QueryGroupInfoRequest", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         struct_ser.end()
@@ -6221,20 +6247,20 @@ impl<'de> serde::Deserialize<'de> for QueryGroupInfoRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupInfoRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -6324,19 +6350,19 @@ impl<'de> serde::Deserialize<'de> for QueryGroupInfoResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupInfoResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut info__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Info => {
                             if info__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("info"));
                             }
-                            info__ = map.next_value()?;
+                            info__ = map_.next_value()?;
                         }
                     }
                 }
@@ -6367,6 +6393,7 @@ impl serde::Serialize for QueryGroupMembersRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.QueryGroupMembersRequest", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if let Some(v) = self.pagination.as_ref() {
@@ -6430,21 +6457,21 @@ impl<'de> serde::Deserialize<'de> for QueryGroupMembersRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupMembersRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -6452,7 +6479,7 @@ impl<'de> serde::Deserialize<'de> for QueryGroupMembersRequest {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -6549,26 +6576,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupMembersResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupMembersResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut members__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Members => {
                             if members__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("members"));
                             }
-                            members__ = Some(map.next_value()?);
+                            members__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -6665,26 +6692,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupPoliciesByAdminRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupPoliciesByAdminRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut admin__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -6781,26 +6808,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupPoliciesByAdminResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupPoliciesByAdminResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_policies__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupPolicies => {
                             if group_policies__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupPolicies"));
                             }
-                            group_policies__ = Some(map.next_value()?);
+                            group_policies__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -6834,6 +6861,7 @@ impl serde::Serialize for QueryGroupPoliciesByGroupRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.QueryGroupPoliciesByGroupRequest", len)?;
         if self.group_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("groupId", ToString::to_string(&self.group_id).as_str())?;
         }
         if let Some(v) = self.pagination.as_ref() {
@@ -6897,21 +6925,21 @@ impl<'de> serde::Deserialize<'de> for QueryGroupPoliciesByGroupRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupPoliciesByGroupRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_id__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupId => {
                             if group_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupId"));
                             }
                             group_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -6919,7 +6947,7 @@ impl<'de> serde::Deserialize<'de> for QueryGroupPoliciesByGroupRequest {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7016,26 +7044,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupPoliciesByGroupResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupPoliciesByGroupResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut group_policies__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupPolicies => {
                             if group_policies__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groupPolicies"));
                             }
-                            group_policies__ = Some(map.next_value()?);
+                            group_policies__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7124,19 +7152,19 @@ impl<'de> serde::Deserialize<'de> for QueryGroupPolicyInfoRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupPolicyInfoRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -7224,19 +7252,19 @@ impl<'de> serde::Deserialize<'de> for QueryGroupPolicyInfoResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupPolicyInfoResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut info__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Info => {
                             if info__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("info"));
                             }
-                            info__ = map.next_value()?;
+                            info__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7330,26 +7358,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupsByAdminRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupsByAdminRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut admin__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Admin => {
                             if admin__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("admin"));
                             }
-                            admin__ = Some(map.next_value()?);
+                            admin__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7446,26 +7474,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupsByAdminResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupsByAdminResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut groups__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Groups => {
                             if groups__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groups"));
                             }
-                            groups__ = Some(map.next_value()?);
+                            groups__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7562,26 +7590,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupsByMemberRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupsByMemberRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7678,26 +7706,26 @@ impl<'de> serde::Deserialize<'de> for QueryGroupsByMemberResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryGroupsByMemberResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut groups__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Groups => {
                             if groups__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groups"));
                             }
-                            groups__ = Some(map.next_value()?);
+                            groups__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7784,18 +7812,18 @@ impl<'de> serde::Deserialize<'de> for QueryGroupsRequest {
                 formatter.write_str("struct cosmos.group.v1.QueryGroupsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryGroupsRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryGroupsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7889,25 +7917,25 @@ impl<'de> serde::Deserialize<'de> for QueryGroupsResponse {
                 formatter.write_str("struct cosmos.group.v1.QueryGroupsResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryGroupsResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryGroupsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut groups__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Groups => {
                             if groups__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("groups"));
                             }
-                            groups__ = Some(map.next_value()?);
+                            groups__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -7938,6 +7966,7 @@ impl serde::Serialize for QueryProposalRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.QueryProposalRequest", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -7997,19 +8026,22 @@ impl<'de> serde::Deserialize<'de> for QueryProposalRequest {
                 formatter.write_str("struct cosmos.group.v1.QueryProposalRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryProposalRequest, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryProposalRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -8099,19 +8131,19 @@ impl<'de> serde::Deserialize<'de> for QueryProposalResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryProposalResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Proposal => {
                             if proposal__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposal"));
                             }
-                            proposal__ = map.next_value()?;
+                            proposal__ = map_.next_value()?;
                         }
                     }
                 }
@@ -8207,26 +8239,26 @@ impl<'de> serde::Deserialize<'de> for QueryProposalsByGroupPolicyRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryProposalsByGroupPolicyRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -8323,26 +8355,26 @@ impl<'de> serde::Deserialize<'de> for QueryProposalsByGroupPolicyResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryProposalsByGroupPolicyResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposals__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Proposals => {
                             if proposals__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposals"));
                             }
-                            proposals__ = Some(map.next_value()?);
+                            proposals__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -8373,6 +8405,7 @@ impl serde::Serialize for QueryTallyResultRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.QueryTallyResultRequest", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -8434,20 +8467,20 @@ impl<'de> serde::Deserialize<'de> for QueryTallyResultRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryTallyResultRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -8537,19 +8570,19 @@ impl<'de> serde::Deserialize<'de> for QueryTallyResultResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryTallyResultResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut tally__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Tally => {
                             if tally__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("tally"));
                             }
-                            tally__ = map.next_value()?;
+                            tally__ = map_.next_value()?;
                         }
                     }
                 }
@@ -8580,6 +8613,7 @@ impl serde::Serialize for QueryVoteByProposalVoterRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.QueryVoteByProposalVoterRequest", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -8646,21 +8680,21 @@ impl<'de> serde::Deserialize<'de> for QueryVoteByProposalVoterRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryVoteByProposalVoterRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
                 let mut voter__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -8668,7 +8702,7 @@ impl<'de> serde::Deserialize<'de> for QueryVoteByProposalVoterRequest {
                             if voter__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("voter"));
                             }
-                            voter__ = Some(map.next_value()?);
+                            voter__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -8757,19 +8791,19 @@ impl<'de> serde::Deserialize<'de> for QueryVoteByProposalVoterResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryVoteByProposalVoterResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut vote__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Vote => {
                             if vote__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("vote"));
                             }
-                            vote__ = map.next_value()?;
+                            vote__ = map_.next_value()?;
                         }
                     }
                 }
@@ -8800,6 +8834,7 @@ impl serde::Serialize for QueryVotesByProposalRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.QueryVotesByProposalRequest", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -8866,21 +8901,21 @@ impl<'de> serde::Deserialize<'de> for QueryVotesByProposalRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryVotesByProposalRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut proposal_id__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -8888,7 +8923,7 @@ impl<'de> serde::Deserialize<'de> for QueryVotesByProposalRequest {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -8985,26 +9020,26 @@ impl<'de> serde::Deserialize<'de> for QueryVotesByProposalResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryVotesByProposalResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut votes__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Votes => {
                             if votes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("votes"));
                             }
-                            votes__ = Some(map.next_value()?);
+                            votes__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -9101,26 +9136,26 @@ impl<'de> serde::Deserialize<'de> for QueryVotesByVoterRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryVotesByVoterRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut voter__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Voter => {
                             if voter__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("voter"));
                             }
-                            voter__ = Some(map.next_value()?);
+                            voter__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -9217,26 +9252,26 @@ impl<'de> serde::Deserialize<'de> for QueryVotesByVoterResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryVotesByVoterResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut votes__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Votes => {
                             if votes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("votes"));
                             }
-                            votes__ = Some(map.next_value()?);
+                            votes__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -9357,7 +9392,7 @@ impl<'de> serde::Deserialize<'de> for TallyResult {
                 formatter.write_str("struct cosmos.group.v1.TallyResult")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<TallyResult, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<TallyResult, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -9365,31 +9400,31 @@ impl<'de> serde::Deserialize<'de> for TallyResult {
                 let mut abstain_count__ = None;
                 let mut no_count__ = None;
                 let mut no_with_veto_count__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::YesCount => {
                             if yes_count__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("yesCount"));
                             }
-                            yes_count__ = Some(map.next_value()?);
+                            yes_count__ = Some(map_.next_value()?);
                         }
                         GeneratedField::AbstainCount => {
                             if abstain_count__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("abstainCount"));
                             }
-                            abstain_count__ = Some(map.next_value()?);
+                            abstain_count__ = Some(map_.next_value()?);
                         }
                         GeneratedField::NoCount => {
                             if no_count__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("noCount"));
                             }
-                            no_count__ = Some(map.next_value()?);
+                            no_count__ = Some(map_.next_value()?);
                         }
                         GeneratedField::NoWithVetoCount => {
                             if no_with_veto_count__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("noWithVetoCount"));
                             }
-                            no_with_veto_count__ = Some(map.next_value()?);
+                            no_with_veto_count__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -9484,26 +9519,26 @@ impl<'de> serde::Deserialize<'de> for ThresholdDecisionPolicy {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ThresholdDecisionPolicy, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut threshold__ = None;
                 let mut windows__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Threshold => {
                             if threshold__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("threshold"));
                             }
-                            threshold__ = Some(map.next_value()?);
+                            threshold__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Windows => {
                             if windows__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("windows"));
                             }
-                            windows__ = map.next_value()?;
+                            windows__ = map_.next_value()?;
                         }
                     }
                 }
@@ -9545,6 +9580,7 @@ impl serde::Serialize for Vote {
         }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.Vote", len)?;
         if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "proposalId",
                 ToString::to_string(&self.proposal_id).as_str(),
@@ -9554,7 +9590,7 @@ impl serde::Serialize for Vote {
             struct_ser.serialize_field("voter", &self.voter)?;
         }
         if self.option != 0 {
-            let v = VoteOption::from_i32(self.option).ok_or_else(|| {
+            let v = VoteOption::try_from(self.option).map_err(|_| {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.option))
             })?;
             struct_ser.serialize_field("option", &v)?;
@@ -9635,7 +9671,7 @@ impl<'de> serde::Deserialize<'de> for Vote {
                 formatter.write_str("struct cosmos.group.v1.Vote")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Vote, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Vote, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -9644,14 +9680,14 @@ impl<'de> serde::Deserialize<'de> for Vote {
                 let mut option__ = None;
                 let mut metadata__ = None;
                 let mut submit_time__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProposalId => {
                             if proposal_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("proposalId"));
                             }
                             proposal_id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -9659,25 +9695,25 @@ impl<'de> serde::Deserialize<'de> for Vote {
                             if voter__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("voter"));
                             }
-                            voter__ = Some(map.next_value()?);
+                            voter__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Option => {
                             if option__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("option"));
                             }
-                            option__ = Some(map.next_value::<VoteOption>()? as i32);
+                            option__ = Some(map_.next_value::<VoteOption>()? as i32);
                         }
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = Some(map.next_value()?);
+                            metadata__ = Some(map_.next_value()?);
                         }
                         GeneratedField::SubmitTime => {
                             if submit_time__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("submitTime"));
                             }
-                            submit_time__ = map.next_value()?;
+                            submit_time__ = map_.next_value()?;
                         }
                     }
                 }
@@ -9736,10 +9772,9 @@ impl<'de> serde::Deserialize<'de> for VoteOption {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(VoteOption::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
                     })
@@ -9749,10 +9784,9 @@ impl<'de> serde::Deserialize<'de> for VoteOption {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(VoteOption::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
                     })

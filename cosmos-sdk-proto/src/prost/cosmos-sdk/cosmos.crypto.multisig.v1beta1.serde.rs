@@ -19,6 +19,7 @@ impl serde::Serialize for CompactBitArray {
             struct_ser.serialize_field("extraBitsStored", &self.extra_bits_stored)?;
         }
         if !self.elems.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "elems",
                 pbjson::private::base64::encode(&self.elems).as_str(),
@@ -82,20 +83,20 @@ impl<'de> serde::Deserialize<'de> for CompactBitArray {
                 formatter.write_str("struct cosmos.crypto.multisig.v1beta1.CompactBitArray")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<CompactBitArray, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<CompactBitArray, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut extra_bits_stored__ = None;
                 let mut elems__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ExtraBitsStored => {
                             if extra_bits_stored__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("extraBitsStored"));
                             }
                             extra_bits_stored__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -104,7 +105,7 @@ impl<'de> serde::Deserialize<'de> for CompactBitArray {
                                 return Err(serde::de::Error::duplicate_field("elems"));
                             }
                             elems__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -200,19 +201,19 @@ impl<'de> serde::Deserialize<'de> for MultiSignature {
                 formatter.write_str("struct cosmos.crypto.multisig.v1beta1.MultiSignature")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MultiSignature, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MultiSignature, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut signatures__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Signatures => {
                             if signatures__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("signatures"));
                             }
                             signatures__ = Some(
-                                map.next_value::<Vec<::pbjson::private::BytesDeserialize<_>>>()?
+                                map_.next_value::<Vec<::pbjson::private::BytesDeserialize<_>>>()?
                                     .into_iter()
                                     .map(|x| x.0)
                                     .collect(),

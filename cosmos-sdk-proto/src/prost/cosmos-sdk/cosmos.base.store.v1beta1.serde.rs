@@ -132,7 +132,7 @@ impl<'de> serde::Deserialize<'de> for BlockMetadata {
                 formatter.write_str("struct cosmos.base.store.v1beta1.BlockMetadata")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<BlockMetadata, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<BlockMetadata, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -142,13 +142,13 @@ impl<'de> serde::Deserialize<'de> for BlockMetadata {
                 let mut request_end_block__ = None;
                 let mut response_end_block__ = None;
                 let mut response_commit__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::RequestBeginBlock => {
                             if request_begin_block__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("requestBeginBlock"));
                             }
-                            request_begin_block__ = map.next_value()?;
+                            request_begin_block__ = map_.next_value()?;
                         }
                         GeneratedField::ResponseBeginBlock => {
                             if response_begin_block__.is_some() {
@@ -156,31 +156,31 @@ impl<'de> serde::Deserialize<'de> for BlockMetadata {
                                     "responseBeginBlock",
                                 ));
                             }
-                            response_begin_block__ = map.next_value()?;
+                            response_begin_block__ = map_.next_value()?;
                         }
                         GeneratedField::DeliverTxs => {
                             if deliver_txs__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("deliverTxs"));
                             }
-                            deliver_txs__ = Some(map.next_value()?);
+                            deliver_txs__ = Some(map_.next_value()?);
                         }
                         GeneratedField::RequestEndBlock => {
                             if request_end_block__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("requestEndBlock"));
                             }
-                            request_end_block__ = map.next_value()?;
+                            request_end_block__ = map_.next_value()?;
                         }
                         GeneratedField::ResponseEndBlock => {
                             if response_end_block__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("responseEndBlock"));
                             }
-                            response_end_block__ = map.next_value()?;
+                            response_end_block__ = map_.next_value()?;
                         }
                         GeneratedField::ResponseCommit => {
                             if response_commit__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("responseCommit"));
                             }
-                            response_commit__ = map.next_value()?;
+                            response_commit__ = map_.next_value()?;
                         }
                     }
                 }
@@ -281,26 +281,26 @@ impl<'de> serde::Deserialize<'de> for block_metadata::DeliverTx {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<block_metadata::DeliverTx, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut request__ = None;
                 let mut response__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Request => {
                             if request__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("request"));
                             }
-                            request__ = map.next_value()?;
+                            request__ = map_.next_value()?;
                         }
                         GeneratedField::Response => {
                             if response__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("response"));
                             }
-                            response__ = map.next_value()?;
+                            response__ = map_.next_value()?;
                         }
                     }
                 }
@@ -334,9 +334,11 @@ impl serde::Serialize for CommitId {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.base.store.v1beta1.CommitID", len)?;
         if self.version != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("version", ToString::to_string(&self.version).as_str())?;
         }
         if !self.hash.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser
                 .serialize_field("hash", pbjson::private::base64::encode(&self.hash).as_str())?;
         }
@@ -396,20 +398,20 @@ impl<'de> serde::Deserialize<'de> for CommitId {
                 formatter.write_str("struct cosmos.base.store.v1beta1.CommitID")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<CommitId, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<CommitId, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut version__ = None;
                 let mut hash__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Version => {
                             if version__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("version"));
                             }
                             version__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -418,7 +420,7 @@ impl<'de> serde::Deserialize<'de> for CommitId {
                                 return Err(serde::de::Error::duplicate_field("hash"));
                             }
                             hash__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -454,6 +456,7 @@ impl serde::Serialize for CommitInfo {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.base.store.v1beta1.CommitInfo", len)?;
         if self.version != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("version", ToString::to_string(&self.version).as_str())?;
         }
         if !self.store_infos.is_empty() {
@@ -515,20 +518,20 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
                 formatter.write_str("struct cosmos.base.store.v1beta1.CommitInfo")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<CommitInfo, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<CommitInfo, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut version__ = None;
                 let mut store_infos__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Version => {
                             if version__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("version"));
                             }
                             version__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -536,7 +539,7 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
                             if store_infos__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("storeInfos"));
                             }
-                            store_infos__ = Some(map.next_value()?);
+                            store_infos__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -631,25 +634,25 @@ impl<'de> serde::Deserialize<'de> for StoreInfo {
                 formatter.write_str("struct cosmos.base.store.v1beta1.StoreInfo")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<StoreInfo, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<StoreInfo, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut name__ = None;
                 let mut commit_id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Name => {
                             if name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("name"));
                             }
-                            name__ = Some(map.next_value()?);
+                            name__ = Some(map_.next_value()?);
                         }
                         GeneratedField::CommitId => {
                             if commit_id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("commitId"));
                             }
-                            commit_id__ = map.next_value()?;
+                            commit_id__ = map_.next_value()?;
                         }
                     }
                 }
@@ -695,10 +698,12 @@ impl serde::Serialize for StoreKvPair {
             struct_ser.serialize_field("delete", &self.delete)?;
         }
         if !self.key.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }
         if !self.value.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "value",
                 pbjson::private::base64::encode(&self.value).as_str(),
@@ -764,7 +769,7 @@ impl<'de> serde::Deserialize<'de> for StoreKvPair {
                 formatter.write_str("struct cosmos.base.store.v1beta1.StoreKVPair")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<StoreKvPair, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<StoreKvPair, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -772,26 +777,26 @@ impl<'de> serde::Deserialize<'de> for StoreKvPair {
                 let mut delete__ = None;
                 let mut key__ = None;
                 let mut value__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::StoreKey => {
                             if store_key__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("storeKey"));
                             }
-                            store_key__ = Some(map.next_value()?);
+                            store_key__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Delete => {
                             if delete__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delete"));
                             }
-                            delete__ = Some(map.next_value()?);
+                            delete__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Key => {
                             if key__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("key"));
                             }
                             key__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -800,7 +805,7 @@ impl<'de> serde::Deserialize<'de> for StoreKvPair {
                                 return Err(serde::de::Error::duplicate_field("value"));
                             }
                             value__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }

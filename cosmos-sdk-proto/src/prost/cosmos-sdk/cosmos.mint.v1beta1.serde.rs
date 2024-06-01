@@ -77,25 +77,25 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.mint.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut minter__ = None;
                 let mut params__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Minter => {
                             if minter__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("minter"));
                             }
-                            minter__ = map.next_value()?;
+                            minter__ = map_.next_value()?;
                         }
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                     }
                 }
@@ -191,25 +191,25 @@ impl<'de> serde::Deserialize<'de> for Minter {
                 formatter.write_str("struct cosmos.mint.v1beta1.Minter")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Minter, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Minter, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut inflation__ = None;
                 let mut annual_provisions__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Inflation => {
                             if inflation__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("inflation"));
                             }
-                            inflation__ = Some(map.next_value()?);
+                            inflation__ = Some(map_.next_value()?);
                         }
                         GeneratedField::AnnualProvisions => {
                             if annual_provisions__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("annualProvisions"));
                             }
-                            annual_provisions__ = Some(map.next_value()?);
+                            annual_provisions__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -265,6 +265,7 @@ impl serde::Serialize for Params {
             struct_ser.serialize_field("goalBonded", &self.goal_bonded)?;
         }
         if self.blocks_per_year != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "blocksPerYear",
                 ToString::to_string(&self.blocks_per_year).as_str(),
@@ -351,7 +352,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                 formatter.write_str("struct cosmos.mint.v1beta1.Params")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Params, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Params, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -361,13 +362,13 @@ impl<'de> serde::Deserialize<'de> for Params {
                 let mut inflation_min__ = None;
                 let mut goal_bonded__ = None;
                 let mut blocks_per_year__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::MintDenom => {
                             if mint_denom__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("mintDenom"));
                             }
-                            mint_denom__ = Some(map.next_value()?);
+                            mint_denom__ = Some(map_.next_value()?);
                         }
                         GeneratedField::InflationRateChange => {
                             if inflation_rate_change__.is_some() {
@@ -375,32 +376,32 @@ impl<'de> serde::Deserialize<'de> for Params {
                                     "inflationRateChange",
                                 ));
                             }
-                            inflation_rate_change__ = Some(map.next_value()?);
+                            inflation_rate_change__ = Some(map_.next_value()?);
                         }
                         GeneratedField::InflationMax => {
                             if inflation_max__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("inflationMax"));
                             }
-                            inflation_max__ = Some(map.next_value()?);
+                            inflation_max__ = Some(map_.next_value()?);
                         }
                         GeneratedField::InflationMin => {
                             if inflation_min__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("inflationMin"));
                             }
-                            inflation_min__ = Some(map.next_value()?);
+                            inflation_min__ = Some(map_.next_value()?);
                         }
                         GeneratedField::GoalBonded => {
                             if goal_bonded__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("goalBonded"));
                             }
-                            goal_bonded__ = Some(map.next_value()?);
+                            goal_bonded__ = Some(map_.next_value()?);
                         }
                         GeneratedField::BlocksPerYear => {
                             if blocks_per_year__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("blocksPerYear"));
                             }
                             blocks_per_year__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -480,13 +481,13 @@ impl<'de> serde::Deserialize<'de> for QueryAnnualProvisionsRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAnnualProvisionsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryAnnualProvisionsRequest {})
             }
@@ -512,6 +513,7 @@ impl serde::Serialize for QueryAnnualProvisionsResponse {
         let mut struct_ser = serializer
             .serialize_struct("cosmos.mint.v1beta1.QueryAnnualProvisionsResponse", len)?;
         if !self.annual_provisions.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "annualProvisions",
                 pbjson::private::base64::encode(&self.annual_provisions).as_str(),
@@ -575,20 +577,20 @@ impl<'de> serde::Deserialize<'de> for QueryAnnualProvisionsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAnnualProvisionsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut annual_provisions__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AnnualProvisions => {
                             if annual_provisions__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("annualProvisions"));
                             }
                             annual_provisions__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -667,13 +669,13 @@ impl<'de> serde::Deserialize<'de> for QueryInflationRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryInflationRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryInflationRequest {})
             }
@@ -699,6 +701,7 @@ impl serde::Serialize for QueryInflationResponse {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.mint.v1beta1.QueryInflationResponse", len)?;
         if !self.inflation.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "inflation",
                 pbjson::private::base64::encode(&self.inflation).as_str(),
@@ -760,20 +763,20 @@ impl<'de> serde::Deserialize<'de> for QueryInflationResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryInflationResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut inflation__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Inflation => {
                             if inflation__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("inflation"));
                             }
                             inflation__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -850,12 +853,12 @@ impl<'de> serde::Deserialize<'de> for QueryParamsRequest {
                 formatter.write_str("struct cosmos.mint.v1beta1.QueryParamsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryParamsRequest {})
             }
@@ -937,18 +940,18 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
                 formatter.write_str("struct cosmos.mint.v1beta1.QueryParamsResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut params__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                     }
                 }

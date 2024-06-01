@@ -22,12 +22,14 @@ impl serde::Serialize for Equivocation {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.evidence.v1beta1.Equivocation", len)?;
         if self.height != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("height", ToString::to_string(&self.height).as_str())?;
         }
         if let Some(v) = self.time.as_ref() {
             struct_ser.serialize_field("time", v)?;
         }
         if self.power != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("power", ToString::to_string(&self.power).as_str())?;
         }
         if !self.consensus_address.is_empty() {
@@ -101,7 +103,7 @@ impl<'de> serde::Deserialize<'de> for Equivocation {
                 formatter.write_str("struct cosmos.evidence.v1beta1.Equivocation")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Equivocation, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Equivocation, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -109,14 +111,14 @@ impl<'de> serde::Deserialize<'de> for Equivocation {
                 let mut time__ = None;
                 let mut power__ = None;
                 let mut consensus_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Height => {
                             if height__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("height"));
                             }
                             height__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -124,14 +126,14 @@ impl<'de> serde::Deserialize<'de> for Equivocation {
                             if time__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("time"));
                             }
-                            time__ = map.next_value()?;
+                            time__ = map_.next_value()?;
                         }
                         GeneratedField::Power => {
                             if power__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("power"));
                             }
                             power__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -139,7 +141,7 @@ impl<'de> serde::Deserialize<'de> for Equivocation {
                             if consensus_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("consensusAddress"));
                             }
-                            consensus_address__ = Some(map.next_value()?);
+                            consensus_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -228,18 +230,18 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.evidence.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut evidence__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Evidence => {
                             if evidence__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("evidence"));
                             }
-                            evidence__ = Some(map.next_value()?);
+                            evidence__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -333,25 +335,25 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitEvidence {
                 formatter.write_str("struct cosmos.evidence.v1beta1.MsgSubmitEvidence")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgSubmitEvidence, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSubmitEvidence, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut submitter__ = None;
                 let mut evidence__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Submitter => {
                             if submitter__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("submitter"));
                             }
-                            submitter__ = Some(map.next_value()?);
+                            submitter__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Evidence => {
                             if evidence__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("evidence"));
                             }
-                            evidence__ = map.next_value()?;
+                            evidence__ = map_.next_value()?;
                         }
                     }
                 }
@@ -382,6 +384,7 @@ impl serde::Serialize for MsgSubmitEvidenceResponse {
         let mut struct_ser = serializer
             .serialize_struct("cosmos.evidence.v1beta1.MsgSubmitEvidenceResponse", len)?;
         if !self.hash.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser
                 .serialize_field("hash", pbjson::private::base64::encode(&self.hash).as_str())?;
         }
@@ -441,20 +444,20 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitEvidenceResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgSubmitEvidenceResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut hash__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Hash => {
                             if hash__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("hash"));
                             }
                             hash__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -544,19 +547,19 @@ impl<'de> serde::Deserialize<'de> for QueryAllEvidenceRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAllEvidenceRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -652,26 +655,26 @@ impl<'de> serde::Deserialize<'de> for QueryAllEvidenceResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAllEvidenceResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut evidence__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Evidence => {
                             if evidence__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("evidence"));
                             }
-                            evidence__ = Some(map.next_value()?);
+                            evidence__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -702,6 +705,7 @@ impl serde::Serialize for QueryEvidenceRequest {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.evidence.v1beta1.QueryEvidenceRequest", len)?;
         if !self.evidence_hash.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "evidenceHash",
                 pbjson::private::base64::encode(&self.evidence_hash).as_str(),
@@ -761,19 +765,22 @@ impl<'de> serde::Deserialize<'de> for QueryEvidenceRequest {
                 formatter.write_str("struct cosmos.evidence.v1beta1.QueryEvidenceRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryEvidenceRequest, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryEvidenceRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut evidence_hash__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::EvidenceHash => {
                             if evidence_hash__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("evidenceHash"));
                             }
                             evidence_hash__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -863,19 +870,19 @@ impl<'de> serde::Deserialize<'de> for QueryEvidenceResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryEvidenceResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut evidence__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Evidence => {
                             if evidence__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("evidence"));
                             }
-                            evidence__ = map.next_value()?;
+                            evidence__ = map_.next_value()?;
                         }
                     }
                 }

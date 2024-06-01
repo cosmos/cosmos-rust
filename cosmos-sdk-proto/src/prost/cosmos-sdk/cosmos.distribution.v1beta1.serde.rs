@@ -97,7 +97,7 @@ impl<'de> serde::Deserialize<'de> for CommunityPoolSpendProposal {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<CommunityPoolSpendProposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -106,31 +106,31 @@ impl<'de> serde::Deserialize<'de> for CommunityPoolSpendProposal {
                 let mut description__ = None;
                 let mut recipient__ = None;
                 let mut amount__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Title => {
                             if title__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("title"));
                             }
-                            title__ = Some(map.next_value()?);
+                            title__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Description => {
                             if description__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("description"));
                             }
-                            description__ = Some(map.next_value()?);
+                            description__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Recipient => {
                             if recipient__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("recipient"));
                             }
-                            recipient__ = Some(map.next_value()?);
+                            recipient__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
-                            amount__ = Some(map.next_value()?);
+                            amount__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -257,7 +257,7 @@ impl<'de> serde::Deserialize<'de> for CommunityPoolSpendProposalWithDeposit {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<CommunityPoolSpendProposalWithDeposit, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -267,37 +267,37 @@ impl<'de> serde::Deserialize<'de> for CommunityPoolSpendProposalWithDeposit {
                 let mut recipient__ = None;
                 let mut amount__ = None;
                 let mut deposit__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Title => {
                             if title__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("title"));
                             }
-                            title__ = Some(map.next_value()?);
+                            title__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Description => {
                             if description__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("description"));
                             }
-                            description__ = Some(map.next_value()?);
+                            description__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Recipient => {
                             if recipient__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("recipient"));
                             }
-                            recipient__ = Some(map.next_value()?);
+                            recipient__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
-                            amount__ = Some(map.next_value()?);
+                            amount__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Deposit => {
                             if deposit__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("deposit"));
                             }
-                            deposit__ = Some(map.next_value()?);
+                            deposit__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -399,26 +399,26 @@ impl<'de> serde::Deserialize<'de> for DelegationDelegatorReward {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<DelegationDelegatorReward, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_address__ = None;
                 let mut reward__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Reward => {
                             if reward__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("reward"));
                             }
-                            reward__ = Some(map.next_value()?);
+                            reward__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -455,6 +455,7 @@ impl serde::Serialize for DelegatorStartingInfo {
         let mut struct_ser = serializer
             .serialize_struct("cosmos.distribution.v1beta1.DelegatorStartingInfo", len)?;
         if self.previous_period != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "previousPeriod",
                 ToString::to_string(&self.previous_period).as_str(),
@@ -464,6 +465,7 @@ impl serde::Serialize for DelegatorStartingInfo {
             struct_ser.serialize_field("stake", &self.stake)?;
         }
         if self.height != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("height", ToString::to_string(&self.height).as_str())?;
         }
         struct_ser.end()
@@ -528,7 +530,7 @@ impl<'de> serde::Deserialize<'de> for DelegatorStartingInfo {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<DelegatorStartingInfo, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -536,14 +538,14 @@ impl<'de> serde::Deserialize<'de> for DelegatorStartingInfo {
                 let mut previous_period__ = None;
                 let mut stake__ = None;
                 let mut height__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::PreviousPeriod => {
                             if previous_period__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("previousPeriod"));
                             }
                             previous_period__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -551,14 +553,14 @@ impl<'de> serde::Deserialize<'de> for DelegatorStartingInfo {
                             if stake__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("stake"));
                             }
-                            stake__ = Some(map.next_value()?);
+                            stake__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Height => {
                             if height__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("height"));
                             }
                             height__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -680,7 +682,7 @@ impl<'de> serde::Deserialize<'de> for DelegatorStartingInfoRecord {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<DelegatorStartingInfoRecord, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -688,25 +690,25 @@ impl<'de> serde::Deserialize<'de> for DelegatorStartingInfoRecord {
                 let mut delegator_address__ = None;
                 let mut validator_address__ = None;
                 let mut starting_info__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::StartingInfo => {
                             if starting_info__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("startingInfo"));
                             }
-                            starting_info__ = map.next_value()?;
+                            starting_info__ = map_.next_value()?;
                         }
                     }
                 }
@@ -813,26 +815,26 @@ impl<'de> serde::Deserialize<'de> for DelegatorWithdrawInfo {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<DelegatorWithdrawInfo, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut delegator_address__ = None;
                 let mut withdraw_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::WithdrawAddress => {
                             if withdraw_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("withdrawAddress"));
                             }
-                            withdraw_address__ = Some(map.next_value()?);
+                            withdraw_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -919,18 +921,18 @@ impl<'de> serde::Deserialize<'de> for FeePool {
                 formatter.write_str("struct cosmos.distribution.v1beta1.FeePool")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<FeePool, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<FeePool, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut community_pool__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::CommunityPool => {
                             if community_pool__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("communityPool"));
                             }
-                            community_pool__ = Some(map.next_value()?);
+                            community_pool__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1132,7 +1134,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.distribution.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1146,19 +1148,19 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 let mut validator_current_rewards__ = None;
                 let mut delegator_starting_infos__ = None;
                 let mut validator_slash_events__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                         GeneratedField::FeePool => {
                             if fee_pool__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("feePool"));
                             }
-                            fee_pool__ = map.next_value()?;
+                            fee_pool__ = map_.next_value()?;
                         }
                         GeneratedField::DelegatorWithdrawInfos => {
                             if delegator_withdraw_infos__.is_some() {
@@ -1166,13 +1168,13 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     "delegatorWithdrawInfos",
                                 ));
                             }
-                            delegator_withdraw_infos__ = Some(map.next_value()?);
+                            delegator_withdraw_infos__ = Some(map_.next_value()?);
                         }
                         GeneratedField::PreviousProposer => {
                             if previous_proposer__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("previousProposer"));
                             }
-                            previous_proposer__ = Some(map.next_value()?);
+                            previous_proposer__ = Some(map_.next_value()?);
                         }
                         GeneratedField::OutstandingRewards => {
                             if outstanding_rewards__.is_some() {
@@ -1180,7 +1182,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     "outstandingRewards",
                                 ));
                             }
-                            outstanding_rewards__ = Some(map.next_value()?);
+                            outstanding_rewards__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ValidatorAccumulatedCommissions => {
                             if validator_accumulated_commissions__.is_some() {
@@ -1188,7 +1190,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     "validatorAccumulatedCommissions",
                                 ));
                             }
-                            validator_accumulated_commissions__ = Some(map.next_value()?);
+                            validator_accumulated_commissions__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ValidatorHistoricalRewards => {
                             if validator_historical_rewards__.is_some() {
@@ -1196,7 +1198,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     "validatorHistoricalRewards",
                                 ));
                             }
-                            validator_historical_rewards__ = Some(map.next_value()?);
+                            validator_historical_rewards__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ValidatorCurrentRewards => {
                             if validator_current_rewards__.is_some() {
@@ -1204,7 +1206,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     "validatorCurrentRewards",
                                 ));
                             }
-                            validator_current_rewards__ = Some(map.next_value()?);
+                            validator_current_rewards__ = Some(map_.next_value()?);
                         }
                         GeneratedField::DelegatorStartingInfos => {
                             if delegator_starting_infos__.is_some() {
@@ -1212,7 +1214,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     "delegatorStartingInfos",
                                 ));
                             }
-                            delegator_starting_infos__ = Some(map.next_value()?);
+                            delegator_starting_infos__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ValidatorSlashEvents => {
                             if validator_slash_events__.is_some() {
@@ -1220,7 +1222,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     "validatorSlashEvents",
                                 ));
                             }
-                            validator_slash_events__ = Some(map.next_value()?);
+                            validator_slash_events__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1325,25 +1327,28 @@ impl<'de> serde::Deserialize<'de> for MsgFundCommunityPool {
                 formatter.write_str("struct cosmos.distribution.v1beta1.MsgFundCommunityPool")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgFundCommunityPool, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgFundCommunityPool, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut amount__ = None;
                 let mut depositor__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
-                            amount__ = Some(map.next_value()?);
+                            amount__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Depositor => {
                             if depositor__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("depositor"));
                             }
-                            depositor__ = Some(map.next_value()?);
+                            depositor__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1424,13 +1429,13 @@ impl<'de> serde::Deserialize<'de> for MsgFundCommunityPoolResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgFundCommunityPoolResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgFundCommunityPoolResponse {})
             }
@@ -1531,26 +1536,26 @@ impl<'de> serde::Deserialize<'de> for MsgSetWithdrawAddress {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgSetWithdrawAddress, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut delegator_address__ = None;
                 let mut withdraw_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::WithdrawAddress => {
                             if withdraw_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("withdrawAddress"));
                             }
-                            withdraw_address__ = Some(map.next_value()?);
+                            withdraw_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1631,13 +1636,13 @@ impl<'de> serde::Deserialize<'de> for MsgSetWithdrawAddressResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgSetWithdrawAddressResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgSetWithdrawAddressResponse {})
             }
@@ -1740,26 +1745,26 @@ impl<'de> serde::Deserialize<'de> for MsgWithdrawDelegatorReward {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgWithdrawDelegatorReward, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut delegator_address__ = None;
                 let mut validator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1852,19 +1857,19 @@ impl<'de> serde::Deserialize<'de> for MsgWithdrawDelegatorRewardResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgWithdrawDelegatorRewardResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut amount__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
-                            amount__ = Some(map.next_value()?);
+                            amount__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1957,19 +1962,19 @@ impl<'de> serde::Deserialize<'de> for MsgWithdrawValidatorCommission {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgWithdrawValidatorCommission, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2061,19 +2066,19 @@ impl<'de> serde::Deserialize<'de> for MsgWithdrawValidatorCommissionResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<MsgWithdrawValidatorCommissionResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut amount__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
-                            amount__ = Some(map.next_value()?);
+                            amount__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2198,7 +2203,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                 formatter.write_str("struct cosmos.distribution.v1beta1.Params")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Params, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Params, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -2206,13 +2211,13 @@ impl<'de> serde::Deserialize<'de> for Params {
                 let mut base_proposer_reward__ = None;
                 let mut bonus_proposer_reward__ = None;
                 let mut withdraw_addr_enabled__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::CommunityTax => {
                             if community_tax__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("communityTax"));
                             }
-                            community_tax__ = Some(map.next_value()?);
+                            community_tax__ = Some(map_.next_value()?);
                         }
                         GeneratedField::BaseProposerReward => {
                             if base_proposer_reward__.is_some() {
@@ -2220,7 +2225,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                     "baseProposerReward",
                                 ));
                             }
-                            base_proposer_reward__ = Some(map.next_value()?);
+                            base_proposer_reward__ = Some(map_.next_value()?);
                         }
                         GeneratedField::BonusProposerReward => {
                             if bonus_proposer_reward__.is_some() {
@@ -2228,7 +2233,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                     "bonusProposerReward",
                                 ));
                             }
-                            bonus_proposer_reward__ = Some(map.next_value()?);
+                            bonus_proposer_reward__ = Some(map_.next_value()?);
                         }
                         GeneratedField::WithdrawAddrEnabled => {
                             if withdraw_addr_enabled__.is_some() {
@@ -2236,7 +2241,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                     "withdrawAddrEnabled",
                                 ));
                             }
-                            withdraw_addr_enabled__ = Some(map.next_value()?);
+                            withdraw_addr_enabled__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2316,13 +2321,13 @@ impl<'de> serde::Deserialize<'de> for QueryCommunityPoolRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryCommunityPoolRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryCommunityPoolRequest {})
             }
@@ -2408,19 +2413,19 @@ impl<'de> serde::Deserialize<'de> for QueryCommunityPoolResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryCommunityPoolResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut pool__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Pool => {
                             if pool__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pool"));
                             }
-                            pool__ = Some(map.next_value()?);
+                            pool__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2528,26 +2533,26 @@ impl<'de> serde::Deserialize<'de> for QueryDelegationRewardsRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegationRewardsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut delegator_address__ = None;
                 let mut validator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2639,19 +2644,19 @@ impl<'de> serde::Deserialize<'de> for QueryDelegationRewardsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegationRewardsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut rewards__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Rewards => {
                             if rewards__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("rewards"));
                             }
-                            rewards__ = Some(map.next_value()?);
+                            rewards__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2745,19 +2750,19 @@ impl<'de> serde::Deserialize<'de> for QueryDelegationTotalRewardsRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegationTotalRewardsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut delegator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2857,26 +2862,26 @@ impl<'de> serde::Deserialize<'de> for QueryDelegationTotalRewardsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegationTotalRewardsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut rewards__ = None;
                 let mut total__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Rewards => {
                             if rewards__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("rewards"));
                             }
-                            rewards__ = Some(map.next_value()?);
+                            rewards__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Total => {
                             if total__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("total"));
                             }
-                            total__ = Some(map.next_value()?);
+                            total__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2970,19 +2975,19 @@ impl<'de> serde::Deserialize<'de> for QueryDelegatorValidatorsRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegatorValidatorsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut delegator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3074,19 +3079,19 @@ impl<'de> serde::Deserialize<'de> for QueryDelegatorValidatorsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegatorValidatorsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validators__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Validators => {
                             if validators__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validators"));
                             }
-                            validators__ = Some(map.next_value()?);
+                            validators__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3180,19 +3185,19 @@ impl<'de> serde::Deserialize<'de> for QueryDelegatorWithdrawAddressRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegatorWithdrawAddressRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut delegator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DelegatorAddress => {
                             if delegator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("delegatorAddress"));
                             }
-                            delegator_address__ = Some(map.next_value()?);
+                            delegator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3286,19 +3291,19 @@ impl<'de> serde::Deserialize<'de> for QueryDelegatorWithdrawAddressResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDelegatorWithdrawAddressResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut withdraw_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::WithdrawAddress => {
                             if withdraw_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("withdrawAddress"));
                             }
-                            withdraw_address__ = Some(map.next_value()?);
+                            withdraw_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3373,12 +3378,12 @@ impl<'de> serde::Deserialize<'de> for QueryParamsRequest {
                 formatter.write_str("struct cosmos.distribution.v1beta1.QueryParamsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryParamsRequest {})
             }
@@ -3460,18 +3465,18 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
                 formatter.write_str("struct cosmos.distribution.v1beta1.QueryParamsResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut params__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                     }
                 }
@@ -3562,19 +3567,19 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorCommissionRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryValidatorCommissionRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3666,19 +3671,19 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorCommissionResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryValidatorCommissionResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut commission__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Commission => {
                             if commission__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("commission"));
                             }
-                            commission__ = map.next_value()?;
+                            commission__ = map_.next_value()?;
                         }
                     }
                 }
@@ -3772,19 +3777,19 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorOutstandingRewardsRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryValidatorOutstandingRewardsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_address__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3876,19 +3881,19 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorOutstandingRewardsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryValidatorOutstandingRewardsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut rewards__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Rewards => {
                             if rewards__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("rewards"));
                             }
-                            rewards__ = map.next_value()?;
+                            rewards__ = map_.next_value()?;
                         }
                     }
                 }
@@ -3930,12 +3935,14 @@ impl serde::Serialize for QueryValidatorSlashesRequest {
             struct_ser.serialize_field("validatorAddress", &self.validator_address)?;
         }
         if self.starting_height != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "startingHeight",
                 ToString::to_string(&self.starting_height).as_str(),
             )?;
         }
         if self.ending_height != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "endingHeight",
                 ToString::to_string(&self.ending_height).as_str(),
@@ -4019,7 +4026,7 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorSlashesRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryValidatorSlashesRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -4028,20 +4035,20 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorSlashesRequest {
                 let mut starting_height__ = None;
                 let mut ending_height__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::StartingHeight => {
                             if starting_height__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("startingHeight"));
                             }
                             starting_height__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -4050,7 +4057,7 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorSlashesRequest {
                                 return Err(serde::de::Error::duplicate_field("endingHeight"));
                             }
                             ending_height__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -4058,7 +4065,7 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorSlashesRequest {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -4160,26 +4167,26 @@ impl<'de> serde::Deserialize<'de> for QueryValidatorSlashesResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryValidatorSlashesResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut slashes__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Slashes => {
                             if slashes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("slashes"));
                             }
-                            slashes__ = Some(map.next_value()?);
+                            slashes__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -4271,19 +4278,19 @@ impl<'de> serde::Deserialize<'de> for ValidatorAccumulatedCommission {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorAccumulatedCommission, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut commission__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Commission => {
                             if commission__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("commission"));
                             }
-                            commission__ = Some(map.next_value()?);
+                            commission__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -4385,26 +4392,26 @@ impl<'de> serde::Deserialize<'de> for ValidatorAccumulatedCommissionRecord {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorAccumulatedCommissionRecord, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_address__ = None;
                 let mut accumulated__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Accumulated => {
                             if accumulated__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("accumulated"));
                             }
-                            accumulated__ = map.next_value()?;
+                            accumulated__ = map_.next_value()?;
                         }
                     }
                 }
@@ -4441,6 +4448,7 @@ impl serde::Serialize for ValidatorCurrentRewards {
             struct_ser.serialize_field("rewards", &self.rewards)?;
         }
         if self.period != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("period", ToString::to_string(&self.period).as_str())?;
         }
         struct_ser.end()
@@ -4501,27 +4509,27 @@ impl<'de> serde::Deserialize<'de> for ValidatorCurrentRewards {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorCurrentRewards, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut rewards__ = None;
                 let mut period__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Rewards => {
                             if rewards__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("rewards"));
                             }
-                            rewards__ = Some(map.next_value()?);
+                            rewards__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Period => {
                             if period__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("period"));
                             }
                             period__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -4625,26 +4633,26 @@ impl<'de> serde::Deserialize<'de> for ValidatorCurrentRewardsRecord {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorCurrentRewardsRecord, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_address__ = None;
                 let mut rewards__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Rewards => {
                             if rewards__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("rewards"));
                             }
-                            rewards__ = map.next_value()?;
+                            rewards__ = map_.next_value()?;
                         }
                     }
                 }
@@ -4752,14 +4760,14 @@ impl<'de> serde::Deserialize<'de> for ValidatorHistoricalRewards {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorHistoricalRewards, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut cumulative_reward_ratio__ = None;
                 let mut reference_count__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::CumulativeRewardRatio => {
                             if cumulative_reward_ratio__.is_some() {
@@ -4767,14 +4775,14 @@ impl<'de> serde::Deserialize<'de> for ValidatorHistoricalRewards {
                                     "cumulativeRewardRatio",
                                 ));
                             }
-                            cumulative_reward_ratio__ = Some(map.next_value()?);
+                            cumulative_reward_ratio__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ReferenceCount => {
                             if reference_count__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("referenceCount"));
                             }
                             reference_count__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -4818,6 +4826,7 @@ impl serde::Serialize for ValidatorHistoricalRewardsRecord {
             struct_ser.serialize_field("validatorAddress", &self.validator_address)?;
         }
         if self.period != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("period", ToString::to_string(&self.period).as_str())?;
         }
         if let Some(v) = self.rewards.as_ref() {
@@ -4887,7 +4896,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorHistoricalRewardsRecord {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorHistoricalRewardsRecord, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -4895,20 +4904,20 @@ impl<'de> serde::Deserialize<'de> for ValidatorHistoricalRewardsRecord {
                 let mut validator_address__ = None;
                 let mut period__ = None;
                 let mut rewards__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Period => {
                             if period__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("period"));
                             }
                             period__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -4916,7 +4925,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorHistoricalRewardsRecord {
                             if rewards__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("rewards"));
                             }
-                            rewards__ = map.next_value()?;
+                            rewards__ = map_.next_value()?;
                         }
                     }
                 }
@@ -5009,19 +5018,19 @@ impl<'de> serde::Deserialize<'de> for ValidatorOutstandingRewards {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorOutstandingRewards, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut rewards__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Rewards => {
                             if rewards__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("rewards"));
                             }
-                            rewards__ = Some(map.next_value()?);
+                            rewards__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -5130,20 +5139,20 @@ impl<'de> serde::Deserialize<'de> for ValidatorOutstandingRewardsRecord {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorOutstandingRewardsRecord, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_address__ = None;
                 let mut outstanding_rewards__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::OutstandingRewards => {
                             if outstanding_rewards__.is_some() {
@@ -5151,7 +5160,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorOutstandingRewardsRecord {
                                     "outstandingRewards",
                                 ));
                             }
-                            outstanding_rewards__ = Some(map.next_value()?);
+                            outstanding_rewards__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -5185,6 +5194,7 @@ impl serde::Serialize for ValidatorSlashEvent {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.distribution.v1beta1.ValidatorSlashEvent", len)?;
         if self.validator_period != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "validatorPeriod",
                 ToString::to_string(&self.validator_period).as_str(),
@@ -5251,20 +5261,20 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEvent {
                 formatter.write_str("struct cosmos.distribution.v1beta1.ValidatorSlashEvent")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<ValidatorSlashEvent, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ValidatorSlashEvent, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_period__ = None;
                 let mut fraction__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorPeriod => {
                             if validator_period__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorPeriod"));
                             }
                             validator_period__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5272,7 +5282,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEvent {
                             if fraction__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("fraction"));
                             }
-                            fraction__ = Some(map.next_value()?);
+                            fraction__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -5315,9 +5325,11 @@ impl serde::Serialize for ValidatorSlashEventRecord {
             struct_ser.serialize_field("validatorAddress", &self.validator_address)?;
         }
         if self.height != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("height", ToString::to_string(&self.height).as_str())?;
         }
         if self.period != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("period", ToString::to_string(&self.period).as_str())?;
         }
         if let Some(v) = self.validator_slash_event.as_ref() {
@@ -5396,7 +5408,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEventRecord {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ValidatorSlashEventRecord, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -5405,20 +5417,20 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEventRecord {
                 let mut height__ = None;
                 let mut period__ = None;
                 let mut validator_slash_event__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorAddress => {
                             if validator_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("validatorAddress"));
                             }
-                            validator_address__ = Some(map.next_value()?);
+                            validator_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Height => {
                             if height__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("height"));
                             }
                             height__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5427,7 +5439,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEventRecord {
                                 return Err(serde::de::Error::duplicate_field("period"));
                             }
                             period__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -5437,7 +5449,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEventRecord {
                                     "validatorSlashEvent",
                                 ));
                             }
-                            validator_slash_event__ = map.next_value()?;
+                            validator_slash_event__ = map_.next_value()?;
                         }
                     }
                 }
@@ -5528,12 +5540,15 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEvents {
                 formatter.write_str("struct cosmos.distribution.v1beta1.ValidatorSlashEvents")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<ValidatorSlashEvents, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<ValidatorSlashEvents, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut validator_slash_events__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ValidatorSlashEvents => {
                             if validator_slash_events__.is_some() {
@@ -5541,7 +5556,7 @@ impl<'de> serde::Deserialize<'de> for ValidatorSlashEvents {
                                     "validatorSlashEvents",
                                 ));
                             }
-                            validator_slash_events__ = Some(map.next_value()?);
+                            validator_slash_events__ = Some(map_.next_value()?);
                         }
                     }
                 }

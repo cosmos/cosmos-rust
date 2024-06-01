@@ -76,25 +76,25 @@ impl<'de> serde::Deserialize<'de> for Balance {
                 formatter.write_str("struct cosmos.bank.v1beta1.Balance")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Balance, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Balance, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut coins__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Coins => {
                             if coins__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("coins"));
                             }
-                            coins__ = Some(map.next_value()?);
+                            coins__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -184,25 +184,25 @@ impl<'de> serde::Deserialize<'de> for DenomOwner {
                 formatter.write_str("struct cosmos.bank.v1beta1.DenomOwner")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<DenomOwner, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<DenomOwner, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut balance__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Balance => {
                             if balance__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("balance"));
                             }
-                            balance__ = map.next_value()?;
+                            balance__ = map_.next_value()?;
                         }
                     }
                 }
@@ -300,27 +300,27 @@ impl<'de> serde::Deserialize<'de> for DenomUnit {
                 formatter.write_str("struct cosmos.bank.v1beta1.DenomUnit")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<DenomUnit, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<DenomUnit, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut denom__ = None;
                 let mut exponent__ = None;
                 let mut aliases__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Denom => {
                             if denom__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denom"));
                             }
-                            denom__ = Some(map.next_value()?);
+                            denom__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Exponent => {
                             if exponent__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("exponent"));
                             }
                             exponent__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -328,7 +328,7 @@ impl<'de> serde::Deserialize<'de> for DenomUnit {
                             if aliases__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("aliases"));
                             }
-                            aliases__ = Some(map.next_value()?);
+                            aliases__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -442,7 +442,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.bank.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -450,31 +450,31 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 let mut balances__ = None;
                 let mut supply__ = None;
                 let mut denom_metadata__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                         GeneratedField::Balances => {
                             if balances__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("balances"));
                             }
-                            balances__ = Some(map.next_value()?);
+                            balances__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Supply => {
                             if supply__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("supply"));
                             }
-                            supply__ = Some(map.next_value()?);
+                            supply__ = Some(map_.next_value()?);
                         }
                         GeneratedField::DenomMetadata => {
                             if denom_metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denomMetadata"));
                             }
-                            denom_metadata__ = Some(map.next_value()?);
+                            denom_metadata__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -570,25 +570,25 @@ impl<'de> serde::Deserialize<'de> for Input {
                 formatter.write_str("struct cosmos.bank.v1beta1.Input")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Input, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Input, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut coins__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Coins => {
                             if coins__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("coins"));
                             }
-                            coins__ = Some(map.next_value()?);
+                            coins__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -737,7 +737,7 @@ impl<'de> serde::Deserialize<'de> for Metadata {
                 formatter.write_str("struct cosmos.bank.v1beta1.Metadata")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Metadata, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Metadata, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -749,55 +749,55 @@ impl<'de> serde::Deserialize<'de> for Metadata {
                 let mut symbol__ = None;
                 let mut uri__ = None;
                 let mut uri_hash__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Description => {
                             if description__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("description"));
                             }
-                            description__ = Some(map.next_value()?);
+                            description__ = Some(map_.next_value()?);
                         }
                         GeneratedField::DenomUnits => {
                             if denom_units__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denomUnits"));
                             }
-                            denom_units__ = Some(map.next_value()?);
+                            denom_units__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Base => {
                             if base__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("base"));
                             }
-                            base__ = Some(map.next_value()?);
+                            base__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Display => {
                             if display__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("display"));
                             }
-                            display__ = Some(map.next_value()?);
+                            display__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Name => {
                             if name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("name"));
                             }
-                            name__ = Some(map.next_value()?);
+                            name__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Symbol => {
                             if symbol__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("symbol"));
                             }
-                            symbol__ = Some(map.next_value()?);
+                            symbol__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Uri => {
                             if uri__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("uri"));
                             }
-                            uri__ = Some(map.next_value()?);
+                            uri__ = Some(map_.next_value()?);
                         }
                         GeneratedField::UriHash => {
                             if uri_hash__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("uriHash"));
                             }
-                            uri_hash__ = Some(map.next_value()?);
+                            uri_hash__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -894,25 +894,25 @@ impl<'de> serde::Deserialize<'de> for MsgMultiSend {
                 formatter.write_str("struct cosmos.bank.v1beta1.MsgMultiSend")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgMultiSend, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgMultiSend, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut inputs__ = None;
                 let mut outputs__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Inputs => {
                             if inputs__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("inputs"));
                             }
-                            inputs__ = Some(map.next_value()?);
+                            inputs__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Outputs => {
                             if outputs__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("outputs"));
                             }
-                            outputs__ = Some(map.next_value()?);
+                            outputs__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -988,12 +988,15 @@ impl<'de> serde::Deserialize<'de> for MsgMultiSendResponse {
                 formatter.write_str("struct cosmos.bank.v1beta1.MsgMultiSendResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgMultiSendResponse, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgMultiSendResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgMultiSendResponse {})
             }
@@ -1096,32 +1099,32 @@ impl<'de> serde::Deserialize<'de> for MsgSend {
                 formatter.write_str("struct cosmos.bank.v1beta1.MsgSend")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgSend, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSend, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut from_address__ = None;
                 let mut to_address__ = None;
                 let mut amount__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::FromAddress => {
                             if from_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("fromAddress"));
                             }
-                            from_address__ = Some(map.next_value()?);
+                            from_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::ToAddress => {
                             if to_address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("toAddress"));
                             }
-                            to_address__ = Some(map.next_value()?);
+                            to_address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
-                            amount__ = Some(map.next_value()?);
+                            amount__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1193,12 +1196,12 @@ impl<'de> serde::Deserialize<'de> for MsgSendResponse {
                 formatter.write_str("struct cosmos.bank.v1beta1.MsgSendResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgSendResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSendResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(MsgSendResponse {})
             }
@@ -1287,25 +1290,25 @@ impl<'de> serde::Deserialize<'de> for Output {
                 formatter.write_str("struct cosmos.bank.v1beta1.Output")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Output, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Output, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut coins__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Coins => {
                             if coins__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("coins"));
                             }
-                            coins__ = Some(map.next_value()?);
+                            coins__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1402,19 +1405,19 @@ impl<'de> serde::Deserialize<'de> for Params {
                 formatter.write_str("struct cosmos.bank.v1beta1.Params")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Params, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Params, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut send_enabled__ = None;
                 let mut default_send_enabled__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::SendEnabled => {
                             if send_enabled__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("sendEnabled"));
                             }
-                            send_enabled__ = Some(map.next_value()?);
+                            send_enabled__ = Some(map_.next_value()?);
                         }
                         GeneratedField::DefaultSendEnabled => {
                             if default_send_enabled__.is_some() {
@@ -1422,7 +1425,7 @@ impl<'de> serde::Deserialize<'de> for Params {
                                     "defaultSendEnabled",
                                 ));
                             }
-                            default_send_enabled__ = Some(map.next_value()?);
+                            default_send_enabled__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1515,26 +1518,26 @@ impl<'de> serde::Deserialize<'de> for QueryAllBalancesRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAllBalancesRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1631,26 +1634,26 @@ impl<'de> serde::Deserialize<'de> for QueryAllBalancesResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryAllBalancesResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut balances__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Balances => {
                             if balances__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("balances"));
                             }
-                            balances__ = Some(map.next_value()?);
+                            balances__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1745,25 +1748,25 @@ impl<'de> serde::Deserialize<'de> for QueryBalanceRequest {
                 formatter.write_str("struct cosmos.bank.v1beta1.QueryBalanceRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryBalanceRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryBalanceRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut denom__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Denom => {
                             if denom__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denom"));
                             }
-                            denom__ = Some(map.next_value()?);
+                            denom__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -1850,18 +1853,21 @@ impl<'de> serde::Deserialize<'de> for QueryBalanceResponse {
                 formatter.write_str("struct cosmos.bank.v1beta1.QueryBalanceResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryBalanceResponse, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryBalanceResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut balance__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Balance => {
                             if balance__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("balance"));
                             }
-                            balance__ = map.next_value()?;
+                            balance__ = map_.next_value()?;
                         }
                     }
                 }
@@ -1947,19 +1953,19 @@ impl<'de> serde::Deserialize<'de> for QueryDenomMetadataRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDenomMetadataRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut denom__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Denom => {
                             if denom__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denom"));
                             }
-                            denom__ = Some(map.next_value()?);
+                            denom__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -2047,19 +2053,19 @@ impl<'de> serde::Deserialize<'de> for QueryDenomMetadataResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDenomMetadataResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut metadata__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Metadata => {
                             if metadata__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadata"));
                             }
-                            metadata__ = map.next_value()?;
+                            metadata__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2155,26 +2161,26 @@ impl<'de> serde::Deserialize<'de> for QueryDenomOwnersRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDenomOwnersRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut denom__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Denom => {
                             if denom__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denom"));
                             }
-                            denom__ = Some(map.next_value()?);
+                            denom__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2271,26 +2277,26 @@ impl<'de> serde::Deserialize<'de> for QueryDenomOwnersResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDenomOwnersResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut denom_owners__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::DenomOwners => {
                             if denom_owners__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denomOwners"));
                             }
-                            denom_owners__ = Some(map.next_value()?);
+                            denom_owners__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2379,19 +2385,19 @@ impl<'de> serde::Deserialize<'de> for QueryDenomsMetadataRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDenomsMetadataRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2487,26 +2493,26 @@ impl<'de> serde::Deserialize<'de> for QueryDenomsMetadataResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryDenomsMetadataResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut metadatas__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Metadatas => {
                             if metadatas__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("metadatas"));
                             }
-                            metadatas__ = Some(map.next_value()?);
+                            metadatas__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2582,12 +2588,12 @@ impl<'de> serde::Deserialize<'de> for QueryParamsRequest {
                 formatter.write_str("struct cosmos.bank.v1beta1.QueryParamsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QueryParamsRequest {})
             }
@@ -2669,18 +2675,18 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
                 formatter.write_str("struct cosmos.bank.v1beta1.QueryParamsResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut params__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
                             if params__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("params"));
                             }
-                            params__ = map.next_value()?;
+                            params__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2774,26 +2780,26 @@ impl<'de> serde::Deserialize<'de> for QuerySpendableBalancesRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QuerySpendableBalancesRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut address__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
                             if address__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("address"));
                             }
-                            address__ = Some(map.next_value()?);
+                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2890,26 +2896,26 @@ impl<'de> serde::Deserialize<'de> for QuerySpendableBalancesResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QuerySpendableBalancesResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut balances__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Balances => {
                             if balances__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("balances"));
                             }
-                            balances__ = Some(map.next_value()?);
+                            balances__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -2996,18 +3002,21 @@ impl<'de> serde::Deserialize<'de> for QuerySupplyOfRequest {
                 formatter.write_str("struct cosmos.bank.v1beta1.QuerySupplyOfRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QuerySupplyOfRequest, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QuerySupplyOfRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut denom__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Denom => {
                             if denom__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denom"));
                             }
-                            denom__ = Some(map.next_value()?);
+                            denom__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3095,19 +3104,19 @@ impl<'de> serde::Deserialize<'de> for QuerySupplyOfResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QuerySupplyOfResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut amount__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Amount => {
                             if amount__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("amount"));
                             }
-                            amount__ = map.next_value()?;
+                            amount__ = map_.next_value()?;
                         }
                     }
                 }
@@ -3193,19 +3202,19 @@ impl<'de> serde::Deserialize<'de> for QueryTotalSupplyRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryTotalSupplyRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -3301,26 +3310,26 @@ impl<'de> serde::Deserialize<'de> for QueryTotalSupplyResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QueryTotalSupplyResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut supply__ = None;
                 let mut pagination__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Supply => {
                             if supply__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("supply"));
                             }
-                            supply__ = Some(map.next_value()?);
+                            supply__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Pagination => {
                             if pagination__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("pagination"));
                             }
-                            pagination__ = map.next_value()?;
+                            pagination__ = map_.next_value()?;
                         }
                     }
                 }
@@ -3407,18 +3416,18 @@ impl<'de> serde::Deserialize<'de> for SendAuthorization {
                 formatter.write_str("struct cosmos.bank.v1beta1.SendAuthorization")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<SendAuthorization, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<SendAuthorization, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut spend_limit__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::SpendLimit => {
                             if spend_limit__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("spendLimit"));
                             }
-                            spend_limit__ = Some(map.next_value()?);
+                            spend_limit__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3511,25 +3520,25 @@ impl<'de> serde::Deserialize<'de> for SendEnabled {
                 formatter.write_str("struct cosmos.bank.v1beta1.SendEnabled")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<SendEnabled, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<SendEnabled, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut denom__ = None;
                 let mut enabled__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Denom => {
                             if denom__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("denom"));
                             }
-                            denom__ = Some(map.next_value()?);
+                            denom__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Enabled => {
                             if enabled__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("enabled"));
                             }
-                            enabled__ = Some(map.next_value()?);
+                            enabled__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -3611,18 +3620,18 @@ impl<'de> serde::Deserialize<'de> for Supply {
                 formatter.write_str("struct cosmos.bank.v1beta1.Supply")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Supply, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Supply, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut total__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Total => {
                             if total__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("total"));
                             }
-                            total__ = Some(map.next_value()?);
+                            total__ = Some(map_.next_value()?);
                         }
                     }
                 }

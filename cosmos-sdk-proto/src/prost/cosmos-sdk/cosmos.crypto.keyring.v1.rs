@@ -1,5 +1,6 @@
 // @generated
 /// Record is used for representing a key in the keyring.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Record {
     /// name represents a name of Record
@@ -16,24 +17,29 @@ pub struct Record {
 pub mod record {
     /// Item is a keyring item stored in a keyring backend.
     /// Local item
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Local {
         #[prost(message, optional, tag = "1")]
         pub priv_key: ::core::option::Option<::prost_types::Any>,
     }
     /// Ledger item
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Ledger {
         #[prost(message, optional, tag = "1")]
         pub path: ::core::option::Option<super::super::super::hd::v1::Bip44Params>,
     }
     /// Multi item
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Multi {}
     /// Offline item
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct Offline {}
     /// Record contains one of the following items
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Item {
         /// local stores the private key locally.

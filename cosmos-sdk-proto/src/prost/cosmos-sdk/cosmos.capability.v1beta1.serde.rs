@@ -13,6 +13,7 @@ impl serde::Serialize for Capability {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.capability.v1beta1.Capability", len)?;
         if self.index != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("index", ToString::to_string(&self.index).as_str())?;
         }
         struct_ser.end()
@@ -69,19 +70,19 @@ impl<'de> serde::Deserialize<'de> for Capability {
                 formatter.write_str("struct cosmos.capability.v1beta1.Capability")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Capability, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Capability, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut index__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Index => {
                             if index__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("index"));
                             }
                             index__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -169,18 +170,18 @@ impl<'de> serde::Deserialize<'de> for CapabilityOwners {
                 formatter.write_str("struct cosmos.capability.v1beta1.CapabilityOwners")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<CapabilityOwners, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<CapabilityOwners, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut owners__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Owners => {
                             if owners__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owners"));
                             }
-                            owners__ = Some(map.next_value()?);
+                            owners__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -213,6 +214,7 @@ impl serde::Serialize for GenesisOwners {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.capability.v1beta1.GenesisOwners", len)?;
         if self.index != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("index", ToString::to_string(&self.index).as_str())?;
         }
         if let Some(v) = self.index_owners.as_ref() {
@@ -274,20 +276,20 @@ impl<'de> serde::Deserialize<'de> for GenesisOwners {
                 formatter.write_str("struct cosmos.capability.v1beta1.GenesisOwners")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisOwners, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisOwners, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut index__ = None;
                 let mut index_owners__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Index => {
                             if index__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("index"));
                             }
                             index__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -295,7 +297,7 @@ impl<'de> serde::Deserialize<'de> for GenesisOwners {
                             if index_owners__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("indexOwners"));
                             }
-                            index_owners__ = map.next_value()?;
+                            index_owners__ = map_.next_value()?;
                         }
                     }
                 }
@@ -329,6 +331,7 @@ impl serde::Serialize for GenesisState {
         let mut struct_ser =
             serializer.serialize_struct("cosmos.capability.v1beta1.GenesisState", len)?;
         if self.index != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("index", ToString::to_string(&self.index).as_str())?;
         }
         if !self.owners.is_empty() {
@@ -390,20 +393,20 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 formatter.write_str("struct cosmos.capability.v1beta1.GenesisState")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<GenesisState, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GenesisState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut index__ = None;
                 let mut owners__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Index => {
                             if index__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("index"));
                             }
                             index__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -411,7 +414,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             if owners__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("owners"));
                             }
-                            owners__ = Some(map.next_value()?);
+                            owners__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -505,25 +508,25 @@ impl<'de> serde::Deserialize<'de> for Owner {
                 formatter.write_str("struct cosmos.capability.v1beta1.Owner")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Owner, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Owner, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut module__ = None;
                 let mut name__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Module => {
                             if module__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("module"));
                             }
-                            module__ = Some(map.next_value()?);
+                            module__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Name => {
                             if name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("name"));
                             }
-                            name__ = Some(map.next_value()?);
+                            name__ = Some(map_.next_value()?);
                         }
                     }
                 }

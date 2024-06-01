@@ -85,32 +85,32 @@ impl<'de> serde::Deserialize<'de> for ParamChange {
                 formatter.write_str("struct cosmos.params.v1beta1.ParamChange")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<ParamChange, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ParamChange, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut subspace__ = None;
                 let mut key__ = None;
                 let mut value__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Subspace => {
                             if subspace__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("subspace"));
                             }
-                            subspace__ = Some(map.next_value()?);
+                            subspace__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Key => {
                             if key__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("key"));
                             }
-                            key__ = Some(map.next_value()?);
+                            key__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Value => {
                             if value__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("value"));
                             }
-                            value__ = Some(map.next_value()?);
+                            value__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -216,7 +216,7 @@ impl<'de> serde::Deserialize<'de> for ParameterChangeProposal {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ParameterChangeProposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -224,25 +224,25 @@ impl<'de> serde::Deserialize<'de> for ParameterChangeProposal {
                 let mut title__ = None;
                 let mut description__ = None;
                 let mut changes__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Title => {
                             if title__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("title"));
                             }
-                            title__ = Some(map.next_value()?);
+                            title__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Description => {
                             if description__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("description"));
                             }
-                            description__ = Some(map.next_value()?);
+                            description__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Changes => {
                             if changes__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("changes"));
                             }
-                            changes__ = Some(map.next_value()?);
+                            changes__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -338,25 +338,25 @@ impl<'de> serde::Deserialize<'de> for QueryParamsRequest {
                 formatter.write_str("struct cosmos.params.v1beta1.QueryParamsRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsRequest, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut subspace__ = None;
                 let mut key__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Subspace => {
                             if subspace__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("subspace"));
                             }
-                            subspace__ = Some(map.next_value()?);
+                            subspace__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Key => {
                             if key__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("key"));
                             }
-                            key__ = Some(map.next_value()?);
+                            key__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -443,18 +443,18 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
                 formatter.write_str("struct cosmos.params.v1beta1.QueryParamsResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<QueryParamsResponse, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryParamsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut param__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Param => {
                             if param__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("param"));
                             }
-                            param__ = map.next_value()?;
+                            param__ = map_.next_value()?;
                         }
                     }
                 }
@@ -529,13 +529,13 @@ impl<'de> serde::Deserialize<'de> for QuerySubspacesRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QuerySubspacesRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(QuerySubspacesRequest {})
             }
@@ -619,19 +619,19 @@ impl<'de> serde::Deserialize<'de> for QuerySubspacesResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<QuerySubspacesResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut subspaces__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Subspaces => {
                             if subspaces__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("subspaces"));
                             }
-                            subspaces__ = Some(map.next_value()?);
+                            subspaces__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -724,25 +724,25 @@ impl<'de> serde::Deserialize<'de> for Subspace {
                 formatter.write_str("struct cosmos.params.v1beta1.Subspace")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<Subspace, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Subspace, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut subspace__ = None;
                 let mut keys__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Subspace => {
                             if subspace__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("subspace"));
                             }
-                            subspace__ = Some(map.next_value()?);
+                            subspace__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Keys => {
                             if keys__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("keys"));
                             }
-                            keys__ = Some(map.next_value()?);
+                            keys__ = Some(map_.next_value()?);
                         }
                     }
                 }

@@ -77,20 +77,20 @@ impl<'de> serde::Deserialize<'de> for LegacyAminoPubKey {
                 formatter.write_str("struct cosmos.crypto.multisig.LegacyAminoPubKey")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<LegacyAminoPubKey, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<LegacyAminoPubKey, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut threshold__ = None;
                 let mut public_keys__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Threshold => {
                             if threshold__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("threshold"));
                             }
                             threshold__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -98,7 +98,7 @@ impl<'de> serde::Deserialize<'de> for LegacyAminoPubKey {
                             if public_keys__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("publicKeys"));
                             }
-                            public_keys__ = Some(map.next_value()?);
+                            public_keys__ = Some(map_.next_value()?);
                         }
                     }
                 }

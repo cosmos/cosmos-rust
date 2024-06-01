@@ -63,13 +63,13 @@ impl<'de> serde::Deserialize<'de> for ListAllInterfacesRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ListAllInterfacesRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
                 }
                 Ok(ListAllInterfacesRequest {})
             }
@@ -158,19 +158,19 @@ impl<'de> serde::Deserialize<'de> for ListAllInterfacesResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ListAllInterfacesResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut interface_names__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::InterfaceNames => {
                             if interface_names__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("interfaceNames"));
                             }
-                            interface_names__ = Some(map.next_value()?);
+                            interface_names__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -261,19 +261,19 @@ impl<'de> serde::Deserialize<'de> for ListImplementationsRequest {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ListImplementationsRequest, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut interface_name__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::InterfaceName => {
                             if interface_name__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("interfaceName"));
                             }
-                            interface_name__ = Some(map.next_value()?);
+                            interface_name__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -369,13 +369,13 @@ impl<'de> serde::Deserialize<'de> for ListImplementationsResponse {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<ListImplementationsResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut implementation_message_names__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ImplementationMessageNames => {
                             if implementation_message_names__.is_some() {
@@ -383,7 +383,7 @@ impl<'de> serde::Deserialize<'de> for ListImplementationsResponse {
                                     "implementationMessageNames",
                                 ));
                             }
-                            implementation_message_names__ = Some(map.next_value()?);
+                            implementation_message_names__ = Some(map_.next_value()?);
                         }
                     }
                 }

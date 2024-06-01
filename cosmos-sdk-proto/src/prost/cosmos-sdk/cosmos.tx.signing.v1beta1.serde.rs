@@ -44,10 +44,9 @@ impl<'de> serde::Deserialize<'de> for SignMode {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(SignMode::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
                     })
@@ -57,10 +56,9 @@ impl<'de> serde::Deserialize<'de> for SignMode {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
-                    .and_then(SignMode::from_i32)
+                    .and_then(|x| x.try_into().ok())
                     .ok_or_else(|| {
                         serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
                     })
@@ -110,6 +108,7 @@ impl serde::Serialize for SignatureDescriptor {
             struct_ser.serialize_field("data", v)?;
         }
         if self.sequence != 0 {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("sequence", ToString::to_string(&self.sequence).as_str())?;
         }
         struct_ser.end()
@@ -170,33 +169,33 @@ impl<'de> serde::Deserialize<'de> for SignatureDescriptor {
                 formatter.write_str("struct cosmos.tx.signing.v1beta1.SignatureDescriptor")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<SignatureDescriptor, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<SignatureDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut public_key__ = None;
                 let mut data__ = None;
                 let mut sequence__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::PublicKey => {
                             if public_key__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("publicKey"));
                             }
-                            public_key__ = map.next_value()?;
+                            public_key__ = map_.next_value()?;
                         }
                         GeneratedField::Data => {
                             if data__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("data"));
                             }
-                            data__ = map.next_value()?;
+                            data__ = map_.next_value()?;
                         }
                         GeneratedField::Sequence => {
                             if sequence__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("sequence"));
                             }
                             sequence__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -297,19 +296,19 @@ impl<'de> serde::Deserialize<'de> for signature_descriptor::Data {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<signature_descriptor::Data, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut sum__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Single => {
                             if sum__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("single"));
                             }
-                            sum__ = map
+                            sum__ = map_
                                 .next_value::<::std::option::Option<_>>()?
                                 .map(signature_descriptor::data::Sum::Single);
                         }
@@ -317,7 +316,7 @@ impl<'de> serde::Deserialize<'de> for signature_descriptor::Data {
                             if sum__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("multi"));
                             }
-                            sum__ = map
+                            sum__ = map_
                                 .next_value::<::std::option::Option<_>>()?
                                 .map(signature_descriptor::data::Sum::Multi);
                         }
@@ -416,26 +415,26 @@ impl<'de> serde::Deserialize<'de> for signature_descriptor::data::Multi {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<signature_descriptor::data::Multi, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut bitarray__ = None;
                 let mut signatures__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Bitarray => {
                             if bitarray__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("bitarray"));
                             }
-                            bitarray__ = map.next_value()?;
+                            bitarray__ = map_.next_value()?;
                         }
                         GeneratedField::Signatures => {
                             if signatures__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("signatures"));
                             }
-                            signatures__ = Some(map.next_value()?);
+                            signatures__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -471,12 +470,12 @@ impl serde::Serialize for signature_descriptor::data::Single {
             len,
         )?;
         if self.mode != 0 {
-            let v = SignMode::from_i32(self.mode).ok_or_else(|| {
-                serde::ser::Error::custom(format!("Invalid variant {}", self.mode))
-            })?;
+            let v = SignMode::try_from(self.mode)
+                .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.mode)))?;
             struct_ser.serialize_field("mode", &v)?;
         }
         if !self.signature.is_empty() {
+            #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field(
                 "signature",
                 pbjson::private::base64::encode(&self.signature).as_str(),
@@ -541,27 +540,27 @@ impl<'de> serde::Deserialize<'de> for signature_descriptor::data::Single {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<signature_descriptor::data::Single, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut mode__ = None;
                 let mut signature__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Mode => {
                             if mode__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("mode"));
                             }
-                            mode__ = Some(map.next_value::<SignMode>()? as i32);
+                            mode__ = Some(map_.next_value::<SignMode>()? as i32);
                         }
                         GeneratedField::Signature => {
                             if signature__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("signature"));
                             }
                             signature__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -650,18 +649,21 @@ impl<'de> serde::Deserialize<'de> for SignatureDescriptors {
                 formatter.write_str("struct cosmos.tx.signing.v1beta1.SignatureDescriptors")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<SignatureDescriptors, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<SignatureDescriptors, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut signatures__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Signatures => {
                             if signatures__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("signatures"));
                             }
-                            signatures__ = Some(map.next_value()?);
+                            signatures__ = Some(map_.next_value()?);
                         }
                     }
                 }

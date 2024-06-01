@@ -77,25 +77,28 @@ impl<'de> serde::Deserialize<'de> for PrimaryKeyDescriptor {
                 formatter.write_str("struct cosmos.orm.v1.PrimaryKeyDescriptor")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<PrimaryKeyDescriptor, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<PrimaryKeyDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut fields__ = None;
                 let mut auto_increment__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Fields => {
                             if fields__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("fields"));
                             }
-                            fields__ = Some(map.next_value()?);
+                            fields__ = Some(map_.next_value()?);
                         }
                         GeneratedField::AutoIncrement => {
                             if auto_increment__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("autoIncrement"));
                             }
-                            auto_increment__ = Some(map.next_value()?);
+                            auto_increment__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -200,7 +203,7 @@ impl<'de> serde::Deserialize<'de> for SecondaryIndexDescriptor {
 
             fn visit_map<V>(
                 self,
-                mut map: V,
+                mut map_: V,
             ) -> std::result::Result<SecondaryIndexDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
@@ -208,20 +211,20 @@ impl<'de> serde::Deserialize<'de> for SecondaryIndexDescriptor {
                 let mut fields__ = None;
                 let mut id__ = None;
                 let mut unique__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Fields => {
                             if fields__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("fields"));
                             }
-                            fields__ = Some(map.next_value()?);
+                            fields__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
                             id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -229,7 +232,7 @@ impl<'de> serde::Deserialize<'de> for SecondaryIndexDescriptor {
                             if unique__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("unique"));
                             }
-                            unique__ = Some(map.next_value()?);
+                            unique__ = Some(map_.next_value()?);
                         }
                     }
                 }
@@ -317,19 +320,19 @@ impl<'de> serde::Deserialize<'de> for SingletonDescriptor {
                 formatter.write_str("struct cosmos.orm.v1.SingletonDescriptor")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<SingletonDescriptor, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<SingletonDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
                             id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
@@ -432,33 +435,33 @@ impl<'de> serde::Deserialize<'de> for TableDescriptor {
                 formatter.write_str("struct cosmos.orm.v1.TableDescriptor")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<TableDescriptor, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<TableDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
                 let mut primary_key__ = None;
                 let mut index__ = None;
                 let mut id__ = None;
-                while let Some(k) = map.next_key()? {
+                while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::PrimaryKey => {
                             if primary_key__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("primaryKey"));
                             }
-                            primary_key__ = map.next_value()?;
+                            primary_key__ = map_.next_value()?;
                         }
                         GeneratedField::Index => {
                             if index__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("index"));
                             }
-                            index__ = Some(map.next_value()?);
+                            index__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Id => {
                             if id__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("id"));
                             }
                             id__ = Some(
-                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
