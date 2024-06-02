@@ -7432,7 +7432,7 @@ impl<'de> serde::Deserialize<'de> for StakeAuthorization {
         )
     }
 }
-impl serde::Serialize for stake_authorization::Policy {
+impl serde::Serialize for stake_authorization::Validators {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
@@ -7451,7 +7451,7 @@ impl serde::Serialize for stake_authorization::Policy {
         struct_ser.end()
     }
 }
-impl<'de> serde::Deserialize<'de> for stake_authorization::Policy {
+impl<'de> serde::Deserialize<'de> for stake_authorization::Validators {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
     where
@@ -7496,7 +7496,7 @@ impl<'de> serde::Deserialize<'de> for stake_authorization::Policy {
         }
         struct GeneratedVisitor;
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = stake_authorization::Policy;
+            type Value = stake_authorization::Validators;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 formatter.write_str("struct cosmos.staking.v1beta1.StakeAuthorization.Validators")
@@ -7505,7 +7505,7 @@ impl<'de> serde::Deserialize<'de> for stake_authorization::Policy {
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<stake_authorization::Policy, V::Error>
+            ) -> std::result::Result<stake_authorization::Validators, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -7520,7 +7520,7 @@ impl<'de> serde::Deserialize<'de> for stake_authorization::Policy {
                         }
                     }
                 }
-                Ok(stake_authorization::Policy {
+                Ok(stake_authorization::Validators {
                     address: address__.unwrap_or_default(),
                 })
             }

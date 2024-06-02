@@ -419,6 +419,12 @@ fn apply_patches(proto_dir: &Path) {
             replacement,
         )
         .expect("error patching cosmos.staking.v1beta1.rs");
+    }
+
+    for (pattern, replacement) in [
+        ("stake_authorization::Validators::AllowList", "stake_authorization::Policy::AllowList"),
+        ("stake_authorization::Validators::DenyList", "stake_authorization::Policy::DenyList"),
+    ] {
         patch_file(
             &proto_dir.join("cosmos-sdk/cosmos.staking.v1beta1.serde.rs"),
             &Regex::new(pattern).unwrap(),
