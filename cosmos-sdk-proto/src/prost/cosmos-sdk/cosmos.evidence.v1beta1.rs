@@ -7,7 +7,7 @@ pub struct Equivocation {
     #[prost(int64, tag = "1")]
     pub height: i64,
     #[prost(message, optional, tag = "2")]
-    pub time: ::core::option::Option<::prost_types::Timestamp>,
+    pub time: ::core::option::Option<::pbjson_types::Timestamp>,
     #[prost(int64, tag = "3")]
     pub power: i64,
     #[prost(string, tag = "4")]
@@ -19,7 +19,7 @@ pub struct Equivocation {
 pub struct GenesisState {
     /// evidence defines all the evidence at genesis.
     #[prost(message, repeated, tag = "1")]
-    pub evidence: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub evidence: ::prost::alloc::vec::Vec<::pbjson_types::Any>,
 }
 /// QueryEvidenceRequest is the request type for the Query/Evidence RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -35,7 +35,7 @@ pub struct QueryEvidenceRequest {
 pub struct QueryEvidenceResponse {
     /// evidence returns the requested evidence.
     #[prost(message, optional, tag = "1")]
-    pub evidence: ::core::option::Option<::prost_types::Any>,
+    pub evidence: ::core::option::Option<::pbjson_types::Any>,
 }
 /// QueryEvidenceRequest is the request type for the Query/AllEvidence RPC
 /// method.
@@ -53,7 +53,7 @@ pub struct QueryAllEvidenceRequest {
 pub struct QueryAllEvidenceResponse {
     /// evidence returns all evidences.
     #[prost(message, repeated, tag = "1")]
-    pub evidence: ::prost::alloc::vec::Vec<::prost_types::Any>,
+    pub evidence: ::prost::alloc::vec::Vec<::pbjson_types::Any>,
     /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
@@ -66,7 +66,7 @@ pub struct MsgSubmitEvidence {
     #[prost(string, tag = "1")]
     pub submitter: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub evidence: ::core::option::Option<::prost_types::Any>,
+    pub evidence: ::core::option::Option<::pbjson_types::Any>,
 }
 /// MsgSubmitEvidenceResponse defines the Msg/SubmitEvidence response type.
 #[allow(clippy::derive_partial_eq_without_eq)]

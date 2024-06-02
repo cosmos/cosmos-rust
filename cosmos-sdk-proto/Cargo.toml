@@ -21,6 +21,7 @@ prost-types = "0.12"
 tendermint-proto = "0.37"
 serde = "1.0.203"
 pbjson = "0.6.0"
+pbjson-types = "0.6.0"
 
 # Optional dependencies
 tonic = { version = "0.11", optional = true, default-features = false, features = ["codegen", "prost"] }

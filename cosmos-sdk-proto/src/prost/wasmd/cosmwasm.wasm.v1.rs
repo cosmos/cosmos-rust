@@ -68,7 +68,7 @@ pub struct ContractInfo {
     /// Extension is an extension point to store custom metadata within the
     /// persistence model.
     #[prost(message, optional, tag = "7")]
-    pub extension: ::core::option::Option<::prost_types::Any>,
+    pub extension: ::core::option::Option<::pbjson_types::Any>,
 }
 /// ContractCodeHistoryEntry metadata to a contract.
 #[allow(clippy::derive_partial_eq_without_eq)]

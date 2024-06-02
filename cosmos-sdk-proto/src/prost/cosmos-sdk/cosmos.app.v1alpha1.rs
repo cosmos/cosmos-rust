@@ -112,7 +112,7 @@ pub struct ModuleConfig {
     /// config is the config object for the module. Module config messages should
     /// define a ModuleDescriptor using the cosmos.app.v1alpha1.is_module extension.
     #[prost(message, optional, tag = "2")]
-    pub config: ::core::option::Option<::prost_types::Any>,
+    pub config: ::core::option::Option<::pbjson_types::Any>,
 }
 /// QueryConfigRequest is the Query/Config request type.
 #[allow(clippy::derive_partial_eq_without_eq)]
