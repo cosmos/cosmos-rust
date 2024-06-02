@@ -7299,10 +7299,10 @@ impl serde::Serialize for StakeAuthorization {
         }
         if let Some(v) = self.validators.as_ref() {
             match v {
-                stake_authorization::Validators::AllowList(v) => {
+                stake_authorization::Policy::AllowList(v) => {
                     struct_ser.serialize_field("allowList", v)?;
                 }
-                stake_authorization::Validators::DenyList(v) => {
+                stake_authorization::Policy::DenyList(v) => {
                     struct_ser.serialize_field("denyList", v)?;
                 }
             }
@@ -7406,7 +7406,7 @@ impl<'de> serde::Deserialize<'de> for StakeAuthorization {
                             }
                             validators__ = map_
                                 .next_value::<::std::option::Option<_>>()?
-                                .map(stake_authorization::Validators::AllowList);
+                                .map(stake_authorization::Policy::AllowList);
                         }
                         GeneratedField::DenyList => {
                             if validators__.is_some() {
@@ -7414,7 +7414,7 @@ impl<'de> serde::Deserialize<'de> for StakeAuthorization {
                             }
                             validators__ = map_
                                 .next_value::<::std::option::Option<_>>()?
-                                .map(stake_authorization::Validators::DenyList);
+                                .map(stake_authorization::Policy::DenyList);
                         }
                     }
                 }
