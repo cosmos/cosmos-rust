@@ -419,5 +419,11 @@ fn apply_patches(proto_dir: &Path) {
             replacement,
         )
         .expect("error patching cosmos.staking.v1beta1.rs");
+        patch_file(
+            &proto_dir.join("cosmos-sdk/cosmos.staking.v1beta1.serde.rs"),
+            &Regex::new(pattern).unwrap(),
+            replacement,
+        )
+            .expect("error patching cosmos.staking.v1beta1.serde.rs");
     }
 }
