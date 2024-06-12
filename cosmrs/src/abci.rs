@@ -5,7 +5,7 @@ mod msg_data;
 
 pub use self::{
     gas_info::GasInfo,
-    msg_data::{MsgData, TxMsgData},
+    msg_data::{MsgData, TxMsgData, MsgResponse},
 };
 
 /// Transaction data.
