@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.17.0 (2024-06-27)
+### Added
+- Basic parsing of `msg_responses` field inside `TxMsgData` ([#472])
+
+### Changed
+- Bump tendermint-rs dependencies to v0.37 ([#469])
+- Match upstream Cosmos SDK's Denom validation logic ([#468], [#470])
+- Bump `cosmos-sdk-proto` to v0.22 ([#473])
+
+[#468]: https://github.com/cosmos/cosmos-rust/pull/468
+[#469]: https://github.com/cosmos/cosmos-rust/pull/469
+[#470]: https://github.com/cosmos/cosmos-rust/pull/470
+[#472]: https://github.com/cosmos/cosmos-rust/pull/472
+[#473]: https://github.com/cosmos/cosmos-rust/pull/473
+
 ## 0.16.0 (2024-03-15)
 ### Added
 - Support for uppercase Bech32 ([#444])
