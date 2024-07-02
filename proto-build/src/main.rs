@@ -20,13 +20,13 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.46.15";
+const COSMOS_SDK_REV: &str = "v0.47.10";
 
 /// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
 const IBC_REV: &str = "v3.0.0";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
-const WASMD_REV: &str = "v0.29.2";
+const WASMD_REV: &str = "v0.45.0";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -419,5 +419,17 @@ fn apply_patches(proto_dir: &Path) {
             replacement,
         )
         .expect("error patching cosmos.staking.v1beta1.rs");
+    }
+
+    for (pattern, replacement) in [
+        ("stake_authorization::Validators::AllowList", "stake_authorization::Policy::AllowList"),
+        ("stake_authorization::Validators::DenyList", "stake_authorization::Policy::DenyList"),
+    ] {
+        patch_file(
+            &proto_dir.join("cosmos-sdk/cosmos.staking.v1beta1.serde.rs"),
+            &Regex::new(pattern).unwrap(),
+            replacement,
+        )
+            .expect("error patching cosmos.staking.v1beta1.serde.rs");
     }
 }

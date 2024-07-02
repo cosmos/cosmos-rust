@@ -1,6 +1,7 @@
 // @generated
 /// InterfaceDescriptor describes an interface type to be used with
 /// accepts_interface and implements_interface and declared by declare_interface.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterfaceDescriptor {
     /// name is the name of the interface. It should be a short-name (without
@@ -21,6 +22,7 @@ pub struct InterfaceDescriptor {
 /// Scalars should ideally define an encoding such that there is only one
 /// valid syntactical representation for a given semantic meaning,
 /// i.e. the encoding should be deterministic.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ScalarDescriptor {
     /// name is the name of the scalar. It should be a short-name (without
@@ -60,5 +62,15 @@ impl ScalarType {
             ScalarType::Bytes => "SCALAR_TYPE_BYTES",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "SCALAR_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
+            "SCALAR_TYPE_STRING" => Some(Self::String),
+            "SCALAR_TYPE_BYTES" => Some(Self::Bytes),
+            _ => None,
+        }
+    }
 }
+include!("cosmos_proto.serde.rs");
 // @@protoc_insertion_point(module)

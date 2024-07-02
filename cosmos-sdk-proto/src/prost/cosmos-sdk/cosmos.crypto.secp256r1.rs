@@ -1,5 +1,6 @@
 // @generated
 /// PubKey defines a secp256r1 ECDSA public key.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PubKey {
     /// Point on secp256r1 curve in a compressed representation as specified in section
@@ -8,10 +9,12 @@ pub struct PubKey {
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
 /// PrivKey defines a secp256r1 ECDSA private key.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PrivKey {
     /// secret number serialized using big-endian encoding
     #[prost(bytes = "vec", tag = "1")]
     pub secret: ::prost::alloc::vec::Vec<u8>,
 }
+include!("cosmos.crypto.secp256r1.serde.rs");
 // @@protoc_insertion_point(module)
