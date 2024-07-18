@@ -38,11 +38,7 @@ impl TryFrom<&proto::cosmos::feegrant::v1beta1::BasicAllowance> for BasicAllowan
                 .iter()
                 .map(TryFrom::try_from)
                 .collect::<Result<_, _>>()?,
-            expiration: proto
-                .expiration
-                .clone()
-                .map(TryFrom::try_from)
-                .transpose()?,
+            expiration: proto.expiration.map(TryFrom::try_from).transpose()?,
         })
     }
 }
