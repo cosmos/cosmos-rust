@@ -2,8 +2,9 @@
 
 pub use prost::{Message, Name};
 
+use alloc::{string::String, vec::Vec};
+use core::str::FromStr;
 use prost::EncodeError;
-use std::str::FromStr;
 
 /// Extension trait for [`Message`].
 pub trait MessageExt: Message {

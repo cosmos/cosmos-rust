@@ -16,8 +16,8 @@ edition = "2021"
 rust-version = "1.72"
 
 [dependencies]
-prost = "0.13"
-prost-types = "0.13"
+prost = { version = "0.13", default-features = false }
+prost-types = { version = "0.13", default-features = false }
 tendermint-proto = "0.38"
 
 # Optional dependencies
@@ -25,7 +25,8 @@ tonic = { version = "0.12", optional = true, default-features = false, features 
 
 [features]
 default = ["grpc-transport"]
-grpc = ["tonic"]
+std = ["prost/std", "prost-types/std"]
+grpc = ["std", "tonic"]
 grpc-transport = ["grpc", "tonic/transport"]
 cosmwasm = []
 
