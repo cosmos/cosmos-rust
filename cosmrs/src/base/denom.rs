@@ -3,7 +3,7 @@ use serde::{de, de::Error as _, ser, Deserialize, Serialize};
 use std::{fmt, str::FromStr};
 
 /// Denomination.
-#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Clone, Debug, Default, Eq, PartialEq, PartialOrd, Ord)]
 pub struct Denom(String);
 
 impl Denom {
