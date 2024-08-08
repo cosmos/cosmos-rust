@@ -39,7 +39,7 @@ pub struct Proposal {
     #[prost(uint64, tag = "1")]
     pub proposal_id: u64,
     #[prost(message, optional, tag = "2")]
-    pub content: ::core::option::Option<::pbjson_types::Any>,
+    pub content: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
     #[prost(enumeration = "ProposalStatus", tag = "3")]
     pub status: i32,
     /// final_tally_result is the final tally result of the proposal. When
@@ -48,15 +48,15 @@ pub struct Proposal {
     #[prost(message, optional, tag = "4")]
     pub final_tally_result: ::core::option::Option<TallyResult>,
     #[prost(message, optional, tag = "5")]
-    pub submit_time: ::core::option::Option<::pbjson_types::Timestamp>,
+    pub submit_time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
     #[prost(message, optional, tag = "6")]
-    pub deposit_end_time: ::core::option::Option<::pbjson_types::Timestamp>,
+    pub deposit_end_time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
     #[prost(message, repeated, tag = "7")]
     pub total_deposit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     #[prost(message, optional, tag = "8")]
-    pub voting_start_time: ::core::option::Option<::pbjson_types::Timestamp>,
+    pub voting_start_time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
     #[prost(message, optional, tag = "9")]
-    pub voting_end_time: ::core::option::Option<::pbjson_types::Timestamp>,
+    pub voting_end_time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
 }
 /// TallyResult defines a standard tally for a governance proposal.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -100,7 +100,7 @@ pub struct DepositParams {
     ///   Maximum period for Atom holders to deposit on a proposal. Initial value: 2
     ///   months.
     #[prost(message, optional, tag = "2")]
-    pub max_deposit_period: ::core::option::Option<::pbjson_types::Duration>,
+    pub max_deposit_period: ::core::option::Option<::tendermint_proto::google::protobuf::Duration>,
 }
 /// VotingParams defines the params for voting on governance proposals.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -108,7 +108,7 @@ pub struct DepositParams {
 pub struct VotingParams {
     ///   Length of the voting period.
     #[prost(message, optional, tag = "1")]
-    pub voting_period: ::core::option::Option<::pbjson_types::Duration>,
+    pub voting_period: ::core::option::Option<::tendermint_proto::google::protobuf::Duration>,
 }
 /// TallyParams defines the params for tallying votes on governance proposals.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -412,7 +412,7 @@ pub struct QueryTallyResultResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitProposal {
     #[prost(message, optional, tag = "1")]
-    pub content: ::core::option::Option<::pbjson_types::Any>,
+    pub content: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
     #[prost(message, repeated, tag = "2")]
     pub initial_deposit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     #[prost(string, tag = "3")]

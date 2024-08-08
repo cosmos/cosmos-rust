@@ -8,7 +8,7 @@ pub struct BaseAccount {
     #[prost(string, tag = "1")]
     pub address: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
-    pub pub_key: ::core::option::Option<::pbjson_types::Any>,
+    pub pub_key: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
     #[prost(uint64, tag = "3")]
     pub account_number: u64,
     #[prost(uint64, tag = "4")]
@@ -49,7 +49,7 @@ pub struct GenesisState {
     pub params: ::core::option::Option<Params>,
     /// accounts are the accounts present at genesis.
     #[prost(message, repeated, tag = "2")]
-    pub accounts: ::prost::alloc::vec::Vec<::pbjson_types::Any>,
+    pub accounts: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
 }
 /// QueryAccountsRequest is the request type for the Query/Accounts RPC method.
 ///
@@ -69,7 +69,7 @@ pub struct QueryAccountsRequest {
 pub struct QueryAccountsResponse {
     /// accounts are the existing accounts
     #[prost(message, repeated, tag = "1")]
-    pub accounts: ::prost::alloc::vec::Vec<::pbjson_types::Any>,
+    pub accounts: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
     /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
@@ -88,7 +88,7 @@ pub struct QueryAccountRequest {
 pub struct QueryAccountResponse {
     /// account defines the account of the corresponding address.
     #[prost(message, optional, tag = "1")]
-    pub account: ::core::option::Option<::pbjson_types::Any>,
+    pub account: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -115,7 +115,7 @@ pub struct QueryModuleAccountsRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleAccountsResponse {
     #[prost(message, repeated, tag = "1")]
-    pub accounts: ::prost::alloc::vec::Vec<::pbjson_types::Any>,
+    pub accounts: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
 }
 /// QueryModuleAccountByNameRequest is the request type for the Query/ModuleAccountByName RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -129,7 +129,7 @@ pub struct QueryModuleAccountByNameRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleAccountByNameResponse {
     #[prost(message, optional, tag = "1")]
-    pub account: ::core::option::Option<::pbjson_types::Any>,
+    pub account: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }
 /// Bech32PrefixRequest is the request type for Bech32Prefix rpc method.
 ///

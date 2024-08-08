@@ -20,8 +20,6 @@ prost = { version = "0.13", default-features = false }
 prost-types = "0.13"
 tendermint-proto = "0.39"
 serde = "1.0.203"
-pbjson = { git = "https://github.com/informalsystems/pbjson.git", package = "informalsystems-pbjson"  }
-pbjson-types = { git = "https://github.com/informalsystems/pbjson.git", package = "informalsystems-pbjson-types"  }
 
 # Optional dependencies
 tonic = { version = "0.12", optional = true, default-features = false, features = ["codegen", "prost"] }

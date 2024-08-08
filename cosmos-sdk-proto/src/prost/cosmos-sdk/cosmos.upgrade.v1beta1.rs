@@ -17,7 +17,7 @@ pub struct Plan {
     /// If this field is not empty, an error will be thrown.
     #[deprecated]
     #[prost(message, optional, tag = "2")]
-    pub time: ::core::option::Option<::pbjson_types::Timestamp>,
+    pub time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
     /// The height at which the upgrade must be performed.
     /// Only used if Time is not set.
     #[prost(int64, tag = "3")]
@@ -31,7 +31,7 @@ pub struct Plan {
     /// If this field is not empty, an error will be thrown.
     #[deprecated]
     #[prost(message, optional, tag = "5")]
-    pub upgraded_client_state: ::core::option::Option<::pbjson_types::Any>,
+    pub upgraded_client_state: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }
 /// SoftwareUpgradeProposal is a gov Content type for initiating a software
 /// upgrade.

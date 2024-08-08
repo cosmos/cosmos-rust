@@ -37,7 +37,7 @@ pub struct TxResponse {
     pub gas_used: i64,
     /// The request transaction bytes.
     #[prost(message, optional, tag = "11")]
-    pub tx: ::core::option::Option<::pbjson_types::Any>,
+    pub tx: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
     /// Time of the previous block. For heights > 1, it's the weighted median of
     /// the timestamps of the valid votes in the block.LastCommit. For height == 1,
     /// it's genesis time.
@@ -118,7 +118,7 @@ pub struct Result {
     ///
     /// Since: cosmos-sdk 0.46
     #[prost(message, repeated, tag = "4")]
-    pub msg_responses: ::prost::alloc::vec::Vec<::pbjson_types::Any>,
+    pub msg_responses: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
 }
 /// SimulationResponse defines the response generated when a transaction is
 /// successfully simulated.
@@ -153,7 +153,7 @@ pub struct TxMsgData {
     ///
     /// Since: cosmos-sdk 0.46
     #[prost(message, repeated, tag = "2")]
-    pub msg_responses: ::prost::alloc::vec::Vec<::pbjson_types::Any>,
+    pub msg_responses: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
 }
 /// SearchTxsResult defines a structure for querying txs pageable
 #[allow(clippy::derive_partial_eq_without_eq)]
