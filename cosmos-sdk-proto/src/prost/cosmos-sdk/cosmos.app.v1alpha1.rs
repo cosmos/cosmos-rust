@@ -1,5 +1,6 @@
 // @generated
 /// ModuleDescriptor describes an app module.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleDescriptor {
     /// go_import names the package that should be imported by an app to load the
@@ -24,6 +25,7 @@ pub struct ModuleDescriptor {
     pub can_migrate_from: ::prost::alloc::vec::Vec<MigrateFromInfo>,
 }
 /// PackageReference is a reference to a protobuf package used by a module.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PackageReference {
     /// name is the fully-qualified name of the package.
@@ -69,6 +71,7 @@ pub struct PackageReference {
 }
 /// MigrateFromInfo is information on a module version that a newer module
 /// can migrate from.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MigrateFromInfo {
     /// module is the fully-qualified protobuf name of the module config object
@@ -83,6 +86,7 @@ pub struct MigrateFromInfo {
 /// allow a mixture of declarative and imperative app wiring, however, apps
 /// that strive for the maximum ease of maintainability should be able to describe
 /// their state machine with a config object alone.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Config {
     /// modules are the module configurations for the app.
@@ -90,6 +94,7 @@ pub struct Config {
     pub modules: ::prost::alloc::vec::Vec<ModuleConfig>,
 }
 /// ModuleConfig is a module configuration for an app.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleConfig {
     /// name is the unique name of the module within the app. It should be a name
@@ -107,12 +112,14 @@ pub struct ModuleConfig {
     /// config is the config object for the module. Module config messages should
     /// define a ModuleDescriptor using the cosmos.app.v1alpha1.is_module extension.
     #[prost(message, optional, tag = "2")]
-    pub config: ::core::option::Option<::prost_types::Any>,
+    pub config: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }
 /// QueryConfigRequest is the Query/Config request type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConfigRequest {}
 /// QueryConfigRequest is the Query/Config response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryConfigResponse {
     /// config is the current app config.

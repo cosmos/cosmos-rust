@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.23.0"
+version = "0.24.0-pre"
 authors = [
     "Justin Kilpatrick <justin@althea.net>",
     "Greg Szabo <greg@informal.systems>",
@@ -17,15 +17,14 @@ rust-version = "1.72"
 
 [dependencies]
 prost = { version = "0.13", default-features = false }
-prost-types = { version = "0.13", default-features = false }
-tendermint-proto = "0.38"
+tendermint-proto = "0.39"
 
 # Optional dependencies
 tonic = { version = "0.12", optional = true, default-features = false, features = ["codegen", "prost"] }
 
 [features]
 default = ["grpc-transport"]
-std = ["prost/std", "prost-types/std"]
+std = ["prost/std", "tendermint-proto/std"]
 grpc = ["std", "tonic"]
 grpc-transport = ["grpc", "tonic/transport"]
 cosmwasm = []

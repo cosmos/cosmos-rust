@@ -1,6 +1,7 @@
 // @generated
 /// BasicAllowance implements Allowance with a one-time grant of coins
 /// that optionally expires. The grantee can use up to SpendLimit to cover fees.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BasicAllowance {
     /// spend_limit specifies the maximum amount of coins that can be spent
@@ -10,10 +11,11 @@ pub struct BasicAllowance {
     pub spend_limit: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
     /// expiration specifies an optional time when this allowance expires
     #[prost(message, optional, tag = "2")]
-    pub expiration: ::core::option::Option<::prost_types::Timestamp>,
+    pub expiration: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
 }
 /// PeriodicAllowance extends Allowance to allow for both a maximum cap,
 /// as well as a limit per time period.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PeriodicAllowance {
     /// basic specifies a struct of `BasicAllowance`
@@ -22,7 +24,7 @@ pub struct PeriodicAllowance {
     /// period specifies the time duration in which period_spend_limit coins can
     /// be spent before that allowance is reset
     #[prost(message, optional, tag = "2")]
-    pub period: ::core::option::Option<::prost_types::Duration>,
+    pub period: ::core::option::Option<::tendermint_proto::google::protobuf::Duration>,
     /// period_spend_limit specifies the maximum number of coins that can be spent
     /// in the period
     #[prost(message, repeated, tag = "3")]
@@ -34,19 +36,21 @@ pub struct PeriodicAllowance {
     /// it is calculated from the start time of the first transaction after the
     /// last period ended
     #[prost(message, optional, tag = "5")]
-    pub period_reset: ::core::option::Option<::prost_types::Timestamp>,
+    pub period_reset: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
 }
 /// AllowedMsgAllowance creates allowance only for specified message types.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AllowedMsgAllowance {
     /// allowance can be any of basic and periodic fee allowance.
     #[prost(message, optional, tag = "1")]
-    pub allowance: ::core::option::Option<::prost_types::Any>,
+    pub allowance: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
     /// allowed_messages are the messages for which the grantee has the access.
     #[prost(string, repeated, tag = "2")]
     pub allowed_messages: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Grant is stored in the KVStore to record a grant with full context
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Grant {
     /// granter is the address of the user granting an allowance of their funds.
@@ -57,15 +61,17 @@ pub struct Grant {
     pub grantee: ::prost::alloc::string::String,
     /// allowance can be any of basic, periodic, allowed fee allowance.
     #[prost(message, optional, tag = "3")]
-    pub allowance: ::core::option::Option<::prost_types::Any>,
+    pub allowance: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }
 /// GenesisState contains a set of fee allowances, persisted from the store
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
     pub allowances: ::prost::alloc::vec::Vec<Grant>,
 }
 /// QueryAllowanceRequest is the request type for the Query/Allowance RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowanceRequest {
     /// granter is the address of the user granting an allowance of their funds.
@@ -76,6 +82,7 @@ pub struct QueryAllowanceRequest {
     pub grantee: ::prost::alloc::string::String,
 }
 /// QueryAllowanceResponse is the response type for the Query/Allowance RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowanceResponse {
     /// allowance is a allowance granted for grantee by granter.
@@ -83,6 +90,7 @@ pub struct QueryAllowanceResponse {
     pub allowance: ::core::option::Option<Grant>,
 }
 /// QueryAllowancesRequest is the request type for the Query/Allowances RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesRequest {
     #[prost(string, tag = "1")]
@@ -92,6 +100,7 @@ pub struct QueryAllowancesRequest {
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
 /// QueryAllowancesResponse is the response type for the Query/Allowances RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesResponse {
     /// allowances are allowance's granted for grantee by granter.
@@ -104,6 +113,7 @@ pub struct QueryAllowancesResponse {
 /// QueryAllowancesByGranterRequest is the request type for the Query/AllowancesByGranter RPC method.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesByGranterRequest {
     #[prost(string, tag = "1")]
@@ -115,6 +125,7 @@ pub struct QueryAllowancesByGranterRequest {
 /// QueryAllowancesByGranterResponse is the response type for the Query/AllowancesByGranter RPC method.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesByGranterResponse {
     /// allowances that have been issued by the granter.
@@ -126,6 +137,7 @@ pub struct QueryAllowancesByGranterResponse {
 }
 /// MsgGrantAllowance adds permission for Grantee to spend up to Allowance
 /// of fees from the account of Granter.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgGrantAllowance {
     /// granter is the address of the user granting an allowance of their funds.
@@ -136,12 +148,14 @@ pub struct MsgGrantAllowance {
     pub grantee: ::prost::alloc::string::String,
     /// allowance can be any of basic, periodic, allowed fee allowance.
     #[prost(message, optional, tag = "3")]
-    pub allowance: ::core::option::Option<::prost_types::Any>,
+    pub allowance: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }
 /// MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgGrantAllowanceResponse {}
 /// MsgRevokeAllowance removes any existing Allowance from Granter to Grantee.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevokeAllowance {
     /// granter is the address of the user granting an allowance of their funds.
@@ -152,6 +166,7 @@ pub struct MsgRevokeAllowance {
     pub grantee: ::prost::alloc::string::String,
 }
 /// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevokeAllowanceResponse {}
 include!("cosmos.feegrant.v1beta1.tonic.rs");
