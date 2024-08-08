@@ -10,13 +10,16 @@
 )]
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
+#![cfg_attr(not(feature = "std"), no_std)]
+
+extern crate alloc;
 
 pub mod traits;
 mod type_names;
 
 pub use prost;
-pub use prost_types::{Any, Timestamp};
 pub use tendermint_proto as tendermint;
+pub use tendermint_proto::google::protobuf::{Any, Timestamp};
 
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
 pub const COSMOS_SDK_VERSION: &str = include_str!("prost/cosmos-sdk/COSMOS_SDK_COMMIT");
