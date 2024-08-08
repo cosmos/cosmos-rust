@@ -1,6 +1,7 @@
 // @generated
 /// BaseVestingAccount implements the VestingAccount interface. It contains all
 /// the necessary fields needed for any vesting account implementation.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BaseVestingAccount {
     #[prost(message, optional, tag = "1")]
@@ -17,6 +18,7 @@ pub struct BaseVestingAccount {
 }
 /// ContinuousVestingAccount implements the VestingAccount interface. It
 /// continuously vests by unlocking coins linearly with respect to time.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ContinuousVestingAccount {
     #[prost(message, optional, tag = "1")]
@@ -28,12 +30,14 @@ pub struct ContinuousVestingAccount {
 /// DelayedVestingAccount implements the VestingAccount interface. It vests all
 /// coins after a specific time, but non prior. In other words, it keeps them
 /// locked until a specified time.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DelayedVestingAccount {
     #[prost(message, optional, tag = "1")]
     pub base_vesting_account: ::core::option::Option<BaseVestingAccount>,
 }
 /// Period defines a length of time and amount of coins that will vest.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Period {
     /// Period duration in seconds.
@@ -44,6 +48,7 @@ pub struct Period {
 }
 /// PeriodicVestingAccount implements the VestingAccount interface. It
 /// periodically vests by unlocking coins during each specified period.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PeriodicVestingAccount {
     #[prost(message, optional, tag = "1")]
@@ -58,6 +63,7 @@ pub struct PeriodicVestingAccount {
 /// still be used for delegating and for governance votes even while locked.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PermanentLockedAccount {
     #[prost(message, optional, tag = "1")]
@@ -65,6 +71,7 @@ pub struct PermanentLockedAccount {
 }
 /// MsgCreateVestingAccount defines a message that enables creating a vesting
 /// account.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateVestingAccount {
     #[prost(string, tag = "1")]
@@ -80,12 +87,14 @@ pub struct MsgCreateVestingAccount {
     pub delayed: bool,
 }
 /// MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreateVestingAccountResponse {}
 /// MsgCreatePermanentLockedAccount defines a message that enables creating a permanent
 /// locked account.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePermanentLockedAccount {
     #[prost(string, tag = "1")]
@@ -98,12 +107,14 @@ pub struct MsgCreatePermanentLockedAccount {
 /// MsgCreatePermanentLockedAccountResponse defines the Msg/CreatePermanentLockedAccount response type.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePermanentLockedAccountResponse {}
 /// MsgCreateVestingAccount defines a message that enables creating a vesting
 /// account.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePeriodicVestingAccount {
     #[prost(string, tag = "1")]
@@ -120,6 +131,7 @@ pub struct MsgCreatePeriodicVestingAccount {
 /// response type.
 ///
 /// Since: cosmos-sdk 0.46
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePeriodicVestingAccountResponse {}
 include!("cosmos.vesting.v1beta1.tonic.rs");
