@@ -504,19 +504,4 @@ mod wasm {
         COSMWASM_PACKAGE,
         "MsgClearAdminResponse"
     );
-    impl_name!(
-        cosmwasm::wasm::v1::ContractExecutionAuthorization,
-        COSMWASM_PACKAGE,
-        "ContractExecutionAuthorization"
-    );
-    impl_name!(
-        cosmwasm::wasm::v1::StoreCodeAuthorization,
-        COSMWASM_PACKAGE,
-        "StoreCodeAuthorization"
-    );
-    impl_name!(
-        cosmwasm::wasm::v1::ContractMigrationAuthorization,
-        COSMWASM_PACKAGE,
-        "ContractMigrationAuthorization"
-    );
 }
