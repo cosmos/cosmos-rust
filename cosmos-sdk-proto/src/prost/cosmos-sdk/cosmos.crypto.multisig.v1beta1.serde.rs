@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for CompactBitArray {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -28,6 +29,7 @@ impl serde::Serialize for CompactBitArray {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for CompactBitArray {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -41,6 +43,7 @@ impl<'de> serde::Deserialize<'de> for CompactBitArray {
             ExtraBitsStored,
             Elems,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -124,6 +127,7 @@ impl<'de> serde::Deserialize<'de> for CompactBitArray {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MultiSignature {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -150,6 +154,7 @@ impl serde::Serialize for MultiSignature {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MultiSignature {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -162,6 +167,7 @@ impl<'de> serde::Deserialize<'de> for MultiSignature {
         enum GeneratedField {
             Signatures,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where

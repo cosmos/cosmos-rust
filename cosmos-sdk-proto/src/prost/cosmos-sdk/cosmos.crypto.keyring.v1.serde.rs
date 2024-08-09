@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for Record {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -42,6 +43,7 @@ impl serde::Serialize for Record {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for Record {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -61,6 +63,7 @@ impl<'de> serde::Deserialize<'de> for Record {
             Multi,
             Offline,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -170,6 +173,7 @@ impl<'de> serde::Deserialize<'de> for Record {
         deserializer.deserialize_struct("cosmos.crypto.keyring.v1.Record", FIELDS, GeneratedVisitor)
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for record::Ledger {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -189,6 +193,7 @@ impl serde::Serialize for record::Ledger {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for record::Ledger {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -201,6 +206,7 @@ impl<'de> serde::Deserialize<'de> for record::Ledger {
         enum GeneratedField {
             Path,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -265,6 +271,7 @@ impl<'de> serde::Deserialize<'de> for record::Ledger {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for record::Local {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -284,6 +291,7 @@ impl serde::Serialize for record::Local {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for record::Local {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -296,6 +304,7 @@ impl<'de> serde::Deserialize<'de> for record::Local {
         enum GeneratedField {
             PrivKey,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -362,6 +371,7 @@ impl<'de> serde::Deserialize<'de> for record::Local {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for record::Multi {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -375,6 +385,7 @@ impl serde::Serialize for record::Multi {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for record::Multi {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -385,6 +396,7 @@ impl<'de> serde::Deserialize<'de> for record::Multi {
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {}
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -438,6 +450,7 @@ impl<'de> serde::Deserialize<'de> for record::Multi {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for record::Offline {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -451,6 +464,7 @@ impl serde::Serialize for record::Offline {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for record::Offline {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -461,6 +475,7 @@ impl<'de> serde::Deserialize<'de> for record::Offline {
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {}
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where

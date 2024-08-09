@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for BaseVestingAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -43,6 +44,7 @@ impl serde::Serialize for BaseVestingAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -70,6 +72,7 @@ impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
             DelegatedVesting,
             EndTime,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -179,6 +182,7 @@ impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for ContinuousVestingAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -206,6 +210,7 @@ impl serde::Serialize for ContinuousVestingAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -224,6 +229,7 @@ impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
             BaseVestingAccount,
             StartTime,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -309,6 +315,7 @@ impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for DelayedVestingAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -328,6 +335,7 @@ impl serde::Serialize for DelayedVestingAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -340,6 +348,7 @@ impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
         enum GeneratedField {
             BaseVestingAccount,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -413,6 +422,7 @@ impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgCreatePeriodicVestingAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -454,6 +464,7 @@ impl serde::Serialize for MsgCreatePeriodicVestingAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -478,6 +489,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
             StartTime,
             VestingPeriods,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -579,6 +591,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgCreatePeriodicVestingAccountResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -594,6 +607,7 @@ impl serde::Serialize for MsgCreatePeriodicVestingAccountResponse {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -604,6 +618,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {}
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -662,6 +677,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgCreatePermanentLockedAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -695,6 +711,7 @@ impl serde::Serialize for MsgCreatePermanentLockedAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -715,6 +732,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
             ToAddress,
             Amount,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -802,6 +820,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgCreatePermanentLockedAccountResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -817,6 +836,7 @@ impl serde::Serialize for MsgCreatePermanentLockedAccountResponse {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -827,6 +847,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {}
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -885,6 +906,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgCreateVestingAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -929,6 +951,7 @@ impl serde::Serialize for MsgCreateVestingAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -954,6 +977,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
             EndTime,
             Delayed,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1062,6 +1086,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgCreateVestingAccountResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1077,6 +1102,7 @@ impl serde::Serialize for MsgCreateVestingAccountResponse {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1087,6 +1113,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {}
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1143,6 +1170,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for Period {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1168,6 +1196,7 @@ impl serde::Serialize for Period {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for Period {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1181,6 +1210,7 @@ impl<'de> serde::Deserialize<'de> for Period {
             Length,
             Amount,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1255,6 +1285,7 @@ impl<'de> serde::Deserialize<'de> for Period {
         deserializer.deserialize_struct("cosmos.vesting.v1beta1.Period", FIELDS, GeneratedVisitor)
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for PeriodicVestingAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1288,6 +1319,7 @@ impl serde::Serialize for PeriodicVestingAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1309,6 +1341,7 @@ impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
             StartTime,
             VestingPeriods,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1405,6 +1438,7 @@ impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for PermanentLockedAccount {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1424,6 +1458,7 @@ impl serde::Serialize for PermanentLockedAccount {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for PermanentLockedAccount {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1436,6 +1471,7 @@ impl<'de> serde::Deserialize<'de> for PermanentLockedAccount {
         enum GeneratedField {
             BaseVestingAccount,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where

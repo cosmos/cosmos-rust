@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for PageRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -46,6 +47,7 @@ impl serde::Serialize for PageRequest {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for PageRequest {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -69,6 +71,7 @@ impl<'de> serde::Deserialize<'de> for PageRequest {
             CountTotal,
             Reverse,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -180,6 +183,7 @@ impl<'de> serde::Deserialize<'de> for PageRequest {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for PageResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -210,6 +214,7 @@ impl serde::Serialize for PageResponse {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for PageResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -223,6 +228,7 @@ impl<'de> serde::Deserialize<'de> for PageResponse {
             NextKey,
             Total,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where

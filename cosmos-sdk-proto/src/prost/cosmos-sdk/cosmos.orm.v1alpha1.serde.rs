@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for ModuleSchemaDescriptor {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -28,6 +29,7 @@ impl serde::Serialize for ModuleSchemaDescriptor {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -41,6 +43,7 @@ impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
             SchemaFile,
             Prefix,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -122,6 +125,7 @@ impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for module_schema_descriptor::FileEntry {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -156,6 +160,7 @@ impl serde::Serialize for module_schema_descriptor::FileEntry {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -176,6 +181,7 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
             ProtoFileName,
             StorageType,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -268,6 +274,7 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for StorageType {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -284,6 +291,7 @@ impl serde::Serialize for StorageType {
         serializer.serialize_str(variant)
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for StorageType {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>

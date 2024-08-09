@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for Metadata {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -25,6 +26,7 @@ impl serde::Serialize for Metadata {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for Metadata {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -37,6 +39,7 @@ impl<'de> serde::Deserialize<'de> for Metadata {
         enum GeneratedField {
             ChunkHashes,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -108,6 +111,7 @@ impl<'de> serde::Deserialize<'de> for Metadata {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for Snapshot {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -154,6 +158,7 @@ impl serde::Serialize for Snapshot {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for Snapshot {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -170,6 +175,7 @@ impl<'de> serde::Deserialize<'de> for Snapshot {
             Hash,
             Metadata,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -284,6 +290,7 @@ impl<'de> serde::Deserialize<'de> for Snapshot {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for SnapshotExtensionMeta {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -309,6 +316,7 @@ impl serde::Serialize for SnapshotExtensionMeta {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for SnapshotExtensionMeta {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -322,6 +330,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotExtensionMeta {
             Name,
             Format,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -403,6 +412,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotExtensionMeta {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for SnapshotExtensionPayload {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -428,6 +438,7 @@ impl serde::Serialize for SnapshotExtensionPayload {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for SnapshotExtensionPayload {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -440,6 +451,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotExtensionPayload {
         enum GeneratedField {
             Payload,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -512,6 +524,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotExtensionPayload {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for SnapshotIavlItem {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -556,6 +569,7 @@ impl serde::Serialize for SnapshotIavlItem {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for SnapshotIavlItem {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -571,6 +585,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotIavlItem {
             Version,
             Height,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -676,6 +691,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotIavlItem {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for SnapshotItem {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -714,6 +730,7 @@ impl serde::Serialize for SnapshotItem {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for SnapshotItem {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -739,6 +756,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotItem {
             Kv,
             Schema,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -852,6 +870,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotItem {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for SnapshotKvItem {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -883,6 +902,7 @@ impl serde::Serialize for SnapshotKvItem {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for SnapshotKvItem {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -896,6 +916,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotKvItem {
             Key,
             Value,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -977,6 +998,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotKvItem {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for SnapshotSchema {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1003,6 +1025,7 @@ impl serde::Serialize for SnapshotSchema {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for SnapshotSchema {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1015,6 +1038,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotSchema {
         enum GeneratedField {
             Keys,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1086,6 +1110,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotSchema {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for SnapshotStoreItem {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1105,6 +1130,7 @@ impl serde::Serialize for SnapshotStoreItem {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for SnapshotStoreItem {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1117,6 +1143,7 @@ impl<'de> serde::Deserialize<'de> for SnapshotStoreItem {
         enum GeneratedField {
             Name,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where

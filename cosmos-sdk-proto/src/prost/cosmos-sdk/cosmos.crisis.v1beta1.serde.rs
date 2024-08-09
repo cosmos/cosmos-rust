@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for GenesisState {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -18,6 +19,7 @@ impl serde::Serialize for GenesisState {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for GenesisState {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -30,6 +32,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
         enum GeneratedField {
             ConstantFee,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -96,6 +99,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgVerifyInvariant {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -127,6 +131,7 @@ impl serde::Serialize for MsgVerifyInvariant {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgVerifyInvariant {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -147,6 +152,7 @@ impl<'de> serde::Deserialize<'de> for MsgVerifyInvariant {
             InvariantModuleName,
             InvariantRoute,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -237,6 +243,7 @@ impl<'de> serde::Deserialize<'de> for MsgVerifyInvariant {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for MsgVerifyInvariantResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -250,6 +257,7 @@ impl serde::Serialize for MsgVerifyInvariantResponse {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for MsgVerifyInvariantResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -260,6 +268,7 @@ impl<'de> serde::Deserialize<'de> for MsgVerifyInvariantResponse {
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {}
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where

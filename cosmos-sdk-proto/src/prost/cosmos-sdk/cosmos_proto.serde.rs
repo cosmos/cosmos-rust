@@ -1,4 +1,5 @@
 // @generated
+#[cfg(feature = "serialization")]
 impl serde::Serialize for InterfaceDescriptor {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -24,6 +25,7 @@ impl serde::Serialize for InterfaceDescriptor {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -37,6 +39,7 @@ impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
             Name,
             Description,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -112,6 +115,7 @@ impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
         )
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for ScalarDescriptor {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -151,6 +155,7 @@ impl serde::Serialize for ScalarDescriptor {
         struct_ser.end()
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -165,6 +170,7 @@ impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
             Description,
             FieldType,
         }
+        #[cfg(feature = "serialization")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -250,6 +256,7 @@ impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
         deserializer.deserialize_struct("cosmos_proto.ScalarDescriptor", FIELDS, GeneratedVisitor)
     }
 }
+#[cfg(feature = "serialization")]
 impl serde::Serialize for ScalarType {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -264,6 +271,7 @@ impl serde::Serialize for ScalarType {
         serializer.serialize_str(variant)
     }
 }
+#[cfg(feature = "serialization")]
 impl<'de> serde::Deserialize<'de> for ScalarType {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
