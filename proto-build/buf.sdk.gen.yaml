@@ -4,7 +4,6 @@ plugins:
     out: .
     opt:
       - compile_well_known_types
-#      - extern_path=.google.protobuf=::pbjson_types
       - extern_path=.google.protobuf=::tendermint_proto::google::protobuf
       - extern_path=.tendermint=::tendermint_proto::v0_34
   - plugin: buf.build/community/neoeinstein-prost-serde:v0.3.0
