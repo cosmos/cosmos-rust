@@ -247,5 +247,6 @@ pub struct QueryMethodDescriptor {
     #[prost(string, tag = "2")]
     pub full_query_path: ::prost::alloc::string::String,
 }
+include!("cosmos.base.reflection.v2alpha1.serde.rs");
 include!("cosmos.base.reflection.v2alpha1.tonic.rs");
 // @@protoc_insertion_point(module)

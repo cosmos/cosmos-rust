@@ -72,4 +72,5 @@ impl ScalarType {
         }
     }
 }
+include!("cosmos_proto.serde.rs");
 // @@protoc_insertion_point(module)

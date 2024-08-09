@@ -502,5 +502,6 @@ pub struct MsgFundCommunityPool {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgFundCommunityPoolResponse {}
+include!("cosmos.distribution.v1beta1.serde.rs");
 include!("cosmos.distribution.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

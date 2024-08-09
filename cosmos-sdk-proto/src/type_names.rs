@@ -300,6 +300,11 @@ impl_name!(
     "cosmos.staking.v1beta1",
     "Validator"
 );
+impl_name!(
+    cosmos::staking::v1beta1::StakeAuthorization,
+    "cosmos.staking.v1beta1",
+    "StakeAuthorization"
+);
 
 impl_name!(
     cosmos::base::abci::v1beta1::MsgData,
@@ -332,6 +337,21 @@ impl_name!(
     cosmos::authz::v1beta1::MsgExec,
     "cosmos.authz.v1beta1",
     "MsgExec"
+);
+impl_name!(
+    cosmos::authz::v1beta1::GenericAuthorization,
+    "cosmos.authz.v1beta1",
+    "GenericAuthorization"
+);
+impl_name!(
+    cosmos::authz::v1beta1::GrantAuthorization,
+    "cosmos.authz.v1beta1",
+    "GrantAuthorization"
+);
+impl_name!(
+    cosmos::authz::v1beta1::Grant,
+    "cosmos.authz.v1beta1",
+    "Grant"
 );
 
 impl_name!(cosmos::tx::v1beta1::Tx, "cosmos.tx.v1beta1", "Tx");

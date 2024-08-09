@@ -151,5 +151,6 @@ pub struct MsgUnjail {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUnjailResponse {}
+include!("cosmos.slashing.v1beta1.serde.rs");
 include!("cosmos.slashing.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

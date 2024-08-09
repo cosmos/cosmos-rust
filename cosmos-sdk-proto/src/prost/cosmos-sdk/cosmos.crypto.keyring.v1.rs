@@ -56,4 +56,5 @@ pub mod record {
         Offline(Offline),
     }
 }
+include!("cosmos.crypto.keyring.v1.serde.rs");
 // @@protoc_insertion_point(module)

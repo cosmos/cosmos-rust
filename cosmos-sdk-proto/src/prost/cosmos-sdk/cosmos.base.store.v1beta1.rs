@@ -81,4 +81,5 @@ pub mod block_metadata {
         pub response: ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseDeliverTx>,
     }
 }
+include!("cosmos.base.store.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)
