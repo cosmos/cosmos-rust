@@ -18,7 +18,7 @@ rust-version = "1.72"
 [dependencies]
 prost = { version = "0.13", default-features = false }
 tendermint-proto = "0.39.1"
-serde = { version = "1.0.203", default-features = false }
+serde = { version = "1.0.203", default-features = false, features = ["alloc"] }
 pbjson = { package = "informalsystems-pbjson", version = "0.7" }
 
 # Optional dependencies
