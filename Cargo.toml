@@ -5,6 +5,3 @@ members = [
     "cosmos-sdk-proto",
     "cosmrs"
 ]
-
-[patch.crates-io]
-tendermint-proto = { git = "https://github.com/informalsystems/tendermint-rs" }
