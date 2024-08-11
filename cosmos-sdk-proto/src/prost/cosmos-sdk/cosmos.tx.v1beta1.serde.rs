@@ -1,5 +1,5 @@
 // @generated
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for AuthInfo {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -30,7 +30,7 @@ impl serde::Serialize for AuthInfo {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for AuthInfo {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -45,7 +45,7 @@ impl<'de> serde::Deserialize<'de> for AuthInfo {
             Fee,
             Tip,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -126,7 +126,7 @@ impl<'de> serde::Deserialize<'de> for AuthInfo {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.AuthInfo", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for AuxSignerData {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -167,7 +167,7 @@ impl serde::Serialize for AuxSignerData {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for AuxSignerData {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -183,7 +183,7 @@ impl<'de> serde::Deserialize<'de> for AuxSignerData {
             Mode,
             Sig,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -278,7 +278,7 @@ impl<'de> serde::Deserialize<'de> for AuxSignerData {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.AuxSignerData", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for BroadcastMode {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -294,7 +294,7 @@ impl serde::Serialize for BroadcastMode {
         serializer.serialize_str(variant)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for BroadcastMode {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -357,7 +357,7 @@ impl<'de> serde::Deserialize<'de> for BroadcastMode {
         deserializer.deserialize_any(GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for BroadcastTxRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -389,7 +389,7 @@ impl serde::Serialize for BroadcastTxRequest {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for BroadcastTxRequest {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -403,7 +403,7 @@ impl<'de> serde::Deserialize<'de> for BroadcastTxRequest {
             TxBytes,
             Mode,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -482,7 +482,7 @@ impl<'de> serde::Deserialize<'de> for BroadcastTxRequest {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for BroadcastTxResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -502,7 +502,7 @@ impl serde::Serialize for BroadcastTxResponse {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for BroadcastTxResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -515,7 +515,7 @@ impl<'de> serde::Deserialize<'de> for BroadcastTxResponse {
         enum GeneratedField {
             TxResponse,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -582,7 +582,7 @@ impl<'de> serde::Deserialize<'de> for BroadcastTxResponse {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for Fee {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -621,7 +621,7 @@ impl serde::Serialize for Fee {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for Fee {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -637,7 +637,7 @@ impl<'de> serde::Deserialize<'de> for Fee {
             Payer,
             Granter,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -730,7 +730,7 @@ impl<'de> serde::Deserialize<'de> for Fee {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.Fee", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for GetBlockWithTxsRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -757,7 +757,7 @@ impl serde::Serialize for GetBlockWithTxsRequest {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for GetBlockWithTxsRequest {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -771,7 +771,7 @@ impl<'de> serde::Deserialize<'de> for GetBlockWithTxsRequest {
             Height,
             Pagination,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -853,7 +853,7 @@ impl<'de> serde::Deserialize<'de> for GetBlockWithTxsRequest {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for GetBlockWithTxsResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -891,7 +891,7 @@ impl serde::Serialize for GetBlockWithTxsResponse {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for GetBlockWithTxsResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -907,7 +907,7 @@ impl<'de> serde::Deserialize<'de> for GetBlockWithTxsResponse {
             Block,
             Pagination,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1004,7 +1004,7 @@ impl<'de> serde::Deserialize<'de> for GetBlockWithTxsResponse {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for GetTxRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1023,7 +1023,7 @@ impl serde::Serialize for GetTxRequest {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for GetTxRequest {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1036,7 +1036,7 @@ impl<'de> serde::Deserialize<'de> for GetTxRequest {
         enum GeneratedField {
             Hash,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1099,7 +1099,7 @@ impl<'de> serde::Deserialize<'de> for GetTxRequest {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.GetTxRequest", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for GetTxResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1124,7 +1124,7 @@ impl serde::Serialize for GetTxResponse {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for GetTxResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1138,7 +1138,7 @@ impl<'de> serde::Deserialize<'de> for GetTxResponse {
             Tx,
             TxResponse,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1210,7 +1210,7 @@ impl<'de> serde::Deserialize<'de> for GetTxResponse {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.GetTxResponse", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for GetTxsEventRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1259,7 +1259,7 @@ impl serde::Serialize for GetTxsEventRequest {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for GetTxsEventRequest {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1283,7 +1283,7 @@ impl<'de> serde::Deserialize<'de> for GetTxsEventRequest {
             Page,
             Limit,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1392,7 +1392,7 @@ impl<'de> serde::Deserialize<'de> for GetTxsEventRequest {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for GetTxsEventResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1431,7 +1431,7 @@ impl serde::Serialize for GetTxsEventResponse {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for GetTxsEventResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1447,7 +1447,7 @@ impl<'de> serde::Deserialize<'de> for GetTxsEventResponse {
             Pagination,
             Total,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1544,7 +1544,7 @@ impl<'de> serde::Deserialize<'de> for GetTxsEventResponse {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for ModeInfo {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1570,7 +1570,7 @@ impl serde::Serialize for ModeInfo {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for ModeInfo {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1584,7 +1584,7 @@ impl<'de> serde::Deserialize<'de> for ModeInfo {
             Single,
             Multi,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1656,7 +1656,7 @@ impl<'de> serde::Deserialize<'de> for ModeInfo {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.ModeInfo", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for mode_info::Multi {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1682,7 +1682,7 @@ impl serde::Serialize for mode_info::Multi {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for mode_info::Multi {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1696,7 +1696,7 @@ impl<'de> serde::Deserialize<'de> for mode_info::Multi {
             Bitarray,
             ModeInfos,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1772,7 +1772,7 @@ impl<'de> serde::Deserialize<'de> for mode_info::Multi {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for mode_info::Single {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1794,7 +1794,7 @@ impl serde::Serialize for mode_info::Single {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for mode_info::Single {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1807,7 +1807,7 @@ impl<'de> serde::Deserialize<'de> for mode_info::Single {
         enum GeneratedField {
             Mode,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -1876,7 +1876,7 @@ impl<'de> serde::Deserialize<'de> for mode_info::Single {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for OrderBy {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1891,7 +1891,7 @@ impl serde::Serialize for OrderBy {
         serializer.serialize_str(variant)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for OrderBy {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -1948,7 +1948,7 @@ impl<'de> serde::Deserialize<'de> for OrderBy {
         deserializer.deserialize_any(GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for SignDoc {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1997,7 +1997,7 @@ impl serde::Serialize for SignDoc {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for SignDoc {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -2022,7 +2022,7 @@ impl<'de> serde::Deserialize<'de> for SignDoc {
             ChainId,
             AccountNumber,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -2123,7 +2123,7 @@ impl<'de> serde::Deserialize<'de> for SignDoc {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.SignDoc", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for SignDocDirectAux {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -2182,7 +2182,7 @@ impl serde::Serialize for SignDocDirectAux {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for SignDocDirectAux {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -2211,7 +2211,7 @@ impl<'de> serde::Deserialize<'de> for SignDocDirectAux {
             Sequence,
             Tip,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -2332,7 +2332,7 @@ impl<'de> serde::Deserialize<'de> for SignDocDirectAux {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for SignerInfo {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -2364,7 +2364,7 @@ impl serde::Serialize for SignerInfo {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for SignerInfo {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -2385,7 +2385,7 @@ impl<'de> serde::Deserialize<'de> for SignerInfo {
             ModeInfo,
             Sequence,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -2469,7 +2469,7 @@ impl<'de> serde::Deserialize<'de> for SignerInfo {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.SignerInfo", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for SimulateRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -2499,7 +2499,7 @@ impl serde::Serialize for SimulateRequest {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for SimulateRequest {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -2513,7 +2513,7 @@ impl<'de> serde::Deserialize<'de> for SimulateRequest {
             Tx,
             TxBytes,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -2592,7 +2592,7 @@ impl<'de> serde::Deserialize<'de> for SimulateRequest {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for SimulateResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -2618,7 +2618,7 @@ impl serde::Serialize for SimulateResponse {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for SimulateResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -2632,7 +2632,7 @@ impl<'de> serde::Deserialize<'de> for SimulateResponse {
             GasInfo,
             Result,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -2708,7 +2708,7 @@ impl<'de> serde::Deserialize<'de> for SimulateResponse {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for Tip {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -2733,7 +2733,7 @@ impl serde::Serialize for Tip {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for Tip {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -2747,7 +2747,7 @@ impl<'de> serde::Deserialize<'de> for Tip {
             Amount,
             Tipper,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -2819,7 +2819,7 @@ impl<'de> serde::Deserialize<'de> for Tip {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.Tip", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for Tx {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -2857,7 +2857,7 @@ impl serde::Serialize for Tx {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for Tx {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -2872,7 +2872,7 @@ impl<'de> serde::Deserialize<'de> for Tx {
             AuthInfo,
             Signatures,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -2958,7 +2958,7 @@ impl<'de> serde::Deserialize<'de> for Tx {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.Tx", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for TxBody {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -3008,7 +3008,7 @@ impl serde::Serialize for TxBody {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for TxBody {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -3034,7 +3034,7 @@ impl<'de> serde::Deserialize<'de> for TxBody {
             ExtensionOptions,
             NonCriticalExtensionOptions,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -3143,7 +3143,7 @@ impl<'de> serde::Deserialize<'de> for TxBody {
         deserializer.deserialize_struct("cosmos.tx.v1beta1.TxBody", FIELDS, GeneratedVisitor)
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for TxRaw {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -3189,7 +3189,7 @@ impl serde::Serialize for TxRaw {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for TxRaw {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -3210,7 +3210,7 @@ impl<'de> serde::Deserialize<'de> for TxRaw {
             AuthInfoBytes,
             Signatures,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where

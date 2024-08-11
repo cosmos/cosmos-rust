@@ -1,5 +1,5 @@
 // @generated
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for PrimaryKeyDescriptor {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -25,7 +25,7 @@ impl serde::Serialize for PrimaryKeyDescriptor {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for PrimaryKeyDescriptor {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -39,7 +39,7 @@ impl<'de> serde::Deserialize<'de> for PrimaryKeyDescriptor {
             Fields,
             AutoIncrement,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -118,7 +118,7 @@ impl<'de> serde::Deserialize<'de> for PrimaryKeyDescriptor {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for SecondaryIndexDescriptor {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -150,7 +150,7 @@ impl serde::Serialize for SecondaryIndexDescriptor {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for SecondaryIndexDescriptor {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -165,7 +165,7 @@ impl<'de> serde::Deserialize<'de> for SecondaryIndexDescriptor {
             Id,
             Unique,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -256,7 +256,7 @@ impl<'de> serde::Deserialize<'de> for SecondaryIndexDescriptor {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for SingletonDescriptor {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -276,7 +276,7 @@ impl serde::Serialize for SingletonDescriptor {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for SingletonDescriptor {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -289,7 +289,7 @@ impl<'de> serde::Deserialize<'de> for SingletonDescriptor {
         enum GeneratedField {
             Id,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
@@ -359,7 +359,7 @@ impl<'de> serde::Deserialize<'de> for SingletonDescriptor {
         )
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl serde::Serialize for TableDescriptor {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -390,7 +390,7 @@ impl serde::Serialize for TableDescriptor {
         struct_ser.end()
     }
 }
-#[cfg(feature = "serialization")]
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for TableDescriptor {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
@@ -405,7 +405,7 @@ impl<'de> serde::Deserialize<'de> for TableDescriptor {
             Index,
             Id,
         }
-        #[cfg(feature = "serialization")]
+        #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
             where
