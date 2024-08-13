@@ -380,10 +380,16 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
         // TODO(tarcieri): figure out what's wrong with our `buf` config and do it there
         ("::prost_types::", "::tendermint_proto::google::protobuf::"),
         // add the feature flag to the serde definitions
-        ("impl serde::Serialize for", "#[cfg(feature = \"serde\")]\n\
-          impl serde::Serialize for"),
-        ("impl<'de> serde::Deserialize<'de> for", "#[cfg(feature = \"serde\")]\n\
-          impl<'de> serde::Deserialize<'de> for")
+        (
+            "impl serde::Serialize for",
+            "#[cfg(feature = \"serde\")]\n\
+            impl serde::Serialize for",
+        ),
+        (
+            "impl<'de> serde::Deserialize<'de> for",
+            "#[cfg(feature = \"serde\")]\n\
+            impl<'de> serde::Deserialize<'de> for",
+        ),
     ];
 
     // Skip proto files belonging to `EXCLUDED_PROTO_PACKAGES`
