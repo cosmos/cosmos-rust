@@ -15,4 +15,5 @@ pub struct Pair {
     #[prost(bytes = "vec", tag = "2")]
     pub value: ::prost::alloc::vec::Vec<u8>,
 }
+include!("cosmos.base.kv.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

@@ -70,5 +70,6 @@ pub struct Subspace {
     #[prost(string, repeated, tag = "2")]
     pub keys: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+include!("cosmos.params.v1beta1.serde.rs");
 include!("cosmos.params.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

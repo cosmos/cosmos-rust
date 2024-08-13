@@ -17,4 +17,5 @@ pub struct PrivKey {
     #[prost(bytes = "vec", tag = "1")]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
+include!("cosmos.crypto.secp256k1.serde.rs");
 // @@protoc_insertion_point(module)

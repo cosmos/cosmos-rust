@@ -20,4 +20,5 @@ pub struct Bip44Params {
     #[prost(uint32, tag = "5")]
     pub address_index: u32,
 }
+include!("cosmos.crypto.hd.v1.serde.rs");
 // @@protoc_insertion_point(module)

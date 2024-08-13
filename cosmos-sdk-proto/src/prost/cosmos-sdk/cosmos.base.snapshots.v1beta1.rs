@@ -118,4 +118,5 @@ pub struct SnapshotSchema {
     #[prost(bytes = "vec", repeated, tag = "1")]
     pub keys: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
+include!("cosmos.base.snapshots.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

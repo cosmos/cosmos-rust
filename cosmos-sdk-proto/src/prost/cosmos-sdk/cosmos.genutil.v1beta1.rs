@@ -7,4 +7,5 @@ pub struct GenesisState {
     #[prost(bytes = "vec", repeated, tag = "1")]
     pub gen_txs: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
+include!("cosmos.genutil.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)
