@@ -376,6 +376,10 @@ pub struct MsgIbcSendResponse {
     #[prost(uint64, tag = "1")]
     pub sequence: u64,
 }
+/// MsgIBCWriteAcknowledgementResponse
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgIbcWriteAcknowledgementResponse {}
 /// MsgIBCCloseChannel port and channel need to be owned by the contract
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -959,6 +963,34 @@ pub struct QueryContractsByCreatorResponse {
     #[prost(message, optional, tag = "2")]
     pub pagination:
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryBuildAddressRequest is the request type for the Query/BuildAddress RPC
+/// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryBuildAddressRequest {
+    /// CodeHash is the hash of the code
+    #[prost(string, tag = "1")]
+    pub code_hash: ::prost::alloc::string::String,
+    /// CreatorAddress is the address of the contract instantiator
+    #[prost(string, tag = "2")]
+    pub creator_address: ::prost::alloc::string::String,
+    /// Salt is a hex encoded salt
+    #[prost(string, tag = "3")]
+    pub salt: ::prost::alloc::string::String,
+    /// InitArgs are optional json encoded init args to be used in contract address
+    /// building if provided
+    #[prost(bytes = "vec", tag = "4")]
+    pub init_args: ::prost::alloc::vec::Vec<u8>,
+}
+/// QueryBuildAddressResponse is the response type for the Query/BuildAddress RPC
+/// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryBuildAddressResponse {
+    /// Address is the contract address
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
 }
 /// MsgStoreCode submit Wasm code to the system
 #[allow(clippy::derive_partial_eq_without_eq)]
