@@ -31,10 +31,6 @@ impl TryFrom<&proto::cosmwasm::wasm::v1::AccessConfig> for AccessConfig {
 
         let mut addresses = Vec::with_capacity(proto.addresses.len());
 
-        if !proto.address.is_empty() {
-            addresses.push(proto.address.parse()?);
-        }
-
         for address in &proto.addresses {
             addresses.push(address.parse()?);
         }
@@ -56,7 +52,6 @@ impl From<&AccessConfig> for proto::cosmwasm::wasm::v1::AccessConfig {
     fn from(config: &AccessConfig) -> proto::cosmwasm::wasm::v1::AccessConfig {
         proto::cosmwasm::wasm::v1::AccessConfig {
             permission: config.permission as i32,
-            address: "".to_string(),
             addresses: config.addresses.iter().map(ToString::to_string).collect(),
         }
     }

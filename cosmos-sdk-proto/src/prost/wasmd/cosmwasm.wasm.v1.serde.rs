@@ -127,6 +127,224 @@ impl<'de> serde::Deserialize<'de> for AbsoluteTxPosition {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for AcceptedMessageKeysFilter {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.keys.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.AcceptedMessageKeysFilter", len)?;
+        if !self.keys.is_empty() {
+            struct_ser.serialize_field("keys", &self.keys)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for AcceptedMessageKeysFilter {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["keys"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Keys,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "keys" => Ok(GeneratedField::Keys),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = AcceptedMessageKeysFilter;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.AcceptedMessageKeysFilter")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<AcceptedMessageKeysFilter, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut keys__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Keys => {
+                            if keys__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("keys"));
+                            }
+                            keys__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(AcceptedMessageKeysFilter {
+                    keys: keys__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.AcceptedMessageKeysFilter",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for AcceptedMessagesFilter {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.messages.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.AcceptedMessagesFilter", len)?;
+        if !self.messages.is_empty() {
+            struct_ser.serialize_field(
+                "messages",
+                &self
+                    .messages
+                    .iter()
+                    .map(pbjson::private::base64::encode)
+                    .collect::<Vec<_>>(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for AcceptedMessagesFilter {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["messages"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Messages,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "messages" => Ok(GeneratedField::Messages),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = AcceptedMessagesFilter;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.AcceptedMessagesFilter")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<AcceptedMessagesFilter, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut messages__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Messages => {
+                            if messages__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("messages"));
+                            }
+                            messages__ = Some(
+                                map_.next_value::<Vec<::pbjson::private::BytesDeserialize<_>>>()?
+                                    .into_iter()
+                                    .map(|x| x.0)
+                                    .collect(),
+                            );
+                        }
+                    }
+                }
+                Ok(AcceptedMessagesFilter {
+                    messages: messages__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.AcceptedMessagesFilter",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for AccessConfig {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -138,9 +356,6 @@ impl serde::Serialize for AccessConfig {
         if self.permission != 0 {
             len += 1;
         }
-        if !self.address.is_empty() {
-            len += 1;
-        }
         if !self.addresses.is_empty() {
             len += 1;
         }
@@ -150,9 +365,6 @@ impl serde::Serialize for AccessConfig {
                 serde::ser::Error::custom(format!("Invalid variant {}", self.permission))
             })?;
             struct_ser.serialize_field("permission", &v)?;
-        }
-        if !self.address.is_empty() {
-            struct_ser.serialize_field("address", &self.address)?;
         }
         if !self.addresses.is_empty() {
             struct_ser.serialize_field("addresses", &self.addresses)?;
@@ -167,12 +379,11 @@ impl<'de> serde::Deserialize<'de> for AccessConfig {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["permission", "address", "addresses"];
+        const FIELDS: &[&str] = &["permission", "addresses"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Permission,
-            Address,
             Addresses,
         }
         #[cfg(feature = "serde")]
@@ -200,7 +411,6 @@ impl<'de> serde::Deserialize<'de> for AccessConfig {
                     {
                         match value {
                             "permission" => Ok(GeneratedField::Permission),
-                            "address" => Ok(GeneratedField::Address),
                             "addresses" => Ok(GeneratedField::Addresses),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
@@ -222,7 +432,6 @@ impl<'de> serde::Deserialize<'de> for AccessConfig {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut permission__ = None;
-                let mut address__ = None;
                 let mut addresses__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
@@ -231,12 +440,6 @@ impl<'de> serde::Deserialize<'de> for AccessConfig {
                                 return Err(serde::de::Error::duplicate_field("permission"));
                             }
                             permission__ = Some(map_.next_value::<AccessType>()? as i32);
-                        }
-                        GeneratedField::Address => {
-                            if address__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("address"));
-                            }
-                            address__ = Some(map_.next_value()?);
                         }
                         GeneratedField::Addresses => {
                             if addresses__.is_some() {
@@ -248,7 +451,6 @@ impl<'de> serde::Deserialize<'de> for AccessConfig {
                 }
                 Ok(AccessConfig {
                     permission: permission__.unwrap_or_default(),
-                    address: address__.unwrap_or_default(),
                     addresses: addresses__.unwrap_or_default(),
                 })
             }
@@ -395,7 +597,6 @@ impl serde::Serialize for AccessType {
         let variant = match self {
             Self::Unspecified => "ACCESS_TYPE_UNSPECIFIED",
             Self::Nobody => "ACCESS_TYPE_NOBODY",
-            Self::OnlyAddress => "ACCESS_TYPE_ONLY_ADDRESS",
             Self::Everybody => "ACCESS_TYPE_EVERYBODY",
             Self::AnyOfAddresses => "ACCESS_TYPE_ANY_OF_ADDRESSES",
         };
@@ -412,7 +613,6 @@ impl<'de> serde::Deserialize<'de> for AccessType {
         const FIELDS: &[&str] = &[
             "ACCESS_TYPE_UNSPECIFIED",
             "ACCESS_TYPE_NOBODY",
-            "ACCESS_TYPE_ONLY_ADDRESS",
             "ACCESS_TYPE_EVERYBODY",
             "ACCESS_TYPE_ANY_OF_ADDRESSES",
         ];
@@ -457,7 +657,6 @@ impl<'de> serde::Deserialize<'de> for AccessType {
                 match value {
                     "ACCESS_TYPE_UNSPECIFIED" => Ok(AccessType::Unspecified),
                     "ACCESS_TYPE_NOBODY" => Ok(AccessType::Nobody),
-                    "ACCESS_TYPE_ONLY_ADDRESS" => Ok(AccessType::OnlyAddress),
                     "ACCESS_TYPE_EVERYBODY" => Ok(AccessType::Everybody),
                     "ACCESS_TYPE_ANY_OF_ADDRESSES" => Ok(AccessType::AnyOfAddresses),
                     _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
@@ -565,6 +764,88 @@ impl<'de> serde::Deserialize<'de> for AccessTypeParam {
         }
         deserializer.deserialize_struct(
             "cosmwasm.wasm.v1.AccessTypeParam",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for AllowAllMessagesFilter {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.AllowAllMessagesFilter", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for AllowAllMessagesFilter {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = AllowAllMessagesFilter;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.AllowAllMessagesFilter")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<AllowAllMessagesFilter, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(AllowAllMessagesFilter {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.AllowAllMessagesFilter",
             FIELDS,
             GeneratedVisitor,
         )
@@ -862,6 +1143,133 @@ impl<'de> serde::Deserialize<'de> for Code {
             }
         }
         deserializer.deserialize_struct("cosmwasm.wasm.v1.Code", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for CodeGrant {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.code_hash.is_empty() {
+            len += 1;
+        }
+        if self.instantiate_permission.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.CodeGrant", len)?;
+        if !self.code_hash.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "codeHash",
+                pbjson::private::base64::encode(&self.code_hash).as_str(),
+            )?;
+        }
+        if let Some(v) = self.instantiate_permission.as_ref() {
+            struct_ser.serialize_field("instantiatePermission", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for CodeGrant {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "code_hash",
+            "codeHash",
+            "instantiate_permission",
+            "instantiatePermission",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            CodeHash,
+            InstantiatePermission,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "codeHash" | "code_hash" => Ok(GeneratedField::CodeHash),
+                            "instantiatePermission" | "instantiate_permission" => {
+                                Ok(GeneratedField::InstantiatePermission)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = CodeGrant;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.CodeGrant")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<CodeGrant, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut code_hash__ = None;
+                let mut instantiate_permission__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::CodeHash => {
+                            if code_hash__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeHash"));
+                            }
+                            code_hash__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::InstantiatePermission => {
+                            if instantiate_permission__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "instantiatePermission",
+                                ));
+                            }
+                            instantiate_permission__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(CodeGrant {
+                    code_hash: code_hash__.unwrap_or_default(),
+                    instantiate_permission: instantiate_permission__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmwasm.wasm.v1.CodeGrant", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -1178,6 +1586,126 @@ impl<'de> serde::Deserialize<'de> for CodeInfoResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for CombinedLimit {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.calls_remaining != 0 {
+            len += 1;
+        }
+        if !self.amounts.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.CombinedLimit", len)?;
+        if self.calls_remaining != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "callsRemaining",
+                ToString::to_string(&self.calls_remaining).as_str(),
+            )?;
+        }
+        if !self.amounts.is_empty() {
+            struct_ser.serialize_field("amounts", &self.amounts)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for CombinedLimit {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["calls_remaining", "callsRemaining", "amounts"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            CallsRemaining,
+            Amounts,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "callsRemaining" | "calls_remaining" => {
+                                Ok(GeneratedField::CallsRemaining)
+                            }
+                            "amounts" => Ok(GeneratedField::Amounts),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = CombinedLimit;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.CombinedLimit")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<CombinedLimit, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut calls_remaining__ = None;
+                let mut amounts__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::CallsRemaining => {
+                            if calls_remaining__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("callsRemaining"));
+                            }
+                            calls_remaining__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Amounts => {
+                            if amounts__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("amounts"));
+                            }
+                            amounts__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(CombinedLimit {
+                    calls_remaining: calls_remaining__.unwrap_or_default(),
+                    amounts: amounts__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmwasm.wasm.v1.CombinedLimit", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for Contract {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1195,6 +1723,9 @@ impl serde::Serialize for Contract {
         if !self.contract_state.is_empty() {
             len += 1;
         }
+        if !self.contract_code_history.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.Contract", len)?;
         if !self.contract_address.is_empty() {
             struct_ser.serialize_field("contractAddress", &self.contract_address)?;
@@ -1204,6 +1735,9 @@ impl serde::Serialize for Contract {
         }
         if !self.contract_state.is_empty() {
             struct_ser.serialize_field("contractState", &self.contract_state)?;
+        }
+        if !self.contract_code_history.is_empty() {
+            struct_ser.serialize_field("contractCodeHistory", &self.contract_code_history)?;
         }
         struct_ser.end()
     }
@@ -1222,6 +1756,8 @@ impl<'de> serde::Deserialize<'de> for Contract {
             "contractInfo",
             "contract_state",
             "contractState",
+            "contract_code_history",
+            "contractCodeHistory",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1229,6 +1765,7 @@ impl<'de> serde::Deserialize<'de> for Contract {
             ContractAddress,
             ContractInfo,
             ContractState,
+            ContractCodeHistory,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -1259,6 +1796,9 @@ impl<'de> serde::Deserialize<'de> for Contract {
                             }
                             "contractInfo" | "contract_info" => Ok(GeneratedField::ContractInfo),
                             "contractState" | "contract_state" => Ok(GeneratedField::ContractState),
+                            "contractCodeHistory" | "contract_code_history" => {
+                                Ok(GeneratedField::ContractCodeHistory)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1281,6 +1821,7 @@ impl<'de> serde::Deserialize<'de> for Contract {
                 let mut contract_address__ = None;
                 let mut contract_info__ = None;
                 let mut contract_state__ = None;
+                let mut contract_code_history__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ContractAddress => {
@@ -1301,12 +1842,21 @@ impl<'de> serde::Deserialize<'de> for Contract {
                             }
                             contract_state__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::ContractCodeHistory => {
+                            if contract_code_history__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "contractCodeHistory",
+                                ));
+                            }
+                            contract_code_history__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(Contract {
                     contract_address: contract_address__.unwrap_or_default(),
                     contract_info: contract_info__,
                     contract_state: contract_state__.unwrap_or_default(),
+                    contract_code_history: contract_code_history__.unwrap_or_default(),
                 })
             }
         }
@@ -1565,6 +2115,236 @@ impl<'de> serde::Deserialize<'de> for ContractCodeHistoryOperationType {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for ContractExecutionAuthorization {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.grants.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.ContractExecutionAuthorization", len)?;
+        if !self.grants.is_empty() {
+            struct_ser.serialize_field("grants", &self.grants)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for ContractExecutionAuthorization {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["grants"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Grants,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "grants" => Ok(GeneratedField::Grants),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = ContractExecutionAuthorization;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.ContractExecutionAuthorization")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<ContractExecutionAuthorization, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut grants__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Grants => {
+                            if grants__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grants"));
+                            }
+                            grants__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(ContractExecutionAuthorization {
+                    grants: grants__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.ContractExecutionAuthorization",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for ContractGrant {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.contract.is_empty() {
+            len += 1;
+        }
+        if self.limit.is_some() {
+            len += 1;
+        }
+        if self.filter.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.ContractGrant", len)?;
+        if !self.contract.is_empty() {
+            struct_ser.serialize_field("contract", &self.contract)?;
+        }
+        if let Some(v) = self.limit.as_ref() {
+            struct_ser.serialize_field("limit", v)?;
+        }
+        if let Some(v) = self.filter.as_ref() {
+            struct_ser.serialize_field("filter", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for ContractGrant {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["contract", "limit", "filter"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Contract,
+            Limit,
+            Filter,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "contract" => Ok(GeneratedField::Contract),
+                            "limit" => Ok(GeneratedField::Limit),
+                            "filter" => Ok(GeneratedField::Filter),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = ContractGrant;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.ContractGrant")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ContractGrant, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut contract__ = None;
+                let mut limit__ = None;
+                let mut filter__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Contract => {
+                            if contract__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("contract"));
+                            }
+                            contract__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Limit => {
+                            if limit__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("limit"));
+                            }
+                            limit__ = map_.next_value()?;
+                        }
+                        GeneratedField::Filter => {
+                            if filter__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("filter"));
+                            }
+                            filter__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(ContractGrant {
+                    contract: contract__.unwrap_or_default(),
+                    limit: limit__,
+                    filter: filter__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmwasm.wasm.v1.ContractGrant", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for ContractInfo {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -1767,6 +2547,109 @@ impl<'de> serde::Deserialize<'de> for ContractInfo {
             }
         }
         deserializer.deserialize_struct("cosmwasm.wasm.v1.ContractInfo", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for ContractMigrationAuthorization {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.grants.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.ContractMigrationAuthorization", len)?;
+        if !self.grants.is_empty() {
+            struct_ser.serialize_field("grants", &self.grants)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for ContractMigrationAuthorization {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["grants"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Grants,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "grants" => Ok(GeneratedField::Grants),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = ContractMigrationAuthorization;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.ContractMigrationAuthorization")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<ContractMigrationAuthorization, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut grants__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Grants => {
+                            if grants__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grants"));
+                            }
+                            grants__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(ContractMigrationAuthorization {
+                    grants: grants__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.ContractMigrationAuthorization",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -1986,9 +2869,6 @@ impl serde::Serialize for GenesisState {
         if !self.sequences.is_empty() {
             len += 1;
         }
-        if !self.gen_msgs.is_empty() {
-            len += 1;
-        }
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.GenesisState", len)?;
         if let Some(v) = self.params.as_ref() {
             struct_ser.serialize_field("params", v)?;
@@ -2002,9 +2882,6 @@ impl serde::Serialize for GenesisState {
         if !self.sequences.is_empty() {
             struct_ser.serialize_field("sequences", &self.sequences)?;
         }
-        if !self.gen_msgs.is_empty() {
-            struct_ser.serialize_field("genMsgs", &self.gen_msgs)?;
-        }
         struct_ser.end()
     }
 }
@@ -2015,14 +2892,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &[
-            "params",
-            "codes",
-            "contracts",
-            "sequences",
-            "gen_msgs",
-            "genMsgs",
-        ];
+        const FIELDS: &[&str] = &["params", "codes", "contracts", "sequences"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
@@ -2030,7 +2900,6 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
             Codes,
             Contracts,
             Sequences,
-            GenMsgs,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -2060,7 +2929,6 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             "codes" => Ok(GeneratedField::Codes),
                             "contracts" => Ok(GeneratedField::Contracts),
                             "sequences" => Ok(GeneratedField::Sequences),
-                            "genMsgs" | "gen_msgs" => Ok(GeneratedField::GenMsgs),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2084,7 +2952,6 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 let mut codes__ = None;
                 let mut contracts__ = None;
                 let mut sequences__ = None;
-                let mut gen_msgs__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
@@ -2111,12 +2978,6 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             }
                             sequences__ = Some(map_.next_value()?);
                         }
-                        GeneratedField::GenMsgs => {
-                            if gen_msgs__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("genMsgs"));
-                            }
-                            gen_msgs__ = Some(map_.next_value()?);
-                        }
                     }
                 }
                 Ok(GenesisState {
@@ -2124,7 +2985,6 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                     codes: codes__.unwrap_or_default(),
                     contracts: contracts__.unwrap_or_default(),
                     sequences: sequences__.unwrap_or_default(),
-                    gen_msgs: gen_msgs__.unwrap_or_default(),
                 })
             }
         }
@@ -2132,7 +2992,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for genesis_state::GenMsgs {
+impl serde::Serialize for InstantiateContract2Proposal {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
@@ -2140,48 +3000,111 @@ impl serde::Serialize for genesis_state::GenMsgs {
     {
         use serde::ser::SerializeStruct;
         let mut len = 0;
-        if self.sum.is_some() {
+        if !self.title.is_empty() {
+            len += 1;
+        }
+        if !self.description.is_empty() {
+            len += 1;
+        }
+        if !self.run_as.is_empty() {
+            len += 1;
+        }
+        if !self.admin.is_empty() {
+            len += 1;
+        }
+        if self.code_id != 0 {
+            len += 1;
+        }
+        if !self.label.is_empty() {
+            len += 1;
+        }
+        if !self.msg.is_empty() {
+            len += 1;
+        }
+        if !self.funds.is_empty() {
+            len += 1;
+        }
+        if !self.salt.is_empty() {
+            len += 1;
+        }
+        if self.fix_msg {
             len += 1;
         }
         let mut struct_ser =
-            serializer.serialize_struct("cosmwasm.wasm.v1.GenesisState.GenMsgs", len)?;
-        if let Some(v) = self.sum.as_ref() {
-            match v {
-                genesis_state::gen_msgs::Sum::StoreCode(v) => {
-                    struct_ser.serialize_field("storeCode", v)?;
-                }
-                genesis_state::gen_msgs::Sum::InstantiateContract(v) => {
-                    struct_ser.serialize_field("instantiateContract", v)?;
-                }
-                genesis_state::gen_msgs::Sum::ExecuteContract(v) => {
-                    struct_ser.serialize_field("executeContract", v)?;
-                }
-            }
+            serializer.serialize_struct("cosmwasm.wasm.v1.InstantiateContract2Proposal", len)?;
+        if !self.title.is_empty() {
+            struct_ser.serialize_field("title", &self.title)?;
+        }
+        if !self.description.is_empty() {
+            struct_ser.serialize_field("description", &self.description)?;
+        }
+        if !self.run_as.is_empty() {
+            struct_ser.serialize_field("runAs", &self.run_as)?;
+        }
+        if !self.admin.is_empty() {
+            struct_ser.serialize_field("admin", &self.admin)?;
+        }
+        if self.code_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field("codeId", ToString::to_string(&self.code_id).as_str())?;
+        }
+        if !self.label.is_empty() {
+            struct_ser.serialize_field("label", &self.label)?;
+        }
+        if !self.msg.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
+        }
+        if !self.funds.is_empty() {
+            struct_ser.serialize_field("funds", &self.funds)?;
+        }
+        if !self.salt.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("salt", pbjson::private::base64::encode(&self.salt).as_str())?;
+        }
+        if self.fix_msg {
+            struct_ser.serialize_field("fixMsg", &self.fix_msg)?;
         }
         struct_ser.end()
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for genesis_state::GenMsgs {
+impl<'de> serde::Deserialize<'de> for InstantiateContract2Proposal {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         const FIELDS: &[&str] = &[
-            "store_code",
-            "storeCode",
-            "instantiate_contract",
-            "instantiateContract",
-            "execute_contract",
-            "executeContract",
+            "title",
+            "description",
+            "run_as",
+            "runAs",
+            "admin",
+            "code_id",
+            "codeId",
+            "label",
+            "msg",
+            "funds",
+            "salt",
+            "fix_msg",
+            "fixMsg",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
-            StoreCode,
-            InstantiateContract,
-            ExecuteContract,
+            Title,
+            Description,
+            RunAs,
+            Admin,
+            CodeId,
+            Label,
+            Msg,
+            Funds,
+            Salt,
+            FixMsg,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -2207,13 +3130,16 @@ impl<'de> serde::Deserialize<'de> for genesis_state::GenMsgs {
                         E: serde::de::Error,
                     {
                         match value {
-                            "storeCode" | "store_code" => Ok(GeneratedField::StoreCode),
-                            "instantiateContract" | "instantiate_contract" => {
-                                Ok(GeneratedField::InstantiateContract)
-                            }
-                            "executeContract" | "execute_contract" => {
-                                Ok(GeneratedField::ExecuteContract)
-                            }
+                            "title" => Ok(GeneratedField::Title),
+                            "description" => Ok(GeneratedField::Description),
+                            "runAs" | "run_as" => Ok(GeneratedField::RunAs),
+                            "admin" => Ok(GeneratedField::Admin),
+                            "codeId" | "code_id" => Ok(GeneratedField::CodeId),
+                            "label" => Ok(GeneratedField::Label),
+                            "msg" => Ok(GeneratedField::Msg),
+                            "funds" => Ok(GeneratedField::Funds),
+                            "salt" => Ok(GeneratedField::Salt),
+                            "fixMsg" | "fix_msg" => Ok(GeneratedField::FixMsg),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2223,55 +3149,118 @@ impl<'de> serde::Deserialize<'de> for genesis_state::GenMsgs {
         }
         struct GeneratedVisitor;
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = genesis_state::GenMsgs;
+            type Value = InstantiateContract2Proposal;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmwasm.wasm.v1.GenesisState.GenMsgs")
+                formatter.write_str("struct cosmwasm.wasm.v1.InstantiateContract2Proposal")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<genesis_state::GenMsgs, V::Error>
+            ) -> std::result::Result<InstantiateContract2Proposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                let mut sum__ = None;
+                let mut title__ = None;
+                let mut description__ = None;
+                let mut run_as__ = None;
+                let mut admin__ = None;
+                let mut code_id__ = None;
+                let mut label__ = None;
+                let mut msg__ = None;
+                let mut funds__ = None;
+                let mut salt__ = None;
+                let mut fix_msg__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
-                        GeneratedField::StoreCode => {
-                            if sum__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("storeCode"));
+                        GeneratedField::Title => {
+                            if title__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("title"));
                             }
-                            sum__ = map_
-                                .next_value::<::std::option::Option<_>>()?
-                                .map(genesis_state::gen_msgs::Sum::StoreCode);
+                            title__ = Some(map_.next_value()?);
                         }
-                        GeneratedField::InstantiateContract => {
-                            if sum__.is_some() {
-                                return Err(serde::de::Error::duplicate_field(
-                                    "instantiateContract",
-                                ));
+                        GeneratedField::Description => {
+                            if description__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("description"));
                             }
-                            sum__ = map_
-                                .next_value::<::std::option::Option<_>>()?
-                                .map(genesis_state::gen_msgs::Sum::InstantiateContract);
+                            description__ = Some(map_.next_value()?);
                         }
-                        GeneratedField::ExecuteContract => {
-                            if sum__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("executeContract"));
+                        GeneratedField::RunAs => {
+                            if run_as__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("runAs"));
                             }
-                            sum__ = map_
-                                .next_value::<::std::option::Option<_>>()?
-                                .map(genesis_state::gen_msgs::Sum::ExecuteContract);
+                            run_as__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Admin => {
+                            if admin__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("admin"));
+                            }
+                            admin__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CodeId => {
+                            if code_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeId"));
+                            }
+                            code_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Label => {
+                            if label__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("label"));
+                            }
+                            label__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Msg => {
+                            if msg__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("msg"));
+                            }
+                            msg__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Funds => {
+                            if funds__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("funds"));
+                            }
+                            funds__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Salt => {
+                            if salt__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("salt"));
+                            }
+                            salt__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::FixMsg => {
+                            if fix_msg__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("fixMsg"));
+                            }
+                            fix_msg__ = Some(map_.next_value()?);
                         }
                     }
                 }
-                Ok(genesis_state::GenMsgs { sum: sum__ })
+                Ok(InstantiateContract2Proposal {
+                    title: title__.unwrap_or_default(),
+                    description: description__.unwrap_or_default(),
+                    run_as: run_as__.unwrap_or_default(),
+                    admin: admin__.unwrap_or_default(),
+                    code_id: code_id__.unwrap_or_default(),
+                    label: label__.unwrap_or_default(),
+                    msg: msg__.unwrap_or_default(),
+                    funds: funds__.unwrap_or_default(),
+                    salt: salt__.unwrap_or_default(),
+                    fix_msg: fix_msg__.unwrap_or_default(),
+                })
             }
         }
         deserializer.deserialize_struct(
-            "cosmwasm.wasm.v1.GenesisState.GenMsgs",
+            "cosmwasm.wasm.v1.InstantiateContract2Proposal",
             FIELDS,
             GeneratedVisitor,
         )
@@ -2510,6 +3499,201 @@ impl<'de> serde::Deserialize<'de> for InstantiateContractProposal {
             FIELDS,
             GeneratedVisitor,
         )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MaxCallsLimit {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.remaining != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.MaxCallsLimit", len)?;
+        if self.remaining != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("remaining", ToString::to_string(&self.remaining).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MaxCallsLimit {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["remaining"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Remaining,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "remaining" => Ok(GeneratedField::Remaining),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MaxCallsLimit;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MaxCallsLimit")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MaxCallsLimit, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut remaining__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Remaining => {
+                            if remaining__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("remaining"));
+                            }
+                            remaining__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MaxCallsLimit {
+                    remaining: remaining__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmwasm.wasm.v1.MaxCallsLimit", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MaxFundsLimit {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.amounts.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.MaxFundsLimit", len)?;
+        if !self.amounts.is_empty() {
+            struct_ser.serialize_field("amounts", &self.amounts)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MaxFundsLimit {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["amounts"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Amounts,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "amounts" => Ok(GeneratedField::Amounts),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MaxFundsLimit;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MaxFundsLimit")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MaxFundsLimit, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut amounts__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Amounts => {
+                            if amounts__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("amounts"));
+                            }
+                            amounts__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MaxFundsLimit {
+                    amounts: amounts__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmwasm.wasm.v1.MaxFundsLimit", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -2816,6 +4000,210 @@ impl<'de> serde::Deserialize<'de> for Model {
             }
         }
         deserializer.deserialize_struct("cosmwasm.wasm.v1.Model", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgAddCodeUploadParamsAddresses {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.addresses.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.addresses.is_empty() {
+            struct_ser.serialize_field("addresses", &self.addresses)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgAddCodeUploadParamsAddresses {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "addresses"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            Addresses,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "addresses" => Ok(GeneratedField::Addresses),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgAddCodeUploadParamsAddresses;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgAddCodeUploadParamsAddresses, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut addresses__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Addresses => {
+                            if addresses__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("addresses"));
+                            }
+                            addresses__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgAddCodeUploadParamsAddresses {
+                    authority: authority__.unwrap_or_default(),
+                    addresses: addresses__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddresses",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgAddCodeUploadParamsAddressesResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer.serialize_struct(
+            "cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddressesResponse",
+            len,
+        )?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgAddCodeUploadParamsAddressesResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgAddCodeUploadParamsAddressesResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddressesResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgAddCodeUploadParamsAddressesResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgAddCodeUploadParamsAddressesResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgAddCodeUploadParamsAddressesResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -3541,6 +4929,110 @@ impl<'de> serde::Deserialize<'de> for MsgIbcSend {
             }
         }
         deserializer.deserialize_struct("cosmwasm.wasm.v1.MsgIBCSend", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgIbcSendResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.sequence != 0 {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgIBCSendResponse", len)?;
+        if self.sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field("sequence", ToString::to_string(&self.sequence).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgIbcSendResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["sequence"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Sequence,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "sequence" => Ok(GeneratedField::Sequence),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgIbcSendResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgIBCSendResponse")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgIbcSendResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut sequence__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Sequence => {
+                            if sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("sequence"));
+                            }
+                            sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgIbcSendResponse {
+                    sequence: sequence__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgIBCSendResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -4483,6 +5975,1183 @@ impl<'de> serde::Deserialize<'de> for MsgMigrateContractResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for MsgPinCodes {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.code_ids.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.MsgPinCodes", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.code_ids.is_empty() {
+            struct_ser.serialize_field(
+                "codeIds",
+                &self
+                    .code_ids
+                    .iter()
+                    .map(ToString::to_string)
+                    .collect::<Vec<_>>(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgPinCodes {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "code_ids", "codeIds"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            CodeIds,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "codeIds" | "code_ids" => Ok(GeneratedField::CodeIds),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgPinCodes;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgPinCodes")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgPinCodes, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut code_ids__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CodeIds => {
+                            if code_ids__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeIds"));
+                            }
+                            code_ids__ = Some(
+                                map_.next_value::<Vec<::pbjson::private::NumberDeserialize<_>>>()?
+                                    .into_iter()
+                                    .map(|x| x.0)
+                                    .collect(),
+                            );
+                        }
+                    }
+                }
+                Ok(MsgPinCodes {
+                    authority: authority__.unwrap_or_default(),
+                    code_ids: code_ids__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmwasm.wasm.v1.MsgPinCodes", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgPinCodesResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgPinCodesResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgPinCodesResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgPinCodesResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgPinCodesResponse")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgPinCodesResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgPinCodesResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgPinCodesResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgRemoveCodeUploadParamsAddresses {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.addresses.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("cosmwasm.wasm.v1.MsgRemoveCodeUploadParamsAddresses", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.addresses.is_empty() {
+            struct_ser.serialize_field("addresses", &self.addresses)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgRemoveCodeUploadParamsAddresses {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "addresses"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            Addresses,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "addresses" => Ok(GeneratedField::Addresses),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgRemoveCodeUploadParamsAddresses;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgRemoveCodeUploadParamsAddresses")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgRemoveCodeUploadParamsAddresses, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut addresses__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Addresses => {
+                            if addresses__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("addresses"));
+                            }
+                            addresses__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgRemoveCodeUploadParamsAddresses {
+                    authority: authority__.unwrap_or_default(),
+                    addresses: addresses__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgRemoveCodeUploadParamsAddresses",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgRemoveCodeUploadParamsAddressesResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer.serialize_struct(
+            "cosmwasm.wasm.v1.MsgRemoveCodeUploadParamsAddressesResponse",
+            len,
+        )?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgRemoveCodeUploadParamsAddressesResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgRemoveCodeUploadParamsAddressesResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmwasm.wasm.v1.MsgRemoveCodeUploadParamsAddressesResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgRemoveCodeUploadParamsAddressesResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgRemoveCodeUploadParamsAddressesResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgRemoveCodeUploadParamsAddressesResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgStoreAndInstantiateContract {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.wasm_byte_code.is_empty() {
+            len += 1;
+        }
+        if self.instantiate_permission.is_some() {
+            len += 1;
+        }
+        if self.unpin_code {
+            len += 1;
+        }
+        if !self.admin.is_empty() {
+            len += 1;
+        }
+        if !self.label.is_empty() {
+            len += 1;
+        }
+        if !self.msg.is_empty() {
+            len += 1;
+        }
+        if !self.funds.is_empty() {
+            len += 1;
+        }
+        if !self.source.is_empty() {
+            len += 1;
+        }
+        if !self.builder.is_empty() {
+            len += 1;
+        }
+        if !self.code_hash.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgStoreAndInstantiateContract", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.wasm_byte_code.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "wasmByteCode",
+                pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
+            )?;
+        }
+        if let Some(v) = self.instantiate_permission.as_ref() {
+            struct_ser.serialize_field("instantiatePermission", v)?;
+        }
+        if self.unpin_code {
+            struct_ser.serialize_field("unpinCode", &self.unpin_code)?;
+        }
+        if !self.admin.is_empty() {
+            struct_ser.serialize_field("admin", &self.admin)?;
+        }
+        if !self.label.is_empty() {
+            struct_ser.serialize_field("label", &self.label)?;
+        }
+        if !self.msg.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
+        }
+        if !self.funds.is_empty() {
+            struct_ser.serialize_field("funds", &self.funds)?;
+        }
+        if !self.source.is_empty() {
+            struct_ser.serialize_field("source", &self.source)?;
+        }
+        if !self.builder.is_empty() {
+            struct_ser.serialize_field("builder", &self.builder)?;
+        }
+        if !self.code_hash.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "codeHash",
+                pbjson::private::base64::encode(&self.code_hash).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgStoreAndInstantiateContract {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "authority",
+            "wasm_byte_code",
+            "wasmByteCode",
+            "instantiate_permission",
+            "instantiatePermission",
+            "unpin_code",
+            "unpinCode",
+            "admin",
+            "label",
+            "msg",
+            "funds",
+            "source",
+            "builder",
+            "code_hash",
+            "codeHash",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            WasmByteCode,
+            InstantiatePermission,
+            UnpinCode,
+            Admin,
+            Label,
+            Msg,
+            Funds,
+            Source,
+            Builder,
+            CodeHash,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "wasmByteCode" | "wasm_byte_code" => Ok(GeneratedField::WasmByteCode),
+                            "instantiatePermission" | "instantiate_permission" => {
+                                Ok(GeneratedField::InstantiatePermission)
+                            }
+                            "unpinCode" | "unpin_code" => Ok(GeneratedField::UnpinCode),
+                            "admin" => Ok(GeneratedField::Admin),
+                            "label" => Ok(GeneratedField::Label),
+                            "msg" => Ok(GeneratedField::Msg),
+                            "funds" => Ok(GeneratedField::Funds),
+                            "source" => Ok(GeneratedField::Source),
+                            "builder" => Ok(GeneratedField::Builder),
+                            "codeHash" | "code_hash" => Ok(GeneratedField::CodeHash),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgStoreAndInstantiateContract;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgStoreAndInstantiateContract")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgStoreAndInstantiateContract, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut wasm_byte_code__ = None;
+                let mut instantiate_permission__ = None;
+                let mut unpin_code__ = None;
+                let mut admin__ = None;
+                let mut label__ = None;
+                let mut msg__ = None;
+                let mut funds__ = None;
+                let mut source__ = None;
+                let mut builder__ = None;
+                let mut code_hash__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::WasmByteCode => {
+                            if wasm_byte_code__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("wasmByteCode"));
+                            }
+                            wasm_byte_code__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::InstantiatePermission => {
+                            if instantiate_permission__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "instantiatePermission",
+                                ));
+                            }
+                            instantiate_permission__ = map_.next_value()?;
+                        }
+                        GeneratedField::UnpinCode => {
+                            if unpin_code__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unpinCode"));
+                            }
+                            unpin_code__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Admin => {
+                            if admin__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("admin"));
+                            }
+                            admin__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Label => {
+                            if label__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("label"));
+                            }
+                            label__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Msg => {
+                            if msg__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("msg"));
+                            }
+                            msg__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Funds => {
+                            if funds__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("funds"));
+                            }
+                            funds__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Source => {
+                            if source__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("source"));
+                            }
+                            source__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Builder => {
+                            if builder__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("builder"));
+                            }
+                            builder__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CodeHash => {
+                            if code_hash__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeHash"));
+                            }
+                            code_hash__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgStoreAndInstantiateContract {
+                    authority: authority__.unwrap_or_default(),
+                    wasm_byte_code: wasm_byte_code__.unwrap_or_default(),
+                    instantiate_permission: instantiate_permission__,
+                    unpin_code: unpin_code__.unwrap_or_default(),
+                    admin: admin__.unwrap_or_default(),
+                    label: label__.unwrap_or_default(),
+                    msg: msg__.unwrap_or_default(),
+                    funds: funds__.unwrap_or_default(),
+                    source: source__.unwrap_or_default(),
+                    builder: builder__.unwrap_or_default(),
+                    code_hash: code_hash__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgStoreAndInstantiateContract",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgStoreAndInstantiateContractResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.address.is_empty() {
+            len += 1;
+        }
+        if !self.data.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct(
+            "cosmwasm.wasm.v1.MsgStoreAndInstantiateContractResponse",
+            len,
+        )?;
+        if !self.address.is_empty() {
+            struct_ser.serialize_field("address", &self.address)?;
+        }
+        if !self.data.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgStoreAndInstantiateContractResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["address", "data"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Address,
+            Data,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "address" => Ok(GeneratedField::Address),
+                            "data" => Ok(GeneratedField::Data),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgStoreAndInstantiateContractResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmwasm.wasm.v1.MsgStoreAndInstantiateContractResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgStoreAndInstantiateContractResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut address__ = None;
+                let mut data__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Address => {
+                            if address__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("address"));
+                            }
+                            address__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Data => {
+                            if data__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("data"));
+                            }
+                            data__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgStoreAndInstantiateContractResponse {
+                    address: address__.unwrap_or_default(),
+                    data: data__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgStoreAndInstantiateContractResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgStoreAndMigrateContract {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.wasm_byte_code.is_empty() {
+            len += 1;
+        }
+        if self.instantiate_permission.is_some() {
+            len += 1;
+        }
+        if !self.contract.is_empty() {
+            len += 1;
+        }
+        if !self.msg.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgStoreAndMigrateContract", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.wasm_byte_code.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "wasmByteCode",
+                pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
+            )?;
+        }
+        if let Some(v) = self.instantiate_permission.as_ref() {
+            struct_ser.serialize_field("instantiatePermission", v)?;
+        }
+        if !self.contract.is_empty() {
+            struct_ser.serialize_field("contract", &self.contract)?;
+        }
+        if !self.msg.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgStoreAndMigrateContract {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "authority",
+            "wasm_byte_code",
+            "wasmByteCode",
+            "instantiate_permission",
+            "instantiatePermission",
+            "contract",
+            "msg",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            WasmByteCode,
+            InstantiatePermission,
+            Contract,
+            Msg,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "wasmByteCode" | "wasm_byte_code" => Ok(GeneratedField::WasmByteCode),
+                            "instantiatePermission" | "instantiate_permission" => {
+                                Ok(GeneratedField::InstantiatePermission)
+                            }
+                            "contract" => Ok(GeneratedField::Contract),
+                            "msg" => Ok(GeneratedField::Msg),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgStoreAndMigrateContract;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgStoreAndMigrateContract")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgStoreAndMigrateContract, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut wasm_byte_code__ = None;
+                let mut instantiate_permission__ = None;
+                let mut contract__ = None;
+                let mut msg__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::WasmByteCode => {
+                            if wasm_byte_code__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("wasmByteCode"));
+                            }
+                            wasm_byte_code__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::InstantiatePermission => {
+                            if instantiate_permission__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "instantiatePermission",
+                                ));
+                            }
+                            instantiate_permission__ = map_.next_value()?;
+                        }
+                        GeneratedField::Contract => {
+                            if contract__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("contract"));
+                            }
+                            contract__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Msg => {
+                            if msg__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("msg"));
+                            }
+                            msg__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgStoreAndMigrateContract {
+                    authority: authority__.unwrap_or_default(),
+                    wasm_byte_code: wasm_byte_code__.unwrap_or_default(),
+                    instantiate_permission: instantiate_permission__,
+                    contract: contract__.unwrap_or_default(),
+                    msg: msg__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgStoreAndMigrateContract",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgStoreAndMigrateContractResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.code_id != 0 {
+            len += 1;
+        }
+        if !self.checksum.is_empty() {
+            len += 1;
+        }
+        if !self.data.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("cosmwasm.wasm.v1.MsgStoreAndMigrateContractResponse", len)?;
+        if self.code_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field("codeId", ToString::to_string(&self.code_id).as_str())?;
+        }
+        if !self.checksum.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "checksum",
+                pbjson::private::base64::encode(&self.checksum).as_str(),
+            )?;
+        }
+        if !self.data.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgStoreAndMigrateContractResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["code_id", "codeId", "checksum", "data"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            CodeId,
+            Checksum,
+            Data,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "codeId" | "code_id" => Ok(GeneratedField::CodeId),
+                            "checksum" => Ok(GeneratedField::Checksum),
+                            "data" => Ok(GeneratedField::Data),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgStoreAndMigrateContractResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgStoreAndMigrateContractResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgStoreAndMigrateContractResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut code_id__ = None;
+                let mut checksum__ = None;
+                let mut data__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::CodeId => {
+                            if code_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeId"));
+                            }
+                            code_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Checksum => {
+                            if checksum__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("checksum"));
+                            }
+                            checksum__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Data => {
+                            if data__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("data"));
+                            }
+                            data__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgStoreAndMigrateContractResponse {
+                    code_id: code_id__.unwrap_or_default(),
+                    checksum: checksum__.unwrap_or_default(),
+                    data: data__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgStoreAndMigrateContractResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for MsgStoreCode {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -4757,6 +7426,456 @@ impl<'de> serde::Deserialize<'de> for MsgStoreCodeResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for MsgSudoContract {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.contract.is_empty() {
+            len += 1;
+        }
+        if !self.msg.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgSudoContract", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.contract.is_empty() {
+            struct_ser.serialize_field("contract", &self.contract)?;
+        }
+        if !self.msg.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgSudoContract {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "contract", "msg"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            Contract,
+            Msg,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "contract" => Ok(GeneratedField::Contract),
+                            "msg" => Ok(GeneratedField::Msg),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgSudoContract;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgSudoContract")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSudoContract, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut contract__ = None;
+                let mut msg__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Contract => {
+                            if contract__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("contract"));
+                            }
+                            contract__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Msg => {
+                            if msg__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("msg"));
+                            }
+                            msg__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgSudoContract {
+                    authority: authority__.unwrap_or_default(),
+                    contract: contract__.unwrap_or_default(),
+                    msg: msg__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgSudoContract",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgSudoContractResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.data.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgSudoContractResponse", len)?;
+        if !self.data.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgSudoContractResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["data"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Data,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "data" => Ok(GeneratedField::Data),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgSudoContractResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgSudoContractResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgSudoContractResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut data__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Data => {
+                            if data__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("data"));
+                            }
+                            data__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgSudoContractResponse {
+                    data: data__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgSudoContractResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUnpinCodes {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.code_ids.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.MsgUnpinCodes", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.code_ids.is_empty() {
+            struct_ser.serialize_field(
+                "codeIds",
+                &self
+                    .code_ids
+                    .iter()
+                    .map(ToString::to_string)
+                    .collect::<Vec<_>>(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUnpinCodes {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "code_ids", "codeIds"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            CodeIds,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "codeIds" | "code_ids" => Ok(GeneratedField::CodeIds),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUnpinCodes;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUnpinCodes")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUnpinCodes, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut code_ids__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CodeIds => {
+                            if code_ids__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeIds"));
+                            }
+                            code_ids__ = Some(
+                                map_.next_value::<Vec<::pbjson::private::NumberDeserialize<_>>>()?
+                                    .into_iter()
+                                    .map(|x| x.0)
+                                    .collect(),
+                            );
+                        }
+                    }
+                }
+                Ok(MsgUnpinCodes {
+                    authority: authority__.unwrap_or_default(),
+                    code_ids: code_ids__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmwasm.wasm.v1.MsgUnpinCodes", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUnpinCodesResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgUnpinCodesResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUnpinCodesResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUnpinCodesResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUnpinCodesResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUnpinCodesResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUnpinCodesResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgUnpinCodesResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for MsgUpdateAdmin {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -4960,6 +8079,652 @@ impl<'de> serde::Deserialize<'de> for MsgUpdateAdminResponse {
         }
         deserializer.deserialize_struct(
             "cosmwasm.wasm.v1.MsgUpdateAdminResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateContractLabel {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.sender.is_empty() {
+            len += 1;
+        }
+        if !self.new_label.is_empty() {
+            len += 1;
+        }
+        if !self.contract.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgUpdateContractLabel", len)?;
+        if !self.sender.is_empty() {
+            struct_ser.serialize_field("sender", &self.sender)?;
+        }
+        if !self.new_label.is_empty() {
+            struct_ser.serialize_field("newLabel", &self.new_label)?;
+        }
+        if !self.contract.is_empty() {
+            struct_ser.serialize_field("contract", &self.contract)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateContractLabel {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["sender", "new_label", "newLabel", "contract"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Sender,
+            NewLabel,
+            Contract,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "sender" => Ok(GeneratedField::Sender),
+                            "newLabel" | "new_label" => Ok(GeneratedField::NewLabel),
+                            "contract" => Ok(GeneratedField::Contract),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateContractLabel;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUpdateContractLabel")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateContractLabel, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut sender__ = None;
+                let mut new_label__ = None;
+                let mut contract__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Sender => {
+                            if sender__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("sender"));
+                            }
+                            sender__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::NewLabel => {
+                            if new_label__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("newLabel"));
+                            }
+                            new_label__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Contract => {
+                            if contract__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("contract"));
+                            }
+                            contract__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgUpdateContractLabel {
+                    sender: sender__.unwrap_or_default(),
+                    new_label: new_label__.unwrap_or_default(),
+                    contract: contract__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgUpdateContractLabel",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateContractLabelResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgUpdateContractLabelResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateContractLabelResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateContractLabelResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUpdateContractLabelResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateContractLabelResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateContractLabelResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgUpdateContractLabelResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateInstantiateConfig {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.sender.is_empty() {
+            len += 1;
+        }
+        if self.code_id != 0 {
+            len += 1;
+        }
+        if self.new_instantiate_permission.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgUpdateInstantiateConfig", len)?;
+        if !self.sender.is_empty() {
+            struct_ser.serialize_field("sender", &self.sender)?;
+        }
+        if self.code_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field("codeId", ToString::to_string(&self.code_id).as_str())?;
+        }
+        if let Some(v) = self.new_instantiate_permission.as_ref() {
+            struct_ser.serialize_field("newInstantiatePermission", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateInstantiateConfig {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "sender",
+            "code_id",
+            "codeId",
+            "new_instantiate_permission",
+            "newInstantiatePermission",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Sender,
+            CodeId,
+            NewInstantiatePermission,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "sender" => Ok(GeneratedField::Sender),
+                            "codeId" | "code_id" => Ok(GeneratedField::CodeId),
+                            "newInstantiatePermission" | "new_instantiate_permission" => {
+                                Ok(GeneratedField::NewInstantiatePermission)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateInstantiateConfig;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUpdateInstantiateConfig")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateInstantiateConfig, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut sender__ = None;
+                let mut code_id__ = None;
+                let mut new_instantiate_permission__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Sender => {
+                            if sender__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("sender"));
+                            }
+                            sender__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CodeId => {
+                            if code_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeId"));
+                            }
+                            code_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::NewInstantiatePermission => {
+                            if new_instantiate_permission__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "newInstantiatePermission",
+                                ));
+                            }
+                            new_instantiate_permission__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgUpdateInstantiateConfig {
+                    sender: sender__.unwrap_or_default(),
+                    code_id: code_id__.unwrap_or_default(),
+                    new_instantiate_permission: new_instantiate_permission__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgUpdateInstantiateConfig",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateInstantiateConfigResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer
+            .serialize_struct("cosmwasm.wasm.v1.MsgUpdateInstantiateConfigResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateInstantiateConfigResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateInstantiateConfigResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUpdateInstantiateConfigResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateInstantiateConfigResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateInstantiateConfigResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgUpdateInstantiateConfigResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if self.params.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgUpdateParams", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "params"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            Params,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "params" => Ok(GeneratedField::Params),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParams;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUpdateParams")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUpdateParams, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut params__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgUpdateParams {
+                    authority: authority__.unwrap_or_default(),
+                    params: params__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgUpdateParams",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.MsgUpdateParamsResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParamsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgUpdateParamsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateParamsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateParamsResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgUpdateParamsResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -6621,6 +10386,248 @@ impl<'de> serde::Deserialize<'de> for QueryContractsByCodeResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for QueryContractsByCreatorRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.creator_address.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryContractsByCreatorRequest", len)?;
+        if !self.creator_address.is_empty() {
+            struct_ser.serialize_field("creatorAddress", &self.creator_address)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryContractsByCreatorRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["creator_address", "creatorAddress", "pagination"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            CreatorAddress,
+            Pagination,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "creatorAddress" | "creator_address" => {
+                                Ok(GeneratedField::CreatorAddress)
+                            }
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryContractsByCreatorRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryContractsByCreatorRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryContractsByCreatorRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut creator_address__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::CreatorAddress => {
+                            if creator_address__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("creatorAddress"));
+                            }
+                            creator_address__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryContractsByCreatorRequest {
+                    creator_address: creator_address__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryContractsByCreatorRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryContractsByCreatorResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.contract_addresses.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryContractsByCreatorResponse", len)?;
+        if !self.contract_addresses.is_empty() {
+            struct_ser.serialize_field("contractAddresses", &self.contract_addresses)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryContractsByCreatorResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["contract_addresses", "contractAddresses", "pagination"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            ContractAddresses,
+            Pagination,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "contractAddresses" | "contract_addresses" => {
+                                Ok(GeneratedField::ContractAddresses)
+                            }
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryContractsByCreatorResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryContractsByCreatorResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryContractsByCreatorResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut contract_addresses__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::ContractAddresses => {
+                            if contract_addresses__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("contractAddresses"));
+                            }
+                            contract_addresses__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryContractsByCreatorResponse {
+                    contract_addresses: contract_addresses__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryContractsByCreatorResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for QueryParamsRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -7621,7 +11628,7 @@ impl<'de> serde::Deserialize<'de> for Sequence {
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for StoreCodeProposal {
+impl serde::Serialize for StoreAndInstantiateContractProposal {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
@@ -7647,8 +11654,29 @@ impl serde::Serialize for StoreCodeProposal {
         if self.unpin_code {
             len += 1;
         }
-        let mut struct_ser =
-            serializer.serialize_struct("cosmwasm.wasm.v1.StoreCodeProposal", len)?;
+        if !self.admin.is_empty() {
+            len += 1;
+        }
+        if !self.label.is_empty() {
+            len += 1;
+        }
+        if !self.msg.is_empty() {
+            len += 1;
+        }
+        if !self.funds.is_empty() {
+            len += 1;
+        }
+        if !self.source.is_empty() {
+            len += 1;
+        }
+        if !self.builder.is_empty() {
+            len += 1;
+        }
+        if !self.code_hash.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("cosmwasm.wasm.v1.StoreAndInstantiateContractProposal", len)?;
         if !self.title.is_empty() {
             struct_ser.serialize_field("title", &self.title)?;
         }
@@ -7671,11 +11699,38 @@ impl serde::Serialize for StoreCodeProposal {
         if self.unpin_code {
             struct_ser.serialize_field("unpinCode", &self.unpin_code)?;
         }
+        if !self.admin.is_empty() {
+            struct_ser.serialize_field("admin", &self.admin)?;
+        }
+        if !self.label.is_empty() {
+            struct_ser.serialize_field("label", &self.label)?;
+        }
+        if !self.msg.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
+        }
+        if !self.funds.is_empty() {
+            struct_ser.serialize_field("funds", &self.funds)?;
+        }
+        if !self.source.is_empty() {
+            struct_ser.serialize_field("source", &self.source)?;
+        }
+        if !self.builder.is_empty() {
+            struct_ser.serialize_field("builder", &self.builder)?;
+        }
+        if !self.code_hash.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "codeHash",
+                pbjson::private::base64::encode(&self.code_hash).as_str(),
+            )?;
+        }
         struct_ser.end()
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
+impl<'de> serde::Deserialize<'de> for StoreAndInstantiateContractProposal {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
     where
@@ -7692,6 +11747,14 @@ impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
             "instantiatePermission",
             "unpin_code",
             "unpinCode",
+            "admin",
+            "label",
+            "msg",
+            "funds",
+            "source",
+            "builder",
+            "code_hash",
+            "codeHash",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -7702,6 +11765,13 @@ impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
             WasmByteCode,
             InstantiatePermission,
             UnpinCode,
+            Admin,
+            Label,
+            Msg,
+            Funds,
+            Source,
+            Builder,
+            CodeHash,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -7735,6 +11805,13 @@ impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
                                 Ok(GeneratedField::InstantiatePermission)
                             }
                             "unpinCode" | "unpin_code" => Ok(GeneratedField::UnpinCode),
+                            "admin" => Ok(GeneratedField::Admin),
+                            "label" => Ok(GeneratedField::Label),
+                            "msg" => Ok(GeneratedField::Msg),
+                            "funds" => Ok(GeneratedField::Funds),
+                            "source" => Ok(GeneratedField::Source),
+                            "builder" => Ok(GeneratedField::Builder),
+                            "codeHash" | "code_hash" => Ok(GeneratedField::CodeHash),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -7744,13 +11821,16 @@ impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
         }
         struct GeneratedVisitor;
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = StoreCodeProposal;
+            type Value = StoreAndInstantiateContractProposal;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmwasm.wasm.v1.StoreCodeProposal")
+                formatter.write_str("struct cosmwasm.wasm.v1.StoreAndInstantiateContractProposal")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<StoreCodeProposal, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<StoreAndInstantiateContractProposal, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -7760,6 +11840,13 @@ impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
                 let mut wasm_byte_code__ = None;
                 let mut instantiate_permission__ = None;
                 let mut unpin_code__ = None;
+                let mut admin__ = None;
+                let mut label__ = None;
+                let mut msg__ = None;
+                let mut funds__ = None;
+                let mut source__ = None;
+                let mut builder__ = None;
+                let mut code_hash__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Title => {
@@ -7803,6 +11890,422 @@ impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
                             }
                             unpin_code__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Admin => {
+                            if admin__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("admin"));
+                            }
+                            admin__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Label => {
+                            if label__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("label"));
+                            }
+                            label__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Msg => {
+                            if msg__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("msg"));
+                            }
+                            msg__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Funds => {
+                            if funds__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("funds"));
+                            }
+                            funds__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Source => {
+                            if source__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("source"));
+                            }
+                            source__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Builder => {
+                            if builder__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("builder"));
+                            }
+                            builder__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CodeHash => {
+                            if code_hash__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeHash"));
+                            }
+                            code_hash__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(StoreAndInstantiateContractProposal {
+                    title: title__.unwrap_or_default(),
+                    description: description__.unwrap_or_default(),
+                    run_as: run_as__.unwrap_or_default(),
+                    wasm_byte_code: wasm_byte_code__.unwrap_or_default(),
+                    instantiate_permission: instantiate_permission__,
+                    unpin_code: unpin_code__.unwrap_or_default(),
+                    admin: admin__.unwrap_or_default(),
+                    label: label__.unwrap_or_default(),
+                    msg: msg__.unwrap_or_default(),
+                    funds: funds__.unwrap_or_default(),
+                    source: source__.unwrap_or_default(),
+                    builder: builder__.unwrap_or_default(),
+                    code_hash: code_hash__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.StoreAndInstantiateContractProposal",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for StoreCodeAuthorization {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.grants.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.StoreCodeAuthorization", len)?;
+        if !self.grants.is_empty() {
+            struct_ser.serialize_field("grants", &self.grants)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for StoreCodeAuthorization {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["grants"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Grants,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "grants" => Ok(GeneratedField::Grants),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = StoreCodeAuthorization;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.StoreCodeAuthorization")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<StoreCodeAuthorization, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut grants__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Grants => {
+                            if grants__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grants"));
+                            }
+                            grants__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(StoreCodeAuthorization {
+                    grants: grants__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.StoreCodeAuthorization",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for StoreCodeProposal {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.title.is_empty() {
+            len += 1;
+        }
+        if !self.description.is_empty() {
+            len += 1;
+        }
+        if !self.run_as.is_empty() {
+            len += 1;
+        }
+        if !self.wasm_byte_code.is_empty() {
+            len += 1;
+        }
+        if self.instantiate_permission.is_some() {
+            len += 1;
+        }
+        if self.unpin_code {
+            len += 1;
+        }
+        if !self.source.is_empty() {
+            len += 1;
+        }
+        if !self.builder.is_empty() {
+            len += 1;
+        }
+        if !self.code_hash.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.StoreCodeProposal", len)?;
+        if !self.title.is_empty() {
+            struct_ser.serialize_field("title", &self.title)?;
+        }
+        if !self.description.is_empty() {
+            struct_ser.serialize_field("description", &self.description)?;
+        }
+        if !self.run_as.is_empty() {
+            struct_ser.serialize_field("runAs", &self.run_as)?;
+        }
+        if !self.wasm_byte_code.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "wasmByteCode",
+                pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
+            )?;
+        }
+        if let Some(v) = self.instantiate_permission.as_ref() {
+            struct_ser.serialize_field("instantiatePermission", v)?;
+        }
+        if self.unpin_code {
+            struct_ser.serialize_field("unpinCode", &self.unpin_code)?;
+        }
+        if !self.source.is_empty() {
+            struct_ser.serialize_field("source", &self.source)?;
+        }
+        if !self.builder.is_empty() {
+            struct_ser.serialize_field("builder", &self.builder)?;
+        }
+        if !self.code_hash.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "codeHash",
+                pbjson::private::base64::encode(&self.code_hash).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "title",
+            "description",
+            "run_as",
+            "runAs",
+            "wasm_byte_code",
+            "wasmByteCode",
+            "instantiate_permission",
+            "instantiatePermission",
+            "unpin_code",
+            "unpinCode",
+            "source",
+            "builder",
+            "code_hash",
+            "codeHash",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Title,
+            Description,
+            RunAs,
+            WasmByteCode,
+            InstantiatePermission,
+            UnpinCode,
+            Source,
+            Builder,
+            CodeHash,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "title" => Ok(GeneratedField::Title),
+                            "description" => Ok(GeneratedField::Description),
+                            "runAs" | "run_as" => Ok(GeneratedField::RunAs),
+                            "wasmByteCode" | "wasm_byte_code" => Ok(GeneratedField::WasmByteCode),
+                            "instantiatePermission" | "instantiate_permission" => {
+                                Ok(GeneratedField::InstantiatePermission)
+                            }
+                            "unpinCode" | "unpin_code" => Ok(GeneratedField::UnpinCode),
+                            "source" => Ok(GeneratedField::Source),
+                            "builder" => Ok(GeneratedField::Builder),
+                            "codeHash" | "code_hash" => Ok(GeneratedField::CodeHash),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = StoreCodeProposal;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.StoreCodeProposal")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<StoreCodeProposal, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut title__ = None;
+                let mut description__ = None;
+                let mut run_as__ = None;
+                let mut wasm_byte_code__ = None;
+                let mut instantiate_permission__ = None;
+                let mut unpin_code__ = None;
+                let mut source__ = None;
+                let mut builder__ = None;
+                let mut code_hash__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Title => {
+                            if title__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("title"));
+                            }
+                            title__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Description => {
+                            if description__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("description"));
+                            }
+                            description__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::RunAs => {
+                            if run_as__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("runAs"));
+                            }
+                            run_as__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::WasmByteCode => {
+                            if wasm_byte_code__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("wasmByteCode"));
+                            }
+                            wasm_byte_code__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::InstantiatePermission => {
+                            if instantiate_permission__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "instantiatePermission",
+                                ));
+                            }
+                            instantiate_permission__ = map_.next_value()?;
+                        }
+                        GeneratedField::UnpinCode => {
+                            if unpin_code__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unpinCode"));
+                            }
+                            unpin_code__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Source => {
+                            if source__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("source"));
+                            }
+                            source__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Builder => {
+                            if builder__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("builder"));
+                            }
+                            builder__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CodeHash => {
+                            if code_hash__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeHash"));
+                            }
+                            code_hash__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(StoreCodeProposal {
@@ -7812,6 +12315,9 @@ impl<'de> serde::Deserialize<'de> for StoreCodeProposal {
                     wasm_byte_code: wasm_byte_code__.unwrap_or_default(),
                     instantiate_permission: instantiate_permission__,
                     unpin_code: unpin_code__.unwrap_or_default(),
+                    source: source__.unwrap_or_default(),
+                    builder: builder__.unwrap_or_default(),
+                    code_hash: code_hash__.unwrap_or_default(),
                 })
             }
         }
