@@ -162,6 +162,32 @@ impl ::prost::Name for PacketState {
         "/ibc.core.channel.v1.PacketState".into()
     }
 }
+/// PacketId is an identifer for a unique Packet
+/// Source chains refer to packets by source port/channel
+/// Destination chains refer to packets by destination port/channel
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PacketId {
+    /// channel port identifier
+    #[prost(string, tag = "1")]
+    pub port_id: ::prost::alloc::string::String,
+    /// channel unique identifier
+    #[prost(string, tag = "2")]
+    pub channel_id: ::prost::alloc::string::String,
+    /// packet sequence
+    #[prost(uint64, tag = "3")]
+    pub sequence: u64,
+}
+impl ::prost::Name for PacketId {
+    const NAME: &'static str = "PacketId";
+    const PACKAGE: &'static str = "ibc.core.channel.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "ibc.core.channel.v1.PacketId".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/ibc.core.channel.v1.PacketId".into()
+    }
+}
 /// Acknowledgement is the recommended acknowledgement format to be used by
 /// app-specific protocols.
 /// NOTE: The field numbers 21 and 22 were explicitly chosen to avoid accidental
@@ -304,6 +330,8 @@ impl ::prost::Name for MsgChannelOpenInit {
 pub struct MsgChannelOpenInitResponse {
     #[prost(string, tag = "1")]
     pub channel_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub version: ::prost::alloc::string::String,
 }
 impl ::prost::Name for MsgChannelOpenInitResponse {
     const NAME: &'static str = "MsgChannelOpenInitResponse";
@@ -323,8 +351,8 @@ impl ::prost::Name for MsgChannelOpenInitResponse {
 pub struct MsgChannelOpenTry {
     #[prost(string, tag = "1")]
     pub port_id: ::prost::alloc::string::String,
-    /// in the case of crossing hello's, when both chains call OpenInit, we need
-    /// the channel identifier of the previous channel in state INIT
+    /// Deprecated: this field is unused. Crossing hello's are no longer supported in core IBC.
+    #[deprecated]
     #[prost(string, tag = "2")]
     pub previous_channel_id: ::prost::alloc::string::String,
     /// NOTE: the version field within the channel has been deprecated. Its value will be ignored by core IBC.
@@ -351,8 +379,11 @@ impl ::prost::Name for MsgChannelOpenTry {
 }
 /// MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct MsgChannelOpenTryResponse {}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgChannelOpenTryResponse {
+    #[prost(string, tag = "1")]
+    pub version: ::prost::alloc::string::String,
+}
 impl ::prost::Name for MsgChannelOpenTryResponse {
     const NAME: &'static str = "MsgChannelOpenTryResponse";
     const PACKAGE: &'static str = "ibc.core.channel.v1";
@@ -698,11 +729,11 @@ impl ::prost::Name for MsgAcknowledgementResponse {
 #[repr(i32)]
 pub enum ResponseResultType {
     /// Default zero value enumeration
-    ResponseResultUnspecified = 0,
+    Unspecified = 0,
     /// The message did not call the IBC application callbacks (because, for example, the packet had already been relayed)
-    ResponseResultNoop = 1,
+    Noop = 1,
     /// The message was executed successfully
-    ResponseResultSuccess = 2,
+    Success = 2,
 }
 impl ResponseResultType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -711,17 +742,17 @@ impl ResponseResultType {
     /// (if the ProtoBuf definition does not change) and safe for programmatic use.
     pub fn as_str_name(&self) -> &'static str {
         match self {
-            ResponseResultType::ResponseResultUnspecified => "RESPONSE_RESULT_UNSPECIFIED",
-            ResponseResultType::ResponseResultNoop => "RESPONSE_RESULT_NOOP",
-            ResponseResultType::ResponseResultSuccess => "RESPONSE_RESULT_SUCCESS",
+            ResponseResultType::Unspecified => "RESPONSE_RESULT_TYPE_UNSPECIFIED",
+            ResponseResultType::Noop => "RESPONSE_RESULT_TYPE_NOOP",
+            ResponseResultType::Success => "RESPONSE_RESULT_TYPE_SUCCESS",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
-            "RESPONSE_RESULT_UNSPECIFIED" => Some(Self::ResponseResultUnspecified),
-            "RESPONSE_RESULT_NOOP" => Some(Self::ResponseResultNoop),
-            "RESPONSE_RESULT_SUCCESS" => Some(Self::ResponseResultSuccess),
+            "RESPONSE_RESULT_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
+            "RESPONSE_RESULT_TYPE_NOOP" => Some(Self::Noop),
+            "RESPONSE_RESULT_TYPE_SUCCESS" => Some(Self::Success),
             _ => None,
         }
     }

@@ -700,6 +700,54 @@ impl ::prost::Name for QueryConsensusStatesResponse {
         "/ibc.core.client.v1.QueryConsensusStatesResponse".into()
     }
 }
+/// QueryConsensusStateHeightsRequest is the request type for Query/ConsensusStateHeights
+/// RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStateHeightsRequest {
+    /// client identifier
+    #[prost(string, tag = "1")]
+    pub client_id: ::prost::alloc::string::String,
+    /// pagination request
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageRequest,
+    >,
+}
+impl ::prost::Name for QueryConsensusStateHeightsRequest {
+    const NAME: &'static str = "QueryConsensusStateHeightsRequest";
+    const PACKAGE: &'static str = "ibc.core.client.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "ibc.core.client.v1.QueryConsensusStateHeightsRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/ibc.core.client.v1.QueryConsensusStateHeightsRequest".into()
+    }
+}
+/// QueryConsensusStateHeightsResponse is the response type for the
+/// Query/ConsensusStateHeights RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryConsensusStateHeightsResponse {
+    /// consensus state heights
+    #[prost(message, repeated, tag = "1")]
+    pub consensus_state_heights: ::prost::alloc::vec::Vec<Height>,
+    /// pagination response
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
+    >,
+}
+impl ::prost::Name for QueryConsensusStateHeightsResponse {
+    const NAME: &'static str = "QueryConsensusStateHeightsResponse";
+    const PACKAGE: &'static str = "ibc.core.client.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "ibc.core.client.v1.QueryConsensusStateHeightsResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/ibc.core.client.v1.QueryConsensusStateHeightsResponse".into()
+    }
+}
 /// QueryClientStatusRequest is the request type for the Query/ClientStatus RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1012,6 +1060,31 @@ pub mod query_client {
             ));
             self.inner.unary(req, path, codec).await
         }
+        /// ConsensusStateHeights queries the height of every consensus states associated with a given client.
+        pub async fn consensus_state_heights(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryConsensusStateHeightsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::QueryConsensusStateHeightsResponse>,
+            tonic::Status,
+        > {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/ibc.core.client.v1.Query/ConsensusStateHeights",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "ibc.core.client.v1.Query",
+                "ConsensusStateHeights",
+            ));
+            self.inner.unary(req, path, codec).await
+        }
         /// Status queries the status of an IBC client.
         pub async fn client_status(
             &mut self,
@@ -1032,7 +1105,7 @@ pub mod query_client {
                 .insert(GrpcMethod::new("ibc.core.client.v1.Query", "ClientStatus"));
             self.inner.unary(req, path, codec).await
         }
-        /// ClientParams queries all parameters of the ibc client.
+        /// ClientParams queries all parameters of the ibc client submodule.
         pub async fn client_params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryClientParamsRequest>,
