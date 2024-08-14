@@ -230,9 +230,9 @@ fn compile_sdk_protos_and_services(out_dir: &Path) {
 }
 
 fn compile_wasmd_proto_and_services(out_dir: &Path) {
-    let sdk_dir = Path::new(WASMD_DIR);
-    let proto_path = sdk_dir.join("proto");
-    let proto_paths = [format!("{}/proto/cosmwasm/wasm", sdk_dir.display())];
+    let wasmd_dir = Path::new(WASMD_DIR);
+    let proto_path = wasmd_dir.join("proto");
+    let proto_paths = [format!("{}/proto/cosmwasm/wasm", wasmd_dir.display())];
 
     // List available proto files
     let mut protos: Vec<PathBuf> = vec![];
@@ -252,13 +252,7 @@ fn compile_ibc_protos_and_services(out_dir: &Path) {
 
     let root = env!("CARGO_MANIFEST_DIR");
     let ibc_dir = Path::new(IBC_DIR);
-
-    let proto_includes_paths = [
-        format!("{}/../proto", root),
-        format!("{}/proto", ibc_dir.display()),
-        format!("{}/third_party/proto", ibc_dir.display()),
-    ];
-
+    let proto_path = ibc_dir.join("proto");
     let proto_paths = [
         format!("{}/../proto/definitions/mock", root),
         format!(
@@ -281,22 +275,13 @@ fn compile_ibc_protos_and_services(out_dir: &Path) {
     let mut protos: Vec<PathBuf> = vec![];
     collect_protos(&proto_paths, &mut protos);
 
-    let includes: Vec<PathBuf> = proto_includes_paths.iter().map(PathBuf::from).collect();
-
     // Enable generation of `prost::Name` annotations for all types
     let mut config = prost_build::Config::new();
     config.enable_type_names();
 
     // Compile all of the proto files, along with the grpc service clients
     info!("Compiling proto definitions and clients for GRPC services!");
-    tonic_build::configure()
-        .build_client(true)
-        .build_server(false)
-        .out_dir(out_dir)
-        .extern_path(".tendermint", "::tendermint_proto")
-        .compile_with_config(config, &protos, &includes)
-        .unwrap();
-
+    run_buf("buf.ibc.gen.yaml", proto_path, out_dir);
     info!("=> Done!");
 }
 
