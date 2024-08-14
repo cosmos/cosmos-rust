@@ -11,7 +11,7 @@ impl serde::Serialize for BatchEntry {
         if self.proof.is_some() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.BatchEntry", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.BatchEntry", len)?;
         if let Some(v) = self.proof.as_ref() {
             match v {
                 batch_entry::Proof::Exist(v) => {
@@ -77,7 +77,7 @@ impl<'de> serde::Deserialize<'de> for BatchEntry {
             type Value = BatchEntry;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.BatchEntry")
+                formatter.write_str("struct cosmos.ics23.v1.BatchEntry")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<BatchEntry, V::Error>
@@ -108,7 +108,7 @@ impl<'de> serde::Deserialize<'de> for BatchEntry {
                 Ok(BatchEntry { proof: proof__ })
             }
         }
-        deserializer.deserialize_struct("ics23.BatchEntry", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.BatchEntry", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -123,7 +123,7 @@ impl serde::Serialize for BatchProof {
         if !self.entries.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.BatchProof", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.BatchProof", len)?;
         if !self.entries.is_empty() {
             struct_ser.serialize_field("entries", &self.entries)?;
         }
@@ -180,7 +180,7 @@ impl<'de> serde::Deserialize<'de> for BatchProof {
             type Value = BatchProof;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.BatchProof")
+                formatter.write_str("struct cosmos.ics23.v1.BatchProof")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<BatchProof, V::Error>
@@ -203,7 +203,7 @@ impl<'de> serde::Deserialize<'de> for BatchProof {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.BatchProof", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.BatchProof", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -218,7 +218,7 @@ impl serde::Serialize for CommitmentProof {
         if self.proof.is_some() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.CommitmentProof", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.CommitmentProof", len)?;
         if let Some(v) = self.proof.as_ref() {
             match v {
                 commitment_proof::Proof::Exist(v) => {
@@ -294,7 +294,7 @@ impl<'de> serde::Deserialize<'de> for CommitmentProof {
             type Value = CommitmentProof;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.CommitmentProof")
+                formatter.write_str("struct cosmos.ics23.v1.CommitmentProof")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<CommitmentProof, V::Error>
@@ -341,7 +341,7 @@ impl<'de> serde::Deserialize<'de> for CommitmentProof {
                 Ok(CommitmentProof { proof: proof__ })
             }
         }
-        deserializer.deserialize_struct("ics23.CommitmentProof", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.CommitmentProof", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -356,7 +356,8 @@ impl serde::Serialize for CompressedBatchEntry {
         if self.proof.is_some() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.CompressedBatchEntry", len)?;
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.ics23.v1.CompressedBatchEntry", len)?;
         if let Some(v) = self.proof.as_ref() {
             match v {
                 compressed_batch_entry::Proof::Exist(v) => {
@@ -422,7 +423,7 @@ impl<'de> serde::Deserialize<'de> for CompressedBatchEntry {
             type Value = CompressedBatchEntry;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.CompressedBatchEntry")
+                formatter.write_str("struct cosmos.ics23.v1.CompressedBatchEntry")
             }
 
             fn visit_map<V>(
@@ -456,7 +457,11 @@ impl<'de> serde::Deserialize<'de> for CompressedBatchEntry {
                 Ok(CompressedBatchEntry { proof: proof__ })
             }
         }
-        deserializer.deserialize_struct("ics23.CompressedBatchEntry", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct(
+            "cosmos.ics23.v1.CompressedBatchEntry",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -474,7 +479,8 @@ impl serde::Serialize for CompressedBatchProof {
         if !self.lookup_inners.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.CompressedBatchProof", len)?;
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.ics23.v1.CompressedBatchProof", len)?;
         if !self.entries.is_empty() {
             struct_ser.serialize_field("entries", &self.entries)?;
         }
@@ -536,7 +542,7 @@ impl<'de> serde::Deserialize<'de> for CompressedBatchProof {
             type Value = CompressedBatchProof;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.CompressedBatchProof")
+                formatter.write_str("struct cosmos.ics23.v1.CompressedBatchProof")
             }
 
             fn visit_map<V>(
@@ -570,7 +576,11 @@ impl<'de> serde::Deserialize<'de> for CompressedBatchProof {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.CompressedBatchProof", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct(
+            "cosmos.ics23.v1.CompressedBatchProof",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -594,7 +604,8 @@ impl serde::Serialize for CompressedExistenceProof {
         if !self.path.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.CompressedExistenceProof", len)?;
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.ics23.v1.CompressedExistenceProof", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
             struct_ser
@@ -672,7 +683,7 @@ impl<'de> serde::Deserialize<'de> for CompressedExistenceProof {
             type Value = CompressedExistenceProof;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.CompressedExistenceProof")
+                formatter.write_str("struct cosmos.ics23.v1.CompressedExistenceProof")
             }
 
             fn visit_map<V>(
@@ -733,7 +744,11 @@ impl<'de> serde::Deserialize<'de> for CompressedExistenceProof {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.CompressedExistenceProof", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct(
+            "cosmos.ics23.v1.CompressedExistenceProof",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -755,7 +770,7 @@ impl serde::Serialize for CompressedNonExistenceProof {
             len += 1;
         }
         let mut struct_ser =
-            serializer.serialize_struct("ics23.CompressedNonExistenceProof", len)?;
+            serializer.serialize_struct("cosmos.ics23.v1.CompressedNonExistenceProof", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
             struct_ser
@@ -824,7 +839,7 @@ impl<'de> serde::Deserialize<'de> for CompressedNonExistenceProof {
             type Value = CompressedNonExistenceProof;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.CompressedNonExistenceProof")
+                formatter.write_str("struct cosmos.ics23.v1.CompressedNonExistenceProof")
             }
 
             fn visit_map<V>(
@@ -870,7 +885,7 @@ impl<'de> serde::Deserialize<'de> for CompressedNonExistenceProof {
             }
         }
         deserializer.deserialize_struct(
-            "ics23.CompressedNonExistenceProof",
+            "cosmos.ics23.v1.CompressedNonExistenceProof",
             FIELDS,
             GeneratedVisitor,
         )
@@ -897,7 +912,7 @@ impl serde::Serialize for ExistenceProof {
         if !self.path.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.ExistenceProof", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.ExistenceProof", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
             struct_ser
@@ -975,7 +990,7 @@ impl<'de> serde::Deserialize<'de> for ExistenceProof {
             type Value = ExistenceProof;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.ExistenceProof")
+                formatter.write_str("struct cosmos.ics23.v1.ExistenceProof")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<ExistenceProof, V::Error>
@@ -1028,7 +1043,7 @@ impl<'de> serde::Deserialize<'de> for ExistenceProof {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.ExistenceProof", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.ExistenceProof", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -1137,7 +1152,7 @@ impl serde::Serialize for InnerOp {
         if !self.suffix.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.InnerOp", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.InnerOp", len)?;
         if self.hash != 0 {
             let v = HashOp::try_from(self.hash)
                 .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.hash)))?;
@@ -1214,7 +1229,7 @@ impl<'de> serde::Deserialize<'de> for InnerOp {
             type Value = InnerOp;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.InnerOp")
+                formatter.write_str("struct cosmos.ics23.v1.InnerOp")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<InnerOp, V::Error>
@@ -1259,7 +1274,7 @@ impl<'de> serde::Deserialize<'de> for InnerOp {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.InnerOp", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.InnerOp", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -1289,7 +1304,7 @@ impl serde::Serialize for InnerSpec {
         if self.hash != 0 {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.InnerSpec", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.InnerSpec", len)?;
         if !self.child_order.is_empty() {
             struct_ser.serialize_field("childOrder", &self.child_order)?;
         }
@@ -1393,7 +1408,7 @@ impl<'de> serde::Deserialize<'de> for InnerSpec {
             type Value = InnerSpec;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.InnerSpec")
+                formatter.write_str("struct cosmos.ics23.v1.InnerSpec")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<InnerSpec, V::Error>
@@ -1473,7 +1488,7 @@ impl<'de> serde::Deserialize<'de> for InnerSpec {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.InnerSpec", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.InnerSpec", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -1500,7 +1515,7 @@ impl serde::Serialize for LeafOp {
         if !self.prefix.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.LeafOp", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.LeafOp", len)?;
         if self.hash != 0 {
             let v = HashOp::try_from(self.hash)
                 .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.hash)))?;
@@ -1600,7 +1615,7 @@ impl<'de> serde::Deserialize<'de> for LeafOp {
             type Value = LeafOp;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.LeafOp")
+                formatter.write_str("struct cosmos.ics23.v1.LeafOp")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<LeafOp, V::Error>
@@ -1658,7 +1673,7 @@ impl<'de> serde::Deserialize<'de> for LeafOp {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.LeafOp", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.LeafOp", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -1773,7 +1788,8 @@ impl serde::Serialize for NonExistenceProof {
         if self.right.is_some() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.NonExistenceProof", len)?;
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.ics23.v1.NonExistenceProof", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
             struct_ser
@@ -1842,7 +1858,7 @@ impl<'de> serde::Deserialize<'de> for NonExistenceProof {
             type Value = NonExistenceProof;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.NonExistenceProof")
+                formatter.write_str("struct cosmos.ics23.v1.NonExistenceProof")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<NonExistenceProof, V::Error>
@@ -1884,7 +1900,11 @@ impl<'de> serde::Deserialize<'de> for NonExistenceProof {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.NonExistenceProof", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct(
+            "cosmos.ics23.v1.NonExistenceProof",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -1908,7 +1928,7 @@ impl serde::Serialize for ProofSpec {
         if self.min_depth != 0 {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("ics23.ProofSpec", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.ics23.v1.ProofSpec", len)?;
         if let Some(v) = self.leaf_spec.as_ref() {
             struct_ser.serialize_field("leafSpec", v)?;
         }
@@ -1989,7 +2009,7 @@ impl<'de> serde::Deserialize<'de> for ProofSpec {
             type Value = ProofSpec;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ics23.ProofSpec")
+                formatter.write_str("struct cosmos.ics23.v1.ProofSpec")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<ProofSpec, V::Error>
@@ -2042,6 +2062,6 @@ impl<'de> serde::Deserialize<'de> for ProofSpec {
                 })
             }
         }
-        deserializer.deserialize_struct("ics23.ProofSpec", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("cosmos.ics23.v1.ProofSpec", FIELDS, GeneratedVisitor)
     }
 }

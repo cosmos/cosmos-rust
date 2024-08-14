@@ -365,5 +365,5 @@ impl LengthOp {
         }
     }
 }
-include!("ics23.serde.rs");
+include!("cosmos.ics23.v1.serde.rs");
 // @@protoc_insertion_point(module)

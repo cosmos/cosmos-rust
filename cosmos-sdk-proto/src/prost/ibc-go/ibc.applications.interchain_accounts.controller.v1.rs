@@ -36,7 +36,7 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
 }
-/// MsgRegisterInterchainAccount defines the payload for Msg/MsgRegisterInterchainAccount
+/// MsgRegisterInterchainAccount defines the payload for Msg/RegisterAccount
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRegisterInterchainAccount {
@@ -46,13 +46,20 @@ pub struct MsgRegisterInterchainAccount {
     pub connection_id: ::prost::alloc::string::String,
     #[prost(string, tag = "3")]
     pub version: ::prost::alloc::string::String,
+    #[prost(
+        enumeration = "super::super::super::super::core::channel::v1::Order",
+        tag = "4"
+    )]
+    pub ordering: i32,
 }
-/// MsgRegisterInterchainAccountResponse defines the response for Msg/MsgRegisterInterchainAccountResponse
+/// MsgRegisterInterchainAccountResponse defines the response for Msg/RegisterAccount
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRegisterInterchainAccountResponse {
     #[prost(string, tag = "1")]
     pub channel_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub port_id: ::prost::alloc::string::String,
 }
 /// MsgSendTx defines the payload for Msg/SendTx
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -76,6 +83,23 @@ pub struct MsgSendTxResponse {
     #[prost(uint64, tag = "1")]
     pub sequence: u64,
 }
+/// MsgUpdateParams defines the payload for Msg/UpdateParams
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParams {
+    /// signer address
+    #[prost(string, tag = "1")]
+    pub signer: ::prost::alloc::string::String,
+    /// params defines the 27-interchain-accounts/controller parameters to update.
+    ///
+    /// NOTE: All parameters must be supplied.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
+/// MsgUpdateParamsResponse defines the response for Msg/UpdateParams
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParamsResponse {}
 include!("ibc.applications.interchain_accounts.controller.v1.serde.rs");
 include!("ibc.applications.interchain_accounts.controller.v1.tonic.rs");
 // @@protoc_insertion_point(module)

@@ -85,34 +85,10 @@ pub mod query_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn interchain_account(
+        pub async fn checksums(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryInterchainAccountRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::QueryInterchainAccountResponse>,
-            tonic::Status,
-        > {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/ibc.applications.interchain_accounts.controller.v1.Query/InterchainAccount",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "ibc.applications.interchain_accounts.controller.v1.Query",
-                "InterchainAccount",
-            ));
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn params(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryParamsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
+            request: impl tonic::IntoRequest<super::QueryChecksumsRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryChecksumsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -121,14 +97,30 @@ pub mod query_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/ibc.applications.interchain_accounts.controller.v1.Query/Params",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/ibc.lightclients.wasm.v1.Query/Checksums");
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
-                "ibc.applications.interchain_accounts.controller.v1.Query",
-                "Params",
+                "ibc.lightclients.wasm.v1.Query",
+                "Checksums",
             ));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn code(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryCodeRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryCodeResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/ibc.lightclients.wasm.v1.Query/Code");
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("ibc.lightclients.wasm.v1.Query", "Code"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -141,17 +133,14 @@ pub mod query_server {
     /// Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
-        async fn interchain_account(
+        async fn checksums(
             &self,
-            request: tonic::Request<super::QueryInterchainAccountRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::QueryInterchainAccountResponse>,
-            tonic::Status,
-        >;
-        async fn params(
+            request: tonic::Request<super::QueryChecksumsRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryChecksumsResponse>, tonic::Status>;
+        async fn code(
             &self,
-            request: tonic::Request<super::QueryParamsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
+            request: tonic::Request<super::QueryCodeRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryCodeResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -229,20 +218,18 @@ pub mod query_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/ibc.applications.interchain_accounts.controller.v1.Query/InterchainAccount" => {
+                "/ibc.lightclients.wasm.v1.Query/Checksums" => {
                     #[allow(non_camel_case_types)]
-                    struct InterchainAccountSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryInterchainAccountRequest>
-                        for InterchainAccountSvc<T>
-                    {
-                        type Response = super::QueryInterchainAccountResponse;
+                    struct ChecksumsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryChecksumsRequest> for ChecksumsSvc<T> {
+                        type Response = super::QueryChecksumsResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryInterchainAccountRequest>,
+                            request: tonic::Request<super::QueryChecksumsRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).interchain_account(request).await };
+                            let fut = async move { (*inner).checksums(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -253,7 +240,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = InterchainAccountSvc(inner);
+                        let method = ChecksumsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -269,18 +256,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/ibc.applications.interchain_accounts.controller.v1.Query/Params" => {
+                "/ibc.lightclients.wasm.v1.Query/Code" => {
                     #[allow(non_camel_case_types)]
-                    struct ParamsSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryParamsRequest> for ParamsSvc<T> {
-                        type Response = super::QueryParamsResponse;
+                    struct CodeSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryCodeRequest> for CodeSvc<T> {
+                        type Response = super::QueryCodeResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryParamsRequest>,
+                            request: tonic::Request<super::QueryCodeRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).params(request).await };
+                            let fut = async move { (*inner).code(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -291,7 +278,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = ParamsSvc(inner);
+                        let method = CodeSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -341,7 +328,7 @@ pub mod query_server {
         }
     }
     impl<T: Query> tonic::server::NamedService for QueryServer<T> {
-        const NAME: &'static str = "ibc.applications.interchain_accounts.controller.v1.Query";
+        const NAME: &'static str = "ibc.lightclients.wasm.v1.Query";
     }
 }
 /// Generated client implementations.
@@ -427,13 +414,11 @@ pub mod msg_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn register_interchain_account(
+        pub async fn store_code(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgRegisterInterchainAccount>,
-        ) -> std::result::Result<
-            tonic::Response<super::MsgRegisterInterchainAccountResponse>,
-            tonic::Status,
-        > {
+            request: impl tonic::IntoRequest<super::MsgStoreCode>,
+        ) -> std::result::Result<tonic::Response<super::MsgStoreCodeResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -441,41 +426,17 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/ibc.applications.interchain_accounts.controller.v1.Msg/RegisterInterchainAccount",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/ibc.lightclients.wasm.v1.Msg/StoreCode");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "ibc.applications.interchain_accounts.controller.v1.Msg",
-                "RegisterInterchainAccount",
-            ));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("ibc.lightclients.wasm.v1.Msg", "StoreCode"));
             self.inner.unary(req, path, codec).await
         }
-        pub async fn send_tx(
+        pub async fn remove_checksum(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgSendTx>,
-        ) -> std::result::Result<tonic::Response<super::MsgSendTxResponse>, tonic::Status> {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/ibc.applications.interchain_accounts.controller.v1.Msg/SendTx",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "ibc.applications.interchain_accounts.controller.v1.Msg",
-                "SendTx",
-            ));
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn update_params(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
+            request: impl tonic::IntoRequest<super::MsgRemoveChecksum>,
+        ) -> std::result::Result<tonic::Response<super::MsgRemoveChecksumResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -485,12 +446,34 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/ibc.applications.interchain_accounts.controller.v1.Msg/UpdateParams",
+                "/ibc.lightclients.wasm.v1.Msg/RemoveChecksum",
             );
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
-                "ibc.applications.interchain_accounts.controller.v1.Msg",
-                "UpdateParams",
+                "ibc.lightclients.wasm.v1.Msg",
+                "RemoveChecksum",
+            ));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn migrate_contract(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgMigrateContract>,
+        ) -> std::result::Result<tonic::Response<super::MsgMigrateContractResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/ibc.lightclients.wasm.v1.Msg/MigrateContract",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "ibc.lightclients.wasm.v1.Msg",
+                "MigrateContract",
             ));
             self.inner.unary(req, path, codec).await
         }
@@ -504,21 +487,18 @@ pub mod msg_server {
     /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
-        async fn register_interchain_account(
+        async fn store_code(
             &self,
-            request: tonic::Request<super::MsgRegisterInterchainAccount>,
-        ) -> std::result::Result<
-            tonic::Response<super::MsgRegisterInterchainAccountResponse>,
-            tonic::Status,
-        >;
-        async fn send_tx(
+            request: tonic::Request<super::MsgStoreCode>,
+        ) -> std::result::Result<tonic::Response<super::MsgStoreCodeResponse>, tonic::Status>;
+        async fn remove_checksum(
             &self,
-            request: tonic::Request<super::MsgSendTx>,
-        ) -> std::result::Result<tonic::Response<super::MsgSendTxResponse>, tonic::Status>;
-        async fn update_params(
+            request: tonic::Request<super::MsgRemoveChecksum>,
+        ) -> std::result::Result<tonic::Response<super::MsgRemoveChecksumResponse>, tonic::Status>;
+        async fn migrate_contract(
             &self,
-            request: tonic::Request<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
+            request: tonic::Request<super::MsgMigrateContract>,
+        ) -> std::result::Result<tonic::Response<super::MsgMigrateContractResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
@@ -596,26 +576,18 @@ pub mod msg_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/ibc.applications.interchain_accounts.controller.v1.Msg/RegisterInterchainAccount" => {
+                "/ibc.lightclients.wasm.v1.Msg/StoreCode" => {
                     #[allow(non_camel_case_types)]
-                    struct RegisterInterchainAccountSvc<T: Msg>(pub Arc<T>);
-                    impl<
-                        T: Msg,
-                    > tonic::server::UnaryService<super::MsgRegisterInterchainAccount>
-                    for RegisterInterchainAccountSvc<T> {
-                        type Response = super::MsgRegisterInterchainAccountResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                    struct StoreCodeSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgStoreCode> for StoreCodeSvc<T> {
+                        type Response = super::MsgStoreCodeResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgRegisterInterchainAccount>,
+                            request: tonic::Request<super::MsgStoreCode>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).register_interchain_account(request).await
-                            };
+                            let fut = async move { (*inner).store_code(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -626,7 +598,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = RegisterInterchainAccountSvc(inner);
+                        let method = StoreCodeSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -642,22 +614,18 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
-                "/ibc.applications.interchain_accounts.controller.v1.Msg/SendTx" => {
+                "/ibc.lightclients.wasm.v1.Msg/RemoveChecksum" => {
                     #[allow(non_camel_case_types)]
-                    struct SendTxSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgSendTx>
-                    for SendTxSvc<T> {
-                        type Response = super::MsgSendTxResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                    struct RemoveChecksumSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgRemoveChecksum> for RemoveChecksumSvc<T> {
+                        type Response = super::MsgRemoveChecksumResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgSendTx>,
+                            request: tonic::Request<super::MsgRemoveChecksum>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).send_tx(request).await };
+                            let fut = async move { (*inner).remove_checksum(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -668,7 +636,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = SendTxSvc(inner);
+                        let method = RemoveChecksumSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -684,24 +652,18 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
-                "/ibc.applications.interchain_accounts.controller.v1.Msg/UpdateParams" => {
+                "/ibc.lightclients.wasm.v1.Msg/MigrateContract" => {
                     #[allow(non_camel_case_types)]
-                    struct UpdateParamsSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgUpdateParams>
-                    for UpdateParamsSvc<T> {
-                        type Response = super::MsgUpdateParamsResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                    struct MigrateContractSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgMigrateContract> for MigrateContractSvc<T> {
+                        type Response = super::MsgMigrateContractResponse;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgUpdateParams>,
+                            request: tonic::Request<super::MsgMigrateContract>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).update_params(request).await
-                            };
+                            let fut = async move { (*inner).migrate_contract(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -712,7 +674,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = UpdateParamsSvc(inner);
+                        let method = MigrateContractSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -728,18 +690,14 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -766,6 +724,6 @@ pub mod msg_server {
         }
     }
     impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
-        const NAME: &'static str = "ibc.applications.interchain_accounts.controller.v1.Msg";
+        const NAME: &'static str = "ibc.lightclients.wasm.v1.Msg";
     }
 }

@@ -946,6 +946,9 @@ impl serde::Serialize for MsgConnectionOpenAck {
         if !self.signer.is_empty() {
             len += 1;
         }
+        if !self.host_consensus_state_proof.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("ibc.core.connection.v1.MsgConnectionOpenAck", len)?;
         if !self.connection_id.is_empty() {
@@ -991,6 +994,13 @@ impl serde::Serialize for MsgConnectionOpenAck {
         if !self.signer.is_empty() {
             struct_ser.serialize_field("signer", &self.signer)?;
         }
+        if !self.host_consensus_state_proof.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "hostConsensusStateProof",
+                pbjson::private::base64::encode(&self.host_consensus_state_proof).as_str(),
+            )?;
+        }
         struct_ser.end()
     }
 }
@@ -1020,6 +1030,8 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenAck {
             "consensus_height",
             "consensusHeight",
             "signer",
+            "host_consensus_state_proof",
+            "hostConsensusStateProof",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1034,6 +1046,7 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenAck {
             ProofConsensus,
             ConsensusHeight,
             Signer,
+            HostConsensusStateProof,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -1075,6 +1088,9 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenAck {
                                 Ok(GeneratedField::ConsensusHeight)
                             }
                             "signer" => Ok(GeneratedField::Signer),
+                            "hostConsensusStateProof" | "host_consensus_state_proof" => {
+                                Ok(GeneratedField::HostConsensusStateProof)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1107,6 +1123,7 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenAck {
                 let mut proof_consensus__ = None;
                 let mut consensus_height__ = None;
                 let mut signer__ = None;
+                let mut host_consensus_state_proof__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ConnectionId => {
@@ -1180,6 +1197,17 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenAck {
                             }
                             signer__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::HostConsensusStateProof => {
+                            if host_consensus_state_proof__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "hostConsensusStateProof",
+                                ));
+                            }
+                            host_consensus_state_proof__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(MsgConnectionOpenAck {
@@ -1193,6 +1221,7 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenAck {
                     proof_consensus: proof_consensus__.unwrap_or_default(),
                     consensus_height: consensus_height__,
                     signer: signer__.unwrap_or_default(),
+                    host_consensus_state_proof: host_consensus_state_proof__.unwrap_or_default(),
                 })
             }
         }
@@ -1845,6 +1874,9 @@ impl serde::Serialize for MsgConnectionOpenTry {
         if !self.signer.is_empty() {
             len += 1;
         }
+        if !self.host_consensus_state_proof.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("ibc.core.connection.v1.MsgConnectionOpenTry", len)?;
         if !self.client_id.is_empty() {
@@ -1899,6 +1931,13 @@ impl serde::Serialize for MsgConnectionOpenTry {
         if !self.signer.is_empty() {
             struct_ser.serialize_field("signer", &self.signer)?;
         }
+        if !self.host_consensus_state_proof.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "hostConsensusStateProof",
+                pbjson::private::base64::encode(&self.host_consensus_state_proof).as_str(),
+            )?;
+        }
         struct_ser.end()
     }
 }
@@ -1932,6 +1971,8 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenTry {
             "consensus_height",
             "consensusHeight",
             "signer",
+            "host_consensus_state_proof",
+            "hostConsensusStateProof",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1948,6 +1989,7 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenTry {
             ProofConsensus,
             ConsensusHeight,
             Signer,
+            HostConsensusStateProof,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -1993,6 +2035,9 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenTry {
                                 Ok(GeneratedField::ConsensusHeight)
                             }
                             "signer" => Ok(GeneratedField::Signer),
+                            "hostConsensusStateProof" | "host_consensus_state_proof" => {
+                                Ok(GeneratedField::HostConsensusStateProof)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2027,6 +2072,7 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenTry {
                 let mut proof_consensus__ = None;
                 let mut consensus_height__ = None;
                 let mut signer__ = None;
+                let mut host_consensus_state_proof__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ClientId => {
@@ -2117,6 +2163,17 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenTry {
                             }
                             signer__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::HostConsensusStateProof => {
+                            if host_consensus_state_proof__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "hostConsensusStateProof",
+                                ));
+                            }
+                            host_consensus_state_proof__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(MsgConnectionOpenTry {
@@ -2132,6 +2189,7 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenTry {
                     proof_consensus: proof_consensus__.unwrap_or_default(),
                     consensus_height: consensus_height__,
                     signer: signer__.unwrap_or_default(),
+                    host_consensus_state_proof: host_consensus_state_proof__.unwrap_or_default(),
                 })
             }
         }
@@ -2219,6 +2277,204 @@ impl<'de> serde::Deserialize<'de> for MsgConnectionOpenTryResponse {
         }
         deserializer.deserialize_struct(
             "ibc.core.connection.v1.MsgConnectionOpenTryResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        if self.params.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.connection.v1.MsgUpdateParams", len)?;
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["signer", "params"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Signer,
+            Params,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "signer" => Ok(GeneratedField::Signer),
+                            "params" => Ok(GeneratedField::Params),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParams;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.connection.v1.MsgUpdateParams")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUpdateParams, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut signer__ = None;
+                let mut params__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgUpdateParams {
+                    signer: signer__.unwrap_or_default(),
+                    params: params__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.connection.v1.MsgUpdateParams",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("ibc.core.connection.v1.MsgUpdateParamsResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParamsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.connection.v1.MsgUpdateParamsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateParamsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateParamsResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.connection.v1.MsgUpdateParamsResponse",
             FIELDS,
             GeneratedVisitor,
         )

@@ -160,6 +160,13 @@ pub mod cosmos {
         }
     }
 
+    /// ICS23 protobuf definitions.
+    pub mod ics23 {
+        pub mod v1 {
+            include!("prost/ibc-go/cosmos.ics23.v1.rs");
+        }
+    }
+
     /// Messages and services handling minting
     pub mod mint {
         pub mod v1beta1 {
@@ -304,17 +311,17 @@ pub mod ibc {
     /// IBC light clients.
     pub mod lightclients {
         pub mod localhost {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.lightclients.localhost.v1.rs");
+            pub mod v2 {
+                include!("prost/ibc-go/ibc.lightclients.localhost.v2.rs");
             }
         }
         pub mod solomachine {
-            pub mod v1 {
-                include!("prost/ibc-go/ibc.lightclients.solomachine.v1.rs");
-            }
-
             pub mod v2 {
                 include!("prost/ibc-go/ibc.lightclients.solomachine.v2.rs");
+            }
+
+            pub mod v3 {
+                include!("prost/ibc-go/ibc.lightclients.solomachine.v3.rs");
             }
         }
         pub mod tendermint {
@@ -322,10 +329,10 @@ pub mod ibc {
                 include!("prost/ibc-go/ibc.lightclients.tendermint.v1.rs");
             }
         }
+        pub mod wasm {
+            pub mod v1 {
+                include!("prost/ibc-go/ibc.lightclients.wasm.v1.rs");
+            }
+        }
     }
-}
-
-/// ICS23 protobuf definitions.
-pub mod ics23 {
-    include!("prost/ibc-go/ics23.rs");
 }

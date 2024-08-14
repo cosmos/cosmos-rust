@@ -17,6 +17,9 @@ impl serde::Serialize for MsgRegisterInterchainAccount {
         if !self.version.is_empty() {
             len += 1;
         }
+        if self.ordering != 0 {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct(
             "ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccount",
             len,
@@ -30,6 +33,13 @@ impl serde::Serialize for MsgRegisterInterchainAccount {
         if !self.version.is_empty() {
             struct_ser.serialize_field("version", &self.version)?;
         }
+        if self.ordering != 0 {
+            let v = super::super::super::super::core::channel::v1::Order::try_from(self.ordering)
+                .map_err(|_| {
+                serde::ser::Error::custom(format!("Invalid variant {}", self.ordering))
+            })?;
+            struct_ser.serialize_field("ordering", &v)?;
+        }
         struct_ser.end()
     }
 }
@@ -40,13 +50,20 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccount {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["owner", "connection_id", "connectionId", "version"];
+        const FIELDS: &[&str] = &[
+            "owner",
+            "connection_id",
+            "connectionId",
+            "version",
+            "ordering",
+        ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Owner,
             ConnectionId,
             Version,
+            Ordering,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -75,6 +92,7 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccount {
                             "owner" => Ok(GeneratedField::Owner),
                             "connectionId" | "connection_id" => Ok(GeneratedField::ConnectionId),
                             "version" => Ok(GeneratedField::Version),
+                            "ordering" => Ok(GeneratedField::Ordering),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -100,6 +118,7 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccount {
                 let mut owner__ = None;
                 let mut connection_id__ = None;
                 let mut version__ = None;
+                let mut ordering__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Owner => {
@@ -120,12 +139,19 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccount {
                             }
                             version__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Ordering => {
+                            if ordering__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("ordering"));
+                            }
+                            ordering__ = Some(map_.next_value::<super::super::super::super::core::channel::v1::Order>()? as i32);
+                        }
                     }
                 }
                 Ok(MsgRegisterInterchainAccount {
                     owner: owner__.unwrap_or_default(),
                     connection_id: connection_id__.unwrap_or_default(),
                     version: version__.unwrap_or_default(),
+                    ordering: ordering__.unwrap_or_default(),
                 })
             }
         }
@@ -148,9 +174,15 @@ impl serde::Serialize for MsgRegisterInterchainAccountResponse {
         if !self.channel_id.is_empty() {
             len += 1;
         }
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("ibc.applications.interchain_accounts.controller.v1.MsgRegisterInterchainAccountResponse", len)?;
         if !self.channel_id.is_empty() {
             struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
         }
         struct_ser.end()
     }
@@ -162,11 +194,12 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccountResponse {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["channel_id", "channelId"];
+        const FIELDS: &[&str] = &["channel_id", "channelId", "port_id", "portId"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             ChannelId,
+            PortId,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -193,6 +226,7 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccountResponse {
                     {
                         match value {
                             "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -216,6 +250,7 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccountResponse {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut channel_id__ = None;
+                let mut port_id__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ChannelId => {
@@ -224,10 +259,17 @@ impl<'de> serde::Deserialize<'de> for MsgRegisterInterchainAccountResponse {
                             }
                             channel_id__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(MsgRegisterInterchainAccountResponse {
                     channel_id: channel_id__.unwrap_or_default(),
+                    port_id: port_id__.unwrap_or_default(),
                 })
             }
         }
@@ -506,6 +548,210 @@ impl<'de> serde::Deserialize<'de> for MsgSendTxResponse {
         }
         deserializer.deserialize_struct(
             "ibc.applications.interchain_accounts.controller.v1.MsgSendTxResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        if self.params.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct(
+            "ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams",
+            len,
+        )?;
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["signer", "params"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Signer,
+            Params,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "signer" => Ok(GeneratedField::Signer),
+                            "params" => Ok(GeneratedField::Params),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParams;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str(
+                    "struct ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams",
+                )
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUpdateParams, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut signer__ = None;
+                let mut params__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgUpdateParams {
+                    signer: signer__.unwrap_or_default(),
+                    params: params__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.applications.interchain_accounts.controller.v1.MsgUpdateParams",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer.serialize_struct(
+            "ibc.applications.interchain_accounts.controller.v1.MsgUpdateParamsResponse",
+            len,
+        )?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParamsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.applications.interchain_accounts.controller.v1.MsgUpdateParamsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateParamsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateParamsResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.applications.interchain_accounts.controller.v1.MsgUpdateParamsResponse",
             FIELDS,
             GeneratedVisitor,
         )
