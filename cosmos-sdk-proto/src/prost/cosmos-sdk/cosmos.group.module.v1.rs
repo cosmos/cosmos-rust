@@ -13,5 +13,12 @@ pub struct Module {
     #[prost(uint64, tag = "2")]
     pub max_metadata_len: u64,
 }
+impl ::prost::Name for Module {
+    const NAME: &'static str = "Module";
+    const PACKAGE: &'static str = "cosmos.group.module.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.group.module.v1.{}", Self::NAME)
+    }
+}
 include!("cosmos.group.module.v1.serde.rs");
 // @@protoc_insertion_point(module)

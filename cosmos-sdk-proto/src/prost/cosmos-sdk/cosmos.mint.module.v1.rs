@@ -9,5 +9,12 @@ pub struct Module {
     #[prost(string, tag = "2")]
     pub authority: ::prost::alloc::string::String,
 }
+impl ::prost::Name for Module {
+    const NAME: &'static str = "Module";
+    const PACKAGE: &'static str = "cosmos.mint.module.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.mint.module.v1.{}", Self::NAME)
+    }
+}
 include!("cosmos.mint.module.v1.serde.rs");
 // @@protoc_insertion_point(module)

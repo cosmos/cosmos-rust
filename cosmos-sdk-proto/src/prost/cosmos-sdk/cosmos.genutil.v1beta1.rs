@@ -7,5 +7,12 @@ pub struct GenesisState {
     #[prost(bytes = "vec", repeated, tag = "1")]
     pub gen_txs: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
+impl ::prost::Name for GenesisState {
+    const NAME: &'static str = "GenesisState";
+    const PACKAGE: &'static str = "cosmos.genutil.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.genutil.v1beta1.{}", Self::NAME)
+    }
+}
 include!("cosmos.genutil.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)
