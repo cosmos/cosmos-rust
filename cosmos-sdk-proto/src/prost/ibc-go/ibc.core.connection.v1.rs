@@ -264,8 +264,8 @@ impl ::prost::Name for MsgConnectionOpenInitResponse {
 pub struct MsgConnectionOpenTry {
     #[prost(string, tag = "1")]
     pub client_id: ::prost::alloc::string::String,
-    /// in the case of crossing hello's, when both chains call OpenInit, we need
-    /// the connection identifier of the previous connection in state INIT
+    /// Deprecated: this field is unused. Crossing hellos are no longer supported in core IBC.
+    #[deprecated]
     #[prost(string, tag = "2")]
     pub previous_connection_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
@@ -824,6 +824,38 @@ impl ::prost::Name for QueryConnectionConsensusStateResponse {
         "/ibc.core.connection.v1.QueryConnectionConsensusStateResponse".into()
     }
 }
+/// QueryConnectionParamsRequest is the request type for the Query/ConnectionParams RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct QueryConnectionParamsRequest {}
+impl ::prost::Name for QueryConnectionParamsRequest {
+    const NAME: &'static str = "QueryConnectionParamsRequest";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "ibc.core.connection.v1.QueryConnectionParamsRequest".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/ibc.core.connection.v1.QueryConnectionParamsRequest".into()
+    }
+}
+/// QueryConnectionParamsResponse is the response type for the Query/ConnectionParams RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct QueryConnectionParamsResponse {
+    /// params defines the parameters of the module.
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+}
+impl ::prost::Name for QueryConnectionParamsResponse {
+    const NAME: &'static str = "QueryConnectionParamsResponse";
+    const PACKAGE: &'static str = "ibc.core.connection.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "ibc.core.connection.v1.QueryConnectionParamsResponse".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/ibc.core.connection.v1.QueryConnectionParamsResponse".into()
+    }
+}
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
 pub mod query_client {
@@ -1030,6 +1062,29 @@ pub mod query_client {
             req.extensions_mut().insert(GrpcMethod::new(
                 "ibc.core.connection.v1.Query",
                 "ConnectionConsensusState",
+            ));
+            self.inner.unary(req, path, codec).await
+        }
+        /// ConnectionParams queries all parameters of the ibc connection submodule.
+        pub async fn connection_params(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryConnectionParamsRequest>,
+        ) -> std::result::Result<tonic::Response<super::QueryConnectionParamsResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/ibc.core.connection.v1.Query/ConnectionParams",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "ibc.core.connection.v1.Query",
+                "ConnectionParams",
             ));
             self.inner.unary(req, path, codec).await
         }

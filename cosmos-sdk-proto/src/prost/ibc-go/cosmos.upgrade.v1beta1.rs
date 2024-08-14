@@ -12,8 +12,10 @@ pub struct Plan {
     /// reached and the software will exit.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
-    /// The time after which the upgrade must be performed.
-    /// Leave set to its zero value to use a pre-defined Height instead.
+    /// Deprecated: Time based upgrades have been deprecated. Time based upgrade logic
+    /// has been removed from the SDK.
+    /// If this field is not empty, an error will be thrown.
+    #[deprecated]
     #[prost(message, optional, tag = "2")]
     pub time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
     /// The height at which the upgrade must be performed.
@@ -24,6 +26,12 @@ pub struct Plan {
     /// such as a git commit that validators could automatically upgrade to
     #[prost(string, tag = "4")]
     pub info: ::prost::alloc::string::String,
+    /// Deprecated: UpgradedClientState field has been deprecated. IBC upgrade logic has been
+    /// moved to the IBC module in the sub module 02-client.
+    /// If this field is not empty, an error will be thrown.
+    #[deprecated]
+    #[prost(message, optional, tag = "5")]
+    pub upgraded_client_state: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }
 impl ::prost::Name for Plan {
     const NAME: &'static str = "Plan";
@@ -37,6 +45,8 @@ impl ::prost::Name for Plan {
 }
 /// SoftwareUpgradeProposal is a gov Content type for initiating a software
 /// upgrade.
+/// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
+/// proposals, see MsgSoftwareUpgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SoftwareUpgradeProposal {
@@ -59,6 +69,8 @@ impl ::prost::Name for SoftwareUpgradeProposal {
 }
 /// CancelSoftwareUpgradeProposal is a gov Content type for cancelling a software
 /// upgrade.
+/// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
+/// proposals, see MsgCancelUpgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CancelSoftwareUpgradeProposal {
@@ -75,5 +87,28 @@ impl ::prost::Name for CancelSoftwareUpgradeProposal {
     }
     fn type_url() -> ::prost::alloc::string::String {
         "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal".into()
+    }
+}
+/// ModuleVersion specifies a module and its consensus version.
+///
+/// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ModuleVersion {
+    /// name of the app module
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+    /// consensus version of the app module
+    #[prost(uint64, tag = "2")]
+    pub version: u64,
+}
+impl ::prost::Name for ModuleVersion {
+    const NAME: &'static str = "ModuleVersion";
+    const PACKAGE: &'static str = "cosmos.upgrade.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        "cosmos.upgrade.v1beta1.ModuleVersion".into()
+    }
+    fn type_url() -> ::prost::alloc::string::String {
+        "/cosmos.upgrade.v1beta1.ModuleVersion".into()
     }
 }

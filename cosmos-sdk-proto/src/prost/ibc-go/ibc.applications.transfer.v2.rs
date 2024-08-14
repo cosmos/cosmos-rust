@@ -17,6 +17,9 @@ pub struct FungibleTokenPacketData {
     /// the recipient address on the destination chain
     #[prost(string, tag = "4")]
     pub receiver: ::prost::alloc::string::String,
+    /// optional memo
+    #[prost(string, tag = "5")]
+    pub memo: ::prost::alloc::string::String,
 }
 impl ::prost::Name for FungibleTokenPacketData {
     const NAME: &'static str = "FungibleTokenPacketData";
