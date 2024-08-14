@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.24.0 (2024-08-14)
+### Added
+- `serde` feature for Protobuf JSON using `informalsystems/pbjson` ([#471])
+
+### Changed
+- Bump `tendermint-proto` to v0.39 ([#482])
+- Use `google.protobuf` types from `tendermint-proto` ([#482])
+- cosmos-sdk-go: bump to v0.50.9 ([#488])
+- wasmd: bump to v0.52.0 ([#489])
+- Use buf's `enable_type_names` feature ([#490])
+- proto-build: use `buf` to process ibc-go protos ([#491])
+- ibc-go: bump to v8.4.0 ([#492])
+
+[#471]: https://github.com/cosmos/cosmos-rust/pull/471
+[#482]: https://github.com/cosmos/cosmos-rust/pull/482
+[#488]: https://github.com/cosmos/cosmos-rust/pull/488
+[#489]: https://github.com/cosmos/cosmos-rust/pull/489
+[#490]: https://github.com/cosmos/cosmos-rust/pull/490
+[#491]: https://github.com/cosmos/cosmos-rust/pull/491
+[#492]: https://github.com/cosmos/cosmos-rust/pull/492
+
 ## 0.23.0 (2024-08-02)
 ### Added
 - Support for `no_std` ([#478])
