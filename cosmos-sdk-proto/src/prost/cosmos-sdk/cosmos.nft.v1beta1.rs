@@ -3,12 +3,16 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventSend {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the nft
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
+    /// sender is the address of the owner of nft
     #[prost(string, tag = "3")]
     pub sender: ::prost::alloc::string::String,
+    /// receiver is the receiver address of nft
     #[prost(string, tag = "4")]
     pub receiver: ::prost::alloc::string::String,
 }
@@ -16,10 +20,13 @@ pub struct EventSend {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventMint {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the nft
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "3")]
     pub owner: ::prost::alloc::string::String,
 }
@@ -27,10 +34,13 @@ pub struct EventMint {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EventBurn {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the nft
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "3")]
     pub owner: ::prost::alloc::string::String,
 }
@@ -87,6 +97,7 @@ pub struct GenesisState {
     /// class defines the class of the nft type.
     #[prost(message, repeated, tag = "1")]
     pub classes: ::prost::alloc::vec::Vec<Class>,
+    /// entry defines all nft owned by a person.
     #[prost(message, repeated, tag = "2")]
     pub entries: ::prost::alloc::vec::Vec<Entry>,
 }
@@ -105,8 +116,10 @@ pub struct Entry {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "2")]
     pub owner: ::prost::alloc::string::String,
 }
@@ -114,6 +127,7 @@ pub struct QueryBalanceRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryBalanceResponse {
+    /// amount is the number of all NFTs of a given class owned by the owner
     #[prost(uint64, tag = "1")]
     pub amount: u64,
 }
@@ -121,8 +135,10 @@ pub struct QueryBalanceResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryOwnerRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the NFT
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
 }
@@ -130,6 +146,7 @@ pub struct QueryOwnerRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryOwnerResponse {
+    /// owner is the owner address of the nft
     #[prost(string, tag = "1")]
     pub owner: ::prost::alloc::string::String,
 }
@@ -137,6 +154,7 @@ pub struct QueryOwnerResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
 }
@@ -144,6 +162,7 @@ pub struct QuerySupplyRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QuerySupplyResponse {
+    /// amount is the number of all NFTs from the given class
     #[prost(uint64, tag = "1")]
     pub amount: u64,
 }
@@ -151,10 +170,13 @@ pub struct QuerySupplyResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNfTsRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// owner is the owner address of the nft
     #[prost(string, tag = "2")]
     pub owner: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "3")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageRequest>,
 }
@@ -162,8 +184,10 @@ pub struct QueryNfTsRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNfTsResponse {
+    /// NFT defines the NFT
     #[prost(message, repeated, tag = "1")]
     pub nfts: ::prost::alloc::vec::Vec<Nft>,
+    /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }
@@ -171,8 +195,10 @@ pub struct QueryNfTsResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNftRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
+    /// id is a unique identifier of the NFT
     #[prost(string, tag = "2")]
     pub id: ::prost::alloc::string::String,
 }
@@ -180,6 +206,7 @@ pub struct QueryNftRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryNftResponse {
+    /// owner is the owner address of the nft
     #[prost(message, optional, tag = "1")]
     pub nft: ::core::option::Option<Nft>,
 }
@@ -187,6 +214,7 @@ pub struct QueryNftResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassRequest {
+    /// class_id associated with the nft
     #[prost(string, tag = "1")]
     pub class_id: ::prost::alloc::string::String,
 }
@@ -194,6 +222,7 @@ pub struct QueryClassRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassResponse {
+    /// class defines the class of the nft type.
     #[prost(message, optional, tag = "1")]
     pub class: ::core::option::Option<Class>,
 }
@@ -209,8 +238,10 @@ pub struct QueryClassesRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryClassesResponse {
+    /// class defines the class of the nft type.
     #[prost(message, repeated, tag = "1")]
     pub classes: ::prost::alloc::vec::Vec<Class>,
+    /// pagination defines the pagination in the response.
     #[prost(message, optional, tag = "2")]
     pub pagination: ::core::option::Option<super::super::base::query::v1beta1::PageResponse>,
 }

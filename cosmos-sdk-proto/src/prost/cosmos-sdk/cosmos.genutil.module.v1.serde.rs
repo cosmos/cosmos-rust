@@ -8,7 +8,7 @@ impl serde::Serialize for Module {
     {
         use serde::ser::SerializeStruct;
         let len = 0;
-        let struct_ser = serializer.serialize_struct("cosmos.app.module.v1alpha1.Module", len)?;
+        let struct_ser = serializer.serialize_struct("cosmos.genutil.module.v1.Module", len)?;
         struct_ser.end()
     }
 }
@@ -57,7 +57,7 @@ impl<'de> serde::Deserialize<'de> for Module {
             type Value = Module;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.app.module.v1alpha1.Module")
+                formatter.write_str("struct cosmos.genutil.module.v1.Module")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<Module, V::Error>
@@ -70,10 +70,6 @@ impl<'de> serde::Deserialize<'de> for Module {
                 Ok(Module {})
             }
         }
-        deserializer.deserialize_struct(
-            "cosmos.app.module.v1alpha1.Module",
-            FIELDS,
-            GeneratedVisitor,
-        )
+        deserializer.deserialize_struct("cosmos.genutil.module.v1.Module", FIELDS, GeneratedVisitor)
     }
 }

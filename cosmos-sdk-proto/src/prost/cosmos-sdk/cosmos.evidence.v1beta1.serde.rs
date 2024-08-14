@@ -721,6 +721,9 @@ impl serde::Serialize for QueryEvidenceRequest {
         if !self.evidence_hash.is_empty() {
             len += 1;
         }
+        if !self.hash.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.evidence.v1beta1.QueryEvidenceRequest", len)?;
         if !self.evidence_hash.is_empty() {
@@ -729,6 +732,9 @@ impl serde::Serialize for QueryEvidenceRequest {
                 "evidenceHash",
                 pbjson::private::base64::encode(&self.evidence_hash).as_str(),
             )?;
+        }
+        if !self.hash.is_empty() {
+            struct_ser.serialize_field("hash", &self.hash)?;
         }
         struct_ser.end()
     }
@@ -740,11 +746,12 @@ impl<'de> serde::Deserialize<'de> for QueryEvidenceRequest {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["evidence_hash", "evidenceHash"];
+        const FIELDS: &[&str] = &["evidence_hash", "evidenceHash", "hash"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             EvidenceHash,
+            Hash,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -771,6 +778,7 @@ impl<'de> serde::Deserialize<'de> for QueryEvidenceRequest {
                     {
                         match value {
                             "evidenceHash" | "evidence_hash" => Ok(GeneratedField::EvidenceHash),
+                            "hash" => Ok(GeneratedField::Hash),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -794,6 +802,7 @@ impl<'de> serde::Deserialize<'de> for QueryEvidenceRequest {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut evidence_hash__ = None;
+                let mut hash__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::EvidenceHash => {
@@ -805,10 +814,17 @@ impl<'de> serde::Deserialize<'de> for QueryEvidenceRequest {
                                     .0,
                             );
                         }
+                        GeneratedField::Hash => {
+                            if hash__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("hash"));
+                            }
+                            hash__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(QueryEvidenceRequest {
                     evidence_hash: evidence_hash__.unwrap_or_default(),
+                    hash: hash__.unwrap_or_default(),
                 })
             }
         }

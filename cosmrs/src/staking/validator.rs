@@ -38,11 +38,18 @@ pub struct Validator {
     /// unbonding_height defines, if unbonding, the height at which this validator has begun unbonding.
     pub unbonding_height: i64,
 
+    /// list of unbonding ids, each uniquely identifing an unbonding of this validator
+    pub unbonding_ids: Vec<u64>,
+
+    /// strictly positive if this validator's unbonding has been stopped by external modules
+    pub unbonding_on_hold_ref_count: i64,
+
     /// unbonding_time defines, if unbonding, the min time for the validator to complete unbonding.
     pub unbonding_time: Option<Time>,
 
     /// commission defines the commission parameters.
     pub commission: Option<Commission>,
+
     /// min_self_delegation is the validator's self declared minimum self delegation.
     ///
     /// Since: cosmos-sdk 0.46
@@ -62,6 +69,8 @@ impl TryFrom<proto::cosmos::staking::v1beta1::Validator> for Validator {
             delegator_shares: proto.delegator_shares,
             description: proto.description.map(Into::into),
             unbonding_height: proto.unbonding_height,
+            unbonding_ids: proto.unbonding_ids,
+            unbonding_on_hold_ref_count: proto.unbonding_on_hold_ref_count,
             unbonding_time: proto
                 .unbonding_time
                 .map(|jailed_until| {
@@ -89,6 +98,8 @@ impl From<Validator> for proto::cosmos::staking::v1beta1::Validator {
             delegator_shares: validator.delegator_shares,
             description: validator.description.map(Into::into),
             unbonding_height: validator.unbonding_height,
+            unbonding_ids: validator.unbonding_ids,
+            unbonding_on_hold_ref_count: validator.unbonding_on_hold_ref_count,
             unbonding_time: validator
                 .unbonding_time
                 .map(cosmos_sdk_proto::tendermint::google::protobuf::Timestamp::from)

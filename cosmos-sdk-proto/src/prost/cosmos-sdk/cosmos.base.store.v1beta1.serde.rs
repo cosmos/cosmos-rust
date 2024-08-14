@@ -463,6 +463,9 @@ impl serde::Serialize for CommitInfo {
         if !self.store_infos.is_empty() {
             len += 1;
         }
+        if self.timestamp.is_some() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.base.store.v1beta1.CommitInfo", len)?;
         if self.version != 0 {
@@ -471,6 +474,9 @@ impl serde::Serialize for CommitInfo {
         }
         if !self.store_infos.is_empty() {
             struct_ser.serialize_field("storeInfos", &self.store_infos)?;
+        }
+        if let Some(v) = self.timestamp.as_ref() {
+            struct_ser.serialize_field("timestamp", v)?;
         }
         struct_ser.end()
     }
@@ -482,12 +488,13 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["version", "store_infos", "storeInfos"];
+        const FIELDS: &[&str] = &["version", "store_infos", "storeInfos", "timestamp"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Version,
             StoreInfos,
+            Timestamp,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -515,6 +522,7 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
                         match value {
                             "version" => Ok(GeneratedField::Version),
                             "storeInfos" | "store_infos" => Ok(GeneratedField::StoreInfos),
+                            "timestamp" => Ok(GeneratedField::Timestamp),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -536,6 +544,7 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
             {
                 let mut version__ = None;
                 let mut store_infos__ = None;
+                let mut timestamp__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Version => {
@@ -553,11 +562,18 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
                             }
                             store_infos__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Timestamp => {
+                            if timestamp__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("timestamp"));
+                            }
+                            timestamp__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(CommitInfo {
                     version: version__.unwrap_or_default(),
                     store_infos: store_infos__.unwrap_or_default(),
+                    timestamp: timestamp__,
                 })
             }
         }
