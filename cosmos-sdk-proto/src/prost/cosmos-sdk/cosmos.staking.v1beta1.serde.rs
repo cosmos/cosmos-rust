@@ -1673,6 +1673,82 @@ impl<'de> serde::Deserialize<'de> for HistoricalInfo {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for Infraction {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let variant = match self {
+            Self::Unspecified => "INFRACTION_UNSPECIFIED",
+            Self::DoubleSign => "INFRACTION_DOUBLE_SIGN",
+            Self::Downtime => "INFRACTION_DOWNTIME",
+        };
+        serializer.serialize_str(variant)
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Infraction {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "INFRACTION_UNSPECIFIED",
+            "INFRACTION_DOUBLE_SIGN",
+            "INFRACTION_DOWNTIME",
+        ];
+
+        struct GeneratedVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = Infraction;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                write!(formatter, "expected one of: {:?}", &FIELDS)
+            }
+
+            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self)
+                    })
+            }
+
+            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                i32::try_from(v)
+                    .ok()
+                    .and_then(|x| x.try_into().ok())
+                    .ok_or_else(|| {
+                        serde::de::Error::invalid_value(serde::de::Unexpected::Unsigned(v), &self)
+                    })
+            }
+
+            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                match value {
+                    "INFRACTION_UNSPECIFIED" => Ok(Infraction::Unspecified),
+                    "INFRACTION_DOUBLE_SIGN" => Ok(Infraction::DoubleSign),
+                    "INFRACTION_DOWNTIME" => Ok(Infraction::Downtime),
+                    _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
+                }
+            }
+        }
+        deserializer.deserialize_any(GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for LastValidatorPower {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -3322,6 +3398,204 @@ impl<'de> serde::Deserialize<'de> for MsgUndelegateResponse {
         }
         deserializer.deserialize_struct(
             "cosmos.staking.v1beta1.MsgUndelegateResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if self.params.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.staking.v1beta1.MsgUpdateParams", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "params"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            Params,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "params" => Ok(GeneratedField::Params),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParams;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.staking.v1beta1.MsgUpdateParams")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUpdateParams, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut params__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgUpdateParams {
+                    authority: authority__.unwrap_or_default(),
+                    params: params__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.staking.v1beta1.MsgUpdateParams",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmos.staking.v1beta1.MsgUpdateParamsResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParamsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.staking.v1beta1.MsgUpdateParamsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateParamsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateParamsResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.staking.v1beta1.MsgUpdateParamsResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -7058,6 +7332,12 @@ impl serde::Serialize for RedelegationEntry {
         if !self.shares_dst.is_empty() {
             len += 1;
         }
+        if self.unbonding_id != 0 {
+            len += 1;
+        }
+        if self.unbonding_on_hold_ref_count != 0 {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.staking.v1beta1.RedelegationEntry", len)?;
         if self.creation_height != 0 {
@@ -7075,6 +7355,20 @@ impl serde::Serialize for RedelegationEntry {
         }
         if !self.shares_dst.is_empty() {
             struct_ser.serialize_field("sharesDst", &self.shares_dst)?;
+        }
+        if self.unbonding_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "unbondingId",
+                ToString::to_string(&self.unbonding_id).as_str(),
+            )?;
+        }
+        if self.unbonding_on_hold_ref_count != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "unbondingOnHoldRefCount",
+                ToString::to_string(&self.unbonding_on_hold_ref_count).as_str(),
+            )?;
         }
         struct_ser.end()
     }
@@ -7095,6 +7389,10 @@ impl<'de> serde::Deserialize<'de> for RedelegationEntry {
             "initialBalance",
             "shares_dst",
             "sharesDst",
+            "unbonding_id",
+            "unbondingId",
+            "unbonding_on_hold_ref_count",
+            "unbondingOnHoldRefCount",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -7103,6 +7401,8 @@ impl<'de> serde::Deserialize<'de> for RedelegationEntry {
             CompletionTime,
             InitialBalance,
             SharesDst,
+            UnbondingId,
+            UnbondingOnHoldRefCount,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -7138,6 +7438,10 @@ impl<'de> serde::Deserialize<'de> for RedelegationEntry {
                                 Ok(GeneratedField::InitialBalance)
                             }
                             "sharesDst" | "shares_dst" => Ok(GeneratedField::SharesDst),
+                            "unbondingId" | "unbonding_id" => Ok(GeneratedField::UnbondingId),
+                            "unbondingOnHoldRefCount" | "unbonding_on_hold_ref_count" => {
+                                Ok(GeneratedField::UnbondingOnHoldRefCount)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -7161,6 +7465,8 @@ impl<'de> serde::Deserialize<'de> for RedelegationEntry {
                 let mut completion_time__ = None;
                 let mut initial_balance__ = None;
                 let mut shares_dst__ = None;
+                let mut unbonding_id__ = None;
+                let mut unbonding_on_hold_ref_count__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::CreationHeight => {
@@ -7190,6 +7496,26 @@ impl<'de> serde::Deserialize<'de> for RedelegationEntry {
                             }
                             shares_dst__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::UnbondingId => {
+                            if unbonding_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unbondingId"));
+                            }
+                            unbonding_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::UnbondingOnHoldRefCount => {
+                            if unbonding_on_hold_ref_count__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "unbondingOnHoldRefCount",
+                                ));
+                            }
+                            unbonding_on_hold_ref_count__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(RedelegationEntry {
@@ -7197,6 +7523,8 @@ impl<'de> serde::Deserialize<'de> for RedelegationEntry {
                     completion_time: completion_time__,
                     initial_balance: initial_balance__.unwrap_or_default(),
                     shares_dst: shares_dst__.unwrap_or_default(),
+                    unbonding_id: unbonding_id__.unwrap_or_default(),
+                    unbonding_on_hold_ref_count: unbonding_on_hold_ref_count__.unwrap_or_default(),
                 })
             }
         }
@@ -7879,6 +8207,12 @@ impl serde::Serialize for UnbondingDelegationEntry {
         if !self.balance.is_empty() {
             len += 1;
         }
+        if self.unbonding_id != 0 {
+            len += 1;
+        }
+        if self.unbonding_on_hold_ref_count != 0 {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.staking.v1beta1.UnbondingDelegationEntry", len)?;
         if self.creation_height != 0 {
@@ -7896,6 +8230,20 @@ impl serde::Serialize for UnbondingDelegationEntry {
         }
         if !self.balance.is_empty() {
             struct_ser.serialize_field("balance", &self.balance)?;
+        }
+        if self.unbonding_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "unbondingId",
+                ToString::to_string(&self.unbonding_id).as_str(),
+            )?;
+        }
+        if self.unbonding_on_hold_ref_count != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "unbondingOnHoldRefCount",
+                ToString::to_string(&self.unbonding_on_hold_ref_count).as_str(),
+            )?;
         }
         struct_ser.end()
     }
@@ -7915,6 +8263,10 @@ impl<'de> serde::Deserialize<'de> for UnbondingDelegationEntry {
             "initial_balance",
             "initialBalance",
             "balance",
+            "unbonding_id",
+            "unbondingId",
+            "unbonding_on_hold_ref_count",
+            "unbondingOnHoldRefCount",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -7923,6 +8275,8 @@ impl<'de> serde::Deserialize<'de> for UnbondingDelegationEntry {
             CompletionTime,
             InitialBalance,
             Balance,
+            UnbondingId,
+            UnbondingOnHoldRefCount,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -7958,6 +8312,10 @@ impl<'de> serde::Deserialize<'de> for UnbondingDelegationEntry {
                                 Ok(GeneratedField::InitialBalance)
                             }
                             "balance" => Ok(GeneratedField::Balance),
+                            "unbondingId" | "unbonding_id" => Ok(GeneratedField::UnbondingId),
+                            "unbondingOnHoldRefCount" | "unbonding_on_hold_ref_count" => {
+                                Ok(GeneratedField::UnbondingOnHoldRefCount)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -7984,6 +8342,8 @@ impl<'de> serde::Deserialize<'de> for UnbondingDelegationEntry {
                 let mut completion_time__ = None;
                 let mut initial_balance__ = None;
                 let mut balance__ = None;
+                let mut unbonding_id__ = None;
+                let mut unbonding_on_hold_ref_count__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::CreationHeight => {
@@ -8013,6 +8373,26 @@ impl<'de> serde::Deserialize<'de> for UnbondingDelegationEntry {
                             }
                             balance__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::UnbondingId => {
+                            if unbonding_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unbondingId"));
+                            }
+                            unbonding_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::UnbondingOnHoldRefCount => {
+                            if unbonding_on_hold_ref_count__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "unbondingOnHoldRefCount",
+                                ));
+                            }
+                            unbonding_on_hold_ref_count__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(UnbondingDelegationEntry {
@@ -8020,6 +8400,8 @@ impl<'de> serde::Deserialize<'de> for UnbondingDelegationEntry {
                     completion_time: completion_time__,
                     initial_balance: initial_balance__.unwrap_or_default(),
                     balance: balance__.unwrap_or_default(),
+                    unbonding_id: unbonding_id__.unwrap_or_default(),
+                    unbonding_on_hold_ref_count: unbonding_on_hold_ref_count__.unwrap_or_default(),
                 })
             }
         }
@@ -8172,6 +8554,12 @@ impl serde::Serialize for Validator {
         if !self.min_self_delegation.is_empty() {
             len += 1;
         }
+        if self.unbonding_on_hold_ref_count != 0 {
+            len += 1;
+        }
+        if !self.unbonding_ids.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.staking.v1beta1.Validator", len)?;
         if !self.operator_address.is_empty() {
@@ -8214,6 +8602,23 @@ impl serde::Serialize for Validator {
         if !self.min_self_delegation.is_empty() {
             struct_ser.serialize_field("minSelfDelegation", &self.min_self_delegation)?;
         }
+        if self.unbonding_on_hold_ref_count != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "unbondingOnHoldRefCount",
+                ToString::to_string(&self.unbonding_on_hold_ref_count).as_str(),
+            )?;
+        }
+        if !self.unbonding_ids.is_empty() {
+            struct_ser.serialize_field(
+                "unbondingIds",
+                &self
+                    .unbonding_ids
+                    .iter()
+                    .map(ToString::to_string)
+                    .collect::<Vec<_>>(),
+            )?;
+        }
         struct_ser.end()
     }
 }
@@ -8242,6 +8647,10 @@ impl<'de> serde::Deserialize<'de> for Validator {
             "commission",
             "min_self_delegation",
             "minSelfDelegation",
+            "unbonding_on_hold_ref_count",
+            "unbondingOnHoldRefCount",
+            "unbonding_ids",
+            "unbondingIds",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -8257,6 +8666,8 @@ impl<'de> serde::Deserialize<'de> for Validator {
             UnbondingTime,
             Commission,
             MinSelfDelegation,
+            UnbondingOnHoldRefCount,
+            UnbondingIds,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -8303,6 +8714,10 @@ impl<'de> serde::Deserialize<'de> for Validator {
                             "minSelfDelegation" | "min_self_delegation" => {
                                 Ok(GeneratedField::MinSelfDelegation)
                             }
+                            "unbondingOnHoldRefCount" | "unbonding_on_hold_ref_count" => {
+                                Ok(GeneratedField::UnbondingOnHoldRefCount)
+                            }
+                            "unbondingIds" | "unbonding_ids" => Ok(GeneratedField::UnbondingIds),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -8333,6 +8748,8 @@ impl<'de> serde::Deserialize<'de> for Validator {
                 let mut unbonding_time__ = None;
                 let mut commission__ = None;
                 let mut min_self_delegation__ = None;
+                let mut unbonding_on_hold_ref_count__ = None;
+                let mut unbonding_ids__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::OperatorAddress => {
@@ -8404,6 +8821,28 @@ impl<'de> serde::Deserialize<'de> for Validator {
                             }
                             min_self_delegation__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::UnbondingOnHoldRefCount => {
+                            if unbonding_on_hold_ref_count__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "unbondingOnHoldRefCount",
+                                ));
+                            }
+                            unbonding_on_hold_ref_count__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::UnbondingIds => {
+                            if unbonding_ids__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unbondingIds"));
+                            }
+                            unbonding_ids__ = Some(
+                                map_.next_value::<Vec<::pbjson::private::NumberDeserialize<_>>>()?
+                                    .into_iter()
+                                    .map(|x| x.0)
+                                    .collect(),
+                            );
+                        }
                     }
                 }
                 Ok(Validator {
@@ -8418,11 +8857,113 @@ impl<'de> serde::Deserialize<'de> for Validator {
                     unbonding_time: unbonding_time__,
                     commission: commission__,
                     min_self_delegation: min_self_delegation__.unwrap_or_default(),
+                    unbonding_on_hold_ref_count: unbonding_on_hold_ref_count__.unwrap_or_default(),
+                    unbonding_ids: unbonding_ids__.unwrap_or_default(),
                 })
             }
         }
         deserializer.deserialize_struct(
             "cosmos.staking.v1beta1.Validator",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for ValidatorUpdates {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.updates.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.staking.v1beta1.ValidatorUpdates", len)?;
+        if !self.updates.is_empty() {
+            struct_ser.serialize_field("updates", &self.updates)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for ValidatorUpdates {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["updates"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Updates,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "updates" => Ok(GeneratedField::Updates),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = ValidatorUpdates;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.staking.v1beta1.ValidatorUpdates")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ValidatorUpdates, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut updates__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Updates => {
+                            if updates__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("updates"));
+                            }
+                            updates__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(ValidatorUpdates {
+                    updates: updates__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.staking.v1beta1.ValidatorUpdates",
             FIELDS,
             GeneratedVisitor,
         )

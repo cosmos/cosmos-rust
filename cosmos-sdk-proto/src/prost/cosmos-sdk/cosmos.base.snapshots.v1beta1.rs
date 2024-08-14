@@ -101,6 +101,7 @@ pub struct SnapshotExtensionPayload {
 /// SnapshotKVItem is an exported Key/Value Pair
 ///
 /// Since: cosmos-sdk 0.46
+/// Deprecated: This message was part of store/v2alpha1 which has been deleted from v0.47.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotKvItem {
@@ -112,6 +113,7 @@ pub struct SnapshotKvItem {
 /// SnapshotSchema is an exported schema of smt store
 ///
 /// Since: cosmos-sdk 0.46
+/// Deprecated: This message was part of store/v2alpha1 which has been deleted from v0.47.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SnapshotSchema {

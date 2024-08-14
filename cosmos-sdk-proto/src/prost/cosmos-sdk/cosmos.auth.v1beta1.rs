@@ -25,6 +25,20 @@ pub struct ModuleAccount {
     #[prost(string, repeated, tag = "3")]
     pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+/// ModuleCredential represents a unclaimable pubkey for base accounts controlled by modules.
+///
+/// Since: cosmos-sdk 0.47
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ModuleCredential {
+    /// module_name is the name of the module used for address derivation (passed into address.Module).
+    #[prost(string, tag = "1")]
+    pub module_name: ::prost::alloc::string::String,
+    /// derivation_keys is for deriving a module account address (passed into address.Module)
+    /// adding more keys creates sub-account addresses (passed into address.Derive)
+    #[prost(bytes = "vec", repeated, tag = "2")]
+    pub derivation_keys: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
 /// Params defines the parameters for the auth module.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -44,7 +58,7 @@ pub struct Params {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GenesisState {
-    /// params defines all the paramaters of the module.
+    /// params defines all the parameters of the module.
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
     /// accounts are the accounts present at genesis.
@@ -188,11 +202,19 @@ pub struct AddressStringToBytesResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountAddressByIdRequest {
+    /// Deprecated, use account_id instead
+    ///
     /// id is the account number of the address to be queried. This field
     /// should have been an uint64 (like all account numbers), and will be
     /// updated to uint64 in a future version of the auth query.
+    #[deprecated]
     #[prost(int64, tag = "1")]
     pub id: i64,
+    /// account_id is the account number of the address to be queried.
+    ///
+    /// Since: cosmos-sdk 0.47
+    #[prost(uint64, tag = "2")]
+    pub account_id: u64,
 }
 /// QueryAccountAddressByIDResponse is the response type for AccountAddressByID rpc method
 ///
@@ -203,6 +225,48 @@ pub struct QueryAccountAddressByIdResponse {
     #[prost(string, tag = "1")]
     pub account_address: ::prost::alloc::string::String,
 }
+/// QueryAccountInfoRequest is the Query/AccountInfo request type.
+///
+/// Since: cosmos-sdk 0.47
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryAccountInfoRequest {
+    /// address is the account address string.
+    #[prost(string, tag = "1")]
+    pub address: ::prost::alloc::string::String,
+}
+/// QueryAccountInfoResponse is the Query/AccountInfo response type.
+///
+/// Since: cosmos-sdk 0.47
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct QueryAccountInfoResponse {
+    /// info is the account info which is represented by BaseAccount.
+    #[prost(message, optional, tag = "1")]
+    pub info: ::core::option::Option<BaseAccount>,
+}
+/// MsgUpdateParams is the Msg/UpdateParams request type.
+///
+/// Since: cosmos-sdk 0.47
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParams {
+    /// authority is the address that controls the module (defaults to x/gov unless overwritten).
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// params defines the x/auth parameters to update.
+    ///
+    /// NOTE: All parameters must be supplied.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
+/// MsgUpdateParamsResponse defines the response structure for executing a
+/// MsgUpdateParams message.
+///
+/// Since: cosmos-sdk 0.47
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgUpdateParamsResponse {}
 include!("cosmos.auth.v1beta1.serde.rs");
 include!("cosmos.auth.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

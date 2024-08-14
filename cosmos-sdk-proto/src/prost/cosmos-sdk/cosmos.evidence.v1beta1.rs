@@ -4,12 +4,16 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Equivocation {
+    /// height is the equivocation height.
     #[prost(int64, tag = "1")]
     pub height: i64,
+    /// time is the equivocation time.
     #[prost(message, optional, tag = "2")]
     pub time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
+    /// power is the equivocation validator power.
     #[prost(int64, tag = "3")]
     pub power: i64,
+    /// consensus_address is the equivocation validator consensus address.
     #[prost(string, tag = "4")]
     pub consensus_address: ::prost::alloc::string::String,
 }
@@ -26,8 +30,15 @@ pub struct GenesisState {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryEvidenceRequest {
     /// evidence_hash defines the hash of the requested evidence.
+    /// Deprecated: Use hash, a HEX encoded string, instead.
+    #[deprecated]
     #[prost(bytes = "vec", tag = "1")]
     pub evidence_hash: ::prost::alloc::vec::Vec<u8>,
+    /// hash defines the evidence hash of the requested evidence.
+    ///
+    /// Since: cosmos-sdk 0.47
+    #[prost(string, tag = "2")]
+    pub hash: ::prost::alloc::string::String,
 }
 /// QueryEvidenceResponse is the response type for the Query/Evidence RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -63,8 +74,10 @@ pub struct QueryAllEvidenceResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSubmitEvidence {
+    /// submitter is the signer account address of evidence.
     #[prost(string, tag = "1")]
     pub submitter: ::prost::alloc::string::String,
+    /// evidence defines the evidence of misbehavior.
     #[prost(message, optional, tag = "2")]
     pub evidence: ::core::option::Option<::tendermint_proto::google::protobuf::Any>,
 }

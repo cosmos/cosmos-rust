@@ -11,9 +11,15 @@ impl serde::Serialize for Config {
         if !self.modules.is_empty() {
             len += 1;
         }
+        if !self.golang_bindings.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("cosmos.app.v1alpha1.Config", len)?;
         if !self.modules.is_empty() {
             struct_ser.serialize_field("modules", &self.modules)?;
+        }
+        if !self.golang_bindings.is_empty() {
+            struct_ser.serialize_field("golangBindings", &self.golang_bindings)?;
         }
         struct_ser.end()
     }
@@ -25,11 +31,12 @@ impl<'de> serde::Deserialize<'de> for Config {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["modules"];
+        const FIELDS: &[&str] = &["modules", "golang_bindings", "golangBindings"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Modules,
+            GolangBindings,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -56,6 +63,9 @@ impl<'de> serde::Deserialize<'de> for Config {
                     {
                         match value {
                             "modules" => Ok(GeneratedField::Modules),
+                            "golangBindings" | "golang_bindings" => {
+                                Ok(GeneratedField::GolangBindings)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -76,6 +86,7 @@ impl<'de> serde::Deserialize<'de> for Config {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut modules__ = None;
+                let mut golang_bindings__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Modules => {
@@ -84,14 +95,137 @@ impl<'de> serde::Deserialize<'de> for Config {
                             }
                             modules__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::GolangBindings => {
+                            if golang_bindings__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("golangBindings"));
+                            }
+                            golang_bindings__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(Config {
                     modules: modules__.unwrap_or_default(),
+                    golang_bindings: golang_bindings__.unwrap_or_default(),
                 })
             }
         }
         deserializer.deserialize_struct("cosmos.app.v1alpha1.Config", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for GolangBinding {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.interface_type.is_empty() {
+            len += 1;
+        }
+        if !self.implementation.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.app.v1alpha1.GolangBinding", len)?;
+        if !self.interface_type.is_empty() {
+            struct_ser.serialize_field("interfaceType", &self.interface_type)?;
+        }
+        if !self.implementation.is_empty() {
+            struct_ser.serialize_field("implementation", &self.implementation)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for GolangBinding {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["interface_type", "interfaceType", "implementation"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            InterfaceType,
+            Implementation,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "interfaceType" | "interface_type" => Ok(GeneratedField::InterfaceType),
+                            "implementation" => Ok(GeneratedField::Implementation),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = GolangBinding;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.app.v1alpha1.GolangBinding")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<GolangBinding, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut interface_type__ = None;
+                let mut implementation__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::InterfaceType => {
+                            if interface_type__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("interfaceType"));
+                            }
+                            interface_type__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Implementation => {
+                            if implementation__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("implementation"));
+                            }
+                            implementation__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(GolangBinding {
+                    interface_type: interface_type__.unwrap_or_default(),
+                    implementation: implementation__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.app.v1alpha1.GolangBinding",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -209,6 +343,9 @@ impl serde::Serialize for ModuleConfig {
         if self.config.is_some() {
             len += 1;
         }
+        if !self.golang_bindings.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.app.v1alpha1.ModuleConfig", len)?;
         if !self.name.is_empty() {
@@ -216,6 +353,9 @@ impl serde::Serialize for ModuleConfig {
         }
         if let Some(v) = self.config.as_ref() {
             struct_ser.serialize_field("config", v)?;
+        }
+        if !self.golang_bindings.is_empty() {
+            struct_ser.serialize_field("golangBindings", &self.golang_bindings)?;
         }
         struct_ser.end()
     }
@@ -227,12 +367,13 @@ impl<'de> serde::Deserialize<'de> for ModuleConfig {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["name", "config"];
+        const FIELDS: &[&str] = &["name", "config", "golang_bindings", "golangBindings"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Name,
             Config,
+            GolangBindings,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -260,6 +401,9 @@ impl<'de> serde::Deserialize<'de> for ModuleConfig {
                         match value {
                             "name" => Ok(GeneratedField::Name),
                             "config" => Ok(GeneratedField::Config),
+                            "golangBindings" | "golang_bindings" => {
+                                Ok(GeneratedField::GolangBindings)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -281,6 +425,7 @@ impl<'de> serde::Deserialize<'de> for ModuleConfig {
             {
                 let mut name__ = None;
                 let mut config__ = None;
+                let mut golang_bindings__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Name => {
@@ -295,11 +440,18 @@ impl<'de> serde::Deserialize<'de> for ModuleConfig {
                             }
                             config__ = map_.next_value()?;
                         }
+                        GeneratedField::GolangBindings => {
+                            if golang_bindings__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("golangBindings"));
+                            }
+                            golang_bindings__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(ModuleConfig {
                     name: name__.unwrap_or_default(),
                     config: config__,
+                    golang_bindings: golang_bindings__.unwrap_or_default(),
                 })
             }
         }

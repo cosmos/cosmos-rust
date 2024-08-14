@@ -1,7 +1,7 @@
 // @generated
-/// Module is the module config object for the cosmos.app v1 app module.
+/// Module is the config object of the authz module.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Module {}
-include!("cosmos.app.module.v1alpha1.serde.rs");
+include!("cosmos.authz.module.v1.serde.rs");
 // @@protoc_insertion_point(module)

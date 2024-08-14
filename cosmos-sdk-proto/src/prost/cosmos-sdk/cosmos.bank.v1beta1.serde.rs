@@ -372,6 +372,9 @@ impl serde::Serialize for GenesisState {
         if !self.denom_metadata.is_empty() {
             len += 1;
         }
+        if !self.send_enabled.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.bank.v1beta1.GenesisState", len)?;
         if let Some(v) = self.params.as_ref() {
@@ -385,6 +388,9 @@ impl serde::Serialize for GenesisState {
         }
         if !self.denom_metadata.is_empty() {
             struct_ser.serialize_field("denomMetadata", &self.denom_metadata)?;
+        }
+        if !self.send_enabled.is_empty() {
+            struct_ser.serialize_field("sendEnabled", &self.send_enabled)?;
         }
         struct_ser.end()
     }
@@ -402,6 +408,8 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
             "supply",
             "denom_metadata",
             "denomMetadata",
+            "send_enabled",
+            "sendEnabled",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -410,6 +418,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
             Balances,
             Supply,
             DenomMetadata,
+            SendEnabled,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -439,6 +448,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             "balances" => Ok(GeneratedField::Balances),
                             "supply" => Ok(GeneratedField::Supply),
                             "denomMetadata" | "denom_metadata" => Ok(GeneratedField::DenomMetadata),
+                            "sendEnabled" | "send_enabled" => Ok(GeneratedField::SendEnabled),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -462,6 +472,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 let mut balances__ = None;
                 let mut supply__ = None;
                 let mut denom_metadata__ = None;
+                let mut send_enabled__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Params => {
@@ -488,6 +499,12 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             }
                             denom_metadata__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::SendEnabled => {
+                            if send_enabled__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("sendEnabled"));
+                            }
+                            send_enabled__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(GenesisState {
@@ -495,6 +512,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                     balances: balances__.unwrap_or_default(),
                     supply: supply__.unwrap_or_default(),
                     denom_metadata: denom_metadata__.unwrap_or_default(),
+                    send_enabled: send_enabled__.unwrap_or_default(),
                 })
             }
         }
@@ -1238,6 +1256,426 @@ impl<'de> serde::Deserialize<'de> for MsgSendResponse {
         }
         deserializer.deserialize_struct(
             "cosmos.bank.v1beta1.MsgSendResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgSetSendEnabled {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if !self.send_enabled.is_empty() {
+            len += 1;
+        }
+        if !self.use_default_for.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.bank.v1beta1.MsgSetSendEnabled", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if !self.send_enabled.is_empty() {
+            struct_ser.serialize_field("sendEnabled", &self.send_enabled)?;
+        }
+        if !self.use_default_for.is_empty() {
+            struct_ser.serialize_field("useDefaultFor", &self.use_default_for)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgSetSendEnabled {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "authority",
+            "send_enabled",
+            "sendEnabled",
+            "use_default_for",
+            "useDefaultFor",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            SendEnabled,
+            UseDefaultFor,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "sendEnabled" | "send_enabled" => Ok(GeneratedField::SendEnabled),
+                            "useDefaultFor" | "use_default_for" => {
+                                Ok(GeneratedField::UseDefaultFor)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgSetSendEnabled;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.MsgSetSendEnabled")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgSetSendEnabled, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut send_enabled__ = None;
+                let mut use_default_for__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::SendEnabled => {
+                            if send_enabled__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("sendEnabled"));
+                            }
+                            send_enabled__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::UseDefaultFor => {
+                            if use_default_for__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("useDefaultFor"));
+                            }
+                            use_default_for__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgSetSendEnabled {
+                    authority: authority__.unwrap_or_default(),
+                    send_enabled: send_enabled__.unwrap_or_default(),
+                    use_default_for: use_default_for__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.MsgSetSendEnabled",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgSetSendEnabledResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmos.bank.v1beta1.MsgSetSendEnabledResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgSetSendEnabledResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgSetSendEnabledResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.MsgSetSendEnabledResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgSetSendEnabledResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgSetSendEnabledResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.MsgSetSendEnabledResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if self.params.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.bank.v1beta1.MsgUpdateParams", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "params"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            Params,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "params" => Ok(GeneratedField::Params),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParams;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.MsgUpdateParams")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUpdateParams, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut params__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgUpdateParams {
+                    authority: authority__.unwrap_or_default(),
+                    params: params__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.MsgUpdateParams",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmos.bank.v1beta1.MsgUpdateParamsResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParamsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.MsgUpdateParamsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateParamsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateParamsResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.MsgUpdateParamsResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -2773,6 +3211,470 @@ impl<'de> serde::Deserialize<'de> for QueryParamsResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for QuerySendEnabledRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.denoms.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.bank.v1beta1.QuerySendEnabledRequest", len)?;
+        if !self.denoms.is_empty() {
+            struct_ser.serialize_field("denoms", &self.denoms)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QuerySendEnabledRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["denoms", "pagination"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Denoms,
+            Pagination,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "denoms" => Ok(GeneratedField::Denoms),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QuerySendEnabledRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.QuerySendEnabledRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QuerySendEnabledRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut denoms__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Denoms => {
+                            if denoms__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("denoms"));
+                            }
+                            denoms__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QuerySendEnabledRequest {
+                    denoms: denoms__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QuerySendEnabledRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QuerySendEnabledResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.send_enabled.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.bank.v1beta1.QuerySendEnabledResponse", len)?;
+        if !self.send_enabled.is_empty() {
+            struct_ser.serialize_field("sendEnabled", &self.send_enabled)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QuerySendEnabledResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["send_enabled", "sendEnabled", "pagination"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            SendEnabled,
+            Pagination,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "sendEnabled" | "send_enabled" => Ok(GeneratedField::SendEnabled),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QuerySendEnabledResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.QuerySendEnabledResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QuerySendEnabledResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut send_enabled__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::SendEnabled => {
+                            if send_enabled__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("sendEnabled"));
+                            }
+                            send_enabled__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QuerySendEnabledResponse {
+                    send_enabled: send_enabled__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QuerySendEnabledResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QuerySpendableBalanceByDenomRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.address.is_empty() {
+            len += 1;
+        }
+        if !self.denom.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct(
+            "cosmos.bank.v1beta1.QuerySpendableBalanceByDenomRequest",
+            len,
+        )?;
+        if !self.address.is_empty() {
+            struct_ser.serialize_field("address", &self.address)?;
+        }
+        if !self.denom.is_empty() {
+            struct_ser.serialize_field("denom", &self.denom)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QuerySpendableBalanceByDenomRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["address", "denom"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Address,
+            Denom,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "address" => Ok(GeneratedField::Address),
+                            "denom" => Ok(GeneratedField::Denom),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QuerySpendableBalanceByDenomRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmos.bank.v1beta1.QuerySpendableBalanceByDenomRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QuerySpendableBalanceByDenomRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut address__ = None;
+                let mut denom__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Address => {
+                            if address__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("address"));
+                            }
+                            address__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Denom => {
+                            if denom__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("denom"));
+                            }
+                            denom__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(QuerySpendableBalanceByDenomRequest {
+                    address: address__.unwrap_or_default(),
+                    denom: denom__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QuerySpendableBalanceByDenomRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QuerySpendableBalanceByDenomResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.balance.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct(
+            "cosmos.bank.v1beta1.QuerySpendableBalanceByDenomResponse",
+            len,
+        )?;
+        if let Some(v) = self.balance.as_ref() {
+            struct_ser.serialize_field("balance", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QuerySpendableBalanceByDenomResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["balance"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Balance,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "balance" => Ok(GeneratedField::Balance),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QuerySpendableBalanceByDenomResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmos.bank.v1beta1.QuerySpendableBalanceByDenomResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QuerySpendableBalanceByDenomResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut balance__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Balance => {
+                            if balance__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("balance"));
+                            }
+                            balance__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QuerySpendableBalanceByDenomResponse { balance: balance__ })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QuerySpendableBalanceByDenomResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for QuerySpendableBalancesRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -3448,10 +4350,16 @@ impl serde::Serialize for SendAuthorization {
         if !self.spend_limit.is_empty() {
             len += 1;
         }
+        if !self.allow_list.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.bank.v1beta1.SendAuthorization", len)?;
         if !self.spend_limit.is_empty() {
             struct_ser.serialize_field("spendLimit", &self.spend_limit)?;
+        }
+        if !self.allow_list.is_empty() {
+            struct_ser.serialize_field("allowList", &self.allow_list)?;
         }
         struct_ser.end()
     }
@@ -3463,11 +4371,12 @@ impl<'de> serde::Deserialize<'de> for SendAuthorization {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["spend_limit", "spendLimit"];
+        const FIELDS: &[&str] = &["spend_limit", "spendLimit", "allow_list", "allowList"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             SpendLimit,
+            AllowList,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -3494,6 +4403,7 @@ impl<'de> serde::Deserialize<'de> for SendAuthorization {
                     {
                         match value {
                             "spendLimit" | "spend_limit" => Ok(GeneratedField::SpendLimit),
+                            "allowList" | "allow_list" => Ok(GeneratedField::AllowList),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -3514,6 +4424,7 @@ impl<'de> serde::Deserialize<'de> for SendAuthorization {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut spend_limit__ = None;
+                let mut allow_list__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::SpendLimit => {
@@ -3522,10 +4433,17 @@ impl<'de> serde::Deserialize<'de> for SendAuthorization {
                             }
                             spend_limit__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::AllowList => {
+                            if allow_list__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("allowList"));
+                            }
+                            allow_list__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(SendAuthorization {
                     spend_limit: spend_limit__.unwrap_or_default(),
+                    allow_list: allow_list__.unwrap_or_default(),
                 })
             }
         }

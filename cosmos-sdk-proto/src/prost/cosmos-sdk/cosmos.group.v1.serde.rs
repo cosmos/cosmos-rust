@@ -3635,6 +3635,12 @@ impl serde::Serialize for MsgSubmitProposal {
         if self.exec != 0 {
             len += 1;
         }
+        if !self.title.is_empty() {
+            len += 1;
+        }
+        if !self.summary.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.group.v1.MsgSubmitProposal", len)?;
         if !self.group_policy_address.is_empty() {
@@ -3654,6 +3660,12 @@ impl serde::Serialize for MsgSubmitProposal {
                 .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", self.exec)))?;
             struct_ser.serialize_field("exec", &v)?;
         }
+        if !self.title.is_empty() {
+            struct_ser.serialize_field("title", &self.title)?;
+        }
+        if !self.summary.is_empty() {
+            struct_ser.serialize_field("summary", &self.summary)?;
+        }
         struct_ser.end()
     }
 }
@@ -3671,6 +3683,8 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
             "metadata",
             "messages",
             "exec",
+            "title",
+            "summary",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -3680,6 +3694,8 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
             Metadata,
             Messages,
             Exec,
+            Title,
+            Summary,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -3712,6 +3728,8 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
                             "metadata" => Ok(GeneratedField::Metadata),
                             "messages" => Ok(GeneratedField::Messages),
                             "exec" => Ok(GeneratedField::Exec),
+                            "title" => Ok(GeneratedField::Title),
+                            "summary" => Ok(GeneratedField::Summary),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -3736,6 +3754,8 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
                 let mut metadata__ = None;
                 let mut messages__ = None;
                 let mut exec__ = None;
+                let mut title__ = None;
+                let mut summary__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::GroupPolicyAddress => {
@@ -3770,6 +3790,18 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
                             }
                             exec__ = Some(map_.next_value::<Exec>()? as i32);
                         }
+                        GeneratedField::Title => {
+                            if title__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("title"));
+                            }
+                            title__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Summary => {
+                            if summary__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("summary"));
+                            }
+                            summary__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(MsgSubmitProposal {
@@ -3778,6 +3810,8 @@ impl<'de> serde::Deserialize<'de> for MsgSubmitProposal {
                     metadata: metadata__.unwrap_or_default(),
                     messages: messages__.unwrap_or_default(),
                     exec: exec__.unwrap_or_default(),
+                    title: title__.unwrap_or_default(),
+                    summary: summary__.unwrap_or_default(),
                 })
             }
         }
@@ -5870,6 +5904,12 @@ impl serde::Serialize for Proposal {
         if !self.messages.is_empty() {
             len += 1;
         }
+        if !self.title.is_empty() {
+            len += 1;
+        }
+        if !self.summary.is_empty() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.Proposal", len)?;
         if self.id != 0 {
             #[allow(clippy::needless_borrow)]
@@ -5922,6 +5962,12 @@ impl serde::Serialize for Proposal {
         if !self.messages.is_empty() {
             struct_ser.serialize_field("messages", &self.messages)?;
         }
+        if !self.title.is_empty() {
+            struct_ser.serialize_field("title", &self.title)?;
+        }
+        if !self.summary.is_empty() {
+            struct_ser.serialize_field("summary", &self.summary)?;
+        }
         struct_ser.end()
     }
 }
@@ -5952,6 +5998,8 @@ impl<'de> serde::Deserialize<'de> for Proposal {
             "executor_result",
             "executorResult",
             "messages",
+            "title",
+            "summary",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -5968,6 +6016,8 @@ impl<'de> serde::Deserialize<'de> for Proposal {
             VotingPeriodEnd,
             ExecutorResult,
             Messages,
+            Title,
+            Summary,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -6015,6 +6065,8 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                                 Ok(GeneratedField::ExecutorResult)
                             }
                             "messages" => Ok(GeneratedField::Messages),
+                            "title" => Ok(GeneratedField::Title),
+                            "summary" => Ok(GeneratedField::Summary),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -6046,6 +6098,8 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                 let mut voting_period_end__ = None;
                 let mut executor_result__ = None;
                 let mut messages__ = None;
+                let mut title__ = None;
+                let mut summary__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Id => {
@@ -6134,6 +6188,18 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                             }
                             messages__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Title => {
+                            if title__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("title"));
+                            }
+                            title__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Summary => {
+                            if summary__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("summary"));
+                            }
+                            summary__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(Proposal {
@@ -6149,6 +6215,8 @@ impl<'de> serde::Deserialize<'de> for Proposal {
                     voting_period_end: voting_period_end__,
                     executor_result: executor_result__.unwrap_or_default(),
                     messages: messages__.unwrap_or_default(),
+                    title: title__.unwrap_or_default(),
+                    summary: summary__.unwrap_or_default(),
                 })
             }
         }
