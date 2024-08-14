@@ -169,6 +169,22 @@ pub struct MsgRevokeAllowance {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgRevokeAllowanceResponse {}
+/// MsgPruneAllowances prunes expired fee allowances.
+///
+/// Since cosmos-sdk 0.50
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgPruneAllowances {
+    /// pruner is the address of the user pruning expired allowances.
+    #[prost(string, tag = "1")]
+    pub pruner: ::prost::alloc::string::String,
+}
+/// MsgPruneAllowancesResponse defines the Msg/PruneAllowancesResponse response type.
+///
+/// Since cosmos-sdk 0.50
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct MsgPruneAllowancesResponse {}
 include!("cosmos.feegrant.v1beta1.serde.rs");
 include!("cosmos.feegrant.v1beta1.tonic.rs");
 // @@protoc_insertion_point(module)

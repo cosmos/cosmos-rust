@@ -285,8 +285,6 @@ impl serde::Serialize for StorageType {
             Self::DefaultUnspecified => "STORAGE_TYPE_DEFAULT_UNSPECIFIED",
             Self::Memory => "STORAGE_TYPE_MEMORY",
             Self::Transient => "STORAGE_TYPE_TRANSIENT",
-            Self::Index => "STORAGE_TYPE_INDEX",
-            Self::Commitment => "STORAGE_TYPE_COMMITMENT",
         };
         serializer.serialize_str(variant)
     }
@@ -302,8 +300,6 @@ impl<'de> serde::Deserialize<'de> for StorageType {
             "STORAGE_TYPE_DEFAULT_UNSPECIFIED",
             "STORAGE_TYPE_MEMORY",
             "STORAGE_TYPE_TRANSIENT",
-            "STORAGE_TYPE_INDEX",
-            "STORAGE_TYPE_COMMITMENT",
         ];
 
         struct GeneratedVisitor;
@@ -347,8 +343,6 @@ impl<'de> serde::Deserialize<'de> for StorageType {
                     "STORAGE_TYPE_DEFAULT_UNSPECIFIED" => Ok(StorageType::DefaultUnspecified),
                     "STORAGE_TYPE_MEMORY" => Ok(StorageType::Memory),
                     "STORAGE_TYPE_TRANSIENT" => Ok(StorageType::Transient),
-                    "STORAGE_TYPE_INDEX" => Ok(StorageType::Index),
-                    "STORAGE_TYPE_COMMITMENT" => Ok(StorageType::Commitment),
                     _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
                 }
             }

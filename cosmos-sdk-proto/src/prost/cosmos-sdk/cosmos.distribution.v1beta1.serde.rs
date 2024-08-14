@@ -1494,6 +1494,237 @@ impl<'de> serde::Deserialize<'de> for MsgCommunityPoolSpendResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for MsgDepositValidatorRewardsPool {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.depositor.is_empty() {
+            len += 1;
+        }
+        if !self.validator_address.is_empty() {
+            len += 1;
+        }
+        if !self.amount.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct(
+            "cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool",
+            len,
+        )?;
+        if !self.depositor.is_empty() {
+            struct_ser.serialize_field("depositor", &self.depositor)?;
+        }
+        if !self.validator_address.is_empty() {
+            struct_ser.serialize_field("validatorAddress", &self.validator_address)?;
+        }
+        if !self.amount.is_empty() {
+            struct_ser.serialize_field("amount", &self.amount)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgDepositValidatorRewardsPool {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "depositor",
+            "validator_address",
+            "validatorAddress",
+            "amount",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Depositor,
+            ValidatorAddress,
+            Amount,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "depositor" => Ok(GeneratedField::Depositor),
+                            "validatorAddress" | "validator_address" => {
+                                Ok(GeneratedField::ValidatorAddress)
+                            }
+                            "amount" => Ok(GeneratedField::Amount),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgDepositValidatorRewardsPool;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgDepositValidatorRewardsPool, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut depositor__ = None;
+                let mut validator_address__ = None;
+                let mut amount__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Depositor => {
+                            if depositor__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("depositor"));
+                            }
+                            depositor__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ValidatorAddress => {
+                            if validator_address__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("validatorAddress"));
+                            }
+                            validator_address__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Amount => {
+                            if amount__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("amount"));
+                            }
+                            amount__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgDepositValidatorRewardsPool {
+                    depositor: depositor__.unwrap_or_default(),
+                    validator_address: validator_address__.unwrap_or_default(),
+                    amount: amount__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPool",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgDepositValidatorRewardsPoolResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer.serialize_struct(
+            "cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPoolResponse",
+            len,
+        )?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgDepositValidatorRewardsPoolResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgDepositValidatorRewardsPoolResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str(
+                    "struct cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPoolResponse",
+                )
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgDepositValidatorRewardsPoolResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgDepositValidatorRewardsPoolResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.distribution.v1beta1.MsgDepositValidatorRewardsPoolResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for MsgFundCommunityPool {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>

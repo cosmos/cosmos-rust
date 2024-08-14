@@ -26,6 +26,15 @@ impl serde::Serialize for Module {
         if !self.override_store_keys.is_empty() {
             len += 1;
         }
+        if !self.order_migrations.is_empty() {
+            len += 1;
+        }
+        if !self.precommiters.is_empty() {
+            len += 1;
+        }
+        if !self.prepare_check_staters.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.app.runtime.v1alpha1.Module", len)?;
         if !self.app_name.is_empty() {
@@ -45,6 +54,15 @@ impl serde::Serialize for Module {
         }
         if !self.override_store_keys.is_empty() {
             struct_ser.serialize_field("overrideStoreKeys", &self.override_store_keys)?;
+        }
+        if !self.order_migrations.is_empty() {
+            struct_ser.serialize_field("orderMigrations", &self.order_migrations)?;
+        }
+        if !self.precommiters.is_empty() {
+            struct_ser.serialize_field("precommiters", &self.precommiters)?;
+        }
+        if !self.prepare_check_staters.is_empty() {
+            struct_ser.serialize_field("prepareCheckStaters", &self.prepare_check_staters)?;
         }
         struct_ser.end()
     }
@@ -69,6 +87,11 @@ impl<'de> serde::Deserialize<'de> for Module {
             "exportGenesis",
             "override_store_keys",
             "overrideStoreKeys",
+            "order_migrations",
+            "orderMigrations",
+            "precommiters",
+            "prepare_check_staters",
+            "prepareCheckStaters",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -79,6 +102,9 @@ impl<'de> serde::Deserialize<'de> for Module {
             InitGenesis,
             ExportGenesis,
             OverrideStoreKeys,
+            OrderMigrations,
+            Precommiters,
+            PrepareCheckStaters,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -112,6 +138,13 @@ impl<'de> serde::Deserialize<'de> for Module {
                             "overrideStoreKeys" | "override_store_keys" => {
                                 Ok(GeneratedField::OverrideStoreKeys)
                             }
+                            "orderMigrations" | "order_migrations" => {
+                                Ok(GeneratedField::OrderMigrations)
+                            }
+                            "precommiters" => Ok(GeneratedField::Precommiters),
+                            "prepareCheckStaters" | "prepare_check_staters" => {
+                                Ok(GeneratedField::PrepareCheckStaters)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -137,6 +170,9 @@ impl<'de> serde::Deserialize<'de> for Module {
                 let mut init_genesis__ = None;
                 let mut export_genesis__ = None;
                 let mut override_store_keys__ = None;
+                let mut order_migrations__ = None;
+                let mut precommiters__ = None;
+                let mut prepare_check_staters__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AppName => {
@@ -175,6 +211,26 @@ impl<'de> serde::Deserialize<'de> for Module {
                             }
                             override_store_keys__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::OrderMigrations => {
+                            if order_migrations__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("orderMigrations"));
+                            }
+                            order_migrations__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Precommiters => {
+                            if precommiters__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("precommiters"));
+                            }
+                            precommiters__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::PrepareCheckStaters => {
+                            if prepare_check_staters__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "prepareCheckStaters",
+                                ));
+                            }
+                            prepare_check_staters__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(Module {
@@ -184,6 +240,9 @@ impl<'de> serde::Deserialize<'de> for Module {
                     init_genesis: init_genesis__.unwrap_or_default(),
                     export_genesis: export_genesis__.unwrap_or_default(),
                     override_store_keys: override_store_keys__.unwrap_or_default(),
+                    order_migrations: order_migrations__.unwrap_or_default(),
+                    precommiters: precommiters__.unwrap_or_default(),
+                    prepare_check_staters: prepare_check_staters__.unwrap_or_default(),
                 })
             }
         }

@@ -105,6 +105,7 @@ pub struct GroupInfo {
     #[prost(string, tag = "2")]
     pub admin: ::prost::alloc::string::String,
     /// metadata is any arbitrary metadata to attached to the group.
+    /// the recommended format of the metadata is to be found here: <https://docs.cosmos.network/v0.47/modules/group#group-1>
     #[prost(string, tag = "3")]
     pub metadata: ::prost::alloc::string::String,
     /// version is used to track changes to a group's membership structure that
@@ -244,7 +245,7 @@ pub struct TallyResult {
     #[prost(string, tag = "4")]
     pub no_with_veto_count: ::prost::alloc::string::String,
 }
-/// Vote represents a vote for a proposal.
+/// Vote represents a vote for a proposal.string metadata
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Vote {
@@ -258,6 +259,7 @@ pub struct Vote {
     #[prost(enumeration = "VoteOption", tag = "3")]
     pub option: i32,
     /// metadata is any arbitrary metadata attached to the vote.
+    /// the recommended format of the metadata is to be found here: <https://docs.cosmos.network/v0.47/modules/group#vote-2>
     #[prost(string, tag = "4")]
     pub metadata: ::prost::alloc::string::String,
     /// submit_time is the timestamp when the vote was submitted.

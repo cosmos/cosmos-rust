@@ -59,10 +59,10 @@ pub mod cosmos {
             }
         }
 
-        /// Key-value pairs.
-        pub mod kv {
+        /// Node requests.
+        pub mod node {
             pub mod v1beta1 {
-                include!("prost/cosmos-sdk/cosmos.base.kv.v1beta1.rs");
+                include!("prost/cosmos-sdk/cosmos.base.node.v1beta1.rs");
             }
         }
 
@@ -84,28 +84,15 @@ pub mod cosmos {
             }
         }
 
-        /// Snapshots containing Tendermint state sync info.
-        pub mod snapshots {
+        /// Tendermint support.
+        pub mod tendermint {
             pub mod v1beta1 {
-                include!("prost/cosmos-sdk/cosmos.base.snapshots.v1beta1.rs");
-            }
-        }
-
-        /// Data structure that holds the state of the application.
-        pub mod store {
-            pub mod v1beta1 {
-                include!("prost/cosmos-sdk/cosmos.base.store.v1beta1.rs");
+                include!("prost/cosmos-sdk/cosmos.base.tendermint.v1beta1.rs");
             }
         }
 
         pub mod v1beta1 {
             include!("prost/cosmos-sdk/cosmos.base.v1beta1.rs");
-        }
-
-        pub mod tendermint {
-            pub mod v1beta1 {
-                include!("prost/cosmos-sdk/cosmos.base.tendermint.v1beta1.rs");
-            }
         }
     }
 

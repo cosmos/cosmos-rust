@@ -20,7 +20,7 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.47.10";
+const COSMOS_SDK_REV: &str = "v0.50.9";
 
 /// The Cosmos ibc-go commit or tag to be cloned and used to build the proto files
 const IBC_REV: &str = "v6.3.1";
