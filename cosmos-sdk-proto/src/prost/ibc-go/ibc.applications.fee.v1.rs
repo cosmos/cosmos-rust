@@ -164,6 +164,11 @@ pub struct QueryIncentivizedPacketsResponse {
     /// list of identified fees for incentivized packets
     #[prost(message, repeated, tag = "1")]
     pub incentivized_packets: ::prost::alloc::vec::Vec<IdentifiedPacketFees>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
+    >,
 }
 /// QueryIncentivizedPacketRequest defines the request type for the IncentivizedPacket rpc
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -209,6 +214,11 @@ pub struct QueryIncentivizedPacketsForChannelResponse {
     /// Map of all incentivized_packets
     #[prost(message, repeated, tag = "1")]
     pub incentivized_packets: ::prost::alloc::vec::Vec<IdentifiedPacketFees>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
+    >,
 }
 /// QueryTotalRecvFeesRequest defines the request type for the TotalRecvFees rpc
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -318,6 +328,11 @@ pub struct QueryFeeEnabledChannelsResponse {
     /// list of fee enabled channels
     #[prost(message, repeated, tag = "1")]
     pub fee_enabled_channels: ::prost::alloc::vec::Vec<FeeEnabledChannel>,
+    /// pagination defines the pagination in the response.
+    #[prost(message, optional, tag = "2")]
+    pub pagination: ::core::option::Option<
+        super::super::super::super::cosmos::base::query::v1beta1::PageResponse,
+    >,
 }
 /// QueryFeeEnabledChannelRequest defines the request type for the FeeEnabledChannel rpc
 #[allow(clippy::derive_partial_eq_without_eq)]

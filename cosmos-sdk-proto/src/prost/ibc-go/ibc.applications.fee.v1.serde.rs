@@ -2720,12 +2720,18 @@ impl serde::Serialize for QueryFeeEnabledChannelsResponse {
         if !self.fee_enabled_channels.is_empty() {
             len += 1;
         }
+        if self.pagination.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct(
             "ibc.applications.fee.v1.QueryFeeEnabledChannelsResponse",
             len,
         )?;
         if !self.fee_enabled_channels.is_empty() {
             struct_ser.serialize_field("feeEnabledChannels", &self.fee_enabled_channels)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
         }
         struct_ser.end()
     }
@@ -2737,11 +2743,12 @@ impl<'de> serde::Deserialize<'de> for QueryFeeEnabledChannelsResponse {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["fee_enabled_channels", "feeEnabledChannels"];
+        const FIELDS: &[&str] = &["fee_enabled_channels", "feeEnabledChannels", "pagination"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             FeeEnabledChannels,
+            Pagination,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -2770,6 +2777,7 @@ impl<'de> serde::Deserialize<'de> for QueryFeeEnabledChannelsResponse {
                             "feeEnabledChannels" | "fee_enabled_channels" => {
                                 Ok(GeneratedField::FeeEnabledChannels)
                             }
+                            "pagination" => Ok(GeneratedField::Pagination),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2794,6 +2802,7 @@ impl<'de> serde::Deserialize<'de> for QueryFeeEnabledChannelsResponse {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut fee_enabled_channels__ = None;
+                let mut pagination__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::FeeEnabledChannels => {
@@ -2804,10 +2813,17 @@ impl<'de> serde::Deserialize<'de> for QueryFeeEnabledChannelsResponse {
                             }
                             fee_enabled_channels__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(QueryFeeEnabledChannelsResponse {
                     fee_enabled_channels: fee_enabled_channels__.unwrap_or_default(),
+                    pagination: pagination__,
                 })
             }
         }
@@ -3238,12 +3254,18 @@ impl serde::Serialize for QueryIncentivizedPacketsForChannelResponse {
         if !self.incentivized_packets.is_empty() {
             len += 1;
         }
+        if self.pagination.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct(
             "ibc.applications.fee.v1.QueryIncentivizedPacketsForChannelResponse",
             len,
         )?;
         if !self.incentivized_packets.is_empty() {
             struct_ser.serialize_field("incentivizedPackets", &self.incentivized_packets)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
         }
         struct_ser.end()
     }
@@ -3255,11 +3277,12 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsForChannelResponse
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["incentivized_packets", "incentivizedPackets"];
+        const FIELDS: &[&str] = &["incentivized_packets", "incentivizedPackets", "pagination"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             IncentivizedPackets,
+            Pagination,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -3288,6 +3311,7 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsForChannelResponse
                             "incentivizedPackets" | "incentivized_packets" => {
                                 Ok(GeneratedField::IncentivizedPackets)
                             }
+                            "pagination" => Ok(GeneratedField::Pagination),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -3313,6 +3337,7 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsForChannelResponse
                 V: serde::de::MapAccess<'de>,
             {
                 let mut incentivized_packets__ = None;
+                let mut pagination__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::IncentivizedPackets => {
@@ -3323,10 +3348,17 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsForChannelResponse
                             }
                             incentivized_packets__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(QueryIncentivizedPacketsForChannelResponse {
                     incentivized_packets: incentivized_packets__.unwrap_or_default(),
+                    pagination: pagination__,
                 })
             }
         }
@@ -3478,12 +3510,18 @@ impl serde::Serialize for QueryIncentivizedPacketsResponse {
         if !self.incentivized_packets.is_empty() {
             len += 1;
         }
+        if self.pagination.is_some() {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct(
             "ibc.applications.fee.v1.QueryIncentivizedPacketsResponse",
             len,
         )?;
         if !self.incentivized_packets.is_empty() {
             struct_ser.serialize_field("incentivizedPackets", &self.incentivized_packets)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
         }
         struct_ser.end()
     }
@@ -3495,11 +3533,12 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsResponse {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["incentivized_packets", "incentivizedPackets"];
+        const FIELDS: &[&str] = &["incentivized_packets", "incentivizedPackets", "pagination"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             IncentivizedPackets,
+            Pagination,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -3528,6 +3567,7 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsResponse {
                             "incentivizedPackets" | "incentivized_packets" => {
                                 Ok(GeneratedField::IncentivizedPackets)
                             }
+                            "pagination" => Ok(GeneratedField::Pagination),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -3552,6 +3592,7 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsResponse {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut incentivized_packets__ = None;
+                let mut pagination__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::IncentivizedPackets => {
@@ -3562,10 +3603,17 @@ impl<'de> serde::Deserialize<'de> for QueryIncentivizedPacketsResponse {
                             }
                             incentivized_packets__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(QueryIncentivizedPacketsResponse {
                     incentivized_packets: incentivized_packets__.unwrap_or_default(),
+                    pagination: pagination__,
                 })
             }
         }

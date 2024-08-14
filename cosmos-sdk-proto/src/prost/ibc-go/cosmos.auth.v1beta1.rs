@@ -25,6 +25,20 @@ pub struct ModuleAccount {
     #[prost(string, repeated, tag = "3")]
     pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+/// ModuleCredential represents a unclaimable pubkey for base accounts controlled by modules.
+///
+/// Since: cosmos-sdk 0.47
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ModuleCredential {
+    /// module_name is the name of the module used for address derivation (passed into address.Module).
+    #[prost(string, tag = "1")]
+    pub module_name: ::prost::alloc::string::String,
+    /// derivation_keys is for deriving a module account address (passed into address.Module)
+    /// adding more keys creates sub-account addresses (passed into address.Derive)
+    #[prost(bytes = "vec", repeated, tag = "2")]
+    pub derivation_keys: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
 /// Params defines the parameters for the auth module.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

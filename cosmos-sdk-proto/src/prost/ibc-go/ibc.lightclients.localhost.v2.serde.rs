@@ -8,19 +8,13 @@ impl serde::Serialize for ClientState {
     {
         use serde::ser::SerializeStruct;
         let mut len = 0;
-        if !self.chain_id.is_empty() {
-            len += 1;
-        }
-        if self.height.is_some() {
+        if self.latest_height.is_some() {
             len += 1;
         }
         let mut struct_ser =
-            serializer.serialize_struct("ibc.lightclients.localhost.v1.ClientState", len)?;
-        if !self.chain_id.is_empty() {
-            struct_ser.serialize_field("chainId", &self.chain_id)?;
-        }
-        if let Some(v) = self.height.as_ref() {
-            struct_ser.serialize_field("height", v)?;
+            serializer.serialize_struct("ibc.lightclients.localhost.v2.ClientState", len)?;
+        if let Some(v) = self.latest_height.as_ref() {
+            struct_ser.serialize_field("latestHeight", v)?;
         }
         struct_ser.end()
     }
@@ -32,12 +26,11 @@ impl<'de> serde::Deserialize<'de> for ClientState {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["chain_id", "chainId", "height"];
+        const FIELDS: &[&str] = &["latest_height", "latestHeight"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
-            ChainId,
-            Height,
+            LatestHeight,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -63,8 +56,7 @@ impl<'de> serde::Deserialize<'de> for ClientState {
                         E: serde::de::Error,
                     {
                         match value {
-                            "chainId" | "chain_id" => Ok(GeneratedField::ChainId),
-                            "height" => Ok(GeneratedField::Height),
+                            "latestHeight" | "latest_height" => Ok(GeneratedField::LatestHeight),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -77,39 +69,31 @@ impl<'de> serde::Deserialize<'de> for ClientState {
             type Value = ClientState;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct ibc.lightclients.localhost.v1.ClientState")
+                formatter.write_str("struct ibc.lightclients.localhost.v2.ClientState")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<ClientState, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                let mut chain_id__ = None;
-                let mut height__ = None;
+                let mut latest_height__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
-                        GeneratedField::ChainId => {
-                            if chain_id__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("chainId"));
+                        GeneratedField::LatestHeight => {
+                            if latest_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("latestHeight"));
                             }
-                            chain_id__ = Some(map_.next_value()?);
-                        }
-                        GeneratedField::Height => {
-                            if height__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("height"));
-                            }
-                            height__ = map_.next_value()?;
+                            latest_height__ = map_.next_value()?;
                         }
                     }
                 }
                 Ok(ClientState {
-                    chain_id: chain_id__.unwrap_or_default(),
-                    height: height__,
+                    latest_height: latest_height__,
                 })
             }
         }
         deserializer.deserialize_struct(
-            "ibc.lightclients.localhost.v1.ClientState",
+            "ibc.lightclients.localhost.v2.ClientState",
             FIELDS,
             GeneratedVisitor,
         )

@@ -142,6 +142,9 @@ impl serde::Serialize for Channel {
         if !self.version.is_empty() {
             len += 1;
         }
+        if self.upgrade_sequence != 0 {
+            len += 1;
+        }
         let mut struct_ser = serializer.serialize_struct("ibc.core.channel.v1.Channel", len)?;
         if self.state != 0 {
             let v = State::try_from(self.state).map_err(|_| {
@@ -164,6 +167,13 @@ impl serde::Serialize for Channel {
         if !self.version.is_empty() {
             struct_ser.serialize_field("version", &self.version)?;
         }
+        if self.upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "upgradeSequence",
+                ToString::to_string(&self.upgrade_sequence).as_str(),
+            )?;
+        }
         struct_ser.end()
     }
 }
@@ -181,6 +191,8 @@ impl<'de> serde::Deserialize<'de> for Channel {
             "connection_hops",
             "connectionHops",
             "version",
+            "upgrade_sequence",
+            "upgradeSequence",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -190,6 +202,7 @@ impl<'de> serde::Deserialize<'de> for Channel {
             Counterparty,
             ConnectionHops,
             Version,
+            UpgradeSequence,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -222,6 +235,9 @@ impl<'de> serde::Deserialize<'de> for Channel {
                                 Ok(GeneratedField::ConnectionHops)
                             }
                             "version" => Ok(GeneratedField::Version),
+                            "upgradeSequence" | "upgrade_sequence" => {
+                                Ok(GeneratedField::UpgradeSequence)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -246,6 +262,7 @@ impl<'de> serde::Deserialize<'de> for Channel {
                 let mut counterparty__ = None;
                 let mut connection_hops__ = None;
                 let mut version__ = None;
+                let mut upgrade_sequence__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::State => {
@@ -278,6 +295,15 @@ impl<'de> serde::Deserialize<'de> for Channel {
                             }
                             version__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::UpgradeSequence => {
+                            if upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgradeSequence"));
+                            }
+                            upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(Channel {
@@ -286,6 +312,7 @@ impl<'de> serde::Deserialize<'de> for Channel {
                     counterparty: counterparty__,
                     connection_hops: connection_hops__.unwrap_or_default(),
                     version: version__.unwrap_or_default(),
+                    upgrade_sequence: upgrade_sequence__.unwrap_or_default(),
                 })
             }
         }
@@ -409,6 +436,126 @@ impl<'de> serde::Deserialize<'de> for Counterparty {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for ErrorReceipt {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.sequence != 0 {
+            len += 1;
+        }
+        if !self.message.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.ErrorReceipt", len)?;
+        if self.sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field("sequence", ToString::to_string(&self.sequence).as_str())?;
+        }
+        if !self.message.is_empty() {
+            struct_ser.serialize_field("message", &self.message)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for ErrorReceipt {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["sequence", "message"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Sequence,
+            Message,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "sequence" => Ok(GeneratedField::Sequence),
+                            "message" => Ok(GeneratedField::Message),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = ErrorReceipt;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.ErrorReceipt")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ErrorReceipt, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut sequence__ = None;
+                let mut message__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Sequence => {
+                            if sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("sequence"));
+                            }
+                            sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Message => {
+                            if message__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("message"));
+                            }
+                            message__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(ErrorReceipt {
+                    sequence: sequence__.unwrap_or_default(),
+                    message: message__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.ErrorReceipt",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for GenesisState {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -441,6 +588,9 @@ impl serde::Serialize for GenesisState {
         if self.next_channel_sequence != 0 {
             len += 1;
         }
+        if self.params.is_some() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("ibc.core.channel.v1.GenesisState", len)?;
         if !self.channels.is_empty() {
@@ -471,6 +621,9 @@ impl serde::Serialize for GenesisState {
                 ToString::to_string(&self.next_channel_sequence).as_str(),
             )?;
         }
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
         struct_ser.end()
     }
 }
@@ -494,6 +647,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
             "ackSequences",
             "next_channel_sequence",
             "nextChannelSequence",
+            "params",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -506,6 +660,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
             RecvSequences,
             AckSequences,
             NextChannelSequence,
+            Params,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -541,6 +696,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                             "nextChannelSequence" | "next_channel_sequence" => {
                                 Ok(GeneratedField::NextChannelSequence)
                             }
+                            "params" => Ok(GeneratedField::Params),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -568,6 +724,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                 let mut recv_sequences__ = None;
                 let mut ack_sequences__ = None;
                 let mut next_channel_sequence__ = None;
+                let mut params__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Channels => {
@@ -623,6 +780,12 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                                     .0,
                             );
                         }
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(GenesisState {
@@ -634,6 +797,7 @@ impl<'de> serde::Deserialize<'de> for GenesisState {
                     recv_sequences: recv_sequences__.unwrap_or_default(),
                     ack_sequences: ack_sequences__.unwrap_or_default(),
                     next_channel_sequence: next_channel_sequence__.unwrap_or_default(),
+                    params: params__,
                 })
             }
         }
@@ -674,6 +838,9 @@ impl serde::Serialize for IdentifiedChannel {
         if !self.channel_id.is_empty() {
             len += 1;
         }
+        if self.upgrade_sequence != 0 {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("ibc.core.channel.v1.IdentifiedChannel", len)?;
         if self.state != 0 {
@@ -703,6 +870,13 @@ impl serde::Serialize for IdentifiedChannel {
         if !self.channel_id.is_empty() {
             struct_ser.serialize_field("channelId", &self.channel_id)?;
         }
+        if self.upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "upgradeSequence",
+                ToString::to_string(&self.upgrade_sequence).as_str(),
+            )?;
+        }
         struct_ser.end()
     }
 }
@@ -724,6 +898,8 @@ impl<'de> serde::Deserialize<'de> for IdentifiedChannel {
             "portId",
             "channel_id",
             "channelId",
+            "upgrade_sequence",
+            "upgradeSequence",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -735,6 +911,7 @@ impl<'de> serde::Deserialize<'de> for IdentifiedChannel {
             Version,
             PortId,
             ChannelId,
+            UpgradeSequence,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -769,6 +946,9 @@ impl<'de> serde::Deserialize<'de> for IdentifiedChannel {
                             "version" => Ok(GeneratedField::Version),
                             "portId" | "port_id" => Ok(GeneratedField::PortId),
                             "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "upgradeSequence" | "upgrade_sequence" => {
+                                Ok(GeneratedField::UpgradeSequence)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -795,6 +975,7 @@ impl<'de> serde::Deserialize<'de> for IdentifiedChannel {
                 let mut version__ = None;
                 let mut port_id__ = None;
                 let mut channel_id__ = None;
+                let mut upgrade_sequence__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::State => {
@@ -839,6 +1020,15 @@ impl<'de> serde::Deserialize<'de> for IdentifiedChannel {
                             }
                             channel_id__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::UpgradeSequence => {
+                            if upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgradeSequence"));
+                            }
+                            upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(IdentifiedChannel {
@@ -849,6 +1039,7 @@ impl<'de> serde::Deserialize<'de> for IdentifiedChannel {
                     version: version__.unwrap_or_default(),
                     port_id: port_id__.unwrap_or_default(),
                     channel_id: channel_id__.unwrap_or_default(),
+                    upgrade_sequence: upgrade_sequence__.unwrap_or_default(),
                 })
             }
         }
@@ -1175,6 +1366,9 @@ impl serde::Serialize for MsgChannelCloseConfirm {
         if !self.signer.is_empty() {
             len += 1;
         }
+        if self.counterparty_upgrade_sequence != 0 {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("ibc.core.channel.v1.MsgChannelCloseConfirm", len)?;
         if !self.port_id.is_empty() {
@@ -1196,6 +1390,13 @@ impl serde::Serialize for MsgChannelCloseConfirm {
         if !self.signer.is_empty() {
             struct_ser.serialize_field("signer", &self.signer)?;
         }
+        if self.counterparty_upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "counterpartyUpgradeSequence",
+                ToString::to_string(&self.counterparty_upgrade_sequence).as_str(),
+            )?;
+        }
         struct_ser.end()
     }
 }
@@ -1216,6 +1417,8 @@ impl<'de> serde::Deserialize<'de> for MsgChannelCloseConfirm {
             "proof_height",
             "proofHeight",
             "signer",
+            "counterparty_upgrade_sequence",
+            "counterpartyUpgradeSequence",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -1225,6 +1428,7 @@ impl<'de> serde::Deserialize<'de> for MsgChannelCloseConfirm {
             ProofInit,
             ProofHeight,
             Signer,
+            CounterpartyUpgradeSequence,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -1255,6 +1459,9 @@ impl<'de> serde::Deserialize<'de> for MsgChannelCloseConfirm {
                             "proofInit" | "proof_init" => Ok(GeneratedField::ProofInit),
                             "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
                             "signer" => Ok(GeneratedField::Signer),
+                            "counterpartyUpgradeSequence" | "counterparty_upgrade_sequence" => {
+                                Ok(GeneratedField::CounterpartyUpgradeSequence)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1282,6 +1489,7 @@ impl<'de> serde::Deserialize<'de> for MsgChannelCloseConfirm {
                 let mut proof_init__ = None;
                 let mut proof_height__ = None;
                 let mut signer__ = None;
+                let mut counterparty_upgrade_sequence__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::PortId => {
@@ -1317,6 +1525,17 @@ impl<'de> serde::Deserialize<'de> for MsgChannelCloseConfirm {
                             }
                             signer__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::CounterpartyUpgradeSequence => {
+                            if counterparty_upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyUpgradeSequence",
+                                ));
+                            }
+                            counterparty_upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(MsgChannelCloseConfirm {
@@ -1325,6 +1544,8 @@ impl<'de> serde::Deserialize<'de> for MsgChannelCloseConfirm {
                     proof_init: proof_init__.unwrap_or_default(),
                     proof_height: proof_height__,
                     signer: signer__.unwrap_or_default(),
+                    counterparty_upgrade_sequence: counterparty_upgrade_sequence__
+                        .unwrap_or_default(),
                 })
             }
         }
@@ -2689,10 +2910,16 @@ impl serde::Serialize for MsgChannelOpenTryResponse {
         if !self.version.is_empty() {
             len += 1;
         }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("ibc.core.channel.v1.MsgChannelOpenTryResponse", len)?;
         if !self.version.is_empty() {
             struct_ser.serialize_field("version", &self.version)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
         }
         struct_ser.end()
     }
@@ -2704,11 +2931,12 @@ impl<'de> serde::Deserialize<'de> for MsgChannelOpenTryResponse {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["version"];
+        const FIELDS: &[&str] = &["version", "channel_id", "channelId"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Version,
+            ChannelId,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -2735,6 +2963,7 @@ impl<'de> serde::Deserialize<'de> for MsgChannelOpenTryResponse {
                     {
                         match value {
                             "version" => Ok(GeneratedField::Version),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2758,6 +2987,7 @@ impl<'de> serde::Deserialize<'de> for MsgChannelOpenTryResponse {
                 V: serde::de::MapAccess<'de>,
             {
                 let mut version__ = None;
+                let mut channel_id__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Version => {
@@ -2766,15 +2996,2651 @@ impl<'de> serde::Deserialize<'de> for MsgChannelOpenTryResponse {
                             }
                             version__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(MsgChannelOpenTryResponse {
                     version: version__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
                 })
             }
         }
         deserializer.deserialize_struct(
             "ibc.core.channel.v1.MsgChannelOpenTryResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeAck {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if self.counterparty_upgrade.is_some() {
+            len += 1;
+        }
+        if !self.proof_channel.is_empty() {
+            len += 1;
+        }
+        if !self.proof_upgrade.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeAck", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if let Some(v) = self.counterparty_upgrade.as_ref() {
+            struct_ser.serialize_field("counterpartyUpgrade", v)?;
+        }
+        if !self.proof_channel.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofChannel",
+                pbjson::private::base64::encode(&self.proof_channel).as_str(),
+            )?;
+        }
+        if !self.proof_upgrade.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofUpgrade",
+                pbjson::private::base64::encode(&self.proof_upgrade).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeAck {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "counterparty_upgrade",
+            "counterpartyUpgrade",
+            "proof_channel",
+            "proofChannel",
+            "proof_upgrade",
+            "proofUpgrade",
+            "proof_height",
+            "proofHeight",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            CounterpartyUpgrade,
+            ProofChannel,
+            ProofUpgrade,
+            ProofHeight,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "counterpartyUpgrade" | "counterparty_upgrade" => {
+                                Ok(GeneratedField::CounterpartyUpgrade)
+                            }
+                            "proofChannel" | "proof_channel" => Ok(GeneratedField::ProofChannel),
+                            "proofUpgrade" | "proof_upgrade" => Ok(GeneratedField::ProofUpgrade),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeAck;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeAck")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeAck, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut counterparty_upgrade__ = None;
+                let mut proof_channel__ = None;
+                let mut proof_upgrade__ = None;
+                let mut proof_height__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CounterpartyUpgrade => {
+                            if counterparty_upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyUpgrade",
+                                ));
+                            }
+                            counterparty_upgrade__ = map_.next_value()?;
+                        }
+                        GeneratedField::ProofChannel => {
+                            if proof_channel__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofChannel"));
+                            }
+                            proof_channel__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofUpgrade => {
+                            if proof_upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofUpgrade"));
+                            }
+                            proof_upgrade__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeAck {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    counterparty_upgrade: counterparty_upgrade__,
+                    proof_channel: proof_channel__.unwrap_or_default(),
+                    proof_upgrade: proof_upgrade__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeAck",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeAckResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.result != 0 {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeAckResponse", len)?;
+        if self.result != 0 {
+            let v = ResponseResultType::try_from(self.result).map_err(|_| {
+                serde::ser::Error::custom(format!("Invalid variant {}", self.result))
+            })?;
+            struct_ser.serialize_field("result", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeAckResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["result"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Result,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "result" => Ok(GeneratedField::Result),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeAckResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeAckResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeAckResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut result__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Result => {
+                            if result__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("result"));
+                            }
+                            result__ = Some(map_.next_value::<ResponseResultType>()? as i32);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeAckResponse {
+                    result: result__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeAckResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeCancel {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if self.error_receipt.is_some() {
+            len += 1;
+        }
+        if !self.proof_error_receipt.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeCancel", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if let Some(v) = self.error_receipt.as_ref() {
+            struct_ser.serialize_field("errorReceipt", v)?;
+        }
+        if !self.proof_error_receipt.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofErrorReceipt",
+                pbjson::private::base64::encode(&self.proof_error_receipt).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeCancel {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "error_receipt",
+            "errorReceipt",
+            "proof_error_receipt",
+            "proofErrorReceipt",
+            "proof_height",
+            "proofHeight",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            ErrorReceipt,
+            ProofErrorReceipt,
+            ProofHeight,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "errorReceipt" | "error_receipt" => Ok(GeneratedField::ErrorReceipt),
+                            "proofErrorReceipt" | "proof_error_receipt" => {
+                                Ok(GeneratedField::ProofErrorReceipt)
+                            }
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeCancel;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeCancel")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeCancel, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut error_receipt__ = None;
+                let mut proof_error_receipt__ = None;
+                let mut proof_height__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ErrorReceipt => {
+                            if error_receipt__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("errorReceipt"));
+                            }
+                            error_receipt__ = map_.next_value()?;
+                        }
+                        GeneratedField::ProofErrorReceipt => {
+                            if proof_error_receipt__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofErrorReceipt"));
+                            }
+                            proof_error_receipt__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeCancel {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    error_receipt: error_receipt__,
+                    proof_error_receipt: proof_error_receipt__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeCancel",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeCancelResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer
+            .serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeCancelResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeCancelResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeCancelResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeCancelResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeCancelResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgChannelUpgradeCancelResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeCancelResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeConfirm {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if self.counterparty_channel_state != 0 {
+            len += 1;
+        }
+        if self.counterparty_upgrade.is_some() {
+            len += 1;
+        }
+        if !self.proof_channel.is_empty() {
+            len += 1;
+        }
+        if !self.proof_upgrade.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeConfirm", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if self.counterparty_channel_state != 0 {
+            let v = State::try_from(self.counterparty_channel_state).map_err(|_| {
+                serde::ser::Error::custom(format!(
+                    "Invalid variant {}",
+                    self.counterparty_channel_state
+                ))
+            })?;
+            struct_ser.serialize_field("counterpartyChannelState", &v)?;
+        }
+        if let Some(v) = self.counterparty_upgrade.as_ref() {
+            struct_ser.serialize_field("counterpartyUpgrade", v)?;
+        }
+        if !self.proof_channel.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofChannel",
+                pbjson::private::base64::encode(&self.proof_channel).as_str(),
+            )?;
+        }
+        if !self.proof_upgrade.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofUpgrade",
+                pbjson::private::base64::encode(&self.proof_upgrade).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeConfirm {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "counterparty_channel_state",
+            "counterpartyChannelState",
+            "counterparty_upgrade",
+            "counterpartyUpgrade",
+            "proof_channel",
+            "proofChannel",
+            "proof_upgrade",
+            "proofUpgrade",
+            "proof_height",
+            "proofHeight",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            CounterpartyChannelState,
+            CounterpartyUpgrade,
+            ProofChannel,
+            ProofUpgrade,
+            ProofHeight,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "counterpartyChannelState" | "counterparty_channel_state" => {
+                                Ok(GeneratedField::CounterpartyChannelState)
+                            }
+                            "counterpartyUpgrade" | "counterparty_upgrade" => {
+                                Ok(GeneratedField::CounterpartyUpgrade)
+                            }
+                            "proofChannel" | "proof_channel" => Ok(GeneratedField::ProofChannel),
+                            "proofUpgrade" | "proof_upgrade" => Ok(GeneratedField::ProofUpgrade),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeConfirm;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeConfirm")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeConfirm, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut counterparty_channel_state__ = None;
+                let mut counterparty_upgrade__ = None;
+                let mut proof_channel__ = None;
+                let mut proof_upgrade__ = None;
+                let mut proof_height__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CounterpartyChannelState => {
+                            if counterparty_channel_state__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyChannelState",
+                                ));
+                            }
+                            counterparty_channel_state__ = Some(map_.next_value::<State>()? as i32);
+                        }
+                        GeneratedField::CounterpartyUpgrade => {
+                            if counterparty_upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyUpgrade",
+                                ));
+                            }
+                            counterparty_upgrade__ = map_.next_value()?;
+                        }
+                        GeneratedField::ProofChannel => {
+                            if proof_channel__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofChannel"));
+                            }
+                            proof_channel__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofUpgrade => {
+                            if proof_upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofUpgrade"));
+                            }
+                            proof_upgrade__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeConfirm {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    counterparty_channel_state: counterparty_channel_state__.unwrap_or_default(),
+                    counterparty_upgrade: counterparty_upgrade__,
+                    proof_channel: proof_channel__.unwrap_or_default(),
+                    proof_upgrade: proof_upgrade__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeConfirm",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeConfirmResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.result != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeConfirmResponse", len)?;
+        if self.result != 0 {
+            let v = ResponseResultType::try_from(self.result).map_err(|_| {
+                serde::ser::Error::custom(format!("Invalid variant {}", self.result))
+            })?;
+            struct_ser.serialize_field("result", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeConfirmResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["result"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Result,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "result" => Ok(GeneratedField::Result),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeConfirmResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeConfirmResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeConfirmResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut result__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Result => {
+                            if result__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("result"));
+                            }
+                            result__ = Some(map_.next_value::<ResponseResultType>()? as i32);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeConfirmResponse {
+                    result: result__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeConfirmResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeInit {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if self.fields.is_some() {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeInit", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if let Some(v) = self.fields.as_ref() {
+            struct_ser.serialize_field("fields", v)?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeInit {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "fields",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            Fields,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "fields" => Ok(GeneratedField::Fields),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeInit;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeInit")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeInit, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut fields__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Fields => {
+                            if fields__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("fields"));
+                            }
+                            fields__ = map_.next_value()?;
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeInit {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    fields: fields__,
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeInit",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeInitResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.upgrade.is_some() {
+            len += 1;
+        }
+        if self.upgrade_sequence != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeInitResponse", len)?;
+        if let Some(v) = self.upgrade.as_ref() {
+            struct_ser.serialize_field("upgrade", v)?;
+        }
+        if self.upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "upgradeSequence",
+                ToString::to_string(&self.upgrade_sequence).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeInitResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["upgrade", "upgrade_sequence", "upgradeSequence"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Upgrade,
+            UpgradeSequence,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "upgrade" => Ok(GeneratedField::Upgrade),
+                            "upgradeSequence" | "upgrade_sequence" => {
+                                Ok(GeneratedField::UpgradeSequence)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeInitResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeInitResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeInitResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut upgrade__ = None;
+                let mut upgrade_sequence__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Upgrade => {
+                            if upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgrade"));
+                            }
+                            upgrade__ = map_.next_value()?;
+                        }
+                        GeneratedField::UpgradeSequence => {
+                            if upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgradeSequence"));
+                            }
+                            upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeInitResponse {
+                    upgrade: upgrade__,
+                    upgrade_sequence: upgrade_sequence__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeInitResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeOpen {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if self.counterparty_channel_state != 0 {
+            len += 1;
+        }
+        if self.counterparty_upgrade_sequence != 0 {
+            len += 1;
+        }
+        if !self.proof_channel.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeOpen", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if self.counterparty_channel_state != 0 {
+            let v = State::try_from(self.counterparty_channel_state).map_err(|_| {
+                serde::ser::Error::custom(format!(
+                    "Invalid variant {}",
+                    self.counterparty_channel_state
+                ))
+            })?;
+            struct_ser.serialize_field("counterpartyChannelState", &v)?;
+        }
+        if self.counterparty_upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "counterpartyUpgradeSequence",
+                ToString::to_string(&self.counterparty_upgrade_sequence).as_str(),
+            )?;
+        }
+        if !self.proof_channel.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofChannel",
+                pbjson::private::base64::encode(&self.proof_channel).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeOpen {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "counterparty_channel_state",
+            "counterpartyChannelState",
+            "counterparty_upgrade_sequence",
+            "counterpartyUpgradeSequence",
+            "proof_channel",
+            "proofChannel",
+            "proof_height",
+            "proofHeight",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            CounterpartyChannelState,
+            CounterpartyUpgradeSequence,
+            ProofChannel,
+            ProofHeight,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "counterpartyChannelState" | "counterparty_channel_state" => {
+                                Ok(GeneratedField::CounterpartyChannelState)
+                            }
+                            "counterpartyUpgradeSequence" | "counterparty_upgrade_sequence" => {
+                                Ok(GeneratedField::CounterpartyUpgradeSequence)
+                            }
+                            "proofChannel" | "proof_channel" => Ok(GeneratedField::ProofChannel),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeOpen;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeOpen")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeOpen, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut counterparty_channel_state__ = None;
+                let mut counterparty_upgrade_sequence__ = None;
+                let mut proof_channel__ = None;
+                let mut proof_height__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CounterpartyChannelState => {
+                            if counterparty_channel_state__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyChannelState",
+                                ));
+                            }
+                            counterparty_channel_state__ = Some(map_.next_value::<State>()? as i32);
+                        }
+                        GeneratedField::CounterpartyUpgradeSequence => {
+                            if counterparty_upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyUpgradeSequence",
+                                ));
+                            }
+                            counterparty_upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofChannel => {
+                            if proof_channel__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofChannel"));
+                            }
+                            proof_channel__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeOpen {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    counterparty_channel_state: counterparty_channel_state__.unwrap_or_default(),
+                    counterparty_upgrade_sequence: counterparty_upgrade_sequence__
+                        .unwrap_or_default(),
+                    proof_channel: proof_channel__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeOpen",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeOpenResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer
+            .serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeOpenResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeOpenResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeOpenResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeOpenResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeOpenResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgChannelUpgradeOpenResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeOpenResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeTimeout {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if self.counterparty_channel.is_some() {
+            len += 1;
+        }
+        if !self.proof_channel.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeTimeout", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if let Some(v) = self.counterparty_channel.as_ref() {
+            struct_ser.serialize_field("counterpartyChannel", v)?;
+        }
+        if !self.proof_channel.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofChannel",
+                pbjson::private::base64::encode(&self.proof_channel).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeTimeout {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "counterparty_channel",
+            "counterpartyChannel",
+            "proof_channel",
+            "proofChannel",
+            "proof_height",
+            "proofHeight",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            CounterpartyChannel,
+            ProofChannel,
+            ProofHeight,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "counterpartyChannel" | "counterparty_channel" => {
+                                Ok(GeneratedField::CounterpartyChannel)
+                            }
+                            "proofChannel" | "proof_channel" => Ok(GeneratedField::ProofChannel),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeTimeout;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeTimeout")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeTimeout, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut counterparty_channel__ = None;
+                let mut proof_channel__ = None;
+                let mut proof_height__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CounterpartyChannel => {
+                            if counterparty_channel__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyChannel",
+                                ));
+                            }
+                            counterparty_channel__ = map_.next_value()?;
+                        }
+                        GeneratedField::ProofChannel => {
+                            if proof_channel__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofChannel"));
+                            }
+                            proof_channel__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeTimeout {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    counterparty_channel: counterparty_channel__,
+                    proof_channel: proof_channel__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeTimeout",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeTimeoutResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer
+            .serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeTimeoutResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeTimeoutResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeTimeoutResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeTimeoutResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeTimeoutResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgChannelUpgradeTimeoutResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeTimeoutResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeTry {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if !self.proposed_upgrade_connection_hops.is_empty() {
+            len += 1;
+        }
+        if self.counterparty_upgrade_fields.is_some() {
+            len += 1;
+        }
+        if self.counterparty_upgrade_sequence != 0 {
+            len += 1;
+        }
+        if !self.proof_channel.is_empty() {
+            len += 1;
+        }
+        if !self.proof_upgrade.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeTry", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if !self.proposed_upgrade_connection_hops.is_empty() {
+            struct_ser.serialize_field(
+                "proposedUpgradeConnectionHops",
+                &self.proposed_upgrade_connection_hops,
+            )?;
+        }
+        if let Some(v) = self.counterparty_upgrade_fields.as_ref() {
+            struct_ser.serialize_field("counterpartyUpgradeFields", v)?;
+        }
+        if self.counterparty_upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "counterpartyUpgradeSequence",
+                ToString::to_string(&self.counterparty_upgrade_sequence).as_str(),
+            )?;
+        }
+        if !self.proof_channel.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofChannel",
+                pbjson::private::base64::encode(&self.proof_channel).as_str(),
+            )?;
+        }
+        if !self.proof_upgrade.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proofUpgrade",
+                pbjson::private::base64::encode(&self.proof_upgrade).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeTry {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "proposed_upgrade_connection_hops",
+            "proposedUpgradeConnectionHops",
+            "counterparty_upgrade_fields",
+            "counterpartyUpgradeFields",
+            "counterparty_upgrade_sequence",
+            "counterpartyUpgradeSequence",
+            "proof_channel",
+            "proofChannel",
+            "proof_upgrade",
+            "proofUpgrade",
+            "proof_height",
+            "proofHeight",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            ProposedUpgradeConnectionHops,
+            CounterpartyUpgradeFields,
+            CounterpartyUpgradeSequence,
+            ProofChannel,
+            ProofUpgrade,
+            ProofHeight,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "proposedUpgradeConnectionHops"
+                            | "proposed_upgrade_connection_hops" => {
+                                Ok(GeneratedField::ProposedUpgradeConnectionHops)
+                            }
+                            "counterpartyUpgradeFields" | "counterparty_upgrade_fields" => {
+                                Ok(GeneratedField::CounterpartyUpgradeFields)
+                            }
+                            "counterpartyUpgradeSequence" | "counterparty_upgrade_sequence" => {
+                                Ok(GeneratedField::CounterpartyUpgradeSequence)
+                            }
+                            "proofChannel" | "proof_channel" => Ok(GeneratedField::ProofChannel),
+                            "proofUpgrade" | "proof_upgrade" => Ok(GeneratedField::ProofUpgrade),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeTry;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeTry")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeTry, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut proposed_upgrade_connection_hops__ = None;
+                let mut counterparty_upgrade_fields__ = None;
+                let mut counterparty_upgrade_sequence__ = None;
+                let mut proof_channel__ = None;
+                let mut proof_upgrade__ = None;
+                let mut proof_height__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ProposedUpgradeConnectionHops => {
+                            if proposed_upgrade_connection_hops__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "proposedUpgradeConnectionHops",
+                                ));
+                            }
+                            proposed_upgrade_connection_hops__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CounterpartyUpgradeFields => {
+                            if counterparty_upgrade_fields__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyUpgradeFields",
+                                ));
+                            }
+                            counterparty_upgrade_fields__ = map_.next_value()?;
+                        }
+                        GeneratedField::CounterpartyUpgradeSequence => {
+                            if counterparty_upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyUpgradeSequence",
+                                ));
+                            }
+                            counterparty_upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofChannel => {
+                            if proof_channel__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofChannel"));
+                            }
+                            proof_channel__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofUpgrade => {
+                            if proof_upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofUpgrade"));
+                            }
+                            proof_upgrade__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeTry {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    proposed_upgrade_connection_hops: proposed_upgrade_connection_hops__
+                        .unwrap_or_default(),
+                    counterparty_upgrade_fields: counterparty_upgrade_fields__,
+                    counterparty_upgrade_sequence: counterparty_upgrade_sequence__
+                        .unwrap_or_default(),
+                    proof_channel: proof_channel__.unwrap_or_default(),
+                    proof_upgrade: proof_upgrade__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeTry",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgChannelUpgradeTryResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.upgrade.is_some() {
+            len += 1;
+        }
+        if self.upgrade_sequence != 0 {
+            len += 1;
+        }
+        if self.result != 0 {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgChannelUpgradeTryResponse", len)?;
+        if let Some(v) = self.upgrade.as_ref() {
+            struct_ser.serialize_field("upgrade", v)?;
+        }
+        if self.upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "upgradeSequence",
+                ToString::to_string(&self.upgrade_sequence).as_str(),
+            )?;
+        }
+        if self.result != 0 {
+            let v = ResponseResultType::try_from(self.result).map_err(|_| {
+                serde::ser::Error::custom(format!("Invalid variant {}", self.result))
+            })?;
+            struct_ser.serialize_field("result", &v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgChannelUpgradeTryResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["upgrade", "upgrade_sequence", "upgradeSequence", "result"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Upgrade,
+            UpgradeSequence,
+            Result,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "upgrade" => Ok(GeneratedField::Upgrade),
+                            "upgradeSequence" | "upgrade_sequence" => {
+                                Ok(GeneratedField::UpgradeSequence)
+                            }
+                            "result" => Ok(GeneratedField::Result),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgChannelUpgradeTryResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgChannelUpgradeTryResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgChannelUpgradeTryResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut upgrade__ = None;
+                let mut upgrade_sequence__ = None;
+                let mut result__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Upgrade => {
+                            if upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgrade"));
+                            }
+                            upgrade__ = map_.next_value()?;
+                        }
+                        GeneratedField::UpgradeSequence => {
+                            if upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgradeSequence"));
+                            }
+                            upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Result => {
+                            if result__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("result"));
+                            }
+                            result__ = Some(map_.next_value::<ResponseResultType>()? as i32);
+                        }
+                    }
+                }
+                Ok(MsgChannelUpgradeTryResponse {
+                    upgrade: upgrade__,
+                    upgrade_sequence: upgrade_sequence__.unwrap_or_default(),
+                    result: result__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgChannelUpgradeTryResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgPruneAcknowledgements {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        if self.limit != 0 {
+            len += 1;
+        }
+        if !self.signer.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgPruneAcknowledgements", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        if self.limit != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field("limit", ToString::to_string(&self.limit).as_str())?;
+        }
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgPruneAcknowledgements {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "port_id",
+            "portId",
+            "channel_id",
+            "channelId",
+            "limit",
+            "signer",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+            Limit,
+            Signer,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            "limit" => Ok(GeneratedField::Limit),
+                            "signer" => Ok(GeneratedField::Signer),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgPruneAcknowledgements;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgPruneAcknowledgements")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgPruneAcknowledgements, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                let mut limit__ = None;
+                let mut signer__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Limit => {
+                            if limit__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("limit"));
+                            }
+                            limit__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
+                            }
+                            signer__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(MsgPruneAcknowledgements {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                    limit: limit__.unwrap_or_default(),
+                    signer: signer__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgPruneAcknowledgements",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgPruneAcknowledgementsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.total_pruned_sequences != 0 {
+            len += 1;
+        }
+        if self.total_remaining_sequences != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("ibc.core.channel.v1.MsgPruneAcknowledgementsResponse", len)?;
+        if self.total_pruned_sequences != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "totalPrunedSequences",
+                ToString::to_string(&self.total_pruned_sequences).as_str(),
+            )?;
+        }
+        if self.total_remaining_sequences != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "totalRemainingSequences",
+                ToString::to_string(&self.total_remaining_sequences).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgPruneAcknowledgementsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "total_pruned_sequences",
+            "totalPrunedSequences",
+            "total_remaining_sequences",
+            "totalRemainingSequences",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            TotalPrunedSequences,
+            TotalRemainingSequences,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "totalPrunedSequences" | "total_pruned_sequences" => {
+                                Ok(GeneratedField::TotalPrunedSequences)
+                            }
+                            "totalRemainingSequences" | "total_remaining_sequences" => {
+                                Ok(GeneratedField::TotalRemainingSequences)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgPruneAcknowledgementsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgPruneAcknowledgementsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgPruneAcknowledgementsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut total_pruned_sequences__ = None;
+                let mut total_remaining_sequences__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::TotalPrunedSequences => {
+                            if total_pruned_sequences__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "totalPrunedSequences",
+                                ));
+                            }
+                            total_pruned_sequences__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::TotalRemainingSequences => {
+                            if total_remaining_sequences__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "totalRemainingSequences",
+                                ));
+                            }
+                            total_remaining_sequences__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(MsgPruneAcknowledgementsResponse {
+                    total_pruned_sequences: total_pruned_sequences__.unwrap_or_default(),
+                    total_remaining_sequences: total_remaining_sequences__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgPruneAcknowledgementsResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -3263,6 +6129,9 @@ impl serde::Serialize for MsgTimeoutOnClose {
         if !self.signer.is_empty() {
             len += 1;
         }
+        if self.counterparty_upgrade_sequence != 0 {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("ibc.core.channel.v1.MsgTimeoutOnClose", len)?;
         if let Some(v) = self.packet.as_ref() {
@@ -3295,6 +6164,13 @@ impl serde::Serialize for MsgTimeoutOnClose {
         if !self.signer.is_empty() {
             struct_ser.serialize_field("signer", &self.signer)?;
         }
+        if self.counterparty_upgrade_sequence != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "counterpartyUpgradeSequence",
+                ToString::to_string(&self.counterparty_upgrade_sequence).as_str(),
+            )?;
+        }
         struct_ser.end()
     }
 }
@@ -3316,6 +6192,8 @@ impl<'de> serde::Deserialize<'de> for MsgTimeoutOnClose {
             "next_sequence_recv",
             "nextSequenceRecv",
             "signer",
+            "counterparty_upgrade_sequence",
+            "counterpartyUpgradeSequence",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -3326,6 +6204,7 @@ impl<'de> serde::Deserialize<'de> for MsgTimeoutOnClose {
             ProofHeight,
             NextSequenceRecv,
             Signer,
+            CounterpartyUpgradeSequence,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -3361,6 +6240,9 @@ impl<'de> serde::Deserialize<'de> for MsgTimeoutOnClose {
                                 Ok(GeneratedField::NextSequenceRecv)
                             }
                             "signer" => Ok(GeneratedField::Signer),
+                            "counterpartyUpgradeSequence" | "counterparty_upgrade_sequence" => {
+                                Ok(GeneratedField::CounterpartyUpgradeSequence)
+                            }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -3386,6 +6268,7 @@ impl<'de> serde::Deserialize<'de> for MsgTimeoutOnClose {
                 let mut proof_height__ = None;
                 let mut next_sequence_recv__ = None;
                 let mut signer__ = None;
+                let mut counterparty_upgrade_sequence__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Packet => {
@@ -3433,6 +6316,17 @@ impl<'de> serde::Deserialize<'de> for MsgTimeoutOnClose {
                             }
                             signer__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::CounterpartyUpgradeSequence => {
+                            if counterparty_upgrade_sequence__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "counterpartyUpgradeSequence",
+                                ));
+                            }
+                            counterparty_upgrade_sequence__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
                     }
                 }
                 Ok(MsgTimeoutOnClose {
@@ -3442,6 +6336,8 @@ impl<'de> serde::Deserialize<'de> for MsgTimeoutOnClose {
                     proof_height: proof_height__,
                     next_sequence_recv: next_sequence_recv__.unwrap_or_default(),
                     signer: signer__.unwrap_or_default(),
+                    counterparty_upgrade_sequence: counterparty_upgrade_sequence__
+                        .unwrap_or_default(),
                 })
             }
         }
@@ -3656,6 +6552,204 @@ impl<'de> serde::Deserialize<'de> for MsgTimeoutResponse {
         }
         deserializer.deserialize_struct(
             "ibc.core.channel.v1.MsgTimeoutResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        if self.params.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgUpdateParams", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParams {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["authority", "params"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Authority,
+            Params,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            "params" => Ok(GeneratedField::Params),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParams;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgUpdateParams")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<MsgUpdateParams, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut authority__ = None;
+                let mut params__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgUpdateParams {
+                    authority: authority__.unwrap_or_default(),
+                    params: params__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgUpdateParams",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.MsgUpdateParamsResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgUpdateParamsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgUpdateParamsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.MsgUpdateParamsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgUpdateParamsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgUpdateParamsResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.MsgUpdateParamsResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -4406,6 +7500,103 @@ impl<'de> serde::Deserialize<'de> for PacketState {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for Params {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.upgrade_timeout.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("ibc.core.channel.v1.Params", len)?;
+        if let Some(v) = self.upgrade_timeout.as_ref() {
+            struct_ser.serialize_field("upgradeTimeout", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Params {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["upgrade_timeout", "upgradeTimeout"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            UpgradeTimeout,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "upgradeTimeout" | "upgrade_timeout" => {
+                                Ok(GeneratedField::UpgradeTimeout)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = Params;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.Params")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Params, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut upgrade_timeout__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::UpgradeTimeout => {
+                            if upgrade_timeout__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgradeTimeout"));
+                            }
+                            upgrade_timeout__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(Params {
+                    upgrade_timeout: upgrade_timeout__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("ibc.core.channel.v1.Params", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for QueryChannelClientStateRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -5019,6 +8210,189 @@ impl<'de> serde::Deserialize<'de> for QueryChannelConsensusStateResponse {
         }
         deserializer.deserialize_struct(
             "ibc.core.channel.v1.QueryChannelConsensusStateResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryChannelParamsRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.QueryChannelParamsRequest", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryChannelParamsRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryChannelParamsRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryChannelParamsRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryChannelParamsRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(QueryChannelParamsRequest {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryChannelParamsRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryChannelParamsResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.params.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.QueryChannelParamsResponse", len)?;
+        if let Some(v) = self.params.as_ref() {
+            struct_ser.serialize_field("params", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryChannelParamsResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["params"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Params,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "params" => Ok(GeneratedField::Params),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryChannelParamsResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryChannelParamsResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryChannelParamsResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut params__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Params => {
+                            if params__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("params"));
+                            }
+                            params__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryChannelParamsResponse { params: params__ })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryChannelParamsResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -6047,6 +9421,282 @@ impl<'de> serde::Deserialize<'de> for QueryNextSequenceReceiveResponse {
         }
         deserializer.deserialize_struct(
             "ibc.core.channel.v1.QueryNextSequenceReceiveResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryNextSequenceSendRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.QueryNextSequenceSendRequest", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryNextSequenceSendRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["port_id", "portId", "channel_id", "channelId"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryNextSequenceSendRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryNextSequenceSendRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryNextSequenceSendRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(QueryNextSequenceSendRequest {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryNextSequenceSendRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryNextSequenceSendResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.next_sequence_send != 0 {
+            len += 1;
+        }
+        if !self.proof.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("ibc.core.channel.v1.QueryNextSequenceSendResponse", len)?;
+        if self.next_sequence_send != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "nextSequenceSend",
+                ToString::to_string(&self.next_sequence_send).as_str(),
+            )?;
+        }
+        if !self.proof.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proof",
+                pbjson::private::base64::encode(&self.proof).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryNextSequenceSendResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "next_sequence_send",
+            "nextSequenceSend",
+            "proof",
+            "proof_height",
+            "proofHeight",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            NextSequenceSend,
+            Proof,
+            ProofHeight,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "nextSequenceSend" | "next_sequence_send" => {
+                                Ok(GeneratedField::NextSequenceSend)
+                            }
+                            "proof" => Ok(GeneratedField::Proof),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryNextSequenceSendResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryNextSequenceSendResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryNextSequenceSendResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut next_sequence_send__ = None;
+                let mut proof__ = None;
+                let mut proof_height__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::NextSequenceSend => {
+                            if next_sequence_send__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nextSequenceSend"));
+                            }
+                            next_sequence_send__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Proof => {
+                            if proof__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proof"));
+                            }
+                            proof__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryNextSequenceSendResponse {
+                    next_sequence_send: next_sequence_send__.unwrap_or_default(),
+                    proof: proof__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryNextSequenceSendResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -8075,6 +11725,531 @@ impl<'de> serde::Deserialize<'de> for QueryUnreceivedPacketsResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for QueryUpgradeErrorRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.QueryUpgradeErrorRequest", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryUpgradeErrorRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["port_id", "portId", "channel_id", "channelId"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryUpgradeErrorRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryUpgradeErrorRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryUpgradeErrorRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(QueryUpgradeErrorRequest {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryUpgradeErrorRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryUpgradeErrorResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.error_receipt.is_some() {
+            len += 1;
+        }
+        if !self.proof.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.QueryUpgradeErrorResponse", len)?;
+        if let Some(v) = self.error_receipt.as_ref() {
+            struct_ser.serialize_field("errorReceipt", v)?;
+        }
+        if !self.proof.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proof",
+                pbjson::private::base64::encode(&self.proof).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryUpgradeErrorResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "error_receipt",
+            "errorReceipt",
+            "proof",
+            "proof_height",
+            "proofHeight",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            ErrorReceipt,
+            Proof,
+            ProofHeight,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "errorReceipt" | "error_receipt" => Ok(GeneratedField::ErrorReceipt),
+                            "proof" => Ok(GeneratedField::Proof),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryUpgradeErrorResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryUpgradeErrorResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryUpgradeErrorResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut error_receipt__ = None;
+                let mut proof__ = None;
+                let mut proof_height__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::ErrorReceipt => {
+                            if error_receipt__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("errorReceipt"));
+                            }
+                            error_receipt__ = map_.next_value()?;
+                        }
+                        GeneratedField::Proof => {
+                            if proof__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proof"));
+                            }
+                            proof__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryUpgradeErrorResponse {
+                    error_receipt: error_receipt__,
+                    proof: proof__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryUpgradeErrorResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryUpgradeRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.port_id.is_empty() {
+            len += 1;
+        }
+        if !self.channel_id.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.QueryUpgradeRequest", len)?;
+        if !self.port_id.is_empty() {
+            struct_ser.serialize_field("portId", &self.port_id)?;
+        }
+        if !self.channel_id.is_empty() {
+            struct_ser.serialize_field("channelId", &self.channel_id)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryUpgradeRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["port_id", "portId", "channel_id", "channelId"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            PortId,
+            ChannelId,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "portId" | "port_id" => Ok(GeneratedField::PortId),
+                            "channelId" | "channel_id" => Ok(GeneratedField::ChannelId),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryUpgradeRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryUpgradeRequest")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<QueryUpgradeRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut port_id__ = None;
+                let mut channel_id__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::PortId => {
+                            if port_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("portId"));
+                            }
+                            port_id__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::ChannelId => {
+                            if channel_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("channelId"));
+                            }
+                            channel_id__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(QueryUpgradeRequest {
+                    port_id: port_id__.unwrap_or_default(),
+                    channel_id: channel_id__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryUpgradeRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryUpgradeResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.upgrade.is_some() {
+            len += 1;
+        }
+        if !self.proof.is_empty() {
+            len += 1;
+        }
+        if self.proof_height.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.QueryUpgradeResponse", len)?;
+        if let Some(v) = self.upgrade.as_ref() {
+            struct_ser.serialize_field("upgrade", v)?;
+        }
+        if !self.proof.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "proof",
+                pbjson::private::base64::encode(&self.proof).as_str(),
+            )?;
+        }
+        if let Some(v) = self.proof_height.as_ref() {
+            struct_ser.serialize_field("proofHeight", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryUpgradeResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["upgrade", "proof", "proof_height", "proofHeight"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Upgrade,
+            Proof,
+            ProofHeight,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "upgrade" => Ok(GeneratedField::Upgrade),
+                            "proof" => Ok(GeneratedField::Proof),
+                            "proofHeight" | "proof_height" => Ok(GeneratedField::ProofHeight),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryUpgradeResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.QueryUpgradeResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryUpgradeResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut upgrade__ = None;
+                let mut proof__ = None;
+                let mut proof_height__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Upgrade => {
+                            if upgrade__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("upgrade"));
+                            }
+                            upgrade__ = map_.next_value()?;
+                        }
+                        GeneratedField::Proof => {
+                            if proof__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proof"));
+                            }
+                            proof__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ProofHeight => {
+                            if proof_height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proofHeight"));
+                            }
+                            proof_height__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryUpgradeResponse {
+                    upgrade: upgrade__,
+                    proof: proof__.unwrap_or_default(),
+                    proof_height: proof_height__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.QueryUpgradeResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for ResponseResultType {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -8085,6 +12260,7 @@ impl serde::Serialize for ResponseResultType {
             Self::Unspecified => "RESPONSE_RESULT_TYPE_UNSPECIFIED",
             Self::Noop => "RESPONSE_RESULT_TYPE_NOOP",
             Self::Success => "RESPONSE_RESULT_TYPE_SUCCESS",
+            Self::Failure => "RESPONSE_RESULT_TYPE_FAILURE",
         };
         serializer.serialize_str(variant)
     }
@@ -8100,6 +12276,7 @@ impl<'de> serde::Deserialize<'de> for ResponseResultType {
             "RESPONSE_RESULT_TYPE_UNSPECIFIED",
             "RESPONSE_RESULT_TYPE_NOOP",
             "RESPONSE_RESULT_TYPE_SUCCESS",
+            "RESPONSE_RESULT_TYPE_FAILURE",
         ];
 
         struct GeneratedVisitor;
@@ -8143,6 +12320,7 @@ impl<'de> serde::Deserialize<'de> for ResponseResultType {
                     "RESPONSE_RESULT_TYPE_UNSPECIFIED" => Ok(ResponseResultType::Unspecified),
                     "RESPONSE_RESULT_TYPE_NOOP" => Ok(ResponseResultType::Noop),
                     "RESPONSE_RESULT_TYPE_SUCCESS" => Ok(ResponseResultType::Success),
+                    "RESPONSE_RESULT_TYPE_FAILURE" => Ok(ResponseResultType::Failure),
                     _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
                 }
             }
@@ -8163,6 +12341,8 @@ impl serde::Serialize for State {
             Self::Tryopen => "STATE_TRYOPEN",
             Self::Open => "STATE_OPEN",
             Self::Closed => "STATE_CLOSED",
+            Self::Flushing => "STATE_FLUSHING",
+            Self::Flushcomplete => "STATE_FLUSHCOMPLETE",
         };
         serializer.serialize_str(variant)
     }
@@ -8180,6 +12360,8 @@ impl<'de> serde::Deserialize<'de> for State {
             "STATE_TRYOPEN",
             "STATE_OPEN",
             "STATE_CLOSED",
+            "STATE_FLUSHING",
+            "STATE_FLUSHCOMPLETE",
         ];
 
         struct GeneratedVisitor;
@@ -8225,10 +12407,406 @@ impl<'de> serde::Deserialize<'de> for State {
                     "STATE_TRYOPEN" => Ok(State::Tryopen),
                     "STATE_OPEN" => Ok(State::Open),
                     "STATE_CLOSED" => Ok(State::Closed),
+                    "STATE_FLUSHING" => Ok(State::Flushing),
+                    "STATE_FLUSHCOMPLETE" => Ok(State::Flushcomplete),
                     _ => Err(serde::de::Error::unknown_variant(value, FIELDS)),
                 }
             }
         }
         deserializer.deserialize_any(GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for Timeout {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.height.is_some() {
+            len += 1;
+        }
+        if self.timestamp != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("ibc.core.channel.v1.Timeout", len)?;
+        if let Some(v) = self.height.as_ref() {
+            struct_ser.serialize_field("height", v)?;
+        }
+        if self.timestamp != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser
+                .serialize_field("timestamp", ToString::to_string(&self.timestamp).as_str())?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Timeout {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["height", "timestamp"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Height,
+            Timestamp,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "height" => Ok(GeneratedField::Height),
+                            "timestamp" => Ok(GeneratedField::Timestamp),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = Timeout;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.Timeout")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Timeout, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut height__ = None;
+                let mut timestamp__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Height => {
+                            if height__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("height"));
+                            }
+                            height__ = map_.next_value()?;
+                        }
+                        GeneratedField::Timestamp => {
+                            if timestamp__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("timestamp"));
+                            }
+                            timestamp__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(Timeout {
+                    height: height__,
+                    timestamp: timestamp__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("ibc.core.channel.v1.Timeout", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for Upgrade {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.fields.is_some() {
+            len += 1;
+        }
+        if self.timeout.is_some() {
+            len += 1;
+        }
+        if self.next_sequence_send != 0 {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("ibc.core.channel.v1.Upgrade", len)?;
+        if let Some(v) = self.fields.as_ref() {
+            struct_ser.serialize_field("fields", v)?;
+        }
+        if let Some(v) = self.timeout.as_ref() {
+            struct_ser.serialize_field("timeout", v)?;
+        }
+        if self.next_sequence_send != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "nextSequenceSend",
+                ToString::to_string(&self.next_sequence_send).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Upgrade {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "fields",
+            "timeout",
+            "next_sequence_send",
+            "nextSequenceSend",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Fields,
+            Timeout,
+            NextSequenceSend,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "fields" => Ok(GeneratedField::Fields),
+                            "timeout" => Ok(GeneratedField::Timeout),
+                            "nextSequenceSend" | "next_sequence_send" => {
+                                Ok(GeneratedField::NextSequenceSend)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = Upgrade;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.Upgrade")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Upgrade, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut fields__ = None;
+                let mut timeout__ = None;
+                let mut next_sequence_send__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Fields => {
+                            if fields__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("fields"));
+                            }
+                            fields__ = map_.next_value()?;
+                        }
+                        GeneratedField::Timeout => {
+                            if timeout__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("timeout"));
+                            }
+                            timeout__ = map_.next_value()?;
+                        }
+                        GeneratedField::NextSequenceSend => {
+                            if next_sequence_send__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("nextSequenceSend"));
+                            }
+                            next_sequence_send__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(Upgrade {
+                    fields: fields__,
+                    timeout: timeout__,
+                    next_sequence_send: next_sequence_send__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("ibc.core.channel.v1.Upgrade", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for UpgradeFields {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.ordering != 0 {
+            len += 1;
+        }
+        if !self.connection_hops.is_empty() {
+            len += 1;
+        }
+        if !self.version.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("ibc.core.channel.v1.UpgradeFields", len)?;
+        if self.ordering != 0 {
+            let v = Order::try_from(self.ordering).map_err(|_| {
+                serde::ser::Error::custom(format!("Invalid variant {}", self.ordering))
+            })?;
+            struct_ser.serialize_field("ordering", &v)?;
+        }
+        if !self.connection_hops.is_empty() {
+            struct_ser.serialize_field("connectionHops", &self.connection_hops)?;
+        }
+        if !self.version.is_empty() {
+            struct_ser.serialize_field("version", &self.version)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for UpgradeFields {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["ordering", "connection_hops", "connectionHops", "version"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Ordering,
+            ConnectionHops,
+            Version,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "ordering" => Ok(GeneratedField::Ordering),
+                            "connectionHops" | "connection_hops" => {
+                                Ok(GeneratedField::ConnectionHops)
+                            }
+                            "version" => Ok(GeneratedField::Version),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = UpgradeFields;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct ibc.core.channel.v1.UpgradeFields")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> std::result::Result<UpgradeFields, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut ordering__ = None;
+                let mut connection_hops__ = None;
+                let mut version__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Ordering => {
+                            if ordering__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("ordering"));
+                            }
+                            ordering__ = Some(map_.next_value::<Order>()? as i32);
+                        }
+                        GeneratedField::ConnectionHops => {
+                            if connection_hops__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("connectionHops"));
+                            }
+                            connection_hops__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Version => {
+                            if version__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("version"));
+                            }
+                            version__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(UpgradeFields {
+                    ordering: ordering__.unwrap_or_default(),
+                    connection_hops: connection_hops__.unwrap_or_default(),
+                    version: version__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "ibc.core.channel.v1.UpgradeFields",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
