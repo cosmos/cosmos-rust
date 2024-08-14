@@ -14,7 +14,8 @@ impl serde::Serialize for Pair {
         if !self.value.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("cosmos.base.kv.v1beta1.Pair", len)?;
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.store.internal.kv.v1beta1.Pair", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
             struct_ser
@@ -82,7 +83,7 @@ impl<'de> serde::Deserialize<'de> for Pair {
             type Value = Pair;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.kv.v1beta1.Pair")
+                formatter.write_str("struct cosmos.store.internal.kv.v1beta1.Pair")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<Pair, V::Error>
@@ -119,7 +120,11 @@ impl<'de> serde::Deserialize<'de> for Pair {
                 })
             }
         }
-        deserializer.deserialize_struct("cosmos.base.kv.v1beta1.Pair", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct(
+            "cosmos.store.internal.kv.v1beta1.Pair",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 #[cfg(feature = "serde")]
@@ -134,7 +139,8 @@ impl serde::Serialize for Pairs {
         if !self.pairs.is_empty() {
             len += 1;
         }
-        let mut struct_ser = serializer.serialize_struct("cosmos.base.kv.v1beta1.Pairs", len)?;
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.store.internal.kv.v1beta1.Pairs", len)?;
         if !self.pairs.is_empty() {
             struct_ser.serialize_field("pairs", &self.pairs)?;
         }
@@ -191,7 +197,7 @@ impl<'de> serde::Deserialize<'de> for Pairs {
             type Value = Pairs;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.kv.v1beta1.Pairs")
+                formatter.write_str("struct cosmos.store.internal.kv.v1beta1.Pairs")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<Pairs, V::Error>
@@ -214,6 +220,10 @@ impl<'de> serde::Deserialize<'de> for Pairs {
                 })
             }
         }
-        deserializer.deserialize_struct("cosmos.base.kv.v1beta1.Pairs", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct(
+            "cosmos.store.internal.kv.v1beta1.Pairs",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }

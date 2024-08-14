@@ -1,16 +1,18 @@
 // @generated
 /// Generated client implementations.
 #[cfg(feature = "grpc")]
-pub mod service_client {
+pub mod abci_listener_service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::http::Uri;
     use tonic::codegen::*;
+    /** ABCIListenerService is the service for the BaseApp ABCIListener interface
+    */
     #[derive(Debug, Clone)]
-    pub struct ServiceClient<T> {
+    pub struct AbciListenerServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
     #[cfg(feature = "grpc-transport")]
-    impl ServiceClient<tonic::transport::Channel> {
+    impl AbciListenerServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -21,7 +23,7 @@ pub mod service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> ServiceClient<T>
+    impl<T> AbciListenerServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -39,7 +41,7 @@ pub mod service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> ServiceClient<InterceptedService<T, F>>
+        ) -> AbciListenerServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -52,7 +54,7 @@ pub mod service_client {
             <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
                 Into<StdError> + Send + Sync,
         {
-            ServiceClient::new(InterceptedService::new(inner, interceptor))
+            AbciListenerServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -85,10 +87,13 @@ pub mod service_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn config(
+        /** ListenFinalizeBlock is the corresponding endpoint for ABCIListener.ListenEndBlock
+        */
+        pub async fn listen_finalize_block(
             &mut self,
-            request: impl tonic::IntoRequest<super::ConfigRequest>,
-        ) -> std::result::Result<tonic::Response<super::ConfigResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::ListenFinalizeBlockRequest>,
+        ) -> std::result::Result<tonic::Response<super::ListenFinalizeBlockResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -96,19 +101,23 @@ pub mod service_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.base.node.v1beta1.Service/Config");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.store.streaming.abci.ABCIListenerService/ListenFinalizeBlock",
+            );
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.base.node.v1beta1.Service",
-                "Config",
+                "cosmos.store.streaming.abci.ABCIListenerService",
+                "ListenFinalizeBlock",
             ));
             self.inner.unary(req, path, codec).await
         }
-        pub async fn status(
+        /** ListenCommit is the corresponding endpoint for ABCIListener.ListenCommit
+        */
+        pub async fn listen_commit(
             &mut self,
-            request: impl tonic::IntoRequest<super::StatusRequest>,
-        ) -> std::result::Result<tonic::Response<super::StatusResponse>, tonic::Status> {
+            request: impl tonic::IntoRequest<super::ListenCommitRequest>,
+        ) -> std::result::Result<tonic::Response<super::ListenCommitResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -116,12 +125,13 @@ pub mod service_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.base.node.v1beta1.Service/Status");
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.store.streaming.abci.ABCIListenerService/ListenCommit",
+            );
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.base.node.v1beta1.Service",
-                "Status",
+                "cosmos.store.streaming.abci.ABCIListenerService",
+                "ListenCommit",
             ));
             self.inner.unary(req, path, codec).await
         }
@@ -129,23 +139,29 @@ pub mod service_client {
 }
 /// Generated server implementations.
 #[cfg(feature = "grpc")]
-pub mod service_server {
+pub mod abci_listener_service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with ServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with AbciListenerServiceServer.
     #[async_trait]
-    pub trait Service: Send + Sync + 'static {
-        async fn config(
+    pub trait AbciListenerService: Send + Sync + 'static {
+        /** ListenFinalizeBlock is the corresponding endpoint for ABCIListener.ListenEndBlock
+        */
+        async fn listen_finalize_block(
             &self,
-            request: tonic::Request<super::ConfigRequest>,
-        ) -> std::result::Result<tonic::Response<super::ConfigResponse>, tonic::Status>;
-        async fn status(
+            request: tonic::Request<super::ListenFinalizeBlockRequest>,
+        ) -> std::result::Result<tonic::Response<super::ListenFinalizeBlockResponse>, tonic::Status>;
+        /** ListenCommit is the corresponding endpoint for ABCIListener.ListenCommit
+        */
+        async fn listen_commit(
             &self,
-            request: tonic::Request<super::StatusRequest>,
-        ) -> std::result::Result<tonic::Response<super::StatusResponse>, tonic::Status>;
+            request: tonic::Request<super::ListenCommitRequest>,
+        ) -> std::result::Result<tonic::Response<super::ListenCommitResponse>, tonic::Status>;
     }
+    /** ABCIListenerService is the service for the BaseApp ABCIListener interface
+    */
     #[derive(Debug)]
-    pub struct ServiceServer<T: Service> {
+    pub struct AbciListenerServiceServer<T: AbciListenerService> {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
@@ -153,7 +169,7 @@ pub mod service_server {
         max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
-    impl<T: Service> ServiceServer<T> {
+    impl<T: AbciListenerService> AbciListenerServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -202,9 +218,9 @@ pub mod service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for ServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for AbciListenerServiceServer<T>
     where
-        T: Service,
+        T: AbciListenerService,
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
@@ -220,18 +236,21 @@ pub mod service_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.base.node.v1beta1.Service/Config" => {
+                "/cosmos.store.streaming.abci.ABCIListenerService/ListenFinalizeBlock" => {
                     #[allow(non_camel_case_types)]
-                    struct ConfigSvc<T: Service>(pub Arc<T>);
-                    impl<T: Service> tonic::server::UnaryService<super::ConfigRequest> for ConfigSvc<T> {
-                        type Response = super::ConfigResponse;
+                    struct ListenFinalizeBlockSvc<T: AbciListenerService>(pub Arc<T>);
+                    impl<T: AbciListenerService>
+                        tonic::server::UnaryService<super::ListenFinalizeBlockRequest>
+                        for ListenFinalizeBlockSvc<T>
+                    {
+                        type Response = super::ListenFinalizeBlockResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::ConfigRequest>,
+                            request: tonic::Request<super::ListenFinalizeBlockRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).config(request).await };
+                            let fut = async move { (*inner).listen_finalize_block(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -242,7 +261,7 @@ pub mod service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = ConfigSvc(inner);
+                        let method = ListenFinalizeBlockSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -258,18 +277,21 @@ pub mod service_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.base.node.v1beta1.Service/Status" => {
+                "/cosmos.store.streaming.abci.ABCIListenerService/ListenCommit" => {
                     #[allow(non_camel_case_types)]
-                    struct StatusSvc<T: Service>(pub Arc<T>);
-                    impl<T: Service> tonic::server::UnaryService<super::StatusRequest> for StatusSvc<T> {
-                        type Response = super::StatusResponse;
+                    struct ListenCommitSvc<T: AbciListenerService>(pub Arc<T>);
+                    impl<T: AbciListenerService>
+                        tonic::server::UnaryService<super::ListenCommitRequest>
+                        for ListenCommitSvc<T>
+                    {
+                        type Response = super::ListenCommitResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::StatusRequest>,
+                            request: tonic::Request<super::ListenCommitRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).status(request).await };
+                            let fut = async move { (*inner).listen_commit(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -280,7 +302,7 @@ pub mod service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = StatusSvc(inner);
+                        let method = ListenCommitSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -307,7 +329,7 @@ pub mod service_server {
             }
         }
     }
-    impl<T: Service> Clone for ServiceServer<T> {
+    impl<T: AbciListenerService> Clone for AbciListenerServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -319,7 +341,7 @@ pub mod service_server {
             }
         }
     }
-    impl<T: Service> Clone for _Inner<T> {
+    impl<T: AbciListenerService> Clone for _Inner<T> {
         fn clone(&self) -> Self {
             Self(Arc::clone(&self.0))
         }
@@ -329,7 +351,7 @@ pub mod service_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: Service> tonic::server::NamedService for ServiceServer<T> {
-        const NAME: &'static str = "cosmos.base.node.v1beta1.Service";
+    impl<T: AbciListenerService> tonic::server::NamedService for AbciListenerServiceServer<T> {
+        const NAME: &'static str = "cosmos.store.streaming.abci.ABCIListenerService";
     }
 }

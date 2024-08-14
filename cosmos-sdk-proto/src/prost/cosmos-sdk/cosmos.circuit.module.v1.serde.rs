@@ -8,13 +8,12 @@ impl serde::Serialize for Module {
     {
         use serde::ser::SerializeStruct;
         let mut len = 0;
-        if self.seal_keeper {
+        if !self.authority.is_empty() {
             len += 1;
         }
-        let mut struct_ser =
-            serializer.serialize_struct("cosmos.capability.module.v1.Module", len)?;
-        if self.seal_keeper {
-            struct_ser.serialize_field("sealKeeper", &self.seal_keeper)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.circuit.module.v1.Module", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
         }
         struct_ser.end()
     }
@@ -26,11 +25,11 @@ impl<'de> serde::Deserialize<'de> for Module {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["seal_keeper", "sealKeeper"];
+        const FIELDS: &[&str] = &["authority"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
-            SealKeeper,
+            Authority,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -56,7 +55,7 @@ impl<'de> serde::Deserialize<'de> for Module {
                         E: serde::de::Error,
                     {
                         match value {
-                            "sealKeeper" | "seal_keeper" => Ok(GeneratedField::SealKeeper),
+                            "authority" => Ok(GeneratedField::Authority),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -69,33 +68,29 @@ impl<'de> serde::Deserialize<'de> for Module {
             type Value = Module;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.capability.module.v1.Module")
+                formatter.write_str("struct cosmos.circuit.module.v1.Module")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<Module, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                let mut seal_keeper__ = None;
+                let mut authority__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
-                        GeneratedField::SealKeeper => {
-                            if seal_keeper__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("sealKeeper"));
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
                             }
-                            seal_keeper__ = Some(map_.next_value()?);
+                            authority__ = Some(map_.next_value()?);
                         }
                     }
                 }
                 Ok(Module {
-                    seal_keeper: seal_keeper__.unwrap_or_default(),
+                    authority: authority__.unwrap_or_default(),
                 })
             }
         }
-        deserializer.deserialize_struct(
-            "cosmos.capability.module.v1.Module",
-            FIELDS,
-            GeneratedVisitor,
-        )
+        deserializer.deserialize_struct("cosmos.circuit.module.v1.Module", FIELDS, GeneratedVisitor)
     }
 }

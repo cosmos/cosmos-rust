@@ -6,23 +6,24 @@
 pub struct ValidatorSigningInfo {
     #[prost(string, tag = "1")]
     pub address: ::prost::alloc::string::String,
-    /// Height at which validator was first a candidate OR was unjailed
+    /// Height at which validator was first a candidate OR was un-jailed
     #[prost(int64, tag = "2")]
     pub start_height: i64,
-    /// Index which is incremented each time the validator was a bonded
-    /// in a block and may have signed a precommit or not. This in conjunction with the
-    /// `SignedBlocksWindow` param determines the index in the `MissedBlocksBitArray`.
+    /// Index which is incremented every time a validator is bonded in a block and
+    /// _may_ have signed a pre-commit or not. This in conjunction with the
+    /// signed_blocks_window param determines the index in the missed block bitmap.
     #[prost(int64, tag = "3")]
     pub index_offset: i64,
     /// Timestamp until which the validator is jailed due to liveness downtime.
     #[prost(message, optional, tag = "4")]
     pub jailed_until: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
-    /// Whether or not a validator has been tombstoned (killed out of validator set). It is set
-    /// once the validator commits an equivocation or for any other configured misbehiavor.
+    /// Whether or not a validator has been tombstoned (killed out of validator
+    /// set). It is set once the validator commits an equivocation or for any other
+    /// configured misbehavior.
     #[prost(bool, tag = "5")]
     pub tombstoned: bool,
-    /// A counter kept to avoid unnecessary array reads.
-    /// Note that `Sum(MissedBlocksBitArray)` always equals `MissedBlocksCounter`.
+    /// A counter of missed (unsigned) blocks. It is used to avoid unnecessary
+    /// reads in the missed block bitmap.
     #[prost(int64, tag = "6")]
     pub missed_blocks_counter: i64,
 }

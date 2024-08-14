@@ -256,13 +256,13 @@ pub struct GenesisState {
     /// proposals defines all the proposals present at genesis.
     #[prost(message, repeated, tag = "4")]
     pub proposals: ::prost::alloc::vec::Vec<Proposal>,
-    /// params defines all the parameters of related to deposit.
+    /// deposit_params defines all the parameters related to deposit.
     #[prost(message, optional, tag = "5")]
     pub deposit_params: ::core::option::Option<DepositParams>,
-    /// params defines all the parameters of related to voting.
+    /// voting_params defines all the parameters related to voting.
     #[prost(message, optional, tag = "6")]
     pub voting_params: ::core::option::Option<VotingParams>,
-    /// params defines all the parameters of related to tally.
+    /// tally_params defines all the parameters related to tally.
     #[prost(message, optional, tag = "7")]
     pub tally_params: ::core::option::Option<TallyParams>,
 }

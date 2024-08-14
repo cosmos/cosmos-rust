@@ -11,6 +11,12 @@ pub struct Module {
     /// authority defines the custom module authority. If not set, defaults to the governance module.
     #[prost(string, tag = "2")]
     pub authority: ::prost::alloc::string::String,
+    /// bech32_prefix_validator is the bech32 validator prefix for the app.
+    #[prost(string, tag = "3")]
+    pub bech32_prefix_validator: ::prost::alloc::string::String,
+    /// bech32_prefix_consensus is the bech32 consensus node prefix for the app.
+    #[prost(string, tag = "4")]
+    pub bech32_prefix_consensus: ::prost::alloc::string::String,
 }
 include!("cosmos.staking.module.v1.serde.rs");
 // @@protoc_insertion_point(module)

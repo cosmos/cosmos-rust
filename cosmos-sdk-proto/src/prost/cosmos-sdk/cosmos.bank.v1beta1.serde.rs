@@ -1927,6 +1927,9 @@ impl serde::Serialize for QueryAllBalancesRequest {
         if self.pagination.is_some() {
             len += 1;
         }
+        if self.resolve_denom {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.bank.v1beta1.QueryAllBalancesRequest", len)?;
         if !self.address.is_empty() {
@@ -1934,6 +1937,9 @@ impl serde::Serialize for QueryAllBalancesRequest {
         }
         if let Some(v) = self.pagination.as_ref() {
             struct_ser.serialize_field("pagination", v)?;
+        }
+        if self.resolve_denom {
+            struct_ser.serialize_field("resolveDenom", &self.resolve_denom)?;
         }
         struct_ser.end()
     }
@@ -1945,12 +1951,13 @@ impl<'de> serde::Deserialize<'de> for QueryAllBalancesRequest {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["address", "pagination"];
+        const FIELDS: &[&str] = &["address", "pagination", "resolve_denom", "resolveDenom"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             Address,
             Pagination,
+            ResolveDenom,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -1978,6 +1985,7 @@ impl<'de> serde::Deserialize<'de> for QueryAllBalancesRequest {
                         match value {
                             "address" => Ok(GeneratedField::Address),
                             "pagination" => Ok(GeneratedField::Pagination),
+                            "resolveDenom" | "resolve_denom" => Ok(GeneratedField::ResolveDenom),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -2002,6 +2010,7 @@ impl<'de> serde::Deserialize<'de> for QueryAllBalancesRequest {
             {
                 let mut address__ = None;
                 let mut pagination__ = None;
+                let mut resolve_denom__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Address => {
@@ -2016,11 +2025,18 @@ impl<'de> serde::Deserialize<'de> for QueryAllBalancesRequest {
                             }
                             pagination__ = map_.next_value()?;
                         }
+                        GeneratedField::ResolveDenom => {
+                            if resolve_denom__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("resolveDenom"));
+                            }
+                            resolve_denom__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(QueryAllBalancesRequest {
                     address: address__.unwrap_or_default(),
                     pagination: pagination__,
+                    resolve_denom: resolve_denom__.unwrap_or_default(),
                 })
             }
         }
@@ -2368,6 +2384,218 @@ impl<'de> serde::Deserialize<'de> for QueryBalanceResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for QueryDenomMetadataByQueryStringRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.denom.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct(
+            "cosmos.bank.v1beta1.QueryDenomMetadataByQueryStringRequest",
+            len,
+        )?;
+        if !self.denom.is_empty() {
+            struct_ser.serialize_field("denom", &self.denom)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryDenomMetadataByQueryStringRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["denom"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Denom,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "denom" => Ok(GeneratedField::Denom),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryDenomMetadataByQueryStringRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmos.bank.v1beta1.QueryDenomMetadataByQueryStringRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryDenomMetadataByQueryStringRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut denom__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Denom => {
+                            if denom__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("denom"));
+                            }
+                            denom__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(QueryDenomMetadataByQueryStringRequest {
+                    denom: denom__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QueryDenomMetadataByQueryStringRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryDenomMetadataByQueryStringResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.metadata.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct(
+            "cosmos.bank.v1beta1.QueryDenomMetadataByQueryStringResponse",
+            len,
+        )?;
+        if let Some(v) = self.metadata.as_ref() {
+            struct_ser.serialize_field("metadata", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryDenomMetadataByQueryStringResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["metadata"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Metadata,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "metadata" => Ok(GeneratedField::Metadata),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryDenomMetadataByQueryStringResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter
+                    .write_str("struct cosmos.bank.v1beta1.QueryDenomMetadataByQueryStringResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryDenomMetadataByQueryStringResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut metadata__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Metadata => {
+                            if metadata__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("metadata"));
+                            }
+                            metadata__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryDenomMetadataByQueryStringResponse {
+                    metadata: metadata__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QueryDenomMetadataByQueryStringResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for QueryDenomMetadataRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -2568,6 +2796,244 @@ impl<'de> serde::Deserialize<'de> for QueryDenomMetadataResponse {
         }
         deserializer.deserialize_struct(
             "cosmos.bank.v1beta1.QueryDenomMetadataResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryDenomOwnersByQueryRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.denom.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("cosmos.bank.v1beta1.QueryDenomOwnersByQueryRequest", len)?;
+        if !self.denom.is_empty() {
+            struct_ser.serialize_field("denom", &self.denom)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryDenomOwnersByQueryRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["denom", "pagination"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Denom,
+            Pagination,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "denom" => Ok(GeneratedField::Denom),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryDenomOwnersByQueryRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.QueryDenomOwnersByQueryRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryDenomOwnersByQueryRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut denom__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Denom => {
+                            if denom__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("denom"));
+                            }
+                            denom__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryDenomOwnersByQueryRequest {
+                    denom: denom__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QueryDenomOwnersByQueryRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryDenomOwnersByQueryResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.denom_owners.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer
+            .serialize_struct("cosmos.bank.v1beta1.QueryDenomOwnersByQueryResponse", len)?;
+        if !self.denom_owners.is_empty() {
+            struct_ser.serialize_field("denomOwners", &self.denom_owners)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryDenomOwnersByQueryResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["denom_owners", "denomOwners", "pagination"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            DenomOwners,
+            Pagination,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "denomOwners" | "denom_owners" => Ok(GeneratedField::DenomOwners),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryDenomOwnersByQueryResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmos.bank.v1beta1.QueryDenomOwnersByQueryResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryDenomOwnersByQueryResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut denom_owners__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::DenomOwners => {
+                            if denom_owners__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("denomOwners"));
+                            }
+                            denom_owners__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryDenomOwnersByQueryResponse {
+                    denom_owners: denom_owners__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.bank.v1beta1.QueryDenomOwnersByQueryResponse",
             FIELDS,
             GeneratedVisitor,
         )

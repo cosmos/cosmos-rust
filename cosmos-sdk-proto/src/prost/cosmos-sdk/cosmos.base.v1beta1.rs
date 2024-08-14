@@ -24,6 +24,7 @@ pub struct DecCoin {
     pub amount: ::prost::alloc::string::String,
 }
 /// IntProto defines a Protobuf wrapper around an Int object.
+/// Deprecated: Prefer to use math.Int directly. It supports binary Marshal and Unmarshal.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct IntProto {
@@ -31,6 +32,7 @@ pub struct IntProto {
     pub int: ::prost::alloc::string::String,
 }
 /// DecProto defines a Protobuf wrapper around a Dec object.
+/// Deprecated: Prefer to use math.LegacyDec directly. It supports binary Marshal and Unmarshal.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DecProto {

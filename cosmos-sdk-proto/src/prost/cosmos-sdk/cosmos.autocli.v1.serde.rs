@@ -199,9 +199,6 @@ impl serde::Serialize for FlagOptions {
         if !self.default_value.is_empty() {
             len += 1;
         }
-        if !self.no_opt_default_value.is_empty() {
-            len += 1;
-        }
         if !self.deprecated.is_empty() {
             len += 1;
         }
@@ -223,9 +220,6 @@ impl serde::Serialize for FlagOptions {
         }
         if !self.default_value.is_empty() {
             struct_ser.serialize_field("defaultValue", &self.default_value)?;
-        }
-        if !self.no_opt_default_value.is_empty() {
-            struct_ser.serialize_field("noOptDefaultValue", &self.no_opt_default_value)?;
         }
         if !self.deprecated.is_empty() {
             struct_ser.serialize_field("deprecated", &self.deprecated)?;
@@ -252,8 +246,6 @@ impl<'de> serde::Deserialize<'de> for FlagOptions {
             "usage",
             "default_value",
             "defaultValue",
-            "no_opt_default_value",
-            "noOptDefaultValue",
             "deprecated",
             "shorthand_deprecated",
             "shorthandDeprecated",
@@ -266,7 +258,6 @@ impl<'de> serde::Deserialize<'de> for FlagOptions {
             Shorthand,
             Usage,
             DefaultValue,
-            NoOptDefaultValue,
             Deprecated,
             ShorthandDeprecated,
             Hidden,
@@ -299,9 +290,6 @@ impl<'de> serde::Deserialize<'de> for FlagOptions {
                             "shorthand" => Ok(GeneratedField::Shorthand),
                             "usage" => Ok(GeneratedField::Usage),
                             "defaultValue" | "default_value" => Ok(GeneratedField::DefaultValue),
-                            "noOptDefaultValue" | "no_opt_default_value" => {
-                                Ok(GeneratedField::NoOptDefaultValue)
-                            }
                             "deprecated" => Ok(GeneratedField::Deprecated),
                             "shorthandDeprecated" | "shorthand_deprecated" => {
                                 Ok(GeneratedField::ShorthandDeprecated)
@@ -330,7 +318,6 @@ impl<'de> serde::Deserialize<'de> for FlagOptions {
                 let mut shorthand__ = None;
                 let mut usage__ = None;
                 let mut default_value__ = None;
-                let mut no_opt_default_value__ = None;
                 let mut deprecated__ = None;
                 let mut shorthand_deprecated__ = None;
                 let mut hidden__ = None;
@@ -360,12 +347,6 @@ impl<'de> serde::Deserialize<'de> for FlagOptions {
                             }
                             default_value__ = Some(map_.next_value()?);
                         }
-                        GeneratedField::NoOptDefaultValue => {
-                            if no_opt_default_value__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("noOptDefaultValue"));
-                            }
-                            no_opt_default_value__ = Some(map_.next_value()?);
-                        }
                         GeneratedField::Deprecated => {
                             if deprecated__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("deprecated"));
@@ -393,7 +374,6 @@ impl<'de> serde::Deserialize<'de> for FlagOptions {
                     shorthand: shorthand__.unwrap_or_default(),
                     usage: usage__.unwrap_or_default(),
                     default_value: default_value__.unwrap_or_default(),
-                    no_opt_default_value: no_opt_default_value__.unwrap_or_default(),
                     deprecated: deprecated__.unwrap_or_default(),
                     shorthand_deprecated: shorthand_deprecated__.unwrap_or_default(),
                     hidden: hidden__.unwrap_or_default(),

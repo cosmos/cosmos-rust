@@ -85,10 +85,44 @@ pub mod query_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn allowance(
+        pub async fn account(
             &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllowanceRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryAllowanceResponse>, tonic::Status>
+            request: impl tonic::IntoRequest<super::QueryAccountRequest>,
+        ) -> std::result::Result<tonic::Response<super::AccountResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.circuit.v1.Query/Account");
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmos.circuit.v1.Query", "Account"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn accounts(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryAccountsRequest>,
+        ) -> std::result::Result<tonic::Response<super::AccountsResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmos.circuit.v1.Query/Accounts");
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmos.circuit.v1.Query", "Accounts"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn disabled_list(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryDisabledListRequest>,
+        ) -> std::result::Result<tonic::Response<super::DisabledListResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -98,57 +132,10 @@ pub mod query_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path =
-                http::uri::PathAndQuery::from_static("/cosmos.feegrant.v1beta1.Query/Allowance");
+                http::uri::PathAndQuery::from_static("/cosmos.circuit.v1.Query/DisabledList");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.feegrant.v1beta1.Query",
-                "Allowance",
-            ));
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn allowances(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllowancesRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryAllowancesResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path =
-                http::uri::PathAndQuery::from_static("/cosmos.feegrant.v1beta1.Query/Allowances");
-            let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.feegrant.v1beta1.Query",
-                "Allowances",
-            ));
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn allowances_by_granter(
-            &mut self,
-            request: impl tonic::IntoRequest<super::QueryAllowancesByGranterRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::QueryAllowancesByGranterResponse>,
-            tonic::Status,
-        > {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Query/AllowancesByGranter",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.feegrant.v1beta1.Query",
-                "AllowancesByGranter",
-            ));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmos.circuit.v1.Query", "DisabledList"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -161,21 +148,18 @@ pub mod query_server {
     /// Generated trait containing gRPC methods that should be implemented for use with QueryServer.
     #[async_trait]
     pub trait Query: Send + Sync + 'static {
-        async fn allowance(
+        async fn account(
             &self,
-            request: tonic::Request<super::QueryAllowanceRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryAllowanceResponse>, tonic::Status>;
-        async fn allowances(
+            request: tonic::Request<super::QueryAccountRequest>,
+        ) -> std::result::Result<tonic::Response<super::AccountResponse>, tonic::Status>;
+        async fn accounts(
             &self,
-            request: tonic::Request<super::QueryAllowancesRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryAllowancesResponse>, tonic::Status>;
-        async fn allowances_by_granter(
+            request: tonic::Request<super::QueryAccountsRequest>,
+        ) -> std::result::Result<tonic::Response<super::AccountsResponse>, tonic::Status>;
+        async fn disabled_list(
             &self,
-            request: tonic::Request<super::QueryAllowancesByGranterRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::QueryAllowancesByGranterResponse>,
-            tonic::Status,
-        >;
+            request: tonic::Request<super::QueryDisabledListRequest>,
+        ) -> std::result::Result<tonic::Response<super::DisabledListResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -253,18 +237,18 @@ pub mod query_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.feegrant.v1beta1.Query/Allowance" => {
+                "/cosmos.circuit.v1.Query/Account" => {
                     #[allow(non_camel_case_types)]
-                    struct AllowanceSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryAllowanceRequest> for AllowanceSvc<T> {
-                        type Response = super::QueryAllowanceResponse;
+                    struct AccountSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryAccountRequest> for AccountSvc<T> {
+                        type Response = super::AccountResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAllowanceRequest>,
+                            request: tonic::Request<super::QueryAccountRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).allowance(request).await };
+                            let fut = async move { (*inner).account(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -275,7 +259,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AllowanceSvc(inner);
+                        let method = AccountSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -291,18 +275,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.feegrant.v1beta1.Query/Allowances" => {
+                "/cosmos.circuit.v1.Query/Accounts" => {
                     #[allow(non_camel_case_types)]
-                    struct AllowancesSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query> tonic::server::UnaryService<super::QueryAllowancesRequest> for AllowancesSvc<T> {
-                        type Response = super::QueryAllowancesResponse;
+                    struct AccountsSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryAccountsRequest> for AccountsSvc<T> {
+                        type Response = super::AccountsResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAllowancesRequest>,
+                            request: tonic::Request<super::QueryAccountsRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).allowances(request).await };
+                            let fut = async move { (*inner).accounts(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -313,7 +297,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AllowancesSvc(inner);
+                        let method = AccountsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -329,21 +313,18 @@ pub mod query_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.feegrant.v1beta1.Query/AllowancesByGranter" => {
+                "/cosmos.circuit.v1.Query/DisabledList" => {
                     #[allow(non_camel_case_types)]
-                    struct AllowancesByGranterSvc<T: Query>(pub Arc<T>);
-                    impl<T: Query>
-                        tonic::server::UnaryService<super::QueryAllowancesByGranterRequest>
-                        for AllowancesByGranterSvc<T>
-                    {
-                        type Response = super::QueryAllowancesByGranterResponse;
+                    struct DisabledListSvc<T: Query>(pub Arc<T>);
+                    impl<T: Query> tonic::server::UnaryService<super::QueryDisabledListRequest> for DisabledListSvc<T> {
+                        type Response = super::DisabledListResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::QueryAllowancesByGranterRequest>,
+                            request: tonic::Request<super::QueryDisabledListRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).allowances_by_granter(request).await };
+                            let fut = async move { (*inner).disabled_list(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -354,7 +335,7 @@ pub mod query_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = AllowancesByGranterSvc(inner);
+                        let method = DisabledListSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -404,7 +385,7 @@ pub mod query_server {
         }
     }
     impl<T: Query> tonic::server::NamedService for QueryServer<T> {
-        const NAME: &'static str = "cosmos.feegrant.v1beta1.Query";
+        const NAME: &'static str = "cosmos.circuit.v1.Query";
     }
 }
 /// Generated client implementations.
@@ -490,10 +471,34 @@ pub mod msg_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn grant_allowance(
+        pub async fn authorize_circuit_breaker(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgGrantAllowance>,
-        ) -> std::result::Result<tonic::Response<super::MsgGrantAllowanceResponse>, tonic::Status>
+            request: impl tonic::IntoRequest<super::MsgAuthorizeCircuitBreaker>,
+        ) -> std::result::Result<
+            tonic::Response<super::MsgAuthorizeCircuitBreakerResponse>,
+            tonic::Status,
+        > {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/cosmos.circuit.v1.Msg/AuthorizeCircuitBreaker",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmos.circuit.v1.Msg",
+                "AuthorizeCircuitBreaker",
+            ));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn trip_circuit_breaker(
+            &mut self,
+            request: impl tonic::IntoRequest<super::MsgTripCircuitBreaker>,
+        ) -> std::result::Result<tonic::Response<super::MsgTripCircuitBreakerResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
@@ -503,19 +508,21 @@ pub mod msg_client {
             })?;
             let codec = tonic::codec::ProstCodec::default();
             let path =
-                http::uri::PathAndQuery::from_static("/cosmos.feegrant.v1beta1.Msg/GrantAllowance");
+                http::uri::PathAndQuery::from_static("/cosmos.circuit.v1.Msg/TripCircuitBreaker");
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.feegrant.v1beta1.Msg",
-                "GrantAllowance",
+                "cosmos.circuit.v1.Msg",
+                "TripCircuitBreaker",
             ));
             self.inner.unary(req, path, codec).await
         }
-        pub async fn revoke_allowance(
+        pub async fn reset_circuit_breaker(
             &mut self,
-            request: impl tonic::IntoRequest<super::MsgRevokeAllowance>,
-        ) -> std::result::Result<tonic::Response<super::MsgRevokeAllowanceResponse>, tonic::Status>
-        {
+            request: impl tonic::IntoRequest<super::MsgResetCircuitBreaker>,
+        ) -> std::result::Result<
+            tonic::Response<super::MsgResetCircuitBreakerResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
@@ -523,35 +530,12 @@ pub mod msg_client {
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Msg/RevokeAllowance",
-            );
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmos.circuit.v1.Msg/ResetCircuitBreaker");
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.feegrant.v1beta1.Msg",
-                "RevokeAllowance",
-            ));
-            self.inner.unary(req, path, codec).await
-        }
-        pub async fn prune_allowances(
-            &mut self,
-            request: impl tonic::IntoRequest<super::MsgPruneAllowances>,
-        ) -> std::result::Result<tonic::Response<super::MsgPruneAllowancesResponse>, tonic::Status>
-        {
-            self.inner.ready().await.map_err(|e| {
-                tonic::Status::new(
-                    tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
-                )
-            })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/cosmos.feegrant.v1beta1.Msg/PruneAllowances",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new(
-                "cosmos.feegrant.v1beta1.Msg",
-                "PruneAllowances",
+                "cosmos.circuit.v1.Msg",
+                "ResetCircuitBreaker",
             ));
             self.inner.unary(req, path, codec).await
         }
@@ -565,18 +549,24 @@ pub mod msg_server {
     /// Generated trait containing gRPC methods that should be implemented for use with MsgServer.
     #[async_trait]
     pub trait Msg: Send + Sync + 'static {
-        async fn grant_allowance(
+        async fn authorize_circuit_breaker(
             &self,
-            request: tonic::Request<super::MsgGrantAllowance>,
-        ) -> std::result::Result<tonic::Response<super::MsgGrantAllowanceResponse>, tonic::Status>;
-        async fn revoke_allowance(
+            request: tonic::Request<super::MsgAuthorizeCircuitBreaker>,
+        ) -> std::result::Result<
+            tonic::Response<super::MsgAuthorizeCircuitBreakerResponse>,
+            tonic::Status,
+        >;
+        async fn trip_circuit_breaker(
             &self,
-            request: tonic::Request<super::MsgRevokeAllowance>,
-        ) -> std::result::Result<tonic::Response<super::MsgRevokeAllowanceResponse>, tonic::Status>;
-        async fn prune_allowances(
+            request: tonic::Request<super::MsgTripCircuitBreaker>,
+        ) -> std::result::Result<tonic::Response<super::MsgTripCircuitBreakerResponse>, tonic::Status>;
+        async fn reset_circuit_breaker(
             &self,
-            request: tonic::Request<super::MsgPruneAllowances>,
-        ) -> std::result::Result<tonic::Response<super::MsgPruneAllowancesResponse>, tonic::Status>;
+            request: tonic::Request<super::MsgResetCircuitBreaker>,
+        ) -> std::result::Result<
+            tonic::Response<super::MsgResetCircuitBreakerResponse>,
+            tonic::Status,
+        >;
     }
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
@@ -654,18 +644,21 @@ pub mod msg_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/cosmos.feegrant.v1beta1.Msg/GrantAllowance" => {
+                "/cosmos.circuit.v1.Msg/AuthorizeCircuitBreaker" => {
                     #[allow(non_camel_case_types)]
-                    struct GrantAllowanceSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgGrantAllowance> for GrantAllowanceSvc<T> {
-                        type Response = super::MsgGrantAllowanceResponse;
+                    struct AuthorizeCircuitBreakerSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgAuthorizeCircuitBreaker>
+                        for AuthorizeCircuitBreakerSvc<T>
+                    {
+                        type Response = super::MsgAuthorizeCircuitBreakerResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgGrantAllowance>,
+                            request: tonic::Request<super::MsgAuthorizeCircuitBreaker>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).grant_allowance(request).await };
+                            let fut =
+                                async move { (*inner).authorize_circuit_breaker(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -676,7 +669,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = GrantAllowanceSvc(inner);
+                        let method = AuthorizeCircuitBreakerSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -692,18 +685,20 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.feegrant.v1beta1.Msg/RevokeAllowance" => {
+                "/cosmos.circuit.v1.Msg/TripCircuitBreaker" => {
                     #[allow(non_camel_case_types)]
-                    struct RevokeAllowanceSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgRevokeAllowance> for RevokeAllowanceSvc<T> {
-                        type Response = super::MsgRevokeAllowanceResponse;
+                    struct TripCircuitBreakerSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgTripCircuitBreaker>
+                        for TripCircuitBreakerSvc<T>
+                    {
+                        type Response = super::MsgTripCircuitBreakerResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgRevokeAllowance>,
+                            request: tonic::Request<super::MsgTripCircuitBreaker>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).revoke_allowance(request).await };
+                            let fut = async move { (*inner).trip_circuit_breaker(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -714,7 +709,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = RevokeAllowanceSvc(inner);
+                        let method = TripCircuitBreakerSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -730,18 +725,20 @@ pub mod msg_server {
                     };
                     Box::pin(fut)
                 }
-                "/cosmos.feegrant.v1beta1.Msg/PruneAllowances" => {
+                "/cosmos.circuit.v1.Msg/ResetCircuitBreaker" => {
                     #[allow(non_camel_case_types)]
-                    struct PruneAllowancesSvc<T: Msg>(pub Arc<T>);
-                    impl<T: Msg> tonic::server::UnaryService<super::MsgPruneAllowances> for PruneAllowancesSvc<T> {
-                        type Response = super::MsgPruneAllowancesResponse;
+                    struct ResetCircuitBreakerSvc<T: Msg>(pub Arc<T>);
+                    impl<T: Msg> tonic::server::UnaryService<super::MsgResetCircuitBreaker>
+                        for ResetCircuitBreakerSvc<T>
+                    {
+                        type Response = super::MsgResetCircuitBreakerResponse;
                         type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::MsgPruneAllowances>,
+                            request: tonic::Request<super::MsgResetCircuitBreaker>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).prune_allowances(request).await };
+                            let fut = async move { (*inner).reset_circuit_breaker(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -752,7 +749,7 @@ pub mod msg_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = PruneAllowancesSvc(inner);
+                        let method = ResetCircuitBreakerSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -802,6 +799,6 @@ pub mod msg_server {
         }
     }
     impl<T: Msg> tonic::server::NamedService for MsgServer<T> {
-        const NAME: &'static str = "cosmos.feegrant.v1beta1.Msg";
+        const NAME: &'static str = "cosmos.circuit.v1.Msg";
     }
 }

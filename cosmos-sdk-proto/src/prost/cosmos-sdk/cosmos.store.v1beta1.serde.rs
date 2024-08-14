@@ -8,43 +8,25 @@ impl serde::Serialize for BlockMetadata {
     {
         use serde::ser::SerializeStruct;
         let mut len = 0;
-        if self.request_begin_block.is_some() {
-            len += 1;
-        }
-        if self.response_begin_block.is_some() {
-            len += 1;
-        }
-        if !self.deliver_txs.is_empty() {
-            len += 1;
-        }
-        if self.request_end_block.is_some() {
-            len += 1;
-        }
-        if self.response_end_block.is_some() {
-            len += 1;
-        }
         if self.response_commit.is_some() {
             len += 1;
         }
+        if self.request_finalize_block.is_some() {
+            len += 1;
+        }
+        if self.response_finalize_block.is_some() {
+            len += 1;
+        }
         let mut struct_ser =
-            serializer.serialize_struct("cosmos.base.store.v1beta1.BlockMetadata", len)?;
-        if let Some(v) = self.request_begin_block.as_ref() {
-            struct_ser.serialize_field("requestBeginBlock", v)?;
-        }
-        if let Some(v) = self.response_begin_block.as_ref() {
-            struct_ser.serialize_field("responseBeginBlock", v)?;
-        }
-        if !self.deliver_txs.is_empty() {
-            struct_ser.serialize_field("deliverTxs", &self.deliver_txs)?;
-        }
-        if let Some(v) = self.request_end_block.as_ref() {
-            struct_ser.serialize_field("requestEndBlock", v)?;
-        }
-        if let Some(v) = self.response_end_block.as_ref() {
-            struct_ser.serialize_field("responseEndBlock", v)?;
-        }
+            serializer.serialize_struct("cosmos.store.v1beta1.BlockMetadata", len)?;
         if let Some(v) = self.response_commit.as_ref() {
             struct_ser.serialize_field("responseCommit", v)?;
+        }
+        if let Some(v) = self.request_finalize_block.as_ref() {
+            struct_ser.serialize_field("requestFinalizeBlock", v)?;
+        }
+        if let Some(v) = self.response_finalize_block.as_ref() {
+            struct_ser.serialize_field("responseFinalizeBlock", v)?;
         }
         struct_ser.end()
     }
@@ -57,28 +39,19 @@ impl<'de> serde::Deserialize<'de> for BlockMetadata {
         D: serde::Deserializer<'de>,
     {
         const FIELDS: &[&str] = &[
-            "request_begin_block",
-            "requestBeginBlock",
-            "response_begin_block",
-            "responseBeginBlock",
-            "deliver_txs",
-            "deliverTxs",
-            "request_end_block",
-            "requestEndBlock",
-            "response_end_block",
-            "responseEndBlock",
             "response_commit",
             "responseCommit",
+            "request_finalize_block",
+            "requestFinalizeBlock",
+            "response_finalize_block",
+            "responseFinalizeBlock",
         ];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
-            RequestBeginBlock,
-            ResponseBeginBlock,
-            DeliverTxs,
-            RequestEndBlock,
-            ResponseEndBlock,
             ResponseCommit,
+            RequestFinalizeBlock,
+            ResponseFinalizeBlock,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -104,21 +77,14 @@ impl<'de> serde::Deserialize<'de> for BlockMetadata {
                         E: serde::de::Error,
                     {
                         match value {
-                            "requestBeginBlock" | "request_begin_block" => {
-                                Ok(GeneratedField::RequestBeginBlock)
-                            }
-                            "responseBeginBlock" | "response_begin_block" => {
-                                Ok(GeneratedField::ResponseBeginBlock)
-                            }
-                            "deliverTxs" | "deliver_txs" => Ok(GeneratedField::DeliverTxs),
-                            "requestEndBlock" | "request_end_block" => {
-                                Ok(GeneratedField::RequestEndBlock)
-                            }
-                            "responseEndBlock" | "response_end_block" => {
-                                Ok(GeneratedField::ResponseEndBlock)
-                            }
                             "responseCommit" | "response_commit" => {
                                 Ok(GeneratedField::ResponseCommit)
+                            }
+                            "requestFinalizeBlock" | "request_finalize_block" => {
+                                Ok(GeneratedField::RequestFinalizeBlock)
+                            }
+                            "responseFinalizeBlock" | "response_finalize_block" => {
+                                Ok(GeneratedField::ResponseFinalizeBlock)
                             }
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
@@ -132,192 +98,51 @@ impl<'de> serde::Deserialize<'de> for BlockMetadata {
             type Value = BlockMetadata;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.store.v1beta1.BlockMetadata")
+                formatter.write_str("struct cosmos.store.v1beta1.BlockMetadata")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<BlockMetadata, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                let mut request_begin_block__ = None;
-                let mut response_begin_block__ = None;
-                let mut deliver_txs__ = None;
-                let mut request_end_block__ = None;
-                let mut response_end_block__ = None;
                 let mut response_commit__ = None;
+                let mut request_finalize_block__ = None;
+                let mut response_finalize_block__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
-                        GeneratedField::RequestBeginBlock => {
-                            if request_begin_block__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("requestBeginBlock"));
-                            }
-                            request_begin_block__ = map_.next_value()?;
-                        }
-                        GeneratedField::ResponseBeginBlock => {
-                            if response_begin_block__.is_some() {
-                                return Err(serde::de::Error::duplicate_field(
-                                    "responseBeginBlock",
-                                ));
-                            }
-                            response_begin_block__ = map_.next_value()?;
-                        }
-                        GeneratedField::DeliverTxs => {
-                            if deliver_txs__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("deliverTxs"));
-                            }
-                            deliver_txs__ = Some(map_.next_value()?);
-                        }
-                        GeneratedField::RequestEndBlock => {
-                            if request_end_block__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("requestEndBlock"));
-                            }
-                            request_end_block__ = map_.next_value()?;
-                        }
-                        GeneratedField::ResponseEndBlock => {
-                            if response_end_block__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("responseEndBlock"));
-                            }
-                            response_end_block__ = map_.next_value()?;
-                        }
                         GeneratedField::ResponseCommit => {
                             if response_commit__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("responseCommit"));
                             }
                             response_commit__ = map_.next_value()?;
                         }
+                        GeneratedField::RequestFinalizeBlock => {
+                            if request_finalize_block__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "requestFinalizeBlock",
+                                ));
+                            }
+                            request_finalize_block__ = map_.next_value()?;
+                        }
+                        GeneratedField::ResponseFinalizeBlock => {
+                            if response_finalize_block__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "responseFinalizeBlock",
+                                ));
+                            }
+                            response_finalize_block__ = map_.next_value()?;
+                        }
                     }
                 }
                 Ok(BlockMetadata {
-                    request_begin_block: request_begin_block__,
-                    response_begin_block: response_begin_block__,
-                    deliver_txs: deliver_txs__.unwrap_or_default(),
-                    request_end_block: request_end_block__,
-                    response_end_block: response_end_block__,
                     response_commit: response_commit__,
+                    request_finalize_block: request_finalize_block__,
+                    response_finalize_block: response_finalize_block__,
                 })
             }
         }
         deserializer.deserialize_struct(
-            "cosmos.base.store.v1beta1.BlockMetadata",
-            FIELDS,
-            GeneratedVisitor,
-        )
-    }
-}
-#[cfg(feature = "serde")]
-impl serde::Serialize for block_metadata::DeliverTx {
-    #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        use serde::ser::SerializeStruct;
-        let mut len = 0;
-        if self.request.is_some() {
-            len += 1;
-        }
-        if self.response.is_some() {
-            len += 1;
-        }
-        let mut struct_ser = serializer
-            .serialize_struct("cosmos.base.store.v1beta1.BlockMetadata.DeliverTx", len)?;
-        if let Some(v) = self.request.as_ref() {
-            struct_ser.serialize_field("request", v)?;
-        }
-        if let Some(v) = self.response.as_ref() {
-            struct_ser.serialize_field("response", v)?;
-        }
-        struct_ser.end()
-    }
-}
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for block_metadata::DeliverTx {
-    #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        const FIELDS: &[&str] = &["request", "response"];
-
-        #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {
-            Request,
-            Response,
-        }
-        #[cfg(feature = "serde")]
-        impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
-            where
-                D: serde::Deserializer<'de>,
-            {
-                struct GeneratedVisitor;
-
-                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-                    type Value = GeneratedField;
-
-                    fn expecting(
-                        &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
-                        write!(formatter, "expected one of: {:?}", &FIELDS)
-                    }
-
-                    #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
-                    where
-                        E: serde::de::Error,
-                    {
-                        match value {
-                            "request" => Ok(GeneratedField::Request),
-                            "response" => Ok(GeneratedField::Response),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                        }
-                    }
-                }
-                deserializer.deserialize_identifier(GeneratedVisitor)
-            }
-        }
-        struct GeneratedVisitor;
-        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = block_metadata::DeliverTx;
-
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.store.v1beta1.BlockMetadata.DeliverTx")
-            }
-
-            fn visit_map<V>(
-                self,
-                mut map_: V,
-            ) -> std::result::Result<block_metadata::DeliverTx, V::Error>
-            where
-                V: serde::de::MapAccess<'de>,
-            {
-                let mut request__ = None;
-                let mut response__ = None;
-                while let Some(k) = map_.next_key()? {
-                    match k {
-                        GeneratedField::Request => {
-                            if request__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("request"));
-                            }
-                            request__ = map_.next_value()?;
-                        }
-                        GeneratedField::Response => {
-                            if response__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("response"));
-                            }
-                            response__ = map_.next_value()?;
-                        }
-                    }
-                }
-                Ok(block_metadata::DeliverTx {
-                    request: request__,
-                    response: response__,
-                })
-            }
-        }
-        deserializer.deserialize_struct(
-            "cosmos.base.store.v1beta1.BlockMetadata.DeliverTx",
+            "cosmos.store.v1beta1.BlockMetadata",
             FIELDS,
             GeneratedVisitor,
         )
@@ -338,8 +163,7 @@ impl serde::Serialize for CommitId {
         if !self.hash.is_empty() {
             len += 1;
         }
-        let mut struct_ser =
-            serializer.serialize_struct("cosmos.base.store.v1beta1.CommitID", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.store.v1beta1.CommitID", len)?;
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("version", ToString::to_string(&self.version).as_str())?;
@@ -404,7 +228,7 @@ impl<'de> serde::Deserialize<'de> for CommitId {
             type Value = CommitId;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.store.v1beta1.CommitID")
+                formatter.write_str("struct cosmos.store.v1beta1.CommitID")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<CommitId, V::Error>
@@ -441,11 +265,7 @@ impl<'de> serde::Deserialize<'de> for CommitId {
                 })
             }
         }
-        deserializer.deserialize_struct(
-            "cosmos.base.store.v1beta1.CommitID",
-            FIELDS,
-            GeneratedVisitor,
-        )
+        deserializer.deserialize_struct("cosmos.store.v1beta1.CommitID", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -466,8 +286,7 @@ impl serde::Serialize for CommitInfo {
         if self.timestamp.is_some() {
             len += 1;
         }
-        let mut struct_ser =
-            serializer.serialize_struct("cosmos.base.store.v1beta1.CommitInfo", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.store.v1beta1.CommitInfo", len)?;
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
             struct_ser.serialize_field("version", ToString::to_string(&self.version).as_str())?;
@@ -535,7 +354,7 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
             type Value = CommitInfo;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.store.v1beta1.CommitInfo")
+                formatter.write_str("struct cosmos.store.v1beta1.CommitInfo")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<CommitInfo, V::Error>
@@ -577,11 +396,7 @@ impl<'de> serde::Deserialize<'de> for CommitInfo {
                 })
             }
         }
-        deserializer.deserialize_struct(
-            "cosmos.base.store.v1beta1.CommitInfo",
-            FIELDS,
-            GeneratedVisitor,
-        )
+        deserializer.deserialize_struct("cosmos.store.v1beta1.CommitInfo", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -599,8 +414,7 @@ impl serde::Serialize for StoreInfo {
         if self.commit_id.is_some() {
             len += 1;
         }
-        let mut struct_ser =
-            serializer.serialize_struct("cosmos.base.store.v1beta1.StoreInfo", len)?;
+        let mut struct_ser = serializer.serialize_struct("cosmos.store.v1beta1.StoreInfo", len)?;
         if !self.name.is_empty() {
             struct_ser.serialize_field("name", &self.name)?;
         }
@@ -662,7 +476,7 @@ impl<'de> serde::Deserialize<'de> for StoreInfo {
             type Value = StoreInfo;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.store.v1beta1.StoreInfo")
+                formatter.write_str("struct cosmos.store.v1beta1.StoreInfo")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<StoreInfo, V::Error>
@@ -693,11 +507,7 @@ impl<'de> serde::Deserialize<'de> for StoreInfo {
                 })
             }
         }
-        deserializer.deserialize_struct(
-            "cosmos.base.store.v1beta1.StoreInfo",
-            FIELDS,
-            GeneratedVisitor,
-        )
+        deserializer.deserialize_struct("cosmos.store.v1beta1.StoreInfo", FIELDS, GeneratedVisitor)
     }
 }
 #[cfg(feature = "serde")]
@@ -722,7 +532,7 @@ impl serde::Serialize for StoreKvPair {
             len += 1;
         }
         let mut struct_ser =
-            serializer.serialize_struct("cosmos.base.store.v1beta1.StoreKVPair", len)?;
+            serializer.serialize_struct("cosmos.store.v1beta1.StoreKVPair", len)?;
         if !self.store_key.is_empty() {
             struct_ser.serialize_field("storeKey", &self.store_key)?;
         }
@@ -800,7 +610,7 @@ impl<'de> serde::Deserialize<'de> for StoreKvPair {
             type Value = StoreKvPair;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct cosmos.base.store.v1beta1.StoreKVPair")
+                formatter.write_str("struct cosmos.store.v1beta1.StoreKVPair")
             }
 
             fn visit_map<V>(self, mut map_: V) -> std::result::Result<StoreKvPair, V::Error>
@@ -854,7 +664,7 @@ impl<'de> serde::Deserialize<'de> for StoreKvPair {
             }
         }
         deserializer.deserialize_struct(
-            "cosmos.base.store.v1beta1.StoreKVPair",
+            "cosmos.store.v1beta1.StoreKVPair",
             FIELDS,
             GeneratedVisitor,
         )
