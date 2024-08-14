@@ -5036,6 +5036,88 @@ impl<'de> serde::Deserialize<'de> for MsgIbcSendResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for MsgIbcWriteAcknowledgementResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser = serializer
+            .serialize_struct("cosmwasm.wasm.v1.MsgIBCWriteAcknowledgementResponse", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for MsgIbcWriteAcknowledgementResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgIbcWriteAcknowledgementResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.MsgIBCWriteAcknowledgementResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<MsgIbcWriteAcknowledgementResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgIbcWriteAcknowledgementResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.MsgIBCWriteAcknowledgementResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for MsgInstantiateContract {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -9237,6 +9319,277 @@ impl<'de> serde::Deserialize<'de> for QueryAllContractStateResponse {
         }
         deserializer.deserialize_struct(
             "cosmwasm.wasm.v1.QueryAllContractStateResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryBuildAddressRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.code_hash.is_empty() {
+            len += 1;
+        }
+        if !self.creator_address.is_empty() {
+            len += 1;
+        }
+        if !self.salt.is_empty() {
+            len += 1;
+        }
+        if !self.init_args.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryBuildAddressRequest", len)?;
+        if !self.code_hash.is_empty() {
+            struct_ser.serialize_field("codeHash", &self.code_hash)?;
+        }
+        if !self.creator_address.is_empty() {
+            struct_ser.serialize_field("creatorAddress", &self.creator_address)?;
+        }
+        if !self.salt.is_empty() {
+            struct_ser.serialize_field("salt", &self.salt)?;
+        }
+        if !self.init_args.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "initArgs",
+                pbjson::private::base64::encode(&self.init_args).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryBuildAddressRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "code_hash",
+            "codeHash",
+            "creator_address",
+            "creatorAddress",
+            "salt",
+            "init_args",
+            "initArgs",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            CodeHash,
+            CreatorAddress,
+            Salt,
+            InitArgs,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "codeHash" | "code_hash" => Ok(GeneratedField::CodeHash),
+                            "creatorAddress" | "creator_address" => {
+                                Ok(GeneratedField::CreatorAddress)
+                            }
+                            "salt" => Ok(GeneratedField::Salt),
+                            "initArgs" | "init_args" => Ok(GeneratedField::InitArgs),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryBuildAddressRequest;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryBuildAddressRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryBuildAddressRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut code_hash__ = None;
+                let mut creator_address__ = None;
+                let mut salt__ = None;
+                let mut init_args__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::CodeHash => {
+                            if code_hash__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeHash"));
+                            }
+                            code_hash__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::CreatorAddress => {
+                            if creator_address__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("creatorAddress"));
+                            }
+                            creator_address__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Salt => {
+                            if salt__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("salt"));
+                            }
+                            salt__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::InitArgs => {
+                            if init_args__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("initArgs"));
+                            }
+                            init_args__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(QueryBuildAddressRequest {
+                    code_hash: code_hash__.unwrap_or_default(),
+                    creator_address: creator_address__.unwrap_or_default(),
+                    salt: salt__.unwrap_or_default(),
+                    init_args: init_args__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryBuildAddressRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryBuildAddressResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.address.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryBuildAddressResponse", len)?;
+        if !self.address.is_empty() {
+            struct_ser.serialize_field("address", &self.address)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryBuildAddressResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["address"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Address,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "address" => Ok(GeneratedField::Address),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryBuildAddressResponse;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryBuildAddressResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> std::result::Result<QueryBuildAddressResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut address__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Address => {
+                            if address__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("address"));
+                            }
+                            address__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(QueryBuildAddressResponse {
+                    address: address__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryBuildAddressResponse",
             FIELDS,
             GeneratedVisitor,
         )

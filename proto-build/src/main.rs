@@ -26,7 +26,7 @@ const COSMOS_SDK_REV: &str = "v0.50.9";
 const IBC_REV: &str = "v6.3.1";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
-const WASMD_REV: &str = "v0.45.0";
+const WASMD_REV: &str = "v0.52.0";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
