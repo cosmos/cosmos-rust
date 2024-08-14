@@ -11,6 +11,4 @@ plugins:
   - plugin: buf.build/community/neoeinstein-tonic:v0.3.0
     out: .
     opt:
-      - compile_well_known_types
-      - extern_path=.google.protobuf=::tendermint_proto::google::protobuf
       - no_server=true
