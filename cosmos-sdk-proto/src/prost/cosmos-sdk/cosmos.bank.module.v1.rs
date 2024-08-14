@@ -18,5 +18,12 @@ pub struct Module {
     #[prost(string, repeated, tag = "3")]
     pub restrictions_order: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+impl ::prost::Name for Module {
+    const NAME: &'static str = "Module";
+    const PACKAGE: &'static str = "cosmos.bank.module.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.bank.module.v1.{}", Self::NAME)
+    }
+}
 include!("cosmos.bank.module.v1.serde.rs");
 // @@protoc_insertion_point(module)

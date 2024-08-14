@@ -18,6 +18,13 @@ pub struct StoreKvPair {
     #[prost(bytes = "vec", tag = "4")]
     pub value: ::prost::alloc::vec::Vec<u8>,
 }
+impl ::prost::Name for StoreKvPair {
+    const NAME: &'static str = "StoreKVPair";
+    const PACKAGE: &'static str = "cosmos.store.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.store.v1beta1.{}", Self::NAME)
+    }
+}
 /// BlockMetadata contains all the abci event data of a block
 /// the file streamer dump them into files together with the state changes.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -33,6 +40,13 @@ pub struct BlockMetadata {
     pub response_finalize_block:
         ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseFinalizeBlock>,
 }
+impl ::prost::Name for BlockMetadata {
+    const NAME: &'static str = "BlockMetadata";
+    const PACKAGE: &'static str = "cosmos.store.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.store.v1beta1.{}", Self::NAME)
+    }
+}
 /// CommitInfo defines commit information used by the multi-store when committing
 /// a version/height.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -45,6 +59,13 @@ pub struct CommitInfo {
     #[prost(message, optional, tag = "3")]
     pub timestamp: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
 }
+impl ::prost::Name for CommitInfo {
+    const NAME: &'static str = "CommitInfo";
+    const PACKAGE: &'static str = "cosmos.store.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.store.v1beta1.{}", Self::NAME)
+    }
+}
 /// StoreInfo defines store-specific commit information. It contains a reference
 /// between a store name and the commit ID.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -55,6 +76,13 @@ pub struct StoreInfo {
     #[prost(message, optional, tag = "2")]
     pub commit_id: ::core::option::Option<CommitId>,
 }
+impl ::prost::Name for StoreInfo {
+    const NAME: &'static str = "StoreInfo";
+    const PACKAGE: &'static str = "cosmos.store.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.store.v1beta1.{}", Self::NAME)
+    }
+}
 /// CommitID defines the commitment information when a specific store is
 /// committed.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -64,6 +92,13 @@ pub struct CommitId {
     pub version: i64,
     #[prost(bytes = "vec", tag = "2")]
     pub hash: ::prost::alloc::vec::Vec<u8>,
+}
+impl ::prost::Name for CommitId {
+    const NAME: &'static str = "CommitID";
+    const PACKAGE: &'static str = "cosmos.store.v1beta1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.store.v1beta1.{}", Self::NAME)
+    }
 }
 include!("cosmos.store.v1beta1.serde.rs");
 // @@protoc_insertion_point(module)

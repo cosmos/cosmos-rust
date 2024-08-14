@@ -15,7 +15,6 @@
 extern crate alloc;
 
 pub mod traits;
-mod type_names;
 
 pub use prost;
 pub use tendermint_proto as tendermint;
