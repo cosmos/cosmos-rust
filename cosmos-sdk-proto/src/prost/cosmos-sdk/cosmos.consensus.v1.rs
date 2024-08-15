@@ -18,7 +18,7 @@ pub struct QueryParamsResponse {
     /// Please note that `params.version` is not populated in this response, it is
     /// tracked separately in the x/upgrade module.
     #[prost(message, optional, tag = "1")]
-    pub params: ::core::option::Option<::tendermint_proto::v0_34::types::ConsensusParams>,
+    pub params: ::core::option::Option<::tendermint_proto::types::ConsensusParams>,
 }
 impl ::prost::Name for QueryParamsResponse {
     const NAME: &'static str = "QueryParamsResponse";
@@ -40,14 +40,14 @@ pub struct MsgUpdateParams {
     ///
     /// NOTE: All parameters must be supplied.
     #[prost(message, optional, tag = "2")]
-    pub block: ::core::option::Option<::tendermint_proto::v0_34::types::BlockParams>,
+    pub block: ::core::option::Option<::tendermint_proto::types::BlockParams>,
     #[prost(message, optional, tag = "3")]
-    pub evidence: ::core::option::Option<::tendermint_proto::v0_34::types::EvidenceParams>,
+    pub evidence: ::core::option::Option<::tendermint_proto::types::EvidenceParams>,
     #[prost(message, optional, tag = "4")]
-    pub validator: ::core::option::Option<::tendermint_proto::v0_34::types::ValidatorParams>,
+    pub validator: ::core::option::Option<::tendermint_proto::types::ValidatorParams>,
     /// Since: cosmos-sdk 0.50
     #[prost(message, optional, tag = "5")]
-    pub abci: ::core::option::Option<::tendermint_proto::v0_34::types::AbciParams>,
+    pub abci: ::core::option::Option<::tendermint_proto::types::AbciParams>,
 }
 impl ::prost::Name for MsgUpdateParams {
     const NAME: &'static str = "MsgUpdateParams";

@@ -280,8 +280,6 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
     /// Regex substitutions to apply to the prost-generated output
     // TODO(tarcieri): use prost-build/tonic-build config for this instead
     const REPLACEMENTS: &[(&str, &str)] = &[
-        // Use `tendermint-proto` proto definitions
-        ("(super::)+tendermint", "tendermint_proto"),
         // Feature-gate gRPC client modules
         (
             "/// Generated client implementations.",
@@ -300,9 +298,6 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
             "/// Generated server implementations.\n\
              #[cfg(feature = \"grpc\")]",
         ),
-        // Use `tendermint_proto` as source of `google.protobuf` types
-        // TODO(tarcieri): figure out what's wrong with our `buf` config and do it there
-        ("::prost_types::", "::tendermint_proto::google::protobuf::"),
         // add the feature flag to the serde definitions
         (
             "impl serde::Serialize for",
