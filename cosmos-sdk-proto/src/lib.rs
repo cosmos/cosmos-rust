@@ -162,9 +162,7 @@ pub mod cosmos {
 
     /// ICS23 protobuf definitions.
     pub mod ics23 {
-        pub mod v1 {
-            include!("prost/ibc-go/cosmos.ics23.v1.rs");
-        }
+        pub use ::ics23 as v1;
     }
 
     /// Messages and services handling minting

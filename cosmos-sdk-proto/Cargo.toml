@@ -16,8 +16,9 @@ edition = "2021"
 rust-version = "1.72"
 
 [dependencies]
+ics23 = { version = "0.12.0" }
 prost = { version = "0.13", default-features = false }
-tendermint-proto = "0.39.1"
+tendermint-proto = { version = "0.39.1" }
 
 # Optional dependencies
 tonic = { version = "0.12", optional = true, default-features = false, features = ["codegen", "prost"] }
