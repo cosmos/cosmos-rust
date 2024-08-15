@@ -50,7 +50,7 @@ pub struct TxResponse {
     ///
     /// Since: cosmos-sdk 0.42.11, 0.44.5, 0.45
     #[prost(message, repeated, tag = "13")]
-    pub events: ::prost::alloc::vec::Vec<::tendermint_proto::v0_34::abci::Event>,
+    pub events: ::prost::alloc::vec::Vec<::tendermint_proto::abci::Event>,
 }
 impl ::prost::Name for TxResponse {
     const NAME: &'static str = "TxResponse";
@@ -148,7 +148,7 @@ pub struct Result {
     /// Events contains a slice of Event objects that were emitted during message
     /// or handler execution.
     #[prost(message, repeated, tag = "3")]
-    pub events: ::prost::alloc::vec::Vec<::tendermint_proto::v0_34::abci::Event>,
+    pub events: ::prost::alloc::vec::Vec<::tendermint_proto::abci::Event>,
     /// msg_responses contains the Msg handler responses type packed in Anys.
     ///
     /// Since: cosmos-sdk 0.46
@@ -269,7 +269,7 @@ pub struct SearchBlocksResult {
     pub limit: i64,
     /// List of blocks in current page
     #[prost(message, repeated, tag = "6")]
-    pub blocks: ::prost::alloc::vec::Vec<::tendermint_proto::v0_34::types::Block>,
+    pub blocks: ::prost::alloc::vec::Vec<::tendermint_proto::types::Block>,
 }
 impl ::prost::Name for SearchBlocksResult {
     const NAME: &'static str = "SearchBlocksResult";

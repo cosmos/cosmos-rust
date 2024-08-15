@@ -107,7 +107,7 @@ impl AuthorizationType {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HistoricalInfo {
     #[prost(message, optional, tag = "1")]
-    pub header: ::core::option::Option<::tendermint_proto::v0_34::types::Header>,
+    pub header: ::core::option::Option<::tendermint_proto::types::Header>,
     #[prost(message, repeated, tag = "2")]
     pub valset: ::prost::alloc::vec::Vec<Validator>,
 }
@@ -566,7 +566,7 @@ impl ::prost::Name for Pool {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ValidatorUpdates {
     #[prost(message, repeated, tag = "1")]
-    pub updates: ::prost::alloc::vec::Vec<::tendermint_proto::v0_34::abci::ValidatorUpdate>,
+    pub updates: ::prost::alloc::vec::Vec<::tendermint_proto::abci::ValidatorUpdate>,
 }
 impl ::prost::Name for ValidatorUpdates {
     const NAME: &'static str = "ValidatorUpdates";

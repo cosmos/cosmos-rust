@@ -31,14 +31,14 @@ impl ::prost::Name for StoreKvPair {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct BlockMetadata {
     #[prost(message, optional, tag = "6")]
-    pub response_commit: ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseCommit>,
+    pub response_commit: ::core::option::Option<::tendermint_proto::abci::ResponseCommit>,
     #[prost(message, optional, tag = "7")]
     pub request_finalize_block:
-        ::core::option::Option<::tendermint_proto::v0_34::abci::RequestFinalizeBlock>,
+        ::core::option::Option<::tendermint_proto::abci::RequestFinalizeBlock>,
     /// TODO: should we renumber this?
     #[prost(message, optional, tag = "8")]
     pub response_finalize_block:
-        ::core::option::Option<::tendermint_proto::v0_34::abci::ResponseFinalizeBlock>,
+        ::core::option::Option<::tendermint_proto::abci::ResponseFinalizeBlock>,
 }
 impl ::prost::Name for BlockMetadata {
     const NAME: &'static str = "BlockMetadata";
