@@ -23,7 +23,7 @@ Pull requests to expand coverage are welcome.
 This crate is supported on Rust **1.72** or newer.
 
 [//]: # "badges"
-[crate-image]: https://img.shields.io/crates/v/cosmos-sdk-proto
+[crate-image]: https://img.shields.io/crates/v/cosmos-sdk-proto?logo=rust
 [crate-link]: https://crates.io/crates/cosmos-sdk-proto
 [docs-image]: https://docs.rs/cosmos-sdk-proto/badge.svg
 [docs-link]: https://docs.rs/cosmos-sdk-proto/
