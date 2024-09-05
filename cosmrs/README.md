@@ -48,4 +48,4 @@ This crate is supported on Rust **1.72** or newer.
 [Cosmos SDK for Golang]: https://github.com/cosmos/cosmos-sdk
 [CosmWasm]: https://cosmwasm.com/
 [Staking]: https://docs.cosmos.network/master/modules/staking/
-[Transactions]: https://docs.cosmos.network/master/core/transactions.html
+[Transactions]: https://docs.cosmos.network/v0.50/learn/advanced/transactions
