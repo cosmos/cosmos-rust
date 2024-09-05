@@ -33,7 +33,7 @@ and message passing.
 This crate is supported on Rust **1.72** or newer.
 
 [//]: # "badges"
-[crate-image]: https://buildstats.info/crate/cosmrs
+[crate-image]: https://img.shields.io/crates/v/cosmrs
 [crate-link]: https://crates.io/crates/cosmrs
 [docs-image]: https://docs.rs/cosmrs/badge.svg
 [docs-link]: https://docs.rs/cosmrs/
@@ -43,7 +43,7 @@ This crate is supported on Rust **1.72** or newer.
 [license-link]: https://github.com/cosmos/cosmos-rust/blob/master/LICENSE
 [rustc-image]: https://img.shields.io/badge/rustc-1.72+-blue.svg
 
-[//]: # "general links"
+[//]: # "links"
 [Cosmos]: https://cosmos.network/
 [Cosmos SDK for Golang]: https://github.com/cosmos/cosmos-sdk
 [CosmWasm]: https://cosmwasm.com/
