@@ -320,7 +320,7 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
         ("alloc::alloc", "alloc"),
         ("alloc::vec::alloc", "alloc"),
         // workaround to keep rustfmt from having a freak out
-        ("__ = ", "__ =")
+        ("__ = ", "__ ="),
     ];
 
     // Skip proto files belonging to `EXCLUDED_PROTO_PACKAGES`
