@@ -88,12 +88,12 @@ pub mod reflection_service_client {
         pub async fn get_authn_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetAuthnDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -110,12 +110,12 @@ pub mod reflection_service_client {
         pub async fn get_chain_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetChainDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -132,12 +132,12 @@ pub mod reflection_service_client {
         pub async fn get_codec_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetCodecDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -154,14 +154,14 @@ pub mod reflection_service_client {
         pub async fn get_configuration_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetConfigurationDescriptorRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::GetConfigurationDescriptorResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -178,14 +178,14 @@ pub mod reflection_service_client {
         pub async fn get_query_services_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetQueryServicesDescriptorRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::GetQueryServicesDescriptorResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -202,12 +202,12 @@ pub mod reflection_service_client {
         pub async fn get_tx_descriptor(
             &mut self,
             request: impl tonic::IntoRequest<super::GetTxDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -234,33 +234,33 @@ pub mod reflection_service_server {
         async fn get_authn_descriptor(
             &self,
             request: tonic::Request<super::GetAuthnDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetAuthnDescriptorResponse>, tonic::Status>;
         async fn get_chain_descriptor(
             &self,
             request: tonic::Request<super::GetChainDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetChainDescriptorResponse>, tonic::Status>;
         async fn get_codec_descriptor(
             &self,
             request: tonic::Request<super::GetCodecDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetCodecDescriptorResponse>, tonic::Status>;
         async fn get_configuration_descriptor(
             &self,
             request: tonic::Request<super::GetConfigurationDescriptorRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::GetConfigurationDescriptorResponse>,
             tonic::Status,
         >;
         async fn get_query_services_descriptor(
             &self,
             request: tonic::Request<super::GetQueryServicesDescriptorRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::GetQueryServicesDescriptorResponse>,
             tonic::Status,
         >;
         async fn get_tx_descriptor(
             &self,
             request: tonic::Request<super::GetTxDescriptorRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetTxDescriptorResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct ReflectionServiceServer<T: ReflectionService> {
@@ -332,7 +332,7 @@ pub mod reflection_service_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -615,8 +615,8 @@ pub mod reflection_service_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

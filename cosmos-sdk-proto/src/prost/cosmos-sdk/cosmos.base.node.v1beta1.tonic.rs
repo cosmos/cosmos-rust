@@ -88,11 +88,11 @@ pub mod service_client {
         pub async fn config(
             &mut self,
             request: impl tonic::IntoRequest<super::ConfigRequest>,
-        ) -> std::result::Result<tonic::Response<super::ConfigResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::ConfigResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -108,11 +108,11 @@ pub mod service_client {
         pub async fn status(
             &mut self,
             request: impl tonic::IntoRequest<super::StatusRequest>,
-        ) -> std::result::Result<tonic::Response<super::StatusResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::StatusResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -138,11 +138,11 @@ pub mod service_server {
         async fn config(
             &self,
             request: tonic::Request<super::ConfigRequest>,
-        ) -> std::result::Result<tonic::Response<super::ConfigResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::ConfigResponse>, tonic::Status>;
         async fn status(
             &self,
             request: tonic::Request<super::StatusRequest>,
-        ) -> std::result::Result<tonic::Response<super::StatusResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::StatusResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct ServiceServer<T: Service> {
@@ -214,7 +214,7 @@ pub mod service_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -324,8 +324,8 @@ pub mod service_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

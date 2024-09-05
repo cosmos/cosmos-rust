@@ -88,12 +88,12 @@ pub mod query_client {
         pub async fn params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryParamsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -109,14 +109,14 @@ pub mod query_client {
         pub async fn validator_distribution_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorDistributionInfoRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorDistributionInfoResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -133,14 +133,14 @@ pub mod query_client {
         pub async fn validator_outstanding_rewards(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorOutstandingRewardsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorOutstandingRewardsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -157,14 +157,14 @@ pub mod query_client {
         pub async fn validator_commission(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorCommissionRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorCommissionResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -181,12 +181,14 @@ pub mod query_client {
         pub async fn validator_slashes(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorSlashesRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryValidatorSlashesResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::QueryValidatorSlashesResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -203,14 +205,14 @@ pub mod query_client {
         pub async fn delegation_rewards(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegationRewardsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegationRewardsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -227,14 +229,14 @@ pub mod query_client {
         pub async fn delegation_total_rewards(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegationTotalRewardsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegationTotalRewardsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -251,14 +253,14 @@ pub mod query_client {
         pub async fn delegator_validators(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorValidatorsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorValidatorsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -275,14 +277,14 @@ pub mod query_client {
         pub async fn delegator_withdraw_address(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorWithdrawAddressRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorWithdrawAddressResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -299,12 +301,12 @@ pub mod query_client {
         pub async fn community_pool(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryCommunityPoolRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryCommunityPoolResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryCommunityPoolResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -331,64 +333,67 @@ pub mod query_server {
         async fn params(
             &self,
             request: tonic::Request<super::QueryParamsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
         async fn validator_distribution_info(
             &self,
             request: tonic::Request<super::QueryValidatorDistributionInfoRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorDistributionInfoResponse>,
             tonic::Status,
         >;
         async fn validator_outstanding_rewards(
             &self,
             request: tonic::Request<super::QueryValidatorOutstandingRewardsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorOutstandingRewardsResponse>,
             tonic::Status,
         >;
         async fn validator_commission(
             &self,
             request: tonic::Request<super::QueryValidatorCommissionRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorCommissionResponse>,
             tonic::Status,
         >;
         async fn validator_slashes(
             &self,
             request: tonic::Request<super::QueryValidatorSlashesRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryValidatorSlashesResponse>, tonic::Status>;
+        ) -> core::result::Result<
+            tonic::Response<super::QueryValidatorSlashesResponse>,
+            tonic::Status,
+        >;
         async fn delegation_rewards(
             &self,
             request: tonic::Request<super::QueryDelegationRewardsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegationRewardsResponse>,
             tonic::Status,
         >;
         async fn delegation_total_rewards(
             &self,
             request: tonic::Request<super::QueryDelegationTotalRewardsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegationTotalRewardsResponse>,
             tonic::Status,
         >;
         async fn delegator_validators(
             &self,
             request: tonic::Request<super::QueryDelegatorValidatorsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorValidatorsResponse>,
             tonic::Status,
         >;
         async fn delegator_withdraw_address(
             &self,
             request: tonic::Request<super::QueryDelegatorWithdrawAddressRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorWithdrawAddressResponse>,
             tonic::Status,
         >;
         async fn community_pool(
             &self,
             request: tonic::Request<super::QueryCommunityPoolRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryCommunityPoolResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryCommunityPoolResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -460,7 +465,7 @@ pub mod query_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -903,8 +908,8 @@ pub mod query_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }
@@ -998,12 +1003,14 @@ pub mod msg_client {
         pub async fn set_withdraw_address(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgSetWithdrawAddress>,
-        ) -> std::result::Result<tonic::Response<super::MsgSetWithdrawAddressResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::MsgSetWithdrawAddressResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1020,14 +1027,14 @@ pub mod msg_client {
         pub async fn withdraw_delegator_reward(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgWithdrawDelegatorReward>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgWithdrawDelegatorRewardResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1044,14 +1051,14 @@ pub mod msg_client {
         pub async fn withdraw_validator_commission(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgWithdrawValidatorCommission>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgWithdrawValidatorCommissionResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1068,12 +1075,12 @@ pub mod msg_client {
         pub async fn fund_community_pool(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgFundCommunityPool>,
-        ) -> std::result::Result<tonic::Response<super::MsgFundCommunityPoolResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgFundCommunityPoolResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1090,12 +1097,12 @@ pub mod msg_client {
         pub async fn update_params(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1112,12 +1119,14 @@ pub mod msg_client {
         pub async fn community_pool_spend(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCommunityPoolSpend>,
-        ) -> std::result::Result<tonic::Response<super::MsgCommunityPoolSpendResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::MsgCommunityPoolSpendResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1134,14 +1143,14 @@ pub mod msg_client {
         pub async fn deposit_validator_rewards_pool(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgDepositValidatorRewardsPool>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgDepositValidatorRewardsPoolResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1168,37 +1177,43 @@ pub mod msg_server {
         async fn set_withdraw_address(
             &self,
             request: tonic::Request<super::MsgSetWithdrawAddress>,
-        ) -> std::result::Result<tonic::Response<super::MsgSetWithdrawAddressResponse>, tonic::Status>;
+        ) -> core::result::Result<
+            tonic::Response<super::MsgSetWithdrawAddressResponse>,
+            tonic::Status,
+        >;
         async fn withdraw_delegator_reward(
             &self,
             request: tonic::Request<super::MsgWithdrawDelegatorReward>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgWithdrawDelegatorRewardResponse>,
             tonic::Status,
         >;
         async fn withdraw_validator_commission(
             &self,
             request: tonic::Request<super::MsgWithdrawValidatorCommission>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgWithdrawValidatorCommissionResponse>,
             tonic::Status,
         >;
         async fn fund_community_pool(
             &self,
             request: tonic::Request<super::MsgFundCommunityPool>,
-        ) -> std::result::Result<tonic::Response<super::MsgFundCommunityPoolResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgFundCommunityPoolResponse>, tonic::Status>;
         async fn update_params(
             &self,
             request: tonic::Request<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
         async fn community_pool_spend(
             &self,
             request: tonic::Request<super::MsgCommunityPoolSpend>,
-        ) -> std::result::Result<tonic::Response<super::MsgCommunityPoolSpendResponse>, tonic::Status>;
+        ) -> core::result::Result<
+            tonic::Response<super::MsgCommunityPoolSpendResponse>,
+            tonic::Status,
+        >;
         async fn deposit_validator_rewards_pool(
             &self,
             request: tonic::Request<super::MsgDepositValidatorRewardsPool>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgDepositValidatorRewardsPoolResponse>,
             tonic::Status,
         >;
@@ -1273,7 +1288,7 @@ pub mod msg_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -1588,8 +1603,8 @@ pub mod msg_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

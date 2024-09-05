@@ -2,7 +2,7 @@
 #[cfg(feature = "serde")]
 impl serde::Serialize for BaseVestingAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -39,7 +39,10 @@ impl serde::Serialize for BaseVestingAccount {
         }
         if self.end_time != 0 {
             #[allow(clippy::needless_borrow)]
-            struct_ser.serialize_field("endTime", ToString::to_string(&self.end_time).as_str())?;
+            struct_ser.serialize_field(
+                "endTime",
+                alloc::string::ToString::to_string(&self.end_time).as_str(),
+            )?;
         }
         struct_ser.end()
     }
@@ -47,7 +50,7 @@ impl serde::Serialize for BaseVestingAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -74,7 +77,7 @@ impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -85,13 +88,13 @@ impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -116,11 +119,11 @@ impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = BaseVestingAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.BaseVestingAccount")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<BaseVestingAccount, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<BaseVestingAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -185,7 +188,7 @@ impl<'de> serde::Deserialize<'de> for BaseVestingAccount {
 #[cfg(feature = "serde")]
 impl serde::Serialize for ContinuousVestingAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -204,8 +207,10 @@ impl serde::Serialize for ContinuousVestingAccount {
         }
         if self.start_time != 0 {
             #[allow(clippy::needless_borrow)]
-            struct_ser
-                .serialize_field("startTime", ToString::to_string(&self.start_time).as_str())?;
+            struct_ser.serialize_field(
+                "startTime",
+                alloc::string::ToString::to_string(&self.start_time).as_str(),
+            )?;
         }
         struct_ser.end()
     }
@@ -213,7 +218,7 @@ impl serde::Serialize for ContinuousVestingAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -231,7 +236,7 @@ impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -242,13 +247,13 @@ impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -268,14 +273,14 @@ impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = ContinuousVestingAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.ContinuousVestingAccount")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<ContinuousVestingAccount, V::Error>
+            ) -> core::result::Result<ContinuousVestingAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -318,7 +323,7 @@ impl<'de> serde::Deserialize<'de> for ContinuousVestingAccount {
 #[cfg(feature = "serde")]
 impl serde::Serialize for DelayedVestingAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -338,7 +343,7 @@ impl serde::Serialize for DelayedVestingAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -350,7 +355,7 @@ impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -361,13 +366,13 @@ impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -386,14 +391,14 @@ impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = DelayedVestingAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.DelayedVestingAccount")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<DelayedVestingAccount, V::Error>
+            ) -> core::result::Result<DelayedVestingAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -425,7 +430,7 @@ impl<'de> serde::Deserialize<'de> for DelayedVestingAccount {
 #[cfg(feature = "serde")]
 impl serde::Serialize for MsgCreatePeriodicVestingAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -455,8 +460,10 @@ impl serde::Serialize for MsgCreatePeriodicVestingAccount {
         }
         if self.start_time != 0 {
             #[allow(clippy::needless_borrow)]
-            struct_ser
-                .serialize_field("startTime", ToString::to_string(&self.start_time).as_str())?;
+            struct_ser.serialize_field(
+                "startTime",
+                alloc::string::ToString::to_string(&self.start_time).as_str(),
+            )?;
         }
         if !self.vesting_periods.is_empty() {
             struct_ser.serialize_field("vestingPeriods", &self.vesting_periods)?;
@@ -467,7 +474,7 @@ impl serde::Serialize for MsgCreatePeriodicVestingAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -491,7 +498,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -502,13 +509,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -530,14 +537,14 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = MsgCreatePeriodicVestingAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccount")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<MsgCreatePeriodicVestingAccount, V::Error>
+            ) -> core::result::Result<MsgCreatePeriodicVestingAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -594,7 +601,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccount {
 #[cfg(feature = "serde")]
 impl serde::Serialize for MsgCreatePeriodicVestingAccountResponse {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -610,7 +617,7 @@ impl serde::Serialize for MsgCreatePeriodicVestingAccountResponse {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -620,7 +627,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
         enum GeneratedField {}
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -631,13 +638,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -651,7 +658,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = MsgCreatePeriodicVestingAccountResponse;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str(
                     "struct cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccountResponse",
                 )
@@ -660,7 +667,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<MsgCreatePeriodicVestingAccountResponse, V::Error>
+            ) -> core::result::Result<MsgCreatePeriodicVestingAccountResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -680,7 +687,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePeriodicVestingAccountResponse {
 #[cfg(feature = "serde")]
 impl serde::Serialize for MsgCreatePermanentLockedAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -714,7 +721,7 @@ impl serde::Serialize for MsgCreatePermanentLockedAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -734,7 +741,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -745,13 +752,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -770,14 +777,14 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = MsgCreatePermanentLockedAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccount")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<MsgCreatePermanentLockedAccount, V::Error>
+            ) -> core::result::Result<MsgCreatePermanentLockedAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -823,7 +830,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccount {
 #[cfg(feature = "serde")]
 impl serde::Serialize for MsgCreatePermanentLockedAccountResponse {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -839,7 +846,7 @@ impl serde::Serialize for MsgCreatePermanentLockedAccountResponse {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -849,7 +856,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
         enum GeneratedField {}
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -860,13 +867,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -880,7 +887,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = MsgCreatePermanentLockedAccountResponse;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str(
                     "struct cosmos.vesting.v1beta1.MsgCreatePermanentLockedAccountResponse",
                 )
@@ -889,7 +896,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<MsgCreatePermanentLockedAccountResponse, V::Error>
+            ) -> core::result::Result<MsgCreatePermanentLockedAccountResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -909,7 +916,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreatePermanentLockedAccountResponse {
 #[cfg(feature = "serde")]
 impl serde::Serialize for MsgCreateVestingAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -943,7 +950,10 @@ impl serde::Serialize for MsgCreateVestingAccount {
         }
         if self.end_time != 0 {
             #[allow(clippy::needless_borrow)]
-            struct_ser.serialize_field("endTime", ToString::to_string(&self.end_time).as_str())?;
+            struct_ser.serialize_field(
+                "endTime",
+                alloc::string::ToString::to_string(&self.end_time).as_str(),
+            )?;
         }
         if self.delayed {
             struct_ser.serialize_field("delayed", &self.delayed)?;
@@ -954,7 +964,7 @@ impl serde::Serialize for MsgCreateVestingAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -979,7 +989,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -990,13 +1000,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -1017,14 +1027,14 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = MsgCreateVestingAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.MsgCreateVestingAccount")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<MsgCreateVestingAccount, V::Error>
+            ) -> core::result::Result<MsgCreateVestingAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1089,7 +1099,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccount {
 #[cfg(feature = "serde")]
 impl serde::Serialize for MsgCreateVestingAccountResponse {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -1105,7 +1115,7 @@ impl serde::Serialize for MsgCreateVestingAccountResponse {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -1115,7 +1125,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
         enum GeneratedField {}
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -1126,13 +1136,13 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -1146,14 +1156,14 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = MsgCreateVestingAccountResponse;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.MsgCreateVestingAccountResponse")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<MsgCreateVestingAccountResponse, V::Error>
+            ) -> core::result::Result<MsgCreateVestingAccountResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1173,7 +1183,7 @@ impl<'de> serde::Deserialize<'de> for MsgCreateVestingAccountResponse {
 #[cfg(feature = "serde")]
 impl serde::Serialize for Period {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -1188,7 +1198,10 @@ impl serde::Serialize for Period {
         let mut struct_ser = serializer.serialize_struct("cosmos.vesting.v1beta1.Period", len)?;
         if self.length != 0 {
             #[allow(clippy::needless_borrow)]
-            struct_ser.serialize_field("length", ToString::to_string(&self.length).as_str())?;
+            struct_ser.serialize_field(
+                "length",
+                alloc::string::ToString::to_string(&self.length).as_str(),
+            )?;
         }
         if !self.amount.is_empty() {
             struct_ser.serialize_field("amount", &self.amount)?;
@@ -1199,7 +1212,7 @@ impl serde::Serialize for Period {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for Period {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -1212,7 +1225,7 @@ impl<'de> serde::Deserialize<'de> for Period {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -1223,13 +1236,13 @@ impl<'de> serde::Deserialize<'de> for Period {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -1247,11 +1260,11 @@ impl<'de> serde::Deserialize<'de> for Period {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = Period;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.Period")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Period, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<Period, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1288,7 +1301,7 @@ impl<'de> serde::Deserialize<'de> for Period {
 #[cfg(feature = "serde")]
 impl serde::Serialize for PeriodicVestingAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -1310,8 +1323,10 @@ impl serde::Serialize for PeriodicVestingAccount {
         }
         if self.start_time != 0 {
             #[allow(clippy::needless_borrow)]
-            struct_ser
-                .serialize_field("startTime", ToString::to_string(&self.start_time).as_str())?;
+            struct_ser.serialize_field(
+                "startTime",
+                alloc::string::ToString::to_string(&self.start_time).as_str(),
+            )?;
         }
         if !self.vesting_periods.is_empty() {
             struct_ser.serialize_field("vestingPeriods", &self.vesting_periods)?;
@@ -1322,7 +1337,7 @@ impl serde::Serialize for PeriodicVestingAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -1343,7 +1358,7 @@ impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -1354,13 +1369,13 @@ impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -1383,14 +1398,14 @@ impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = PeriodicVestingAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.PeriodicVestingAccount")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<PeriodicVestingAccount, V::Error>
+            ) -> core::result::Result<PeriodicVestingAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -1441,7 +1456,7 @@ impl<'de> serde::Deserialize<'de> for PeriodicVestingAccount {
 #[cfg(feature = "serde")]
 impl serde::Serialize for PermanentLockedAccount {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -1461,7 +1476,7 @@ impl serde::Serialize for PermanentLockedAccount {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for PermanentLockedAccount {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -1473,7 +1488,7 @@ impl<'de> serde::Deserialize<'de> for PermanentLockedAccount {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -1484,13 +1499,13 @@ impl<'de> serde::Deserialize<'de> for PermanentLockedAccount {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -1509,14 +1524,14 @@ impl<'de> serde::Deserialize<'de> for PermanentLockedAccount {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = PermanentLockedAccount;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.vesting.v1beta1.PermanentLockedAccount")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<PermanentLockedAccount, V::Error>
+            ) -> core::result::Result<PermanentLockedAccount, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {

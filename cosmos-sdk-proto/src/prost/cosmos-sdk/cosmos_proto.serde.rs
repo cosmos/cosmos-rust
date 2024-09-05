@@ -2,7 +2,7 @@
 #[cfg(feature = "serde")]
 impl serde::Serialize for InterfaceDescriptor {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -28,7 +28,7 @@ impl serde::Serialize for InterfaceDescriptor {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -41,7 +41,7 @@ impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -52,13 +52,13 @@ impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -76,11 +76,14 @@ impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = InterfaceDescriptor;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos_proto.InterfaceDescriptor")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<InterfaceDescriptor, V::Error>
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> core::result::Result<InterfaceDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -118,7 +121,7 @@ impl<'de> serde::Deserialize<'de> for InterfaceDescriptor {
 #[cfg(feature = "serde")]
 impl serde::Serialize for ScalarDescriptor {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -146,10 +149,11 @@ impl serde::Serialize for ScalarDescriptor {
                 .iter()
                 .cloned()
                 .map(|v| {
-                    ScalarType::try_from(v)
-                        .map_err(|_| serde::ser::Error::custom(format!("Invalid variant {}", v)))
+                    ScalarType::try_from(v).map_err(|_| {
+                        serde::ser::Error::custom(alloc::format!("Invalid variant {}", v))
+                    })
                 })
-                .collect::<Result<Vec<_>, _>>()?;
+                .collect::<Result<alloc::vec::Vec<_>, _>>()?;
             struct_ser.serialize_field("fieldType", &v)?;
         }
         struct_ser.end()
@@ -158,7 +162,7 @@ impl serde::Serialize for ScalarDescriptor {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -172,7 +176,7 @@ impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -183,13 +187,13 @@ impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -208,11 +212,11 @@ impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = ScalarDescriptor;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos_proto.ScalarDescriptor")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<ScalarDescriptor, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<ScalarDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -238,7 +242,7 @@ impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
                                 return Err(serde::de::Error::duplicate_field("fieldType"));
                             }
                             field_type__ = Some(
-                                map_.next_value::<Vec<ScalarType>>()?
+                                map_.next_value::<alloc::vec::Vec<ScalarType>>()?
                                     .into_iter()
                                     .map(|x| x as i32)
                                     .collect(),
@@ -259,7 +263,7 @@ impl<'de> serde::Deserialize<'de> for ScalarDescriptor {
 #[cfg(feature = "serde")]
 impl serde::Serialize for ScalarType {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -274,7 +278,7 @@ impl serde::Serialize for ScalarType {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for ScalarType {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -289,11 +293,11 @@ impl<'de> serde::Deserialize<'de> for ScalarType {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = ScalarType;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 write!(formatter, "expected one of: {:?}", &FIELDS)
             }
 
-            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            fn visit_i64<E>(self, v: i64) -> core::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {
@@ -305,7 +309,7 @@ impl<'de> serde::Deserialize<'de> for ScalarType {
                     })
             }
 
-            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            fn visit_u64<E>(self, v: u64) -> core::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {
@@ -317,7 +321,7 @@ impl<'de> serde::Deserialize<'de> for ScalarType {
                     })
             }
 
-            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            fn visit_str<E>(self, value: &str) -> core::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {

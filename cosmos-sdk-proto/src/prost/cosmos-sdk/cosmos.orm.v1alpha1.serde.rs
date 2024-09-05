@@ -2,7 +2,7 @@
 #[cfg(feature = "serde")]
 impl serde::Serialize for ModuleSchemaDescriptor {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -32,7 +32,7 @@ impl serde::Serialize for ModuleSchemaDescriptor {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -45,7 +45,7 @@ impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -56,13 +56,13 @@ impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -80,14 +80,14 @@ impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = ModuleSchemaDescriptor;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.orm.v1alpha1.ModuleSchemaDescriptor")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<ModuleSchemaDescriptor, V::Error>
+            ) -> core::result::Result<ModuleSchemaDescriptor, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -128,7 +128,7 @@ impl<'de> serde::Deserialize<'de> for ModuleSchemaDescriptor {
 #[cfg(feature = "serde")]
 impl serde::Serialize for module_schema_descriptor::FileEntry {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -153,7 +153,7 @@ impl serde::Serialize for module_schema_descriptor::FileEntry {
         }
         if self.storage_type != 0 {
             let v = StorageType::try_from(self.storage_type).map_err(|_| {
-                serde::ser::Error::custom(format!("Invalid variant {}", self.storage_type))
+                serde::ser::Error::custom(alloc::format!("Invalid variant {}", self.storage_type))
             })?;
             struct_ser.serialize_field("storageType", &v)?;
         }
@@ -163,7 +163,7 @@ impl serde::Serialize for module_schema_descriptor::FileEntry {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -183,7 +183,7 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -194,13 +194,13 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -221,14 +221,14 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = module_schema_descriptor::FileEntry;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.orm.v1alpha1.ModuleSchemaDescriptor.FileEntry")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> std::result::Result<module_schema_descriptor::FileEntry, V::Error>
+            ) -> core::result::Result<module_schema_descriptor::FileEntry, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -277,7 +277,7 @@ impl<'de> serde::Deserialize<'de> for module_schema_descriptor::FileEntry {
 #[cfg(feature = "serde")]
 impl serde::Serialize for StorageType {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -292,7 +292,7 @@ impl serde::Serialize for StorageType {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for StorageType {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -307,11 +307,11 @@ impl<'de> serde::Deserialize<'de> for StorageType {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = StorageType;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 write!(formatter, "expected one of: {:?}", &FIELDS)
             }
 
-            fn visit_i64<E>(self, v: i64) -> std::result::Result<Self::Value, E>
+            fn visit_i64<E>(self, v: i64) -> core::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {
@@ -323,7 +323,7 @@ impl<'de> serde::Deserialize<'de> for StorageType {
                     })
             }
 
-            fn visit_u64<E>(self, v: u64) -> std::result::Result<Self::Value, E>
+            fn visit_u64<E>(self, v: u64) -> core::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {
@@ -335,7 +335,7 @@ impl<'de> serde::Deserialize<'de> for StorageType {
                     })
             }
 
-            fn visit_str<E>(self, value: &str) -> std::result::Result<Self::Value, E>
+            fn visit_str<E>(self, value: &str) -> core::result::Result<Self::Value, E>
             where
                 E: serde::de::Error,
             {

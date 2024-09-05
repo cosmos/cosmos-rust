@@ -88,12 +88,12 @@ pub mod query_client {
         pub async fn grants(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGrantsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGrantsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGrantsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -106,12 +106,12 @@ pub mod query_client {
         pub async fn granter_grants(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGranterGrantsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGranterGrantsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGranterGrantsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -127,12 +127,12 @@ pub mod query_client {
         pub async fn grantee_grants(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGranteeGrantsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGranteeGrantsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGranteeGrantsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -158,15 +158,15 @@ pub mod query_server {
         async fn grants(
             &self,
             request: tonic::Request<super::QueryGrantsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGrantsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGrantsResponse>, tonic::Status>;
         async fn granter_grants(
             &self,
             request: tonic::Request<super::QueryGranterGrantsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGranterGrantsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGranterGrantsResponse>, tonic::Status>;
         async fn grantee_grants(
             &self,
             request: tonic::Request<super::QueryGranteeGrantsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGranteeGrantsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGranteeGrantsResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -238,7 +238,7 @@ pub mod query_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -390,8 +390,8 @@ pub mod query_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }
@@ -485,11 +485,11 @@ pub mod msg_client {
         pub async fn grant(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgGrant>,
-        ) -> std::result::Result<tonic::Response<super::MsgGrantResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::MsgGrantResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -502,11 +502,11 @@ pub mod msg_client {
         pub async fn exec(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgExec>,
-        ) -> std::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -519,11 +519,12 @@ pub mod msg_client {
         pub async fn revoke(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgRevoke>,
-        ) -> std::result::Result<tonic::Response<super::MsgRevokeResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::MsgRevokeResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -546,15 +547,15 @@ pub mod msg_server {
         async fn grant(
             &self,
             request: tonic::Request<super::MsgGrant>,
-        ) -> std::result::Result<tonic::Response<super::MsgGrantResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgGrantResponse>, tonic::Status>;
         async fn exec(
             &self,
             request: tonic::Request<super::MsgExec>,
-        ) -> std::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status>;
         async fn revoke(
             &self,
             request: tonic::Request<super::MsgRevoke>,
-        ) -> std::result::Result<tonic::Response<super::MsgRevokeResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgRevokeResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
@@ -626,7 +627,7 @@ pub mod msg_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -774,8 +775,8 @@ pub mod msg_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

@@ -88,12 +88,12 @@ pub mod query_client {
         pub async fn contract_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryContractInfoResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryContractInfoResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -106,12 +106,12 @@ pub mod query_client {
         pub async fn contract_history(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractHistoryRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryContractHistoryResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryContractHistoryResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -125,12 +125,12 @@ pub mod query_client {
         pub async fn contracts_by_code(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractsByCodeRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryContractsByCodeResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryContractsByCodeResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -144,12 +144,14 @@ pub mod query_client {
         pub async fn all_contract_state(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAllContractStateRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryAllContractStateResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::QueryAllContractStateResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -165,12 +167,14 @@ pub mod query_client {
         pub async fn raw_contract_state(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryRawContractStateRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryRawContractStateResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::QueryRawContractStateResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -186,14 +190,14 @@ pub mod query_client {
         pub async fn smart_contract_state(
             &mut self,
             request: impl tonic::IntoRequest<super::QuerySmartContractStateRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QuerySmartContractStateResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -209,11 +213,12 @@ pub mod query_client {
         pub async fn code(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryCodeRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryCodeResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::QueryCodeResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -226,12 +231,12 @@ pub mod query_client {
         pub async fn codes(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryCodesRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryCodesResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryCodesResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -244,12 +249,12 @@ pub mod query_client {
         pub async fn pinned_codes(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPinnedCodesRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryPinnedCodesResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryPinnedCodesResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -262,12 +267,12 @@ pub mod query_client {
         pub async fn params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryParamsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -280,14 +285,14 @@ pub mod query_client {
         pub async fn contracts_by_creator(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryContractsByCreatorRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryContractsByCreatorResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -303,12 +308,12 @@ pub mod query_client {
         pub async fn build_address(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryBuildAddressRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryBuildAddressResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryBuildAddressResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -406,12 +411,12 @@ pub mod msg_client {
         pub async fn store_code(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgStoreCode>,
-        ) -> std::result::Result<tonic::Response<super::MsgStoreCodeResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgStoreCodeResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -424,14 +429,14 @@ pub mod msg_client {
         pub async fn instantiate_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgInstantiateContract>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgInstantiateContractResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -447,14 +452,14 @@ pub mod msg_client {
         pub async fn instantiate_contract2(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgInstantiateContract2>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgInstantiateContract2Response>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -470,12 +475,12 @@ pub mod msg_client {
         pub async fn execute_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgExecuteContract>,
-        ) -> std::result::Result<tonic::Response<super::MsgExecuteContractResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgExecuteContractResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -489,12 +494,12 @@ pub mod msg_client {
         pub async fn migrate_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgMigrateContract>,
-        ) -> std::result::Result<tonic::Response<super::MsgMigrateContractResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgMigrateContractResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -508,12 +513,12 @@ pub mod msg_client {
         pub async fn update_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateAdmin>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateAdminResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateAdminResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -526,12 +531,12 @@ pub mod msg_client {
         pub async fn clear_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgClearAdmin>,
-        ) -> std::result::Result<tonic::Response<super::MsgClearAdminResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgClearAdminResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -544,14 +549,14 @@ pub mod msg_client {
         pub async fn update_instantiate_config(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateInstantiateConfig>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateInstantiateConfigResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -568,12 +573,12 @@ pub mod msg_client {
         pub async fn update_params(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -586,12 +591,12 @@ pub mod msg_client {
         pub async fn sudo_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgSudoContract>,
-        ) -> std::result::Result<tonic::Response<super::MsgSudoContractResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgSudoContractResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -604,12 +609,12 @@ pub mod msg_client {
         pub async fn pin_codes(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgPinCodes>,
-        ) -> std::result::Result<tonic::Response<super::MsgPinCodesResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgPinCodesResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -622,12 +627,12 @@ pub mod msg_client {
         pub async fn unpin_codes(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUnpinCodes>,
-        ) -> std::result::Result<tonic::Response<super::MsgUnpinCodesResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgUnpinCodesResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -640,14 +645,14 @@ pub mod msg_client {
         pub async fn store_and_instantiate_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgStoreAndInstantiateContract>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgStoreAndInstantiateContractResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -664,14 +669,14 @@ pub mod msg_client {
         pub async fn remove_code_upload_params_addresses(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgRemoveCodeUploadParamsAddresses>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgRemoveCodeUploadParamsAddressesResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -688,14 +693,14 @@ pub mod msg_client {
         pub async fn add_code_upload_params_addresses(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgAddCodeUploadParamsAddresses>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgAddCodeUploadParamsAddressesResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -712,14 +717,14 @@ pub mod msg_client {
         pub async fn store_and_migrate_contract(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgStoreAndMigrateContract>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgStoreAndMigrateContractResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -736,14 +741,14 @@ pub mod msg_client {
         pub async fn update_contract_label(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateContractLabel>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateContractLabelResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();

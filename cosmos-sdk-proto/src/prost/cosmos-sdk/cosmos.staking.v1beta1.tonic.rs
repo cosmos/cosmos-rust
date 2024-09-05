@@ -88,12 +88,12 @@ pub mod query_client {
         pub async fn validators(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryValidatorsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryValidatorsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -109,12 +109,12 @@ pub mod query_client {
         pub async fn validator(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryValidatorResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryValidatorResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -128,14 +128,14 @@ pub mod query_client {
         pub async fn validator_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorDelegationsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -152,14 +152,14 @@ pub mod query_client {
         pub async fn validator_unbonding_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryValidatorUnbondingDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorUnbondingDelegationsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -176,12 +176,12 @@ pub mod query_client {
         pub async fn delegation(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegationRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryDelegationResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryDelegationResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -197,14 +197,14 @@ pub mod query_client {
         pub async fn unbonding_delegation(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryUnbondingDelegationRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryUnbondingDelegationResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -221,14 +221,14 @@ pub mod query_client {
         pub async fn delegator_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorDelegationsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -245,14 +245,14 @@ pub mod query_client {
         pub async fn delegator_unbonding_delegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorUnbondingDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorUnbondingDelegationsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -269,12 +269,12 @@ pub mod query_client {
         pub async fn redelegations(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryRedelegationsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryRedelegationsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryRedelegationsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -290,14 +290,14 @@ pub mod query_client {
         pub async fn delegator_validators(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorValidatorsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorValidatorsResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -314,14 +314,14 @@ pub mod query_client {
         pub async fn delegator_validator(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDelegatorValidatorRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorValidatorResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -338,12 +338,12 @@ pub mod query_client {
         pub async fn historical_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryHistoricalInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryHistoricalInfoResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryHistoricalInfoResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -360,11 +360,12 @@ pub mod query_client {
         pub async fn pool(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryPoolRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryPoolResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::QueryPoolResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -377,12 +378,12 @@ pub mod query_client {
         pub async fn params(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryParamsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -405,80 +406,80 @@ pub mod query_server {
         async fn validators(
             &self,
             request: tonic::Request<super::QueryValidatorsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryValidatorsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryValidatorsResponse>, tonic::Status>;
         async fn validator(
             &self,
             request: tonic::Request<super::QueryValidatorRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryValidatorResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryValidatorResponse>, tonic::Status>;
         async fn validator_delegations(
             &self,
             request: tonic::Request<super::QueryValidatorDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorDelegationsResponse>,
             tonic::Status,
         >;
         async fn validator_unbonding_delegations(
             &self,
             request: tonic::Request<super::QueryValidatorUnbondingDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryValidatorUnbondingDelegationsResponse>,
             tonic::Status,
         >;
         async fn delegation(
             &self,
             request: tonic::Request<super::QueryDelegationRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryDelegationResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryDelegationResponse>, tonic::Status>;
         async fn unbonding_delegation(
             &self,
             request: tonic::Request<super::QueryUnbondingDelegationRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryUnbondingDelegationResponse>,
             tonic::Status,
         >;
         async fn delegator_delegations(
             &self,
             request: tonic::Request<super::QueryDelegatorDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorDelegationsResponse>,
             tonic::Status,
         >;
         async fn delegator_unbonding_delegations(
             &self,
             request: tonic::Request<super::QueryDelegatorUnbondingDelegationsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorUnbondingDelegationsResponse>,
             tonic::Status,
         >;
         async fn redelegations(
             &self,
             request: tonic::Request<super::QueryRedelegationsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryRedelegationsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryRedelegationsResponse>, tonic::Status>;
         async fn delegator_validators(
             &self,
             request: tonic::Request<super::QueryDelegatorValidatorsRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorValidatorsResponse>,
             tonic::Status,
         >;
         async fn delegator_validator(
             &self,
             request: tonic::Request<super::QueryDelegatorValidatorRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryDelegatorValidatorResponse>,
             tonic::Status,
         >;
         async fn historical_info(
             &self,
             request: tonic::Request<super::QueryHistoricalInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryHistoricalInfoResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryHistoricalInfoResponse>, tonic::Status>;
         async fn pool(
             &self,
             request: tonic::Request<super::QueryPoolRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryPoolResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryPoolResponse>, tonic::Status>;
         async fn params(
             &self,
             request: tonic::Request<super::QueryParamsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryParamsResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -550,7 +551,7 @@ pub mod query_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -1151,8 +1152,8 @@ pub mod query_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }
@@ -1246,12 +1247,12 @@ pub mod msg_client {
         pub async fn create_validator(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateValidator>,
-        ) -> std::result::Result<tonic::Response<super::MsgCreateValidatorResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgCreateValidatorResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1267,12 +1268,12 @@ pub mod msg_client {
         pub async fn edit_validator(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgEditValidator>,
-        ) -> std::result::Result<tonic::Response<super::MsgEditValidatorResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgEditValidatorResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1288,12 +1289,12 @@ pub mod msg_client {
         pub async fn delegate(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgDelegate>,
-        ) -> std::result::Result<tonic::Response<super::MsgDelegateResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgDelegateResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1306,12 +1307,12 @@ pub mod msg_client {
         pub async fn begin_redelegate(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgBeginRedelegate>,
-        ) -> std::result::Result<tonic::Response<super::MsgBeginRedelegateResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgBeginRedelegateResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1327,12 +1328,12 @@ pub mod msg_client {
         pub async fn undelegate(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUndelegate>,
-        ) -> std::result::Result<tonic::Response<super::MsgUndelegateResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgUndelegateResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1346,14 +1347,14 @@ pub mod msg_client {
         pub async fn cancel_unbonding_delegation(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCancelUnbondingDelegation>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgCancelUnbondingDelegationResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1370,12 +1371,12 @@ pub mod msg_client {
         pub async fn update_params(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1401,34 +1402,34 @@ pub mod msg_server {
         async fn create_validator(
             &self,
             request: tonic::Request<super::MsgCreateValidator>,
-        ) -> std::result::Result<tonic::Response<super::MsgCreateValidatorResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgCreateValidatorResponse>, tonic::Status>;
         async fn edit_validator(
             &self,
             request: tonic::Request<super::MsgEditValidator>,
-        ) -> std::result::Result<tonic::Response<super::MsgEditValidatorResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgEditValidatorResponse>, tonic::Status>;
         async fn delegate(
             &self,
             request: tonic::Request<super::MsgDelegate>,
-        ) -> std::result::Result<tonic::Response<super::MsgDelegateResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgDelegateResponse>, tonic::Status>;
         async fn begin_redelegate(
             &self,
             request: tonic::Request<super::MsgBeginRedelegate>,
-        ) -> std::result::Result<tonic::Response<super::MsgBeginRedelegateResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgBeginRedelegateResponse>, tonic::Status>;
         async fn undelegate(
             &self,
             request: tonic::Request<super::MsgUndelegate>,
-        ) -> std::result::Result<tonic::Response<super::MsgUndelegateResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgUndelegateResponse>, tonic::Status>;
         async fn cancel_unbonding_delegation(
             &self,
             request: tonic::Request<super::MsgCancelUnbondingDelegation>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgCancelUnbondingDelegationResponse>,
             tonic::Status,
         >;
         async fn update_params(
             &self,
             request: tonic::Request<super::MsgUpdateParams>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateParamsResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
@@ -1500,7 +1501,7 @@ pub mod msg_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -1803,8 +1804,8 @@ pub mod msg_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

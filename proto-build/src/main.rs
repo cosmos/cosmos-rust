@@ -309,6 +309,18 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
             "#[cfg(feature = \"serde\")]\n\
             impl<'de> serde::Deserialize<'de> for",
         ),
+        // no_std compatibility
+        ("std::fmt", "core::fmt"),
+        ("std::option", "core::option"),
+        ("std::result", "core::result"),
+        ("ToString::", "alloc::string::ToString::"),
+        ("Vec", "alloc::vec::Vec"),
+        ("format!", "alloc::format!"),
+        // workarounds for duplication introduced by other regexes applied above
+        ("alloc::alloc", "alloc"),
+        ("alloc::vec::alloc", "alloc"),
+        // workaround to keep rustfmt from having a freak out
+        ("__ = ", "__ ="),
     ];
 
     // Skip proto files belonging to `EXCLUDED_PROTO_PACKAGES`
