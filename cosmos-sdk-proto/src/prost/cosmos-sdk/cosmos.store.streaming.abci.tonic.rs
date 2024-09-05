@@ -92,12 +92,12 @@ pub mod abci_listener_service_client {
         pub async fn listen_finalize_block(
             &mut self,
             request: impl tonic::IntoRequest<super::ListenFinalizeBlockRequest>,
-        ) -> std::result::Result<tonic::Response<super::ListenFinalizeBlockResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::ListenFinalizeBlockResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -116,12 +116,12 @@ pub mod abci_listener_service_client {
         pub async fn listen_commit(
             &mut self,
             request: impl tonic::IntoRequest<super::ListenCommitRequest>,
-        ) -> std::result::Result<tonic::Response<super::ListenCommitResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::ListenCommitResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -150,13 +150,13 @@ pub mod abci_listener_service_server {
         async fn listen_finalize_block(
             &self,
             request: tonic::Request<super::ListenFinalizeBlockRequest>,
-        ) -> std::result::Result<tonic::Response<super::ListenFinalizeBlockResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::ListenFinalizeBlockResponse>, tonic::Status>;
         /** ListenCommit is the corresponding endpoint for ABCIListener.ListenCommit
         */
         async fn listen_commit(
             &self,
             request: tonic::Request<super::ListenCommitRequest>,
-        ) -> std::result::Result<tonic::Response<super::ListenCommitResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::ListenCommitResponse>, tonic::Status>;
     }
     /** ABCIListenerService is the service for the BaseApp ABCIListener interface
     */
@@ -230,7 +230,7 @@ pub mod abci_listener_service_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -346,8 +346,8 @@ pub mod abci_listener_service_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

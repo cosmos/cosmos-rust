@@ -88,12 +88,12 @@ pub mod query_client {
         pub async fn group_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupInfoResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGroupInfoResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -106,12 +106,12 @@ pub mod query_client {
         pub async fn group_policy_info(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupPolicyInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupPolicyInfoResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGroupPolicyInfoResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -125,12 +125,12 @@ pub mod query_client {
         pub async fn group_members(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupMembersRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupMembersResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGroupMembersResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -143,12 +143,12 @@ pub mod query_client {
         pub async fn groups_by_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupsByAdminRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupsByAdminResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGroupsByAdminResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -161,14 +161,14 @@ pub mod query_client {
         pub async fn group_policies_by_group(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupPoliciesByGroupRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryGroupPoliciesByGroupResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -184,14 +184,14 @@ pub mod query_client {
         pub async fn group_policies_by_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupPoliciesByAdminRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryGroupPoliciesByAdminResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -207,12 +207,12 @@ pub mod query_client {
         pub async fn proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryProposalRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryProposalResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryProposalResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -225,14 +225,14 @@ pub mod query_client {
         pub async fn proposals_by_group_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryProposalsByGroupPolicyRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryProposalsByGroupPolicyResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -249,14 +249,14 @@ pub mod query_client {
         pub async fn vote_by_proposal_voter(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryVoteByProposalVoterRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryVoteByProposalVoterResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -272,12 +272,12 @@ pub mod query_client {
         pub async fn votes_by_proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryVotesByProposalRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryVotesByProposalResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryVotesByProposalResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -291,12 +291,12 @@ pub mod query_client {
         pub async fn votes_by_voter(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryVotesByVoterRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryVotesByVoterResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryVotesByVoterResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -309,12 +309,12 @@ pub mod query_client {
         pub async fn groups_by_member(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupsByMemberRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupsByMemberResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGroupsByMemberResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -328,12 +328,12 @@ pub mod query_client {
         pub async fn tally_result(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryTallyResultRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryTallyResultResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryTallyResultResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -346,12 +346,12 @@ pub mod query_client {
         pub async fn groups(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryGroupsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryGroupsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -374,71 +374,71 @@ pub mod query_server {
         async fn group_info(
             &self,
             request: tonic::Request<super::QueryGroupInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupInfoResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGroupInfoResponse>, tonic::Status>;
         async fn group_policy_info(
             &self,
             request: tonic::Request<super::QueryGroupPolicyInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupPolicyInfoResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGroupPolicyInfoResponse>, tonic::Status>;
         async fn group_members(
             &self,
             request: tonic::Request<super::QueryGroupMembersRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupMembersResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGroupMembersResponse>, tonic::Status>;
         async fn groups_by_admin(
             &self,
             request: tonic::Request<super::QueryGroupsByAdminRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupsByAdminResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGroupsByAdminResponse>, tonic::Status>;
         async fn group_policies_by_group(
             &self,
             request: tonic::Request<super::QueryGroupPoliciesByGroupRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryGroupPoliciesByGroupResponse>,
             tonic::Status,
         >;
         async fn group_policies_by_admin(
             &self,
             request: tonic::Request<super::QueryGroupPoliciesByAdminRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryGroupPoliciesByAdminResponse>,
             tonic::Status,
         >;
         async fn proposal(
             &self,
             request: tonic::Request<super::QueryProposalRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryProposalResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryProposalResponse>, tonic::Status>;
         async fn proposals_by_group_policy(
             &self,
             request: tonic::Request<super::QueryProposalsByGroupPolicyRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryProposalsByGroupPolicyResponse>,
             tonic::Status,
         >;
         async fn vote_by_proposal_voter(
             &self,
             request: tonic::Request<super::QueryVoteByProposalVoterRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::QueryVoteByProposalVoterResponse>,
             tonic::Status,
         >;
         async fn votes_by_proposal(
             &self,
             request: tonic::Request<super::QueryVotesByProposalRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryVotesByProposalResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryVotesByProposalResponse>, tonic::Status>;
         async fn votes_by_voter(
             &self,
             request: tonic::Request<super::QueryVotesByVoterRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryVotesByVoterResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryVotesByVoterResponse>, tonic::Status>;
         async fn groups_by_member(
             &self,
             request: tonic::Request<super::QueryGroupsByMemberRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupsByMemberResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGroupsByMemberResponse>, tonic::Status>;
         async fn tally_result(
             &self,
             request: tonic::Request<super::QueryTallyResultRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryTallyResultResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryTallyResultResponse>, tonic::Status>;
         async fn groups(
             &self,
             request: tonic::Request<super::QueryGroupsRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryGroupsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryGroupsResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -510,7 +510,7 @@ pub mod query_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -1099,8 +1099,8 @@ pub mod query_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }
@@ -1194,12 +1194,12 @@ pub mod msg_client {
         pub async fn create_group(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateGroup>,
-        ) -> std::result::Result<tonic::Response<super::MsgCreateGroupResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgCreateGroupResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1212,12 +1212,14 @@ pub mod msg_client {
         pub async fn update_group_members(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupMembers>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateGroupMembersResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::MsgUpdateGroupMembersResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1231,12 +1233,12 @@ pub mod msg_client {
         pub async fn update_group_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupAdmin>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateGroupAdminResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateGroupAdminResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1250,14 +1252,14 @@ pub mod msg_client {
         pub async fn update_group_metadata(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupMetadata>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupMetadataResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1273,12 +1275,12 @@ pub mod msg_client {
         pub async fn create_group_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateGroupPolicy>,
-        ) -> std::result::Result<tonic::Response<super::MsgCreateGroupPolicyResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgCreateGroupPolicyResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1292,14 +1294,14 @@ pub mod msg_client {
         pub async fn create_group_with_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgCreateGroupWithPolicy>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgCreateGroupWithPolicyResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1315,14 +1317,14 @@ pub mod msg_client {
         pub async fn update_group_policy_admin(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupPolicyAdmin>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupPolicyAdminResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1338,14 +1340,14 @@ pub mod msg_client {
         pub async fn update_group_policy_decision_policy(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupPolicyDecisionPolicy>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupPolicyDecisionPolicyResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1362,14 +1364,14 @@ pub mod msg_client {
         pub async fn update_group_policy_metadata(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgUpdateGroupPolicyMetadata>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupPolicyMetadataResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1386,12 +1388,12 @@ pub mod msg_client {
         pub async fn submit_proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgSubmitProposal>,
-        ) -> std::result::Result<tonic::Response<super::MsgSubmitProposalResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgSubmitProposalResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1404,12 +1406,12 @@ pub mod msg_client {
         pub async fn withdraw_proposal(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgWithdrawProposal>,
-        ) -> std::result::Result<tonic::Response<super::MsgWithdrawProposalResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgWithdrawProposalResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1423,11 +1425,11 @@ pub mod msg_client {
         pub async fn vote(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgVote>,
-        ) -> std::result::Result<tonic::Response<super::MsgVoteResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::MsgVoteResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1440,11 +1442,11 @@ pub mod msg_client {
         pub async fn exec(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgExec>,
-        ) -> std::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1457,12 +1459,12 @@ pub mod msg_client {
         pub async fn leave_group(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgLeaveGroup>,
-        ) -> std::result::Result<tonic::Response<super::MsgLeaveGroupResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::MsgLeaveGroupResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -1485,74 +1487,77 @@ pub mod msg_server {
         async fn create_group(
             &self,
             request: tonic::Request<super::MsgCreateGroup>,
-        ) -> std::result::Result<tonic::Response<super::MsgCreateGroupResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgCreateGroupResponse>, tonic::Status>;
         async fn update_group_members(
             &self,
             request: tonic::Request<super::MsgUpdateGroupMembers>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateGroupMembersResponse>, tonic::Status>;
+        ) -> core::result::Result<
+            tonic::Response<super::MsgUpdateGroupMembersResponse>,
+            tonic::Status,
+        >;
         async fn update_group_admin(
             &self,
             request: tonic::Request<super::MsgUpdateGroupAdmin>,
-        ) -> std::result::Result<tonic::Response<super::MsgUpdateGroupAdminResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgUpdateGroupAdminResponse>, tonic::Status>;
         async fn update_group_metadata(
             &self,
             request: tonic::Request<super::MsgUpdateGroupMetadata>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupMetadataResponse>,
             tonic::Status,
         >;
         async fn create_group_policy(
             &self,
             request: tonic::Request<super::MsgCreateGroupPolicy>,
-        ) -> std::result::Result<tonic::Response<super::MsgCreateGroupPolicyResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgCreateGroupPolicyResponse>, tonic::Status>;
         async fn create_group_with_policy(
             &self,
             request: tonic::Request<super::MsgCreateGroupWithPolicy>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgCreateGroupWithPolicyResponse>,
             tonic::Status,
         >;
         async fn update_group_policy_admin(
             &self,
             request: tonic::Request<super::MsgUpdateGroupPolicyAdmin>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupPolicyAdminResponse>,
             tonic::Status,
         >;
         async fn update_group_policy_decision_policy(
             &self,
             request: tonic::Request<super::MsgUpdateGroupPolicyDecisionPolicy>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupPolicyDecisionPolicyResponse>,
             tonic::Status,
         >;
         async fn update_group_policy_metadata(
             &self,
             request: tonic::Request<super::MsgUpdateGroupPolicyMetadata>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgUpdateGroupPolicyMetadataResponse>,
             tonic::Status,
         >;
         async fn submit_proposal(
             &self,
             request: tonic::Request<super::MsgSubmitProposal>,
-        ) -> std::result::Result<tonic::Response<super::MsgSubmitProposalResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgSubmitProposalResponse>, tonic::Status>;
         async fn withdraw_proposal(
             &self,
             request: tonic::Request<super::MsgWithdrawProposal>,
-        ) -> std::result::Result<tonic::Response<super::MsgWithdrawProposalResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgWithdrawProposalResponse>, tonic::Status>;
         async fn vote(
             &self,
             request: tonic::Request<super::MsgVote>,
-        ) -> std::result::Result<tonic::Response<super::MsgVoteResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgVoteResponse>, tonic::Status>;
         async fn exec(
             &self,
             request: tonic::Request<super::MsgExec>,
-        ) -> std::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgExecResponse>, tonic::Status>;
         async fn leave_group(
             &self,
             request: tonic::Request<super::MsgLeaveGroup>,
-        ) -> std::result::Result<tonic::Response<super::MsgLeaveGroupResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::MsgLeaveGroupResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct MsgServer<T: Msg> {
@@ -1624,7 +1629,7 @@ pub mod msg_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -2208,8 +2213,8 @@ pub mod msg_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

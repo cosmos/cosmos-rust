@@ -88,12 +88,12 @@ pub mod service_client {
         pub async fn get_node_info(
             &mut self,
             request: impl tonic::IntoRequest<super::GetNodeInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -110,12 +110,12 @@ pub mod service_client {
         pub async fn get_syncing(
             &mut self,
             request: impl tonic::IntoRequest<super::GetSyncingRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetSyncingResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetSyncingResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -132,12 +132,12 @@ pub mod service_client {
         pub async fn get_latest_block(
             &mut self,
             request: impl tonic::IntoRequest<super::GetLatestBlockRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -154,12 +154,12 @@ pub mod service_client {
         pub async fn get_block_by_height(
             &mut self,
             request: impl tonic::IntoRequest<super::GetBlockByHeightRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -176,12 +176,14 @@ pub mod service_client {
         pub async fn get_latest_validator_set(
             &mut self,
             request: impl tonic::IntoRequest<super::GetLatestValidatorSetRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetLatestValidatorSetResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::GetLatestValidatorSetResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -198,14 +200,14 @@ pub mod service_client {
         pub async fn get_validator_set_by_height(
             &mut self,
             request: impl tonic::IntoRequest<super::GetValidatorSetByHeightRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::GetValidatorSetByHeightResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -222,11 +224,12 @@ pub mod service_client {
         pub async fn abci_query(
             &mut self,
             request: impl tonic::IntoRequest<super::AbciQueryRequest>,
-        ) -> std::result::Result<tonic::Response<super::AbciQueryResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::AbciQueryResponse>, tonic::Status>
+        {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -253,34 +256,37 @@ pub mod service_server {
         async fn get_node_info(
             &self,
             request: tonic::Request<super::GetNodeInfoRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetNodeInfoResponse>, tonic::Status>;
         async fn get_syncing(
             &self,
             request: tonic::Request<super::GetSyncingRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetSyncingResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetSyncingResponse>, tonic::Status>;
         async fn get_latest_block(
             &self,
             request: tonic::Request<super::GetLatestBlockRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetLatestBlockResponse>, tonic::Status>;
         async fn get_block_by_height(
             &self,
             request: tonic::Request<super::GetBlockByHeightRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetBlockByHeightResponse>, tonic::Status>;
         async fn get_latest_validator_set(
             &self,
             request: tonic::Request<super::GetLatestValidatorSetRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetLatestValidatorSetResponse>, tonic::Status>;
+        ) -> core::result::Result<
+            tonic::Response<super::GetLatestValidatorSetResponse>,
+            tonic::Status,
+        >;
         async fn get_validator_set_by_height(
             &self,
             request: tonic::Request<super::GetValidatorSetByHeightRequest>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::GetValidatorSetByHeightResponse>,
             tonic::Status,
         >;
         async fn abci_query(
             &self,
             request: tonic::Request<super::AbciQueryRequest>,
-        ) -> std::result::Result<tonic::Response<super::AbciQueryResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::AbciQueryResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct ServiceServer<T: Service> {
@@ -352,7 +358,7 @@ pub mod service_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -664,8 +670,8 @@ pub mod service_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

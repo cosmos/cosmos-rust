@@ -92,12 +92,12 @@ pub mod query_client {
         pub async fn config(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryConfigRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryConfigResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::QueryConfigResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -122,7 +122,7 @@ pub mod query_server {
         async fn config(
             &self,
             request: tonic::Request<super::QueryConfigRequest>,
-        ) -> std::result::Result<tonic::Response<super::QueryConfigResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::QueryConfigResponse>, tonic::Status>;
     }
     /** Query is the app module query service.
     */
@@ -196,7 +196,7 @@ pub mod query_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -268,8 +268,8 @@ pub mod query_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

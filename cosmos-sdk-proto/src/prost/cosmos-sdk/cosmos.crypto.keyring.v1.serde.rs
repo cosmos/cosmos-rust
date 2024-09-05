@@ -2,7 +2,7 @@
 #[cfg(feature = "serde")]
 impl serde::Serialize for Record {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -46,7 +46,7 @@ impl serde::Serialize for Record {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for Record {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -65,7 +65,7 @@ impl<'de> serde::Deserialize<'de> for Record {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -76,13 +76,13 @@ impl<'de> serde::Deserialize<'de> for Record {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -104,11 +104,11 @@ impl<'de> serde::Deserialize<'de> for Record {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = Record;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.crypto.keyring.v1.Record")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<Record, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<Record, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -134,7 +134,7 @@ impl<'de> serde::Deserialize<'de> for Record {
                                 return Err(serde::de::Error::duplicate_field("local"));
                             }
                             item__ = map_
-                                .next_value::<::std::option::Option<_>>()?
+                                .next_value::<::core::option::Option<_>>()?
                                 .map(record::Item::Local);
                         }
                         GeneratedField::Ledger => {
@@ -142,7 +142,7 @@ impl<'de> serde::Deserialize<'de> for Record {
                                 return Err(serde::de::Error::duplicate_field("ledger"));
                             }
                             item__ = map_
-                                .next_value::<::std::option::Option<_>>()?
+                                .next_value::<::core::option::Option<_>>()?
                                 .map(record::Item::Ledger);
                         }
                         GeneratedField::Multi => {
@@ -150,7 +150,7 @@ impl<'de> serde::Deserialize<'de> for Record {
                                 return Err(serde::de::Error::duplicate_field("multi"));
                             }
                             item__ = map_
-                                .next_value::<::std::option::Option<_>>()?
+                                .next_value::<::core::option::Option<_>>()?
                                 .map(record::Item::Multi);
                         }
                         GeneratedField::Offline => {
@@ -158,7 +158,7 @@ impl<'de> serde::Deserialize<'de> for Record {
                                 return Err(serde::de::Error::duplicate_field("offline"));
                             }
                             item__ = map_
-                                .next_value::<::std::option::Option<_>>()?
+                                .next_value::<::core::option::Option<_>>()?
                                 .map(record::Item::Offline);
                         }
                     }
@@ -176,7 +176,7 @@ impl<'de> serde::Deserialize<'de> for Record {
 #[cfg(feature = "serde")]
 impl serde::Serialize for record::Ledger {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -196,7 +196,7 @@ impl serde::Serialize for record::Ledger {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for record::Ledger {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -208,7 +208,7 @@ impl<'de> serde::Deserialize<'de> for record::Ledger {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -219,13 +219,13 @@ impl<'de> serde::Deserialize<'de> for record::Ledger {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -242,11 +242,11 @@ impl<'de> serde::Deserialize<'de> for record::Ledger {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = record::Ledger;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.crypto.keyring.v1.Record.Ledger")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<record::Ledger, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<record::Ledger, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -274,7 +274,7 @@ impl<'de> serde::Deserialize<'de> for record::Ledger {
 #[cfg(feature = "serde")]
 impl serde::Serialize for record::Local {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -294,7 +294,7 @@ impl serde::Serialize for record::Local {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for record::Local {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -306,7 +306,7 @@ impl<'de> serde::Deserialize<'de> for record::Local {
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -317,13 +317,13 @@ impl<'de> serde::Deserialize<'de> for record::Local {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -340,11 +340,11 @@ impl<'de> serde::Deserialize<'de> for record::Local {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = record::Local;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.crypto.keyring.v1.Record.Local")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<record::Local, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<record::Local, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -374,7 +374,7 @@ impl<'de> serde::Deserialize<'de> for record::Local {
 #[cfg(feature = "serde")]
 impl serde::Serialize for record::Multi {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -388,7 +388,7 @@ impl serde::Serialize for record::Multi {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for record::Multi {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -398,7 +398,7 @@ impl<'de> serde::Deserialize<'de> for record::Multi {
         enum GeneratedField {}
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -409,13 +409,13 @@ impl<'de> serde::Deserialize<'de> for record::Multi {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -429,11 +429,11 @@ impl<'de> serde::Deserialize<'de> for record::Multi {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = record::Multi;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.crypto.keyring.v1.Record.Multi")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<record::Multi, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<record::Multi, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
@@ -453,7 +453,7 @@ impl<'de> serde::Deserialize<'de> for record::Multi {
 #[cfg(feature = "serde")]
 impl serde::Serialize for record::Offline {
     #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
         S: serde::Serializer,
     {
@@ -467,7 +467,7 @@ impl serde::Serialize for record::Offline {
 #[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for record::Offline {
     #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
@@ -477,7 +477,7 @@ impl<'de> serde::Deserialize<'de> for record::Offline {
         enum GeneratedField {}
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
             where
                 D: serde::Deserializer<'de>,
             {
@@ -488,13 +488,13 @@ impl<'de> serde::Deserialize<'de> for record::Offline {
 
                     fn expecting(
                         &self,
-                        formatter: &mut std::fmt::Formatter<'_>,
-                    ) -> std::fmt::Result {
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
                         write!(formatter, "expected one of: {:?}", &FIELDS)
                     }
 
                     #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
                     where
                         E: serde::de::Error,
                     {
@@ -508,11 +508,11 @@ impl<'de> serde::Deserialize<'de> for record::Offline {
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
             type Value = record::Offline;
 
-            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 formatter.write_str("struct cosmos.crypto.keyring.v1.Record.Offline")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> std::result::Result<record::Offline, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<record::Offline, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {

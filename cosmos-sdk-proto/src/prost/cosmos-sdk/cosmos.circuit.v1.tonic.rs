@@ -88,11 +88,11 @@ pub mod query_client {
         pub async fn account(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAccountRequest>,
-        ) -> std::result::Result<tonic::Response<super::AccountResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::AccountResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -105,11 +105,11 @@ pub mod query_client {
         pub async fn accounts(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryAccountsRequest>,
-        ) -> std::result::Result<tonic::Response<super::AccountsResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::AccountsResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -122,12 +122,12 @@ pub mod query_client {
         pub async fn disabled_list(
             &mut self,
             request: impl tonic::IntoRequest<super::QueryDisabledListRequest>,
-        ) -> std::result::Result<tonic::Response<super::DisabledListResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::DisabledListResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -151,15 +151,15 @@ pub mod query_server {
         async fn account(
             &self,
             request: tonic::Request<super::QueryAccountRequest>,
-        ) -> std::result::Result<tonic::Response<super::AccountResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::AccountResponse>, tonic::Status>;
         async fn accounts(
             &self,
             request: tonic::Request<super::QueryAccountsRequest>,
-        ) -> std::result::Result<tonic::Response<super::AccountsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::AccountsResponse>, tonic::Status>;
         async fn disabled_list(
             &self,
             request: tonic::Request<super::QueryDisabledListRequest>,
-        ) -> std::result::Result<tonic::Response<super::DisabledListResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::DisabledListResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct QueryServer<T: Query> {
@@ -231,7 +231,7 @@ pub mod query_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -379,8 +379,8 @@ pub mod query_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }
@@ -474,14 +474,14 @@ pub mod msg_client {
         pub async fn authorize_circuit_breaker(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgAuthorizeCircuitBreaker>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgAuthorizeCircuitBreakerResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -498,12 +498,14 @@ pub mod msg_client {
         pub async fn trip_circuit_breaker(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgTripCircuitBreaker>,
-        ) -> std::result::Result<tonic::Response<super::MsgTripCircuitBreakerResponse>, tonic::Status>
-        {
+        ) -> core::result::Result<
+            tonic::Response<super::MsgTripCircuitBreakerResponse>,
+            tonic::Status,
+        > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -519,14 +521,14 @@ pub mod msg_client {
         pub async fn reset_circuit_breaker(
             &mut self,
             request: impl tonic::IntoRequest<super::MsgResetCircuitBreaker>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgResetCircuitBreakerResponse>,
             tonic::Status,
         > {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -552,18 +554,21 @@ pub mod msg_server {
         async fn authorize_circuit_breaker(
             &self,
             request: tonic::Request<super::MsgAuthorizeCircuitBreaker>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgAuthorizeCircuitBreakerResponse>,
             tonic::Status,
         >;
         async fn trip_circuit_breaker(
             &self,
             request: tonic::Request<super::MsgTripCircuitBreaker>,
-        ) -> std::result::Result<tonic::Response<super::MsgTripCircuitBreakerResponse>, tonic::Status>;
+        ) -> core::result::Result<
+            tonic::Response<super::MsgTripCircuitBreakerResponse>,
+            tonic::Status,
+        >;
         async fn reset_circuit_breaker(
             &self,
             request: tonic::Request<super::MsgResetCircuitBreaker>,
-        ) -> std::result::Result<
+        ) -> core::result::Result<
             tonic::Response<super::MsgResetCircuitBreakerResponse>,
             tonic::Status,
         >;
@@ -638,7 +643,7 @@ pub mod msg_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -793,8 +798,8 @@ pub mod msg_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }

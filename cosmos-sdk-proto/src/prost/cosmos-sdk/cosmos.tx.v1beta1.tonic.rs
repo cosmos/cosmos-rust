@@ -88,11 +88,11 @@ pub mod service_client {
         pub async fn simulate(
             &mut self,
             request: impl tonic::IntoRequest<super::SimulateRequest>,
-        ) -> std::result::Result<tonic::Response<super::SimulateResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::SimulateResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -105,11 +105,11 @@ pub mod service_client {
         pub async fn get_tx(
             &mut self,
             request: impl tonic::IntoRequest<super::GetTxRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetTxResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::GetTxResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -122,12 +122,12 @@ pub mod service_client {
         pub async fn broadcast_tx(
             &mut self,
             request: impl tonic::IntoRequest<super::BroadcastTxRequest>,
-        ) -> std::result::Result<tonic::Response<super::BroadcastTxResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::BroadcastTxResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -141,12 +141,12 @@ pub mod service_client {
         pub async fn get_txs_event(
             &mut self,
             request: impl tonic::IntoRequest<super::GetTxsEventRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetTxsEventResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetTxsEventResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -160,12 +160,12 @@ pub mod service_client {
         pub async fn get_block_with_txs(
             &mut self,
             request: impl tonic::IntoRequest<super::GetBlockWithTxsRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetBlockWithTxsResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::GetBlockWithTxsResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -181,11 +181,11 @@ pub mod service_client {
         pub async fn tx_decode(
             &mut self,
             request: impl tonic::IntoRequest<super::TxDecodeRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxDecodeResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::TxDecodeResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -198,11 +198,11 @@ pub mod service_client {
         pub async fn tx_encode(
             &mut self,
             request: impl tonic::IntoRequest<super::TxEncodeRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxEncodeResponse>, tonic::Status> {
+        ) -> core::result::Result<tonic::Response<super::TxEncodeResponse>, tonic::Status> {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -215,12 +215,12 @@ pub mod service_client {
         pub async fn tx_encode_amino(
             &mut self,
             request: impl tonic::IntoRequest<super::TxEncodeAminoRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxEncodeAminoResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::TxEncodeAminoResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -236,12 +236,12 @@ pub mod service_client {
         pub async fn tx_decode_amino(
             &mut self,
             request: impl tonic::IntoRequest<super::TxDecodeAminoRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxDecodeAminoResponse>, tonic::Status>
+        ) -> core::result::Result<tonic::Response<super::TxDecodeAminoResponse>, tonic::Status>
         {
             self.inner.ready().await.map_err(|e| {
                 tonic::Status::new(
                     tonic::Code::Unknown,
-                    format!("Service was not ready: {}", e.into()),
+                    alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
             let codec = tonic::codec::ProstCodec::default();
@@ -267,39 +267,39 @@ pub mod service_server {
         async fn simulate(
             &self,
             request: tonic::Request<super::SimulateRequest>,
-        ) -> std::result::Result<tonic::Response<super::SimulateResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::SimulateResponse>, tonic::Status>;
         async fn get_tx(
             &self,
             request: tonic::Request<super::GetTxRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetTxResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetTxResponse>, tonic::Status>;
         async fn broadcast_tx(
             &self,
             request: tonic::Request<super::BroadcastTxRequest>,
-        ) -> std::result::Result<tonic::Response<super::BroadcastTxResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::BroadcastTxResponse>, tonic::Status>;
         async fn get_txs_event(
             &self,
             request: tonic::Request<super::GetTxsEventRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetTxsEventResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetTxsEventResponse>, tonic::Status>;
         async fn get_block_with_txs(
             &self,
             request: tonic::Request<super::GetBlockWithTxsRequest>,
-        ) -> std::result::Result<tonic::Response<super::GetBlockWithTxsResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::GetBlockWithTxsResponse>, tonic::Status>;
         async fn tx_decode(
             &self,
             request: tonic::Request<super::TxDecodeRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxDecodeResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::TxDecodeResponse>, tonic::Status>;
         async fn tx_encode(
             &self,
             request: tonic::Request<super::TxEncodeRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxEncodeResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::TxEncodeResponse>, tonic::Status>;
         async fn tx_encode_amino(
             &self,
             request: tonic::Request<super::TxEncodeAminoRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxEncodeAminoResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::TxEncodeAminoResponse>, tonic::Status>;
         async fn tx_decode_amino(
             &self,
             request: tonic::Request<super::TxDecodeAminoRequest>,
-        ) -> std::result::Result<tonic::Response<super::TxDecodeAminoResponse>, tonic::Status>;
+        ) -> core::result::Result<tonic::Response<super::TxDecodeAminoResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct ServiceServer<T: Service> {
@@ -371,7 +371,7 @@ pub mod service_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
+        ) -> Poll<core::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -749,8 +749,8 @@ pub mod service_server {
             Self(Arc::clone(&self.0))
         }
     }
-    impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
+        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
             write!(f, "{:?}", self.0)
         }
     }
