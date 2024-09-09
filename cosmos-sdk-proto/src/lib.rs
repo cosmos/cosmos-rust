@@ -160,11 +160,6 @@ pub mod cosmos {
         }
     }
 
-    /// ICS23 protobuf definitions.
-    pub mod ics23 {
-        pub use ::ics23 as v1;
-    }
-
     /// Messages and services handling minting
     pub mod mint {
         pub mod v1beta1 {
