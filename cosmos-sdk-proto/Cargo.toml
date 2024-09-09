@@ -1,6 +1,6 @@
 [package]
 name = "cosmos-sdk-proto"
-version = "0.25.0-pre.1"
+version = "0.25.0"
 authors = [
     "Justin Kilpatrick <justin@althea.net>",
     "Greg Szabo <greg@informal.systems>",
