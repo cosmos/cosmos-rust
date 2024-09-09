@@ -289,7 +289,7 @@ dependencies = [
 
 [[package]]
 name = "cosmrs"
-version = "0.20.0-pre"
+version = "0.20.0"
 dependencies = [
  "bip32",
  "cosmos-sdk-proto",
