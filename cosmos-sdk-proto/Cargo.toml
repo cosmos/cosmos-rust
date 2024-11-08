@@ -30,7 +30,7 @@ std = ["prost/std", "tendermint-proto/std"]
 grpc = ["std", "tonic"]
 grpc-transport = ["grpc", "tonic/transport"]
 cosmwasm = []
-serde = ["dep:serde", "tendermint-proto/std", "pbjson"]
+serde = ["dep:serde", "pbjson"]
 
 [package.metadata.docs.rs]
 all-features = true
