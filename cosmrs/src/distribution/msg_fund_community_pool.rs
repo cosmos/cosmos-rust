@@ -30,8 +30,8 @@ impl TryFrom<&proto::cosmos::distribution::v1beta1::MsgFundCommunityPool> for Ms
     fn try_from(
         proto: &proto::cosmos::distribution::v1beta1::MsgFundCommunityPool,
     ) -> Result<MsgFundCommunityPool> {
-        let mut amounts = vec![];
-        for amount in proto.amount.iter() {
+        let mut amounts = Vec::with_capacity(proto.amount.len());
+        for amount in &proto.amount {
             amounts.push(Coin {
                 denom: amount.denom.parse()?,
                 amount: amount.amount.parse()?,
@@ -56,8 +56,8 @@ impl From<&MsgFundCommunityPool> for proto::cosmos::distribution::v1beta1::MsgFu
     fn from(
         msg: &MsgFundCommunityPool,
     ) -> proto::cosmos::distribution::v1beta1::MsgFundCommunityPool {
-        let mut amounts = vec![];
-        for amount in msg.amount.iter() {
+        let mut amounts = Vec::with_capacity(msg.amount.len());
+        for amount in &msg.amount {
             amounts.push(proto::cosmos::base::v1beta1::Coin {
                 denom: amount.denom.to_string(),
                 amount: amount.amount.to_string(),
