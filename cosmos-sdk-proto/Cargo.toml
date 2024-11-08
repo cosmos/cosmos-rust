@@ -22,7 +22,7 @@ tendermint-proto = { version = "0.40.0" }
 # Optional dependencies
 tonic = { version = "0.12", optional = true, default-features = false, features = ["codegen", "prost"] }
 serde = { version = "1.0.203", optional = true, default-features = false, features = ["alloc"] }
-pbjson = { package = "informalsystems-pbjson", optional = true, version = "0.7" }
+pbjson = { package = "informalsystems-pbjson", optional = true, default-features = false, version = "0.7" }
 
 [features]
 default = ["grpc-transport"]
@@ -30,7 +30,7 @@ std = ["prost/std", "tendermint-proto/std"]
 grpc = ["std", "tonic"]
 grpc-transport = ["grpc", "tonic/transport"]
 cosmwasm = []
-serde = ["dep:serde", "tendermint-proto/std", "pbjson"]
+serde = ["dep:serde", "pbjson"]
 
 [package.metadata.docs.rs]
 all-features = true
