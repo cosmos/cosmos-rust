@@ -50,7 +50,7 @@ impl BodyBuilder {
 
     /// Add a non-critical extension option.
     pub fn non_critical_extension_option(&mut self, option: impl Into<Any>) -> &mut Self {
-        self.body.extension_options.push(option.into());
+        self.body.non_critical_extension_options.push(option.into());
         self
     }
 
