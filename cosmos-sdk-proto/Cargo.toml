@@ -13,14 +13,14 @@ readme = "README.md"
 categories = ["cryptography", "cryptography::cryptocurrencies", "database"]
 keywords = ["blockchain", "cosmos", "tendermint", "proto"]
 edition = "2021"
-rust-version = "1.72"
+rust-version = "1.75"
 
 [dependencies]
 prost = { version = "0.13", default-features = false }
 tendermint-proto = { version = "0.40.0" }
 
 # Optional dependencies
-tonic = { version = "0.12", optional = true, default-features = false, features = ["codegen", "prost"] }
+tonic = { version = "0.13", optional = true, default-features = false, features = ["codegen", "prost"] }
 serde = { version = "1.0.203", optional = true, default-features = false, features = ["alloc"] }
 pbjson = { package = "informalsystems-pbjson", optional = true, default-features = false, version = "0.7" }
 
