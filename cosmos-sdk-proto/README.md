@@ -20,7 +20,7 @@ Pull requests to expand coverage are welcome.
 
 ## Minimum Supported Rust Version
 
-This crate is supported on Rust **1.72** or newer.
+This crate is supported on Rust **1.75** or newer.
 
 [//]: # "badges"
 [crate-image]: https://img.shields.io/crates/v/cosmos-sdk-proto?logo=rust
@@ -31,7 +31,7 @@ This crate is supported on Rust **1.72** or newer.
 [build-link]: https://github.com/cosmos/cosmos-rust/actions/workflows/cosmos-sdk-proto.yml
 [license-image]: https://img.shields.io/badge/license-Apache2.0-blue.svg
 [license-link]: https://github.com/cosmos/cosmos-rust/blob/master/LICENSE
-[rustc-image]: https://img.shields.io/badge/rustc-1.72+-blue.svg
+[rustc-image]: https://img.shields.io/badge/rustc-1.75+-blue.svg
 
 [//]: # "links"
 [Protobufs]: https://github.com/cosmos/cosmos-sdk/tree/master/proto/
