@@ -40,8 +40,6 @@ impl ::prost::Name for ModuleAccount {
     }
 }
 /// ModuleCredential represents a unclaimable pubkey for base accounts controlled by modules.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleCredential {
@@ -101,8 +99,6 @@ impl ::prost::Name for GenesisState {
     }
 }
 /// QueryAccountsRequest is the request type for the Query/Accounts RPC method.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountsRequest {
@@ -118,8 +114,6 @@ impl ::prost::Name for QueryAccountsRequest {
     }
 }
 /// QueryAccountsResponse is the response type for the Query/Accounts RPC method.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountsResponse {
@@ -194,8 +188,6 @@ impl ::prost::Name for QueryParamsResponse {
     }
 }
 /// QueryModuleAccountsRequest is the request type for the Query/ModuleAccounts RPC method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleAccountsRequest {}
@@ -207,8 +199,6 @@ impl ::prost::Name for QueryModuleAccountsRequest {
     }
 }
 /// QueryModuleAccountsResponse is the response type for the Query/ModuleAccounts RPC method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleAccountsResponse {
@@ -251,8 +241,6 @@ impl ::prost::Name for QueryModuleAccountByNameResponse {
     }
 }
 /// Bech32PrefixRequest is the request type for Bech32Prefix rpc method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bech32PrefixRequest {}
@@ -264,8 +252,6 @@ impl ::prost::Name for Bech32PrefixRequest {
     }
 }
 /// Bech32PrefixResponse is the response type for Bech32Prefix rpc method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bech32PrefixResponse {
@@ -280,8 +266,6 @@ impl ::prost::Name for Bech32PrefixResponse {
     }
 }
 /// AddressBytesToStringRequest is the request type for AddressString rpc method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AddressBytesToStringRequest {
@@ -296,8 +280,6 @@ impl ::prost::Name for AddressBytesToStringRequest {
     }
 }
 /// AddressBytesToStringResponse is the response type for AddressString rpc method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AddressBytesToStringResponse {
@@ -312,8 +294,6 @@ impl ::prost::Name for AddressBytesToStringResponse {
     }
 }
 /// AddressStringToBytesRequest is the request type for AccountBytes rpc method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AddressStringToBytesRequest {
@@ -328,8 +308,6 @@ impl ::prost::Name for AddressStringToBytesRequest {
     }
 }
 /// AddressStringToBytesResponse is the response type for AddressBytes rpc method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AddressStringToBytesResponse {
@@ -344,8 +322,6 @@ impl ::prost::Name for AddressStringToBytesResponse {
     }
 }
 /// QueryAccountAddressByIDRequest is the request type for AccountAddressByID rpc method
-///
-/// Since: cosmos-sdk 0.46.2
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountAddressByIdRequest {
@@ -358,8 +334,6 @@ pub struct QueryAccountAddressByIdRequest {
     #[prost(int64, tag = "1")]
     pub id: i64,
     /// account_id is the account number of the address to be queried.
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(uint64, tag = "2")]
     pub account_id: u64,
 }
@@ -371,8 +345,6 @@ impl ::prost::Name for QueryAccountAddressByIdRequest {
     }
 }
 /// QueryAccountAddressByIDResponse is the response type for AccountAddressByID rpc method
-///
-/// Since: cosmos-sdk 0.46.2
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountAddressByIdResponse {
@@ -387,8 +359,6 @@ impl ::prost::Name for QueryAccountAddressByIdResponse {
     }
 }
 /// QueryAccountInfoRequest is the Query/AccountInfo request type.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountInfoRequest {
@@ -404,8 +374,6 @@ impl ::prost::Name for QueryAccountInfoRequest {
     }
 }
 /// QueryAccountInfoResponse is the Query/AccountInfo response type.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAccountInfoResponse {
@@ -421,8 +389,6 @@ impl ::prost::Name for QueryAccountInfoResponse {
     }
 }
 /// MsgUpdateParams is the Msg/UpdateParams request type.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParams {
@@ -444,8 +410,6 @@ impl ::prost::Name for MsgUpdateParams {
 }
 /// MsgUpdateParamsResponse defines the response structure for executing a
 /// MsgUpdateParams message.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParamsResponse {}

@@ -47,8 +47,6 @@ pub struct TxResponse {
     /// these events include those emitted by processing all the messages and those
     /// emitted from the ante. Whereas Logs contains the events, with
     /// additional metadata, emitted only by processing the messages.
-    ///
-    /// Since: cosmos-sdk 0.42.11, 0.44.5, 0.45
     #[prost(message, repeated, tag = "13")]
     pub events: ::prost::alloc::vec::Vec<::tendermint_proto::abci::Event>,
 }
@@ -150,8 +148,6 @@ pub struct Result {
     #[prost(message, repeated, tag = "3")]
     pub events: ::prost::alloc::vec::Vec<::tendermint_proto::abci::Event>,
     /// msg_responses contains the Msg handler responses type packed in Anys.
-    ///
-    /// Since: cosmos-sdk 0.46
     #[prost(message, repeated, tag = "4")]
     pub msg_responses: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
 }
@@ -206,8 +202,6 @@ pub struct TxMsgData {
     #[prost(message, repeated, tag = "1")]
     pub data: ::prost::alloc::vec::Vec<MsgData>,
     /// msg_responses contains the Msg handler responses packed into Anys.
-    ///
-    /// Since: cosmos-sdk 0.46
     #[prost(message, repeated, tag = "2")]
     pub msg_responses: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
 }

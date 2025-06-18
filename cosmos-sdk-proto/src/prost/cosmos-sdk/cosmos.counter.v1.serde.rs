@@ -1,6 +1,6 @@
 // @generated
 #[cfg(feature = "serde")]
-impl serde::Serialize for PrimaryKeyDescriptor {
+impl serde::Serialize for MsgIncreaseCountResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
@@ -8,36 +8,33 @@ impl serde::Serialize for PrimaryKeyDescriptor {
     {
         use serde::ser::SerializeStruct;
         let mut len = 0;
-        if !self.fields.is_empty() {
-            len += 1;
-        }
-        if self.auto_increment {
+        if self.new_count != 0 {
             len += 1;
         }
         let mut struct_ser =
-            serializer.serialize_struct("cosmos.orm.v1.PrimaryKeyDescriptor", len)?;
-        if !self.fields.is_empty() {
-            struct_ser.serialize_field("fields", &self.fields)?;
-        }
-        if self.auto_increment {
-            struct_ser.serialize_field("autoIncrement", &self.auto_increment)?;
+            serializer.serialize_struct("cosmos.counter.v1.MsgIncreaseCountResponse", len)?;
+        if self.new_count != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "newCount",
+                alloc::string::ToString::to_string(&self.new_count).as_str(),
+            )?;
         }
         struct_ser.end()
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for PrimaryKeyDescriptor {
+impl<'de> serde::Deserialize<'de> for MsgIncreaseCountResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["fields", "auto_increment", "autoIncrement"];
+        const FIELDS: &[&str] = &["new_count", "newCount"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
-            Fields,
-            AutoIncrement,
+            NewCount,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -63,8 +60,7 @@ impl<'de> serde::Deserialize<'de> for PrimaryKeyDescriptor {
                         E: serde::de::Error,
                     {
                         match value {
-                            "fields" => Ok(GeneratedField::Fields),
-                            "autoIncrement" | "auto_increment" => Ok(GeneratedField::AutoIncrement),
+                            "newCount" | "new_count" => Ok(GeneratedField::NewCount),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -74,296 +70,47 @@ impl<'de> serde::Deserialize<'de> for PrimaryKeyDescriptor {
         }
         struct GeneratedVisitor;
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = PrimaryKeyDescriptor;
+            type Value = MsgIncreaseCountResponse;
 
             fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-                formatter.write_str("struct cosmos.orm.v1.PrimaryKeyDescriptor")
+                formatter.write_str("struct cosmos.counter.v1.MsgIncreaseCountResponse")
             }
 
             fn visit_map<V>(
                 self,
                 mut map_: V,
-            ) -> core::result::Result<PrimaryKeyDescriptor, V::Error>
+            ) -> core::result::Result<MsgIncreaseCountResponse, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                let mut fields__ = None;
-                let mut auto_increment__ = None;
+                let mut new_count__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
-                        GeneratedField::Fields => {
-                            if fields__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("fields"));
+                        GeneratedField::NewCount => {
+                            if new_count__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("newCount"));
                             }
-                            fields__ = Some(map_.next_value()?);
-                        }
-                        GeneratedField::AutoIncrement => {
-                            if auto_increment__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("autoIncrement"));
-                            }
-                            auto_increment__ = Some(map_.next_value()?);
-                        }
-                    }
-                }
-                Ok(PrimaryKeyDescriptor {
-                    fields: fields__.unwrap_or_default(),
-                    auto_increment: auto_increment__.unwrap_or_default(),
-                })
-            }
-        }
-        deserializer.deserialize_struct(
-            "cosmos.orm.v1.PrimaryKeyDescriptor",
-            FIELDS,
-            GeneratedVisitor,
-        )
-    }
-}
-#[cfg(feature = "serde")]
-impl serde::Serialize for SecondaryIndexDescriptor {
-    #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        use serde::ser::SerializeStruct;
-        let mut len = 0;
-        if !self.fields.is_empty() {
-            len += 1;
-        }
-        if self.id != 0 {
-            len += 1;
-        }
-        if self.unique {
-            len += 1;
-        }
-        let mut struct_ser =
-            serializer.serialize_struct("cosmos.orm.v1.SecondaryIndexDescriptor", len)?;
-        if !self.fields.is_empty() {
-            struct_ser.serialize_field("fields", &self.fields)?;
-        }
-        if self.id != 0 {
-            struct_ser.serialize_field("id", &self.id)?;
-        }
-        if self.unique {
-            struct_ser.serialize_field("unique", &self.unique)?;
-        }
-        struct_ser.end()
-    }
-}
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for SecondaryIndexDescriptor {
-    #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        const FIELDS: &[&str] = &["fields", "id", "unique"];
-
-        #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {
-            Fields,
-            Id,
-            Unique,
-        }
-        #[cfg(feature = "serde")]
-        impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
-            where
-                D: serde::Deserializer<'de>,
-            {
-                struct GeneratedVisitor;
-
-                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-                    type Value = GeneratedField;
-
-                    fn expecting(
-                        &self,
-                        formatter: &mut core::fmt::Formatter<'_>,
-                    ) -> core::fmt::Result {
-                        write!(formatter, "expected one of: {:?}", &FIELDS)
-                    }
-
-                    #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
-                    where
-                        E: serde::de::Error,
-                    {
-                        match value {
-                            "fields" => Ok(GeneratedField::Fields),
-                            "id" => Ok(GeneratedField::Id),
-                            "unique" => Ok(GeneratedField::Unique),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                        }
-                    }
-                }
-                deserializer.deserialize_identifier(GeneratedVisitor)
-            }
-        }
-        struct GeneratedVisitor;
-        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = SecondaryIndexDescriptor;
-
-            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-                formatter.write_str("struct cosmos.orm.v1.SecondaryIndexDescriptor")
-            }
-
-            fn visit_map<V>(
-                self,
-                mut map_: V,
-            ) -> core::result::Result<SecondaryIndexDescriptor, V::Error>
-            where
-                V: serde::de::MapAccess<'de>,
-            {
-                let mut fields__ = None;
-                let mut id__ = None;
-                let mut unique__ = None;
-                while let Some(k) = map_.next_key()? {
-                    match k {
-                        GeneratedField::Fields => {
-                            if fields__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("fields"));
-                            }
-                            fields__ = Some(map_.next_value()?);
-                        }
-                        GeneratedField::Id => {
-                            if id__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("id"));
-                            }
-                            id__ = Some(
-                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
-                                    .0,
-                            );
-                        }
-                        GeneratedField::Unique => {
-                            if unique__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("unique"));
-                            }
-                            unique__ = Some(map_.next_value()?);
-                        }
-                    }
-                }
-                Ok(SecondaryIndexDescriptor {
-                    fields: fields__.unwrap_or_default(),
-                    id: id__.unwrap_or_default(),
-                    unique: unique__.unwrap_or_default(),
-                })
-            }
-        }
-        deserializer.deserialize_struct(
-            "cosmos.orm.v1.SecondaryIndexDescriptor",
-            FIELDS,
-            GeneratedVisitor,
-        )
-    }
-}
-#[cfg(feature = "serde")]
-impl serde::Serialize for SingletonDescriptor {
-    #[allow(deprecated)]
-    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        use serde::ser::SerializeStruct;
-        let mut len = 0;
-        if self.id != 0 {
-            len += 1;
-        }
-        let mut struct_ser =
-            serializer.serialize_struct("cosmos.orm.v1.SingletonDescriptor", len)?;
-        if self.id != 0 {
-            struct_ser.serialize_field("id", &self.id)?;
-        }
-        struct_ser.end()
-    }
-}
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for SingletonDescriptor {
-    #[allow(deprecated)]
-    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        const FIELDS: &[&str] = &["id"];
-
-        #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {
-            Id,
-        }
-        #[cfg(feature = "serde")]
-        impl<'de> serde::Deserialize<'de> for GeneratedField {
-            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
-            where
-                D: serde::Deserializer<'de>,
-            {
-                struct GeneratedVisitor;
-
-                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-                    type Value = GeneratedField;
-
-                    fn expecting(
-                        &self,
-                        formatter: &mut core::fmt::Formatter<'_>,
-                    ) -> core::fmt::Result {
-                        write!(formatter, "expected one of: {:?}", &FIELDS)
-                    }
-
-                    #[allow(unused_variables)]
-                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
-                    where
-                        E: serde::de::Error,
-                    {
-                        match value {
-                            "id" => Ok(GeneratedField::Id),
-                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                        }
-                    }
-                }
-                deserializer.deserialize_identifier(GeneratedVisitor)
-            }
-        }
-        struct GeneratedVisitor;
-        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = SingletonDescriptor;
-
-            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-                formatter.write_str("struct cosmos.orm.v1.SingletonDescriptor")
-            }
-
-            fn visit_map<V>(
-                self,
-                mut map_: V,
-            ) -> core::result::Result<SingletonDescriptor, V::Error>
-            where
-                V: serde::de::MapAccess<'de>,
-            {
-                let mut id__ = None;
-                while let Some(k) = map_.next_key()? {
-                    match k {
-                        GeneratedField::Id => {
-                            if id__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("id"));
-                            }
-                            id__ = Some(
+                            new_count__ = Some(
                                 map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
                     }
                 }
-                Ok(SingletonDescriptor {
-                    id: id__.unwrap_or_default(),
+                Ok(MsgIncreaseCountResponse {
+                    new_count: new_count__.unwrap_or_default(),
                 })
             }
         }
         deserializer.deserialize_struct(
-            "cosmos.orm.v1.SingletonDescriptor",
+            "cosmos.counter.v1.MsgIncreaseCountResponse",
             FIELDS,
             GeneratedVisitor,
         )
     }
 }
 #[cfg(feature = "serde")]
-impl serde::Serialize for TableDescriptor {
+impl serde::Serialize for MsgIncreaseCounter {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
     where
@@ -371,42 +118,40 @@ impl serde::Serialize for TableDescriptor {
     {
         use serde::ser::SerializeStruct;
         let mut len = 0;
-        if self.primary_key.is_some() {
+        if !self.signer.is_empty() {
             len += 1;
         }
-        if !self.index.is_empty() {
+        if self.count != 0 {
             len += 1;
         }
-        if self.id != 0 {
-            len += 1;
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.counter.v1.MsgIncreaseCounter", len)?;
+        if !self.signer.is_empty() {
+            struct_ser.serialize_field("signer", &self.signer)?;
         }
-        let mut struct_ser = serializer.serialize_struct("cosmos.orm.v1.TableDescriptor", len)?;
-        if let Some(v) = self.primary_key.as_ref() {
-            struct_ser.serialize_field("primaryKey", v)?;
-        }
-        if !self.index.is_empty() {
-            struct_ser.serialize_field("index", &self.index)?;
-        }
-        if self.id != 0 {
-            struct_ser.serialize_field("id", &self.id)?;
+        if self.count != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "count",
+                alloc::string::ToString::to_string(&self.count).as_str(),
+            )?;
         }
         struct_ser.end()
     }
 }
 #[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for TableDescriptor {
+impl<'de> serde::Deserialize<'de> for MsgIncreaseCounter {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["primary_key", "primaryKey", "index", "id"];
+        const FIELDS: &[&str] = &["signer", "count"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
-            PrimaryKey,
-            Index,
-            Id,
+            Signer,
+            Count,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -432,9 +177,8 @@ impl<'de> serde::Deserialize<'de> for TableDescriptor {
                         E: serde::de::Error,
                     {
                         match value {
-                            "primaryKey" | "primary_key" => Ok(GeneratedField::PrimaryKey),
-                            "index" => Ok(GeneratedField::Index),
-                            "id" => Ok(GeneratedField::Id),
+                            "signer" => Ok(GeneratedField::Signer),
+                            "count" => Ok(GeneratedField::Count),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -444,51 +188,239 @@ impl<'de> serde::Deserialize<'de> for TableDescriptor {
         }
         struct GeneratedVisitor;
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = TableDescriptor;
+            type Value = MsgIncreaseCounter;
 
             fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-                formatter.write_str("struct cosmos.orm.v1.TableDescriptor")
+                formatter.write_str("struct cosmos.counter.v1.MsgIncreaseCounter")
             }
 
-            fn visit_map<V>(self, mut map_: V) -> core::result::Result<TableDescriptor, V::Error>
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<MsgIncreaseCounter, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                let mut primary_key__ = None;
-                let mut index__ = None;
-                let mut id__ = None;
+                let mut signer__ = None;
+                let mut count__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
-                        GeneratedField::PrimaryKey => {
-                            if primary_key__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("primaryKey"));
+                        GeneratedField::Signer => {
+                            if signer__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("signer"));
                             }
-                            primary_key__ = map_.next_value()?;
+                            signer__ = Some(map_.next_value()?);
                         }
-                        GeneratedField::Index => {
-                            if index__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("index"));
+                        GeneratedField::Count => {
+                            if count__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("count"));
                             }
-                            index__ = Some(map_.next_value()?);
-                        }
-                        GeneratedField::Id => {
-                            if id__.is_some() {
-                                return Err(serde::de::Error::duplicate_field("id"));
-                            }
-                            id__ = Some(
+                            count__ = Some(
                                 map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
                                     .0,
                             );
                         }
                     }
                 }
-                Ok(TableDescriptor {
-                    primary_key: primary_key__,
-                    index: index__.unwrap_or_default(),
-                    id: id__.unwrap_or_default(),
+                Ok(MsgIncreaseCounter {
+                    signer: signer__.unwrap_or_default(),
+                    count: count__.unwrap_or_default(),
                 })
             }
         }
-        deserializer.deserialize_struct("cosmos.orm.v1.TableDescriptor", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct(
+            "cosmos.counter.v1.MsgIncreaseCounter",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryGetCountRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmos.counter.v1.QueryGetCountRequest", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryGetCountRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryGetCountRequest;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                formatter.write_str("struct cosmos.counter.v1.QueryGetCountRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> core::result::Result<QueryGetCountRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(QueryGetCountRequest {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.counter.v1.QueryGetCountRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryGetCountResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.total_count != 0 {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.counter.v1.QueryGetCountResponse", len)?;
+        if self.total_count != 0 {
+            #[allow(clippy::needless_borrow)]
+            struct_ser.serialize_field(
+                "totalCount",
+                alloc::string::ToString::to_string(&self.total_count).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryGetCountResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["total_count", "totalCount"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            TotalCount,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "totalCount" | "total_count" => Ok(GeneratedField::TotalCount),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryGetCountResponse;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                formatter.write_str("struct cosmos.counter.v1.QueryGetCountResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> core::result::Result<QueryGetCountResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut total_count__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::TotalCount => {
+                            if total_count__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("totalCount"));
+                            }
+                            total_count__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(QueryGetCountResponse {
+                    total_count: total_count__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmos.counter.v1.QueryGetCountResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }

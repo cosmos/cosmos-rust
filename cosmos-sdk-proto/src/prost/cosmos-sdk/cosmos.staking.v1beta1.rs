@@ -1,7 +1,5 @@
 // @generated
 /// StakeAuthorization defines authorization for delegate/undelegate/redelegate.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StakeAuthorization {
@@ -53,8 +51,6 @@ impl ::prost::Name for StakeAuthorization {
     }
 }
 /// AuthorizationType defines the type of staking module authorization type
-///
-/// Since: cosmos-sdk 0.43
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum AuthorizationType {
@@ -227,8 +223,6 @@ pub struct Validator {
     #[prost(message, optional, tag = "10")]
     pub commission: ::core::option::Option<Commission>,
     /// min_self_delegation is the validator's self declared minimum self delegation.
-    ///
-    /// Since: cosmos-sdk 0.46
     #[prost(string, tag = "11")]
     pub min_self_delegation: ::prost::alloc::string::String,
     /// strictly positive if this validator's unbonding has been stopped by external modules
@@ -1351,8 +1345,6 @@ pub struct MsgUndelegateResponse {
     #[prost(message, optional, tag = "1")]
     pub completion_time: ::core::option::Option<::tendermint_proto::google::protobuf::Timestamp>,
     /// amount returns the amount of undelegated coins
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(message, optional, tag = "2")]
     pub amount: ::core::option::Option<super::super::base::v1beta1::Coin>,
 }
@@ -1364,8 +1356,6 @@ impl ::prost::Name for MsgUndelegateResponse {
     }
 }
 /// MsgCancelUnbondingDelegation defines the SDK message for performing a cancel unbonding delegation for delegator
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelUnbondingDelegation {
@@ -1388,8 +1378,6 @@ impl ::prost::Name for MsgCancelUnbondingDelegation {
     }
 }
 /// MsgCancelUnbondingDelegationResponse
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelUnbondingDelegationResponse {}
@@ -1401,8 +1389,6 @@ impl ::prost::Name for MsgCancelUnbondingDelegationResponse {
     }
 }
 /// MsgUpdateParams is the Msg/UpdateParams request type.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParams {
@@ -1424,8 +1410,6 @@ impl ::prost::Name for MsgUpdateParams {
 }
 /// MsgUpdateParamsResponse defines the response structure for executing a
 /// MsgUpdateParams message.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParamsResponse {}

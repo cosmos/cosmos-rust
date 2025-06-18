@@ -174,8 +174,6 @@ impl ::prost::Name for QueryAllowancesResponse {
     }
 }
 /// QueryAllowancesByGranterRequest is the request type for the Query/AllowancesByGranter RPC method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesByGranterRequest {
@@ -193,8 +191,6 @@ impl ::prost::Name for QueryAllowancesByGranterRequest {
     }
 }
 /// QueryAllowancesByGranterResponse is the response type for the Query/AllowancesByGranter RPC method.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAllowancesByGranterResponse {
@@ -275,8 +271,6 @@ impl ::prost::Name for MsgRevokeAllowanceResponse {
     }
 }
 /// MsgPruneAllowances prunes expired fee allowances.
-///
-/// Since cosmos-sdk 0.50
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgPruneAllowances {
@@ -292,8 +286,6 @@ impl ::prost::Name for MsgPruneAllowances {
     }
 }
 /// MsgPruneAllowancesResponse defines the Msg/PruneAllowancesResponse response type.
-///
-/// Since cosmos-sdk 0.50
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgPruneAllowancesResponse {}

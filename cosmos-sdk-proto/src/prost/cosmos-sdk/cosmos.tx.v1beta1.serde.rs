@@ -3020,6 +3020,12 @@ impl serde::Serialize for TxBody {
         if self.timeout_height != 0 {
             len += 1;
         }
+        if self.unordered {
+            len += 1;
+        }
+        if self.timeout_timestamp.is_some() {
+            len += 1;
+        }
         if !self.extension_options.is_empty() {
             len += 1;
         }
@@ -3039,6 +3045,12 @@ impl serde::Serialize for TxBody {
                 "timeoutHeight",
                 alloc::string::ToString::to_string(&self.timeout_height).as_str(),
             )?;
+        }
+        if self.unordered {
+            struct_ser.serialize_field("unordered", &self.unordered)?;
+        }
+        if let Some(v) = self.timeout_timestamp.as_ref() {
+            struct_ser.serialize_field("timeoutTimestamp", v)?;
         }
         if !self.extension_options.is_empty() {
             struct_ser.serialize_field("extensionOptions", &self.extension_options)?;
@@ -3064,6 +3076,9 @@ impl<'de> serde::Deserialize<'de> for TxBody {
             "memo",
             "timeout_height",
             "timeoutHeight",
+            "unordered",
+            "timeout_timestamp",
+            "timeoutTimestamp",
             "extension_options",
             "extensionOptions",
             "non_critical_extension_options",
@@ -3075,6 +3090,8 @@ impl<'de> serde::Deserialize<'de> for TxBody {
             Messages,
             Memo,
             TimeoutHeight,
+            Unordered,
+            TimeoutTimestamp,
             ExtensionOptions,
             NonCriticalExtensionOptions,
         }
@@ -3105,6 +3122,10 @@ impl<'de> serde::Deserialize<'de> for TxBody {
                             "messages" => Ok(GeneratedField::Messages),
                             "memo" => Ok(GeneratedField::Memo),
                             "timeoutHeight" | "timeout_height" => Ok(GeneratedField::TimeoutHeight),
+                            "unordered" => Ok(GeneratedField::Unordered),
+                            "timeoutTimestamp" | "timeout_timestamp" => {
+                                Ok(GeneratedField::TimeoutTimestamp)
+                            }
                             "extensionOptions" | "extension_options" => {
                                 Ok(GeneratedField::ExtensionOptions)
                             }
@@ -3133,6 +3154,8 @@ impl<'de> serde::Deserialize<'de> for TxBody {
                 let mut messages__ = None;
                 let mut memo__ = None;
                 let mut timeout_height__ = None;
+                let mut unordered__ = None;
+                let mut timeout_timestamp__ = None;
                 let mut extension_options__ = None;
                 let mut non_critical_extension_options__ = None;
                 while let Some(k) = map_.next_key()? {
@@ -3158,6 +3181,18 @@ impl<'de> serde::Deserialize<'de> for TxBody {
                                     .0,
                             );
                         }
+                        GeneratedField::Unordered => {
+                            if unordered__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("unordered"));
+                            }
+                            unordered__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::TimeoutTimestamp => {
+                            if timeout_timestamp__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("timeoutTimestamp"));
+                            }
+                            timeout_timestamp__ = map_.next_value()?;
+                        }
                         GeneratedField::ExtensionOptions => {
                             if extension_options__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("extensionOptions"));
@@ -3178,6 +3213,8 @@ impl<'de> serde::Deserialize<'de> for TxBody {
                     messages: messages__.unwrap_or_default(),
                     memo: memo__.unwrap_or_default(),
                     timeout_height: timeout_height__.unwrap_or_default(),
+                    unordered: unordered__.unwrap_or_default(),
+                    timeout_timestamp: timeout_timestamp__,
                     extension_options: extension_options__.unwrap_or_default(),
                     non_critical_extension_options: non_critical_extension_options__
                         .unwrap_or_default(),

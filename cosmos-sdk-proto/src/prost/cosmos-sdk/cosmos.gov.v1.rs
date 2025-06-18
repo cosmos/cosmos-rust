@@ -78,28 +78,18 @@ pub struct Proposal {
     #[prost(string, tag = "10")]
     pub metadata: ::prost::alloc::string::String,
     /// title is the title of the proposal
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "11")]
     pub title: ::prost::alloc::string::String,
     /// summary is a short summary of the proposal
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "12")]
     pub summary: ::prost::alloc::string::String,
     /// proposer is the address of the proposal sumbitter
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "13")]
     pub proposer: ::prost::alloc::string::String,
     /// expedited defines if the proposal is expedited
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(bool, tag = "14")]
     pub expedited: bool,
     /// failed_reason defines the reason why the proposal failed
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(string, tag = "15")]
     pub failed_reason: ::prost::alloc::string::String,
 }
@@ -218,8 +208,6 @@ impl ::prost::Name for TallyParams {
     }
 }
 /// Params defines the parameters for the x/gov module.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Params {
@@ -248,25 +236,17 @@ pub struct Params {
     #[prost(string, tag = "7")]
     pub min_initial_deposit_ratio: ::prost::alloc::string::String,
     /// The cancel ratio which will not be returned back to the depositors when a proposal is cancelled.
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(string, tag = "8")]
     pub proposal_cancel_ratio: ::prost::alloc::string::String,
     /// The address which will receive (proposal_cancel_ratio * deposit) proposal deposits.
     /// If empty, the (proposal_cancel_ratio * deposit) proposal deposits will be burned.
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(string, tag = "9")]
     pub proposal_cancel_dest: ::prost::alloc::string::String,
     /// Duration of the voting period of an expedited proposal.
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(message, optional, tag = "10")]
     pub expedited_voting_period:
         ::core::option::Option<::tendermint_proto::google::protobuf::Duration>,
     /// Minimum proportion of Yes votes for proposal to pass. Default value: 0.67.
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(string, tag = "11")]
     pub expedited_threshold: ::prost::alloc::string::String,
     ///   Minimum expedited deposit for a proposal to enter voting period.
@@ -284,8 +264,6 @@ pub struct Params {
     /// The ratio representing the proportion of the deposit value minimum that must be met when making a deposit.
     /// Default value: 0.01. Meaning that for a chain with a min_deposit of 100stake, a deposit of 1stake would be
     /// required.
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(string, tag = "16")]
     pub min_deposit_ratio: ::prost::alloc::string::String,
 }
@@ -419,16 +397,12 @@ pub struct GenesisState {
     #[prost(message, optional, tag = "7")]
     pub tally_params: ::core::option::Option<TallyParams>,
     /// params defines all the paramaters of x/gov module.
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "8")]
     pub params: ::core::option::Option<Params>,
     /// The constitution allows builders to lay a foundation and define purpose.
     /// This is an immutable string set in genesis.
     /// There are no amendments, to go outside of scope, just fork.
     /// constitution is an immutable string in genesis for a chain builder to lay out their vision, ideas and ideals.
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(string, tag = "9")]
     pub constitution: ::prost::alloc::string::String,
 }
@@ -642,8 +616,6 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "3")]
     pub tally_params: ::core::option::Option<TallyParams>,
     /// params defines all the paramaters of x/gov module.
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "4")]
     pub params: ::core::option::Option<Params>,
 }
@@ -771,18 +743,12 @@ pub struct MsgSubmitProposal {
     #[prost(string, tag = "4")]
     pub metadata: ::prost::alloc::string::String,
     /// title is the title of the proposal.
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "5")]
     pub title: ::prost::alloc::string::String,
     /// summary is the summary of the proposal
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "6")]
     pub summary: ::prost::alloc::string::String,
     /// expedited defines if the proposal is expedited or not
-    ///
-    /// Since: cosmos-sdk 0.50
     #[prost(bool, tag = "7")]
     pub expedited: bool,
 }
@@ -941,8 +907,6 @@ impl ::prost::Name for MsgDepositResponse {
     }
 }
 /// MsgUpdateParams is the Msg/UpdateParams request type.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParams {
@@ -964,8 +928,6 @@ impl ::prost::Name for MsgUpdateParams {
 }
 /// MsgUpdateParamsResponse defines the response structure for executing a
 /// MsgUpdateParams message.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParamsResponse {}
@@ -977,8 +939,6 @@ impl ::prost::Name for MsgUpdateParamsResponse {
     }
 }
 /// MsgCancelProposal is the Msg/CancelProposal request type.
-///
-/// Since: cosmos-sdk 0.50
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelProposal {
@@ -998,8 +958,6 @@ impl ::prost::Name for MsgCancelProposal {
 }
 /// MsgCancelProposalResponse defines the response structure for executing a
 /// MsgCancelProposal message.
-///
-/// Since: cosmos-sdk 0.50
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelProposalResponse {

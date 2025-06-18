@@ -804,7 +804,6 @@ impl ::prost::Name for MsgWithdrawDelegatorReward {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgWithdrawDelegatorRewardResponse {
-    /// Since: cosmos-sdk 0.46
     #[prost(message, repeated, tag = "1")]
     pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
@@ -835,7 +834,6 @@ impl ::prost::Name for MsgWithdrawValidatorCommission {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgWithdrawValidatorCommissionResponse {
-    /// Since: cosmos-sdk 0.46
     #[prost(message, repeated, tag = "1")]
     pub amount: ::prost::alloc::vec::Vec<super::super::base::v1beta1::Coin>,
 }
@@ -875,8 +873,6 @@ impl ::prost::Name for MsgFundCommunityPoolResponse {
     }
 }
 /// MsgUpdateParams is the Msg/UpdateParams request type.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParams {
@@ -898,8 +894,6 @@ impl ::prost::Name for MsgUpdateParams {
 }
 /// MsgUpdateParamsResponse defines the response structure for executing a
 /// MsgUpdateParams message.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgUpdateParamsResponse {}
@@ -913,8 +907,6 @@ impl ::prost::Name for MsgUpdateParamsResponse {
 /// MsgCommunityPoolSpend defines a message for sending tokens from the community
 /// pool to another account. This message is typically executed via a governance
 /// proposal with the governance module being the executing authority.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCommunityPoolSpend {
@@ -935,8 +927,6 @@ impl ::prost::Name for MsgCommunityPoolSpend {
 }
 /// MsgCommunityPoolSpendResponse defines the response to executing a
 /// MsgCommunityPoolSpend message.
-///
-/// Since: cosmos-sdk 0.47
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCommunityPoolSpendResponse {}
@@ -949,8 +939,6 @@ impl ::prost::Name for MsgCommunityPoolSpendResponse {
 }
 /// DepositValidatorRewardsPool defines the request structure to provide
 /// additional rewards to delegators from a specific validator.
-///
-/// Since: cosmos-sdk 0.50
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDepositValidatorRewardsPool {
@@ -970,8 +958,6 @@ impl ::prost::Name for MsgDepositValidatorRewardsPool {
 }
 /// MsgDepositValidatorRewardsPoolResponse defines the response to executing a
 /// MsgDepositValidatorRewardsPool message.
-///
-/// Since: cosmos-sdk 0.50
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgDepositValidatorRewardsPoolResponse {}

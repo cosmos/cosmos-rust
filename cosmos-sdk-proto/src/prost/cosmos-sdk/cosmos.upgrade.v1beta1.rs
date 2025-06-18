@@ -85,8 +85,6 @@ impl ::prost::Name for CancelSoftwareUpgradeProposal {
     }
 }
 /// ModuleVersion specifies a module and its consensus version.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ModuleVersion {
@@ -186,7 +184,6 @@ impl ::prost::Name for QueryUpgradedConsensusStateRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryUpgradedConsensusStateResponse {
-    /// Since: cosmos-sdk 0.43
     #[prost(bytes = "vec", tag = "2")]
     pub upgraded_consensus_state: ::prost::alloc::vec::Vec<u8>,
 }
@@ -199,8 +196,6 @@ impl ::prost::Name for QueryUpgradedConsensusStateResponse {
 }
 /// QueryModuleVersionsRequest is the request type for the Query/ModuleVersions
 /// RPC method.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleVersionsRequest {
@@ -219,8 +214,6 @@ impl ::prost::Name for QueryModuleVersionsRequest {
 }
 /// QueryModuleVersionsResponse is the response type for the Query/ModuleVersions
 /// RPC method.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryModuleVersionsResponse {
@@ -236,8 +229,6 @@ impl ::prost::Name for QueryModuleVersionsResponse {
     }
 }
 /// QueryAuthorityRequest is the request type for Query/Authority
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAuthorityRequest {}
@@ -249,8 +240,6 @@ impl ::prost::Name for QueryAuthorityRequest {
     }
 }
 /// QueryAuthorityResponse is the response type for Query/Authority
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryAuthorityResponse {
@@ -265,8 +254,6 @@ impl ::prost::Name for QueryAuthorityResponse {
     }
 }
 /// MsgSoftwareUpgrade is the Msg/SoftwareUpgrade request type.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSoftwareUpgrade {
@@ -285,8 +272,6 @@ impl ::prost::Name for MsgSoftwareUpgrade {
     }
 }
 /// MsgSoftwareUpgradeResponse is the Msg/SoftwareUpgrade response type.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgSoftwareUpgradeResponse {}
@@ -298,8 +283,6 @@ impl ::prost::Name for MsgSoftwareUpgradeResponse {
     }
 }
 /// MsgCancelUpgrade is the Msg/CancelUpgrade request type.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelUpgrade {
@@ -315,8 +298,6 @@ impl ::prost::Name for MsgCancelUpgrade {
     }
 }
 /// MsgCancelUpgradeResponse is the Msg/CancelUpgrade response type.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCancelUpgradeResponse {}

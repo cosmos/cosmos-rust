@@ -274,13 +274,9 @@ pub struct Proposal {
     #[prost(message, repeated, tag = "12")]
     pub messages: ::prost::alloc::vec::Vec<::tendermint_proto::google::protobuf::Any>,
     /// title is the title of the proposal
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "13")]
     pub title: ::prost::alloc::string::String,
     /// summary is a short summary of the proposal
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "14")]
     pub summary: ::prost::alloc::string::String,
 }
@@ -631,6 +627,24 @@ pub struct EventProposalPruned {
 }
 impl ::prost::Name for EventProposalPruned {
     const NAME: &'static str = "EventProposalPruned";
+    const PACKAGE: &'static str = "cosmos.group.v1";
+    fn full_name() -> ::prost::alloc::string::String {
+        ::prost::alloc::format!("cosmos.group.v1.{}", Self::NAME)
+    }
+}
+/// EventTallyError is an event emitted when a proposal tally failed with an error.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EventTallyError {
+    /// proposal_id is the unique ID of the proposal.
+    #[prost(uint64, tag = "1")]
+    pub proposal_id: u64,
+    /// error_message is the raw error output
+    #[prost(string, tag = "2")]
+    pub error_message: ::prost::alloc::string::String,
+}
+impl ::prost::Name for EventTallyError {
+    const NAME: &'static str = "EventTallyError";
     const PACKAGE: &'static str = "cosmos.group.v1";
     fn full_name() -> ::prost::alloc::string::String {
         ::prost::alloc::format!("cosmos.group.v1.{}", Self::NAME)
@@ -1117,8 +1131,6 @@ impl ::prost::Name for QueryTallyResultResponse {
     }
 }
 /// QueryGroupsRequest is the Query/Groups request type.
-///
-/// Since: cosmos-sdk 0.47.1
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsRequest {
@@ -1134,8 +1146,6 @@ impl ::prost::Name for QueryGroupsRequest {
     }
 }
 /// QueryGroupsResponse is the Query/Groups response type.
-///
-/// Since: cosmos-sdk 0.47.1
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct QueryGroupsResponse {
@@ -1501,13 +1511,9 @@ pub struct MsgSubmitProposal {
     #[prost(enumeration = "Exec", tag = "5")]
     pub exec: i32,
     /// title is the title of the proposal.
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "6")]
     pub title: ::prost::alloc::string::String,
     /// summary is the summary of the proposal.
-    ///
-    /// Since: cosmos-sdk 0.47
     #[prost(string, tag = "7")]
     pub summary: ::prost::alloc::string::String,
 }

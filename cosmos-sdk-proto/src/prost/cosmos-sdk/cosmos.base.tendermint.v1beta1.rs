@@ -194,7 +194,6 @@ pub struct GetBlockByHeightResponse {
     /// Deprecated: please use `sdk_block` instead
     #[prost(message, optional, tag = "2")]
     pub block: ::core::option::Option<::tendermint_proto::types::Block>,
-    /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "3")]
     pub sdk_block: ::core::option::Option<Block>,
 }
@@ -225,7 +224,6 @@ pub struct GetLatestBlockResponse {
     /// Deprecated: please use `sdk_block` instead
     #[prost(message, optional, tag = "2")]
     pub block: ::core::option::Option<::tendermint_proto::types::Block>,
-    /// Since: cosmos-sdk 0.47
     #[prost(message, optional, tag = "3")]
     pub sdk_block: ::core::option::Option<Block>,
 }
@@ -306,7 +304,6 @@ pub struct VersionInfo {
     pub go_version: ::prost::alloc::string::String,
     #[prost(message, repeated, tag = "7")]
     pub build_deps: ::prost::alloc::vec::Vec<Module>,
-    /// Since: cosmos-sdk 0.43
     #[prost(string, tag = "8")]
     pub cosmos_sdk_version: ::prost::alloc::string::String,
 }

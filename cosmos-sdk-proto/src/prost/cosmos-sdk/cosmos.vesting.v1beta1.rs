@@ -96,8 +96,6 @@ impl ::prost::Name for PeriodicVestingAccount {
 /// PermanentLockedAccount implements the VestingAccount interface. It does
 /// not ever release coins, locking them indefinitely. Coins in this account can
 /// still be used for delegating and for governance votes even while locked.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct PermanentLockedAccount {
@@ -148,8 +146,6 @@ impl ::prost::Name for MsgCreateVestingAccountResponse {
 }
 /// MsgCreatePermanentLockedAccount defines a message that enables creating a permanent
 /// locked account.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePermanentLockedAccount {
@@ -168,8 +164,6 @@ impl ::prost::Name for MsgCreatePermanentLockedAccount {
     }
 }
 /// MsgCreatePermanentLockedAccountResponse defines the Msg/CreatePermanentLockedAccount response type.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePermanentLockedAccountResponse {}
@@ -182,8 +176,6 @@ impl ::prost::Name for MsgCreatePermanentLockedAccountResponse {
 }
 /// MsgCreateVestingAccount defines a message that enables creating a vesting
 /// account.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePeriodicVestingAccount {
@@ -206,8 +198,6 @@ impl ::prost::Name for MsgCreatePeriodicVestingAccount {
 }
 /// MsgCreateVestingAccountResponse defines the Msg/CreatePeriodicVestingAccount
 /// response type.
-///
-/// Since: cosmos-sdk 0.46
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgCreatePeriodicVestingAccountResponse {}

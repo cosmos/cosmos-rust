@@ -1,7 +1,5 @@
 // @generated
 /// WeightedVoteOption defines a unit of vote for vote split.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WeightedVoteOption {
@@ -143,8 +141,6 @@ pub struct Vote {
     #[prost(enumeration = "VoteOption", tag = "3")]
     pub option: i32,
     /// options is the weighted vote options.
-    ///
-    /// Since: cosmos-sdk 0.43
     #[prost(message, repeated, tag = "4")]
     pub options: ::prost::alloc::vec::Vec<WeightedVoteOption>,
 }
@@ -683,8 +679,6 @@ impl ::prost::Name for MsgVoteResponse {
     }
 }
 /// MsgVoteWeighted defines a message to cast a vote.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteWeighted {
@@ -706,8 +700,6 @@ impl ::prost::Name for MsgVoteWeighted {
     }
 }
 /// MsgVoteWeightedResponse defines the Msg/VoteWeighted response type.
-///
-/// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MsgVoteWeightedResponse {}
