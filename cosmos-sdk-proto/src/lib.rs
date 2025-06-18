@@ -174,6 +174,13 @@ pub mod cosmos {
         }
     }
 
+    /// Messages and services handling chain parameters
+    pub mod protocolpool {
+        pub mod v1beta1 {
+            include!("prost/cosmos-sdk/cosmos.protocolpool.v1.rs");
+        }
+    }
+
     /// Handling slashing parameters and unjailing
     pub mod slashing {
         pub mod v1beta1 {
