@@ -95,6 +95,20 @@ pub mod cosmos {
         }
     }
 
+    /// Benchmarking
+    pub mod benchmark {
+        pub mod v1 {
+            include!("prost/cosmos-sdk/cosmos.benchmark.v1.rs");
+        }
+    }
+
+    /// counter
+    pub mod counter {
+        pub mod v1 {
+            include!("prost/cosmos-sdk/cosmos.counter.v1.rs");
+        }
+    }
+
     /// Crisis handling
     pub mod crisis {
         pub mod v1beta1 {
@@ -183,7 +197,7 @@ pub mod cosmos {
 
     /// Messages and services handling chain parameters
     pub mod protocolpool {
-        pub mod v1beta1 {
+        pub mod v1 {
             include!("prost/cosmos-sdk/cosmos.protocolpool.v1.rs");
         }
     }
