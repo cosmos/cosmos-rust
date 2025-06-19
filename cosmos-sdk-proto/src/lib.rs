@@ -130,6 +130,13 @@ pub mod cosmos {
     }
 
     /// Messages and services handling evidence
+    pub mod epochs {
+        pub mod v1beta1 {
+            include!("prost/cosmos-sdk/cosmos.epochs.v1beta1.rs");
+        }
+    }
+    
+    /// Messages and services handling evidence
     pub mod evidence {
         pub mod v1beta1 {
             include!("prost/cosmos-sdk/cosmos.evidence.v1beta1.rs");
