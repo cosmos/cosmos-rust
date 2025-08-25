@@ -41,14 +41,10 @@ impl TryFrom<proto::cosmos::slashing::v1beta1::ValidatorSigningInfo> for Validat
             index_offset: proto.index_offset,
             jailed_until: proto
                 .jailed_until
-                // annoyingly, tendermint uses a different type for its protobuf `Timestamp` than the one
-                // in cosmos proto files. However, internally they have exactly the same layout
-                .map(
-                    |jailed_until| cosmos_sdk_proto::tendermint::google::protobuf::Timestamp {
-                        seconds: jailed_until.seconds,
-                        nanos: jailed_until.nanos,
-                    },
-                )
+                .map(|timestamp| {
+                    Time::from_unix_timestamp(timestamp.seconds, timestamp.nanos as u32)
+                        .map_err(|_| crate::ErrorReport::msg("Invalid timestamp"))
+                })
                 .transpose()?,
             tombstoned: proto.tombstoned,
             missed_blocks_counter: proto.missed_blocks_counter,
@@ -62,13 +58,10 @@ impl From<ValidatorSigningInfo> for proto::cosmos::slashing::v1beta1::ValidatorS
             address: signing_info.address.to_string(),
             start_height: signing_info.start_height,
             index_offset: signing_info.index_offset,
-            jailed_until: signing_info
-                .jailed_until
-                .map(cosmos_sdk_proto::tendermint::google::protobuf::Timestamp::from)
-                .map(|t| Timestamp {
-                    seconds: t.seconds,
-                    nanos: t.nanos,
-                }),
+            jailed_until: signing_info.jailed_until.map(|t| Timestamp {
+                seconds: t.unix_timestamp(),
+                nanos: t.unix_timestamp_nanos() as i32 % 1_000_000_000,
+            }),
             tombstoned: signing_info.tombstoned,
             missed_blocks_counter: signing_info.missed_blocks_counter,
         }
