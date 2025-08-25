@@ -17,6 +17,7 @@ impl serde::Serialize for MsgLoadTest {
         let mut struct_ser = serializer.serialize_struct("cosmos.benchmark.v1.MsgLoadTest", len)?;
         if !self.caller.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "caller",
                 pbjson::private::base64::encode(&self.caller).as_str(),
@@ -136,6 +137,7 @@ impl serde::Serialize for MsgLoadTestResponse {
             serializer.serialize_struct("cosmos.benchmark.v1.MsgLoadTestResponse", len)?;
         if self.total_time != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "totalTime",
                 alloc::string::ToString::to_string(&self.total_time).as_str(),
@@ -143,6 +145,7 @@ impl serde::Serialize for MsgLoadTestResponse {
         }
         if self.total_errors != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "totalErrors",
                 alloc::string::ToString::to_string(&self.total_errors).as_str(),
@@ -283,6 +286,7 @@ impl serde::Serialize for Op {
         let mut struct_ser = serializer.serialize_struct("cosmos.benchmark.v1.Op", len)?;
         if self.seed != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "seed",
                 alloc::string::ToString::to_string(&self.seed).as_str(),
@@ -293,6 +297,7 @@ impl serde::Serialize for Op {
         }
         if self.key_length != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "keyLength",
                 alloc::string::ToString::to_string(&self.key_length).as_str(),
@@ -300,6 +305,7 @@ impl serde::Serialize for Op {
         }
         if self.value_length != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "valueLength",
                 alloc::string::ToString::to_string(&self.value_length).as_str(),

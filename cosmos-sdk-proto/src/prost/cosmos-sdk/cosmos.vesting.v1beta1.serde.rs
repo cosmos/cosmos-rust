@@ -39,6 +39,7 @@ impl serde::Serialize for BaseVestingAccount {
         }
         if self.end_time != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "endTime",
                 alloc::string::ToString::to_string(&self.end_time).as_str(),
@@ -207,6 +208,7 @@ impl serde::Serialize for ContinuousVestingAccount {
         }
         if self.start_time != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "startTime",
                 alloc::string::ToString::to_string(&self.start_time).as_str(),
@@ -460,6 +462,7 @@ impl serde::Serialize for MsgCreatePeriodicVestingAccount {
         }
         if self.start_time != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "startTime",
                 alloc::string::ToString::to_string(&self.start_time).as_str(),
@@ -950,6 +953,7 @@ impl serde::Serialize for MsgCreateVestingAccount {
         }
         if self.end_time != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "endTime",
                 alloc::string::ToString::to_string(&self.end_time).as_str(),
@@ -1198,6 +1202,7 @@ impl serde::Serialize for Period {
         let mut struct_ser = serializer.serialize_struct("cosmos.vesting.v1beta1.Period", len)?;
         if self.length != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "length",
                 alloc::string::ToString::to_string(&self.length).as_str(),
@@ -1323,6 +1328,7 @@ impl serde::Serialize for PeriodicVestingAccount {
         }
         if self.start_time != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "startTime",
                 alloc::string::ToString::to_string(&self.start_time).as_str(),

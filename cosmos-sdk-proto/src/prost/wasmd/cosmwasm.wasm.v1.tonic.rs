@@ -23,7 +23,7 @@ pub mod query_client {
     }
     impl<T> QueryClient<T>
     where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
         T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
@@ -44,12 +44,12 @@ pub mod query_client {
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
             T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
+                http::Request<tonic::body::Body>,
                 Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                    <T as tonic::client::GrpcService<tonic::body::Body>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+            <T as tonic::codegen::Service<http::Request<tonic::body::Body>>>::Error:
                 Into<StdError> + Send + Sync,
         {
             QueryClient::new(InterceptedService::new(inner, interceptor))
@@ -96,7 +96,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractInfo");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -114,7 +114,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractHistory");
             let mut req = request.into_request();
@@ -133,7 +133,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractsByCode");
             let mut req = request.into_request();
@@ -154,7 +154,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/AllContractState");
             let mut req = request.into_request();
@@ -177,7 +177,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/RawContractState");
             let mut req = request.into_request();
@@ -200,7 +200,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/SmartContractState");
             let mut req = request.into_request();
@@ -221,7 +221,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Code");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -239,11 +239,29 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Codes");
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "Codes"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn code_info(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryCodeInfoRequest>,
+        ) -> core::result::Result<tonic::Response<super::QueryCodeInfoResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    alloc::format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/CodeInfo");
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("cosmwasm.wasm.v1.Query", "CodeInfo"));
             self.inner.unary(req, path, codec).await
         }
         pub async fn pinned_codes(
@@ -257,7 +275,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/PinnedCodes");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -275,7 +293,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/Params");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -295,13 +313,36 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/ContractsByCreator");
             let mut req = request.into_request();
             req.extensions_mut().insert(GrpcMethod::new(
                 "cosmwasm.wasm.v1.Query",
                 "ContractsByCreator",
+            ));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn wasm_limits_config(
+            &mut self,
+            request: impl tonic::IntoRequest<super::QueryWasmLimitsConfigRequest>,
+        ) -> core::result::Result<
+            tonic::Response<super::QueryWasmLimitsConfigResponse>,
+            tonic::Status,
+        > {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    alloc::format!("Service was not ready: {}", e.into()),
+                )
+            })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path =
+                http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/WasmLimitsConfig");
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new(
+                "cosmwasm.wasm.v1.Query",
+                "WasmLimitsConfig",
             ));
             self.inner.unary(req, path, codec).await
         }
@@ -316,7 +357,7 @@ pub mod query_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Query/BuildAddress");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -349,7 +390,7 @@ pub mod msg_client {
     }
     impl<T> MsgClient<T>
     where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
         T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
@@ -367,12 +408,12 @@ pub mod msg_client {
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
             T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
+                http::Request<tonic::body::Body>,
                 Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                    <T as tonic::client::GrpcService<tonic::body::Body>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+            <T as tonic::codegen::Service<http::Request<tonic::body::Body>>>::Error:
                 Into<StdError> + Send + Sync,
         {
             MsgClient::new(InterceptedService::new(inner, interceptor))
@@ -419,7 +460,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/StoreCode");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -439,7 +480,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/InstantiateContract");
             let mut req = request.into_request();
@@ -462,7 +503,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/InstantiateContract2");
             let mut req = request.into_request();
@@ -483,7 +524,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/ExecuteContract");
             let mut req = request.into_request();
@@ -502,7 +543,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/MigrateContract");
             let mut req = request.into_request();
@@ -521,7 +562,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/UpdateAdmin");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -539,7 +580,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/ClearAdmin");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -559,7 +600,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmwasm.wasm.v1.Msg/UpdateInstantiateConfig",
             );
@@ -581,7 +622,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/UpdateParams");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -599,7 +640,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/SudoContract");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -617,7 +658,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/PinCodes");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -635,7 +676,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/UnpinCodes");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -655,7 +696,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmwasm.wasm.v1.Msg/StoreAndInstantiateContract",
             );
@@ -679,7 +720,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmwasm.wasm.v1.Msg/RemoveCodeUploadParamsAddresses",
             );
@@ -703,7 +744,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmwasm.wasm.v1.Msg/AddCodeUploadParamsAddresses",
             );
@@ -727,7 +768,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmwasm.wasm.v1.Msg/StoreAndMigrateContract",
             );
@@ -751,7 +792,7 @@ pub mod msg_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmwasm.wasm.v1.Msg/UpdateContractLabel");
             let mut req = request.into_request();

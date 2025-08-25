@@ -112,6 +112,7 @@ impl serde::Serialize for SignatureDescriptor {
         }
         if self.sequence != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "sequence",
                 alloc::string::ToString::to_string(&self.sequence).as_str(),
@@ -495,6 +496,7 @@ impl serde::Serialize for signature_descriptor::data::Single {
         }
         if !self.signature.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "signature",
                 pbjson::private::base64::encode(&self.signature).as_str(),

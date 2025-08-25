@@ -137,6 +137,7 @@ impl serde::Serialize for Snapshot {
             serializer.serialize_struct("cosmos.store.snapshots.v1.Snapshot", len)?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -150,6 +151,7 @@ impl serde::Serialize for Snapshot {
         }
         if !self.hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("hash", pbjson::private::base64::encode(&self.hash).as_str())?;
         }
@@ -429,6 +431,7 @@ impl serde::Serialize for SnapshotExtensionPayload {
             .serialize_struct("cosmos.store.snapshots.v1.SnapshotExtensionPayload", len)?;
         if !self.payload.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "payload",
                 pbjson::private::base64::encode(&self.payload).as_str(),
@@ -548,11 +551,13 @@ impl serde::Serialize for SnapshotIavlItem {
             serializer.serialize_struct("cosmos.store.snapshots.v1.SnapshotIAVLItem", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }
         if !self.value.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "value",
                 pbjson::private::base64::encode(&self.value).as_str(),
@@ -560,6 +565,7 @@ impl serde::Serialize for SnapshotIavlItem {
         }
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "version",
                 alloc::string::ToString::to_string(&self.version).as_str(),

@@ -1,13 +1,13 @@
 use cosmos_sdk_proto::cosmos::base::v1beta1::Coin;
 
-use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
+use crate::{proto, tx::Msg, ErrorReport, Result};
 
 /// MsgCommunityPoolSpend represents a message to set a withdraw address for staking rewards.
-#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct MsgCommunityPoolSpend {
     pub authority: String,
     pub recipient: String,
-    pub amount: Coin,
+    pub amount: Vec<Coin>,
 }
 
 impl Msg for MsgCommunityPoolSpend {
@@ -33,7 +33,7 @@ impl TryFrom<&proto::cosmos::protocolpool::v1::MsgCommunityPoolSpend> for MsgCom
         Ok(MsgCommunityPoolSpend {
             authority: proto.authority.parse()?,
             recipient: proto.recipient.parse()?,
-            amount: proto.amount.parse()?,
+            amount: proto.amount.clone(),
         })
     }
 }
@@ -49,7 +49,7 @@ impl From<&MsgCommunityPoolSpend> for proto::cosmos::protocolpool::v1::MsgCommun
         proto::cosmos::protocolpool::v1::MsgCommunityPoolSpend {
             authority: msg.authority.to_string(),
             recipient: msg.recipient.to_string(),
-            amount: msg.amount,
+            amount: msg.amount.clone(),
         }
     }
 }

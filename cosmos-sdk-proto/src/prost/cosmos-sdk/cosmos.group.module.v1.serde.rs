@@ -20,6 +20,7 @@ impl serde::Serialize for Module {
         }
         if self.max_metadata_len != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "maxMetadataLen",
                 alloc::string::ToString::to_string(&self.max_metadata_len).as_str(),

@@ -23,7 +23,7 @@ pub mod service_client {
     }
     impl<T> ServiceClient<T>
     where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
         T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
@@ -44,12 +44,12 @@ pub mod service_client {
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
             T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
+                http::Request<tonic::body::Body>,
                 Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                    <T as tonic::client::GrpcService<tonic::body::Body>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+            <T as tonic::codegen::Service<http::Request<tonic::body::Body>>>::Error:
                 Into<StdError> + Send + Sync,
         {
             ServiceClient::new(InterceptedService::new(inner, interceptor))
@@ -96,7 +96,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetNodeInfo",
             );
@@ -118,7 +118,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetSyncing",
             );
@@ -140,7 +140,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetLatestBlock",
             );
@@ -162,7 +162,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetBlockByHeight",
             );
@@ -186,7 +186,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetLatestValidatorSet",
             );
@@ -210,7 +210,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/GetValidatorSetByHeight",
             );
@@ -232,7 +232,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/cosmos.base.tendermint.v1beta1.Service/ABCIQuery",
             );
@@ -290,19 +290,17 @@ pub mod service_server {
     }
     #[derive(Debug)]
     pub struct ServiceServer<T: Service> {
-        inner: _Inner<T>,
+        inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    struct _Inner<T>(Arc<T>);
     impl<T: Service> ServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
         pub fn from_arc(inner: Arc<T>) -> Self {
-            let inner = _Inner(inner);
             Self {
                 inner,
                 accept_compression_encodings: Default::default(),
@@ -352,7 +350,7 @@ pub mod service_server {
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
-        type Response = http::Response<tonic::body::BoxBody>;
+        type Response = http::Response<tonic::body::Body>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
         fn poll_ready(
@@ -362,7 +360,6 @@ pub mod service_server {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
-            let inner = self.inner.clone();
             match req.uri().path() {
                 "/cosmos.base.tendermint.v1beta1.Service/GetNodeInfo" => {
                     #[allow(non_camel_case_types)]
@@ -375,7 +372,8 @@ pub mod service_server {
                             request: tonic::Request<super::GetNodeInfoRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).get_node_info(request).await };
+                            let fut =
+                                async move { <T as Service>::get_node_info(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -385,9 +383,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetNodeInfoSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -413,7 +410,8 @@ pub mod service_server {
                             request: tonic::Request<super::GetSyncingRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).get_syncing(request).await };
+                            let fut =
+                                async move { <T as Service>::get_syncing(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -423,9 +421,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetSyncingSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -453,7 +450,9 @@ pub mod service_server {
                             request: tonic::Request<super::GetLatestBlockRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).get_latest_block(request).await };
+                            let fut = async move {
+                                <T as Service>::get_latest_block(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -463,9 +462,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetLatestBlockSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -493,7 +491,9 @@ pub mod service_server {
                             request: tonic::Request<super::GetBlockByHeightRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).get_block_by_height(request).await };
+                            let fut = async move {
+                                <T as Service>::get_block_by_height(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -503,9 +503,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetBlockByHeightSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -534,8 +533,9 @@ pub mod service_server {
                             request: tonic::Request<super::GetLatestValidatorSetRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut =
-                                async move { (*inner).get_latest_validator_set(request).await };
+                            let fut = async move {
+                                <T as Service>::get_latest_validator_set(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -545,9 +545,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetLatestValidatorSetSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -576,8 +575,9 @@ pub mod service_server {
                             request: tonic::Request<super::GetValidatorSetByHeightRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut =
-                                async move { (*inner).get_validator_set_by_height(request).await };
+                            let fut = async move {
+                                <T as Service>::get_validator_set_by_height(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -587,9 +587,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetValidatorSetByHeightSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -615,7 +614,8 @@ pub mod service_server {
                             request: tonic::Request<super::AbciQueryRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).abci_query(request).await };
+                            let fut =
+                                async move { <T as Service>::abci_query(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -625,9 +625,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = ABCIQuerySvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -645,9 +644,12 @@ pub mod service_server {
                 _ => Box::pin(async move {
                     Ok(http::Response::builder()
                         .status(200)
-                        .header("grpc-status", "12")
-                        .header("content-type", "application/grpc")
-                        .body(empty_body())
+                        .header("grpc-status", tonic::Code::Unimplemented as i32)
+                        .header(
+                            http::header::CONTENT_TYPE,
+                            tonic::metadata::GRPC_CONTENT_TYPE,
+                        )
+                        .body(tonic::body::Body::empty())
                         .unwrap())
                 }),
             }
@@ -663,16 +665,6 @@ pub mod service_server {
                 max_decoding_message_size: self.max_decoding_message_size,
                 max_encoding_message_size: self.max_encoding_message_size,
             }
-        }
-    }
-    impl<T: Service> Clone for _Inner<T> {
-        fn clone(&self) -> Self {
-            Self(Arc::clone(&self.0))
-        }
-    }
-    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-            write!(f, "{:?}", self.0)
         }
     }
     impl<T: Service> tonic::server::NamedService for ServiceServer<T> {

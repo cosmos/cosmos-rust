@@ -1360,6 +1360,7 @@ impl serde::Serialize for GenesisState {
         }
         if !self.last_total_power.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "lastTotalPower",
                 pbjson::private::base64::encode(&self.last_total_power).as_str(),
@@ -1775,6 +1776,7 @@ impl serde::Serialize for LastValidatorPower {
         }
         if self.power != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "power",
                 alloc::string::ToString::to_string(&self.power).as_str(),
@@ -2181,6 +2183,7 @@ impl serde::Serialize for MsgCancelUnbondingDelegation {
         }
         if self.creation_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "creationHeight",
                 alloc::string::ToString::to_string(&self.creation_height).as_str(),
@@ -5164,6 +5167,7 @@ impl serde::Serialize for QueryHistoricalInfoRequest {
             .serialize_struct("cosmos.staking.v1beta1.QueryHistoricalInfoRequest", len)?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -7375,6 +7379,7 @@ impl serde::Serialize for RedelegationEntry {
             serializer.serialize_struct("cosmos.staking.v1beta1.RedelegationEntry", len)?;
         if self.creation_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "creationHeight",
                 alloc::string::ToString::to_string(&self.creation_height).as_str(),
@@ -7391,6 +7396,7 @@ impl serde::Serialize for RedelegationEntry {
         }
         if self.unbonding_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "unbondingId",
                 alloc::string::ToString::to_string(&self.unbonding_id).as_str(),
@@ -7398,6 +7404,7 @@ impl serde::Serialize for RedelegationEntry {
         }
         if self.unbonding_on_hold_ref_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "unbondingOnHoldRefCount",
                 alloc::string::ToString::to_string(&self.unbonding_on_hold_ref_count).as_str(),
@@ -8256,6 +8263,7 @@ impl serde::Serialize for UnbondingDelegationEntry {
             serializer.serialize_struct("cosmos.staking.v1beta1.UnbondingDelegationEntry", len)?;
         if self.creation_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "creationHeight",
                 alloc::string::ToString::to_string(&self.creation_height).as_str(),
@@ -8272,6 +8280,7 @@ impl serde::Serialize for UnbondingDelegationEntry {
         }
         if self.unbonding_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "unbondingId",
                 alloc::string::ToString::to_string(&self.unbonding_id).as_str(),
@@ -8279,6 +8288,7 @@ impl serde::Serialize for UnbondingDelegationEntry {
         }
         if self.unbonding_on_hold_ref_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "unbondingOnHoldRefCount",
                 alloc::string::ToString::to_string(&self.unbonding_on_hold_ref_count).as_str(),
@@ -8627,6 +8637,7 @@ impl serde::Serialize for Validator {
         }
         if self.unbonding_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "unbondingHeight",
                 alloc::string::ToString::to_string(&self.unbonding_height).as_str(),
@@ -8643,6 +8654,7 @@ impl serde::Serialize for Validator {
         }
         if self.unbonding_on_hold_ref_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "unbondingOnHoldRefCount",
                 alloc::string::ToString::to_string(&self.unbonding_on_hold_ref_count).as_str(),

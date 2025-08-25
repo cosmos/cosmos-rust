@@ -43,13 +43,12 @@ impl TryFrom<proto::cosmos::slashing::v1beta1::ValidatorSigningInfo> for Validat
                 .jailed_until
                 // annoyingly, tendermint uses a different type for its protobuf `Timestamp` than the one
                 // in cosmos proto files. However, internally they have exactly the same layout
-                .map(|jailed_until| {
-                    cosmos_sdk_proto::tendermint::google::protobuf::Timestamp {
+                .map(
+                    |jailed_until| cosmos_sdk_proto::tendermint::google::protobuf::Timestamp {
                         seconds: jailed_until.seconds,
                         nanos: jailed_until.nanos,
-                    }
-                    .try_into()
-                })
+                    },
+                )
                 .transpose()?,
             tombstoned: proto.tombstoned,
             missed_blocks_counter: proto.missed_blocks_counter,

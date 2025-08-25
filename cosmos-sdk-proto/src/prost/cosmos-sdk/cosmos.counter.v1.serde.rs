@@ -15,6 +15,7 @@ impl serde::Serialize for MsgIncreaseCountResponse {
             serializer.serialize_struct("cosmos.counter.v1.MsgIncreaseCountResponse", len)?;
         if self.new_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "newCount",
                 alloc::string::ToString::to_string(&self.new_count).as_str(),
@@ -131,6 +132,7 @@ impl serde::Serialize for MsgIncreaseCounter {
         }
         if self.count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "count",
                 alloc::string::ToString::to_string(&self.count).as_str(),
@@ -330,6 +332,7 @@ impl serde::Serialize for QueryGetCountResponse {
             serializer.serialize_struct("cosmos.counter.v1.QueryGetCountResponse", len)?;
         if self.total_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "totalCount",
                 alloc::string::ToString::to_string(&self.total_count).as_str(),

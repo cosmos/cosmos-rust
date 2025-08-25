@@ -20,6 +20,7 @@ impl serde::Serialize for Deposit {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.Deposit", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -290,6 +291,7 @@ impl serde::Serialize for GenesisState {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.GenesisState", len)?;
         if self.starting_proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "startingProposalId",
                 alloc::string::ToString::to_string(&self.starting_proposal_id).as_str(),
@@ -517,6 +519,7 @@ impl serde::Serialize for MsgCancelProposal {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.MsgCancelProposal", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -639,6 +642,7 @@ impl serde::Serialize for MsgCancelProposalResponse {
             serializer.serialize_struct("cosmos.gov.v1.MsgCancelProposalResponse", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -649,6 +653,7 @@ impl serde::Serialize for MsgCancelProposalResponse {
         }
         if self.canceled_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "canceledHeight",
                 alloc::string::ToString::to_string(&self.canceled_height).as_str(),
@@ -796,6 +801,7 @@ impl serde::Serialize for MsgDeposit {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.MsgDeposit", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -1406,6 +1412,7 @@ impl serde::Serialize for MsgSubmitProposalResponse {
             serializer.serialize_struct("cosmos.gov.v1.MsgSubmitProposalResponse", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -1717,6 +1724,7 @@ impl serde::Serialize for MsgVote {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.MsgVote", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -1944,6 +1952,7 @@ impl serde::Serialize for MsgVoteWeighted {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.MsgVoteWeighted", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -2614,6 +2623,7 @@ impl serde::Serialize for Proposal {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.Proposal", len)?;
         if self.id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("id", alloc::string::ToString::to_string(&self.id).as_str())?;
         }
@@ -3204,6 +3214,7 @@ impl serde::Serialize for QueryDepositRequest {
             serializer.serialize_struct("cosmos.gov.v1.QueryDepositRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -3431,6 +3442,7 @@ impl serde::Serialize for QueryDepositsRequest {
             serializer.serialize_struct("cosmos.gov.v1.QueryDepositsRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -3932,6 +3944,7 @@ impl serde::Serialize for QueryProposalRequest {
             serializer.serialize_struct("cosmos.gov.v1.QueryProposalRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -4429,6 +4442,7 @@ impl serde::Serialize for QueryTallyResultRequest {
             serializer.serialize_struct("cosmos.gov.v1.QueryTallyResultRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -4642,6 +4656,7 @@ impl serde::Serialize for QueryVoteRequest {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.QueryVoteRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -4853,6 +4868,7 @@ impl serde::Serialize for QueryVotesRequest {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.QueryVotesRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -5374,6 +5390,7 @@ impl serde::Serialize for Vote {
         let mut struct_ser = serializer.serialize_struct("cosmos.gov.v1.Vote", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),

@@ -45,6 +45,7 @@ impl serde::Serialize for GeneratorParams {
             serializer.serialize_struct("cosmos.benchmark.module.v1.GeneratorParams", len)?;
         if self.seed != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "seed",
                 alloc::string::ToString::to_string(&self.seed).as_str(),
@@ -52,6 +53,7 @@ impl serde::Serialize for GeneratorParams {
         }
         if self.bucket_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "bucketCount",
                 alloc::string::ToString::to_string(&self.bucket_count).as_str(),
@@ -59,6 +61,7 @@ impl serde::Serialize for GeneratorParams {
         }
         if self.key_mean != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "keyMean",
                 alloc::string::ToString::to_string(&self.key_mean).as_str(),
@@ -66,6 +69,7 @@ impl serde::Serialize for GeneratorParams {
         }
         if self.key_std_dev != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "keyStdDev",
                 alloc::string::ToString::to_string(&self.key_std_dev).as_str(),
@@ -73,6 +77,7 @@ impl serde::Serialize for GeneratorParams {
         }
         if self.value_mean != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "valueMean",
                 alloc::string::ToString::to_string(&self.value_mean).as_str(),
@@ -80,6 +85,7 @@ impl serde::Serialize for GeneratorParams {
         }
         if self.value_std_dev != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "valueStdDev",
                 alloc::string::ToString::to_string(&self.value_std_dev).as_str(),
@@ -87,6 +93,7 @@ impl serde::Serialize for GeneratorParams {
         }
         if self.genesis_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "genesisCount",
                 alloc::string::ToString::to_string(&self.genesis_count).as_str(),

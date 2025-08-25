@@ -83,6 +83,8 @@ impl From<Body> for proto::cosmos::tx::v1beta1::TxBody {
             timeout_height: body.timeout_height.into(),
             extension_options: body.extension_options,
             non_critical_extension_options: body.non_critical_extension_options,
+            unordered: todo!(),
+            timeout_timestamp: todo!(),
         }
     }
 }

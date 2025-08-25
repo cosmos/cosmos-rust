@@ -162,6 +162,7 @@ impl serde::Serialize for AuxSignerData {
         }
         if !self.sig.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("sig", pbjson::private::base64::encode(&self.sig).as_str())?;
         }
@@ -377,6 +378,7 @@ impl serde::Serialize for BroadcastTxRequest {
             serializer.serialize_struct("cosmos.tx.v1beta1.BroadcastTxRequest", len)?;
         if !self.tx_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "txBytes",
                 pbjson::private::base64::encode(&self.tx_bytes).as_str(),
@@ -614,6 +616,7 @@ impl serde::Serialize for Fee {
         }
         if self.gas_limit != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "gasLimit",
                 alloc::string::ToString::to_string(&self.gas_limit).as_str(),
@@ -756,6 +759,7 @@ impl serde::Serialize for GetBlockWithTxsRequest {
             serializer.serialize_struct("cosmos.tx.v1beta1.GetBlockWithTxsRequest", len)?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -1263,6 +1267,7 @@ impl serde::Serialize for GetTxsEventRequest {
         }
         if self.page != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "page",
                 alloc::string::ToString::to_string(&self.page).as_str(),
@@ -1270,6 +1275,7 @@ impl serde::Serialize for GetTxsEventRequest {
         }
         if self.limit != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "limit",
                 alloc::string::ToString::to_string(&self.limit).as_str(),
@@ -1459,6 +1465,7 @@ impl serde::Serialize for GetTxsEventResponse {
         }
         if self.total != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "total",
                 alloc::string::ToString::to_string(&self.total).as_str(),
@@ -2012,6 +2019,7 @@ impl serde::Serialize for SignDoc {
         let mut struct_ser = serializer.serialize_struct("cosmos.tx.v1beta1.SignDoc", len)?;
         if !self.body_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "bodyBytes",
                 pbjson::private::base64::encode(&self.body_bytes).as_str(),
@@ -2019,6 +2027,7 @@ impl serde::Serialize for SignDoc {
         }
         if !self.auth_info_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "authInfoBytes",
                 pbjson::private::base64::encode(&self.auth_info_bytes).as_str(),
@@ -2029,6 +2038,7 @@ impl serde::Serialize for SignDoc {
         }
         if self.account_number != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "accountNumber",
                 alloc::string::ToString::to_string(&self.account_number).as_str(),
@@ -2194,6 +2204,7 @@ impl serde::Serialize for SignDocDirectAux {
             serializer.serialize_struct("cosmos.tx.v1beta1.SignDocDirectAux", len)?;
         if !self.body_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "bodyBytes",
                 pbjson::private::base64::encode(&self.body_bytes).as_str(),
@@ -2207,6 +2218,7 @@ impl serde::Serialize for SignDocDirectAux {
         }
         if self.account_number != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "accountNumber",
                 alloc::string::ToString::to_string(&self.account_number).as_str(),
@@ -2214,6 +2226,7 @@ impl serde::Serialize for SignDocDirectAux {
         }
         if self.sequence != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "sequence",
                 alloc::string::ToString::to_string(&self.sequence).as_str(),
@@ -2402,6 +2415,7 @@ impl serde::Serialize for SignerInfo {
         }
         if self.sequence != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "sequence",
                 alloc::string::ToString::to_string(&self.sequence).as_str(),
@@ -2537,6 +2551,7 @@ impl serde::Serialize for SimulateRequest {
         }
         if !self.tx_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "txBytes",
                 pbjson::private::base64::encode(&self.tx_bytes).as_str(),
@@ -3041,6 +3056,7 @@ impl serde::Serialize for TxBody {
         }
         if self.timeout_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "timeoutHeight",
                 alloc::string::ToString::to_string(&self.timeout_height).as_str(),
@@ -3240,6 +3256,7 @@ impl serde::Serialize for TxDecodeAminoRequest {
             serializer.serialize_struct("cosmos.tx.v1beta1.TxDecodeAminoRequest", len)?;
         if !self.amino_binary.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "aminoBinary",
                 pbjson::private::base64::encode(&self.amino_binary).as_str(),
@@ -3453,6 +3470,7 @@ impl serde::Serialize for TxDecodeRequest {
             serializer.serialize_struct("cosmos.tx.v1beta1.TxDecodeRequest", len)?;
         if !self.tx_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "txBytes",
                 pbjson::private::base64::encode(&self.tx_bytes).as_str(),
@@ -3761,6 +3779,7 @@ impl serde::Serialize for TxEncodeAminoResponse {
             serializer.serialize_struct("cosmos.tx.v1beta1.TxEncodeAminoResponse", len)?;
         if !self.amino_binary.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "aminoBinary",
                 pbjson::private::base64::encode(&self.amino_binary).as_str(),
@@ -3969,6 +3988,7 @@ impl serde::Serialize for TxEncodeResponse {
             serializer.serialize_struct("cosmos.tx.v1beta1.TxEncodeResponse", len)?;
         if !self.tx_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "txBytes",
                 pbjson::private::base64::encode(&self.tx_bytes).as_str(),
@@ -4081,6 +4101,7 @@ impl serde::Serialize for TxRaw {
         let mut struct_ser = serializer.serialize_struct("cosmos.tx.v1beta1.TxRaw", len)?;
         if !self.body_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "bodyBytes",
                 pbjson::private::base64::encode(&self.body_bytes).as_str(),
@@ -4088,6 +4109,7 @@ impl serde::Serialize for TxRaw {
         }
         if !self.auth_info_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "authInfoBytes",
                 pbjson::private::base64::encode(&self.auth_info_bytes).as_str(),

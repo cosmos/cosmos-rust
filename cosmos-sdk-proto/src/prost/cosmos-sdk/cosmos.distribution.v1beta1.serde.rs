@@ -466,6 +466,7 @@ impl serde::Serialize for DelegatorStartingInfo {
             .serialize_struct("cosmos.distribution.v1beta1.DelegatorStartingInfo", len)?;
         if self.previous_period != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "previousPeriod",
                 alloc::string::ToString::to_string(&self.previous_period).as_str(),
@@ -476,6 +477,7 @@ impl serde::Serialize for DelegatorStartingInfo {
         }
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -4949,6 +4951,7 @@ impl serde::Serialize for QueryValidatorSlashesRequest {
         }
         if self.starting_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "startingHeight",
                 alloc::string::ToString::to_string(&self.starting_height).as_str(),
@@ -4956,6 +4959,7 @@ impl serde::Serialize for QueryValidatorSlashesRequest {
         }
         if self.ending_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "endingHeight",
                 alloc::string::ToString::to_string(&self.ending_height).as_str(),
@@ -5474,6 +5478,7 @@ impl serde::Serialize for ValidatorCurrentRewards {
         }
         if self.period != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "period",
                 alloc::string::ToString::to_string(&self.period).as_str(),
@@ -5864,6 +5869,7 @@ impl serde::Serialize for ValidatorHistoricalRewardsRecord {
         }
         if self.period != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "period",
                 alloc::string::ToString::to_string(&self.period).as_str(),
@@ -6244,6 +6250,7 @@ impl serde::Serialize for ValidatorSlashEvent {
             serializer.serialize_struct("cosmos.distribution.v1beta1.ValidatorSlashEvent", len)?;
         if self.validator_period != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "validatorPeriod",
                 alloc::string::ToString::to_string(&self.validator_period).as_str(),
@@ -6381,6 +6388,7 @@ impl serde::Serialize for ValidatorSlashEventRecord {
         }
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -6388,6 +6396,7 @@ impl serde::Serialize for ValidatorSlashEventRecord {
         }
         if self.period != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "period",
                 alloc::string::ToString::to_string(&self.period).as_str(),

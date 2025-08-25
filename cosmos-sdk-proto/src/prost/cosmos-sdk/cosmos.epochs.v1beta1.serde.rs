@@ -41,6 +41,7 @@ impl serde::Serialize for EpochInfo {
         }
         if self.current_epoch != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "currentEpoch",
                 alloc::string::ToString::to_string(&self.current_epoch).as_str(),
@@ -54,6 +55,7 @@ impl serde::Serialize for EpochInfo {
         }
         if self.current_epoch_start_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "currentEpochStartHeight",
                 alloc::string::ToString::to_string(&self.current_epoch_start_height).as_str(),
@@ -245,6 +247,7 @@ impl serde::Serialize for EventEpochEnd {
             serializer.serialize_struct("cosmos.epochs.v1beta1.EventEpochEnd", len)?;
         if self.epoch_number != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "epochNumber",
                 alloc::string::ToString::to_string(&self.epoch_number).as_str(),
@@ -355,6 +358,7 @@ impl serde::Serialize for EventEpochStart {
             serializer.serialize_struct("cosmos.epochs.v1beta1.EventEpochStart", len)?;
         if self.epoch_number != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "epochNumber",
                 alloc::string::ToString::to_string(&self.epoch_number).as_str(),
@@ -362,6 +366,7 @@ impl serde::Serialize for EventEpochStart {
         }
         if self.epoch_start_time != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "epochStartTime",
                 alloc::string::ToString::to_string(&self.epoch_start_time).as_str(),
@@ -692,6 +697,7 @@ impl serde::Serialize for QueryCurrentEpochResponse {
             serializer.serialize_struct("cosmos.epochs.v1beta1.QueryCurrentEpochResponse", len)?;
         if self.current_epoch != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "currentEpoch",
                 alloc::string::ToString::to_string(&self.current_epoch).as_str(),

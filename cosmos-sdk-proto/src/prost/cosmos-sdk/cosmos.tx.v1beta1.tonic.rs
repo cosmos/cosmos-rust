@@ -23,7 +23,7 @@ pub mod service_client {
     }
     impl<T> ServiceClient<T>
     where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
+        T: tonic::client::GrpcService<tonic::body::Body>,
         T::Error: Into<StdError>,
         T::ResponseBody: Body<Data = Bytes> + Send + 'static,
         <T::ResponseBody as Body>::Error: Into<StdError> + Send,
@@ -44,12 +44,12 @@ pub mod service_client {
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
             T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
+                http::Request<tonic::body::Body>,
                 Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
+                    <T as tonic::client::GrpcService<tonic::body::Body>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+            <T as tonic::codegen::Service<http::Request<tonic::body::Body>>>::Error:
                 Into<StdError> + Send + Sync,
         {
             ServiceClient::new(InterceptedService::new(inner, interceptor))
@@ -95,7 +95,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/Simulate");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -112,7 +112,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/GetTx");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -130,7 +130,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/BroadcastTx");
             let mut req = request.into_request();
@@ -149,7 +149,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/GetTxsEvent");
             let mut req = request.into_request();
@@ -168,7 +168,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/GetBlockWithTxs");
             let mut req = request.into_request();
@@ -188,7 +188,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/TxDecode");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -205,7 +205,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/TxEncode");
             let mut req = request.into_request();
             req.extensions_mut()
@@ -223,7 +223,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/TxEncodeAmino");
             let mut req = request.into_request();
@@ -244,7 +244,7 @@ pub mod service_client {
                     alloc::format!("Service was not ready: {}", e.into()),
                 )
             })?;
-            let codec = tonic::codec::ProstCodec::default();
+            let codec = tonic_prost::ProstCodec::default();
             let path =
                 http::uri::PathAndQuery::from_static("/cosmos.tx.v1beta1.Service/TxDecodeAmino");
             let mut req = request.into_request();
@@ -303,19 +303,17 @@ pub mod service_server {
     }
     #[derive(Debug)]
     pub struct ServiceServer<T: Service> {
-        inner: _Inner<T>,
+        inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    struct _Inner<T>(Arc<T>);
     impl<T: Service> ServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
         pub fn from_arc(inner: Arc<T>) -> Self {
-            let inner = _Inner(inner);
             Self {
                 inner,
                 accept_compression_encodings: Default::default(),
@@ -365,7 +363,7 @@ pub mod service_server {
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
-        type Response = http::Response<tonic::body::BoxBody>;
+        type Response = http::Response<tonic::body::Body>;
         type Error = std::convert::Infallible;
         type Future = BoxFuture<Self::Response, Self::Error>;
         fn poll_ready(
@@ -375,7 +373,6 @@ pub mod service_server {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
-            let inner = self.inner.clone();
             match req.uri().path() {
                 "/cosmos.tx.v1beta1.Service/Simulate" => {
                     #[allow(non_camel_case_types)]
@@ -388,7 +385,8 @@ pub mod service_server {
                             request: tonic::Request<super::SimulateRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).simulate(request).await };
+                            let fut =
+                                async move { <T as Service>::simulate(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -398,9 +396,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = SimulateSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -426,7 +423,7 @@ pub mod service_server {
                             request: tonic::Request<super::GetTxRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).get_tx(request).await };
+                            let fut = async move { <T as Service>::get_tx(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -436,9 +433,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetTxSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -464,7 +460,8 @@ pub mod service_server {
                             request: tonic::Request<super::BroadcastTxRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).broadcast_tx(request).await };
+                            let fut =
+                                async move { <T as Service>::broadcast_tx(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -474,9 +471,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = BroadcastTxSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -502,7 +498,8 @@ pub mod service_server {
                             request: tonic::Request<super::GetTxsEventRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).get_txs_event(request).await };
+                            let fut =
+                                async move { <T as Service>::get_txs_event(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -512,9 +509,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetTxsEventSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -542,7 +538,9 @@ pub mod service_server {
                             request: tonic::Request<super::GetBlockWithTxsRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).get_block_with_txs(request).await };
+                            let fut = async move {
+                                <T as Service>::get_block_with_txs(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -552,9 +550,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = GetBlockWithTxsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -580,7 +577,8 @@ pub mod service_server {
                             request: tonic::Request<super::TxDecodeRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).tx_decode(request).await };
+                            let fut =
+                                async move { <T as Service>::tx_decode(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -590,9 +588,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = TxDecodeSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -618,7 +615,8 @@ pub mod service_server {
                             request: tonic::Request<super::TxEncodeRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).tx_encode(request).await };
+                            let fut =
+                                async move { <T as Service>::tx_encode(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -628,9 +626,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = TxEncodeSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -656,7 +653,9 @@ pub mod service_server {
                             request: tonic::Request<super::TxEncodeAminoRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).tx_encode_amino(request).await };
+                            let fut = async move {
+                                <T as Service>::tx_encode_amino(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -666,9 +665,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = TxEncodeAminoSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -694,7 +692,9 @@ pub mod service_server {
                             request: tonic::Request<super::TxDecodeAminoRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).tx_decode_amino(request).await };
+                            let fut = async move {
+                                <T as Service>::tx_decode_amino(&inner, request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -704,9 +704,8 @@ pub mod service_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let inner = inner.0;
                         let method = TxDecodeAminoSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
+                        let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
                                 accept_compression_encodings,
@@ -724,9 +723,12 @@ pub mod service_server {
                 _ => Box::pin(async move {
                     Ok(http::Response::builder()
                         .status(200)
-                        .header("grpc-status", "12")
-                        .header("content-type", "application/grpc")
-                        .body(empty_body())
+                        .header("grpc-status", tonic::Code::Unimplemented as i32)
+                        .header(
+                            http::header::CONTENT_TYPE,
+                            tonic::metadata::GRPC_CONTENT_TYPE,
+                        )
+                        .body(tonic::body::Body::empty())
                         .unwrap())
                 }),
             }
@@ -742,16 +744,6 @@ pub mod service_server {
                 max_decoding_message_size: self.max_decoding_message_size,
                 max_encoding_message_size: self.max_encoding_message_size,
             }
-        }
-    }
-    impl<T: Service> Clone for _Inner<T> {
-        fn clone(&self) -> Self {
-            Self(Arc::clone(&self.0))
-        }
-    }
-    impl<T: core::fmt::Debug> core::fmt::Debug for _Inner<T> {
-        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-            write!(f, "{:?}", self.0)
         }
     }
     impl<T: Service> tonic::server::NamedService for ServiceServer<T> {

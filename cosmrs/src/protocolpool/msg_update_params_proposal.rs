@@ -1,9 +1,9 @@
 use cosmos_sdk_proto::cosmos::protocolpool::v1::Params;
 
-use crate::{proto, tx::Msg, AccountId, ErrorReport, Result};
+use crate::{proto, tx::Msg, ErrorReport, Result};
 
 /// WithdrawValidatorCommission submits a proposal to update protocolpool module params. Note: the entire params must be provided.
-#[derive(Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct MsgUpdateParams {
     pub authority: String,
     pub params: Option<Params>,
@@ -31,7 +31,7 @@ impl TryFrom<&proto::cosmos::protocolpool::v1::MsgUpdateParams> for MsgUpdatePar
     ) -> Result<MsgUpdateParams> {
         Ok(MsgUpdateParams {
             authority: proto.authority.parse()?,
-            params: proto.params.parse()?,
+            params: proto.params.clone(),
         })
     }
 }
@@ -46,7 +46,7 @@ impl From<&MsgUpdateParams> for proto::cosmos::protocolpool::v1::MsgUpdateParams
     fn from(msg: &MsgUpdateParams) -> proto::cosmos::protocolpool::v1::MsgUpdateParams {
         proto::cosmos::protocolpool::v1::MsgUpdateParams {
             authority: msg.authority.to_string(),
-            params: msg.params,
+            params: msg.params.clone(),
         }
     }
 }

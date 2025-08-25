@@ -21,6 +21,7 @@ impl serde::Serialize for ListenCommitRequest {
             serializer.serialize_struct("cosmos.store.streaming.abci.ListenCommitRequest", len)?;
         if self.block_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "blockHeight",
                 alloc::string::ToString::to_string(&self.block_height).as_str(),

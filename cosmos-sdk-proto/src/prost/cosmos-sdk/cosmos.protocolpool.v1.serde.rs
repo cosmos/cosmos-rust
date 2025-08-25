@@ -395,6 +395,7 @@ impl serde::Serialize for MsgCancelContinuousFundResponse {
         }
         if self.canceled_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "canceledHeight",
                 alloc::string::ToString::to_string(&self.canceled_height).as_str(),
@@ -1395,6 +1396,7 @@ impl serde::Serialize for Params {
         }
         if self.distribution_frequency != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "distributionFrequency",
                 alloc::string::ToString::to_string(&self.distribution_frequency).as_str(),

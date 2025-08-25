@@ -15,6 +15,7 @@ impl serde::Serialize for AddressBytesToStringRequest {
             serializer.serialize_struct("cosmos.auth.v1beta1.AddressBytesToStringRequest", len)?;
         if !self.address_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "addressBytes",
                 pbjson::private::base64::encode(&self.address_bytes).as_str(),
@@ -331,6 +332,7 @@ impl serde::Serialize for AddressStringToBytesResponse {
             serializer.serialize_struct("cosmos.auth.v1beta1.AddressStringToBytesResponse", len)?;
         if !self.address_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "addressBytes",
                 pbjson::private::base64::encode(&self.address_bytes).as_str(),
@@ -455,6 +457,7 @@ impl serde::Serialize for BaseAccount {
         }
         if self.account_number != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "accountNumber",
                 alloc::string::ToString::to_string(&self.account_number).as_str(),
@@ -462,6 +465,7 @@ impl serde::Serialize for BaseAccount {
         }
         if self.sequence != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "sequence",
                 alloc::string::ToString::to_string(&self.sequence).as_str(),
@@ -1380,6 +1384,7 @@ impl serde::Serialize for Params {
         let mut struct_ser = serializer.serialize_struct("cosmos.auth.v1beta1.Params", len)?;
         if self.max_memo_characters != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "maxMemoCharacters",
                 alloc::string::ToString::to_string(&self.max_memo_characters).as_str(),
@@ -1387,6 +1392,7 @@ impl serde::Serialize for Params {
         }
         if self.tx_sig_limit != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "txSigLimit",
                 alloc::string::ToString::to_string(&self.tx_sig_limit).as_str(),
@@ -1394,6 +1400,7 @@ impl serde::Serialize for Params {
         }
         if self.tx_size_cost_per_byte != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "txSizeCostPerByte",
                 alloc::string::ToString::to_string(&self.tx_size_cost_per_byte).as_str(),
@@ -1401,6 +1408,7 @@ impl serde::Serialize for Params {
         }
         if self.sig_verify_cost_ed25519 != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "sigVerifyCostEd25519",
                 alloc::string::ToString::to_string(&self.sig_verify_cost_ed25519).as_str(),
@@ -1408,6 +1416,7 @@ impl serde::Serialize for Params {
         }
         if self.sig_verify_cost_secp256k1 != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "sigVerifyCostSecp256k1",
                 alloc::string::ToString::to_string(&self.sig_verify_cost_secp256k1).as_str(),
@@ -1589,11 +1598,13 @@ impl serde::Serialize for QueryAccountAddressByIdRequest {
             .serialize_struct("cosmos.auth.v1beta1.QueryAccountAddressByIDRequest", len)?;
         if self.id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("id", alloc::string::ToString::to_string(&self.id).as_str())?;
         }
         if self.account_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "accountId",
                 alloc::string::ToString::to_string(&self.account_id).as_str(),

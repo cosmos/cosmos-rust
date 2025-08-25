@@ -1335,6 +1335,7 @@ impl serde::Serialize for QueryBalanceResponse {
             serializer.serialize_struct("cosmos.nft.v1beta1.QueryBalanceResponse", len)?;
         if self.amount != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "amount",
                 alloc::string::ToString::to_string(&self.amount).as_str(),
@@ -2643,6 +2644,7 @@ impl serde::Serialize for QuerySupplyResponse {
             serializer.serialize_struct("cosmos.nft.v1beta1.QuerySupplyResponse", len)?;
         if self.amount != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "amount",
                 alloc::string::ToString::to_string(&self.amount).as_str(),
