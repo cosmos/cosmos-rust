@@ -1882,6 +1882,7 @@ dependencies = [
 [[package]]
 name = "tendermint-proto"
 version = "0.40.4"
+source = "git+https://github.com/permissionlessweb/tendermint-rs#1eb34ad1fa645addc624837eeef4eaa16637c695"
 dependencies = [
  "bytes",
  "flex-error",
