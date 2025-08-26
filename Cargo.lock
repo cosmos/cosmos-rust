@@ -281,7 +281,7 @@ dependencies = [
  "serde_json",
  "signature",
  "subtle-encoding",
- "tendermint",
+ "tendermint 0.40.4",
  "tendermint-rpc",
  "thiserror",
  "tokio",
@@ -904,8 +904,7 @@ dependencies = [
 [[package]]
 name = "informalsystems-pbjson"
 version = "0.7.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9aa4a0980c8379295100d70854354e78df2ee1c6ca0f96ffe89afeb3140e3a3d"
+source = "git+https://github.com/permissionlessweb/pbjson#df9ae64ffc106affccdfec2437365f8498ef306d"
 dependencies = [
  "base64 0.21.4",
  "serde",
@@ -1832,11 +1831,9 @@ dependencies = [
  "ed25519-consensus",
  "flex-error",
  "futures",
- "k256",
  "num-traits",
  "once_cell",
  "prost 0.13.1",
- "ripemd",
  "serde",
  "serde_bytes",
  "serde_json",
@@ -1851,6 +1848,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "tendermint"
+version = "0.40.4"
+source = "git+https://github.com/permissionlessweb/tendermint-rs#ead63760138b7f8f130aabcabd824c621f07abd3"
+dependencies = [
+ "bytes",
+ "digest 0.10.7",
+ "ed25519",
+ "ed25519-consensus",
+ "flex-error",
+ "futures",
+ "k256",
+ "num-traits",
+ "once_cell",
+ "prost 0.14.1",
+ "ripemd",
+ "serde",
+ "serde_bytes",
+ "serde_json",
+ "serde_repr",
+ "sha2 0.10.8",
+ "signature",
+ "subtle",
+ "subtle-encoding",
+ "tendermint-proto 0.40.4",
+ "time",
+ "zeroize",
+]
+
+[[package]]
 name = "tendermint-config"
 version = "0.40.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1859,7 +1885,7 @@ dependencies = [
  "flex-error",
  "serde",
  "serde_json",
- "tendermint",
+ "tendermint 0.40.0",
  "toml",
  "url",
 ]
@@ -1914,7 +1940,7 @@ dependencies = [
  "serde_json",
  "subtle",
  "subtle-encoding",
- "tendermint",
+ "tendermint 0.40.0",
  "tendermint-config",
  "tendermint-proto 0.40.0",
  "thiserror",
