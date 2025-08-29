@@ -160,6 +160,13 @@ pub mod cosmos {
         }
     }
 
+    /// Messages and services handling groups
+    pub mod group {
+        pub mod v1 {
+            include!("prost/cosmos-sdk/cosmos.group.v1.rs");
+        }
+    }
+
     /// Messages and services handling minting
     pub mod mint {
         pub mod v1beta1 {
