@@ -5,7 +5,7 @@ use std::{fmt, str::FromStr};
 use subtle_encoding::bech32;
 
 /// Account identifiers
-#[derive(Clone, Eq, PartialEq, PartialOrd, Ord)]
+#[derive(Clone, Eq, PartialEq, PartialOrd, Ord, Hash)]
 pub struct AccountId {
     /// Account ID encoded as Bech32
     bech32: String,
