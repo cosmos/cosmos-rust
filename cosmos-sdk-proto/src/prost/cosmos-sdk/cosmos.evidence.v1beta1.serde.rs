@@ -24,6 +24,7 @@ impl serde::Serialize for Equivocation {
             serializer.serialize_struct("cosmos.evidence.v1beta1.Equivocation", len)?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -34,6 +35,7 @@ impl serde::Serialize for Equivocation {
         }
         if self.power != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "power",
                 alloc::string::ToString::to_string(&self.power).as_str(),
@@ -401,6 +403,7 @@ impl serde::Serialize for MsgSubmitEvidenceResponse {
             .serialize_struct("cosmos.evidence.v1beta1.MsgSubmitEvidenceResponse", len)?;
         if !self.hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("hash", pbjson::private::base64::encode(&self.hash).as_str())?;
         }
@@ -734,6 +737,7 @@ impl serde::Serialize for QueryEvidenceRequest {
             serializer.serialize_struct("cosmos.evidence.v1beta1.QueryEvidenceRequest", len)?;
         if !self.evidence_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "evidenceHash",
                 pbjson::private::base64::encode(&self.evidence_hash).as_str(),

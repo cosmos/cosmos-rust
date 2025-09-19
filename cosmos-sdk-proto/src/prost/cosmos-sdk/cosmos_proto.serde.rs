@@ -153,7 +153,7 @@ impl serde::Serialize for ScalarDescriptor {
                         serde::ser::Error::custom(alloc::format!("Invalid variant {}", v))
                     })
                 })
-                .collect::<Result<alloc::vec::Vec<_>, _>>()?;
+                .collect::<core::result::Result<alloc::vec::Vec<_>, _>>()?;
             struct_ser.serialize_field("fieldType", &v)?;
         }
         struct_ser.end()

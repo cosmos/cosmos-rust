@@ -7,8 +7,15 @@ impl serde::Serialize for Module {
         S: serde::Serializer,
     {
         use serde::ser::SerializeStruct;
-        let len = 0;
-        let struct_ser = serializer.serialize_struct("cosmos.orm.module.v1alpha1.Module", len)?;
+        let mut len = 0;
+        if !self.authority.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmos.protocolpool.module.v1.Module", len)?;
+        if !self.authority.is_empty() {
+            struct_ser.serialize_field("authority", &self.authority)?;
+        }
         struct_ser.end()
     }
 }
@@ -19,10 +26,12 @@ impl<'de> serde::Deserialize<'de> for Module {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &[];
+        const FIELDS: &[&str] = &["authority"];
 
         #[allow(clippy::enum_variant_names)]
-        enum GeneratedField {}
+        enum GeneratedField {
+            Authority,
+        }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
             fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
@@ -46,7 +55,10 @@ impl<'de> serde::Deserialize<'de> for Module {
                     where
                         E: serde::de::Error,
                     {
-                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                        match value {
+                            "authority" => Ok(GeneratedField::Authority),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
                     }
                 }
                 deserializer.deserialize_identifier(GeneratedVisitor)
@@ -57,21 +69,31 @@ impl<'de> serde::Deserialize<'de> for Module {
             type Value = Module;
 
             fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-                formatter.write_str("struct cosmos.orm.module.v1alpha1.Module")
+                formatter.write_str("struct cosmos.protocolpool.module.v1.Module")
             }
 
             fn visit_map<V>(self, mut map_: V) -> core::result::Result<Module, V::Error>
             where
                 V: serde::de::MapAccess<'de>,
             {
-                while map_.next_key::<GeneratedField>()?.is_some() {
-                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                let mut authority__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Authority => {
+                            if authority__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("authority"));
+                            }
+                            authority__ = Some(map_.next_value()?);
+                        }
+                    }
                 }
-                Ok(Module {})
+                Ok(Module {
+                    authority: authority__.unwrap_or_default(),
+                })
             }
         }
         deserializer.deserialize_struct(
-            "cosmos.orm.module.v1alpha1.Module",
+            "cosmos.protocolpool.module.v1.Module",
             FIELDS,
             GeneratedVisitor,
         )

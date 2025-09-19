@@ -20,10 +20,10 @@ use walkdir::WalkDir;
 static QUIET: AtomicBool = AtomicBool::new(false);
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.50.9";
+const COSMOS_SDK_REV: &str = "v0.53.0";
 
 /// The wasmd commit or tag to be cloned and used to build the proto files
-const WASMD_REV: &str = "v0.52.0";
+const WASMD_REV: &str = "v0.60.1";
 
 // All paths must end with a / and either be absolute or include a ./ to reference the current
 // working directory.
@@ -321,6 +321,14 @@ fn copy_and_patch(src: impl AsRef<Path>, dest: impl AsRef<Path>) -> io::Result<(
         ("alloc::vec::alloc", "alloc"),
         // workaround to keep rustfmt from having a freak out
         ("__ = ", "__ ="),
+        // Fix tonic 0.14+ BoxBody privacy issue - replace with proper body type
+        ("tonic::body::BoxBody", "tonic::body::Body"),
+        // Fix tonic 0.14+ codec location - ProstCodec moved to tonic-prost crate
+        ("tonic::codec::ProstCodec", "tonic_prost::ProstCodec"),
+        // Fix empty_body function - it's now Body::empty()
+        ("empty_body\\(\\)", "tonic::body::Body::empty()"),
+        // Fix UnsyncBoxBody references that weren't caught by BoxBody replacement
+        ("http_body_util::combinators::UnsyncBoxBody<prost::bytes::Bytes, tonic::Status>", "tonic::body::Body"),
     ];
 
     // Skip proto files belonging to `EXCLUDED_PROTO_PACKAGES`

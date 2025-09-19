@@ -156,6 +156,7 @@ impl serde::Serialize for MissedBlock {
             serializer.serialize_struct("cosmos.slashing.v1beta1.MissedBlock", len)?;
         if self.index != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "index",
                 alloc::string::ToString::to_string(&self.index).as_str(),
@@ -664,6 +665,7 @@ impl serde::Serialize for Params {
         let mut struct_ser = serializer.serialize_struct("cosmos.slashing.v1beta1.Params", len)?;
         if self.signed_blocks_window != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "signedBlocksWindow",
                 alloc::string::ToString::to_string(&self.signed_blocks_window).as_str(),
@@ -671,6 +673,7 @@ impl serde::Serialize for Params {
         }
         if !self.min_signed_per_window.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "minSignedPerWindow",
                 pbjson::private::base64::encode(&self.min_signed_per_window).as_str(),
@@ -681,6 +684,7 @@ impl serde::Serialize for Params {
         }
         if !self.slash_fraction_double_sign.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "slashFractionDoubleSign",
                 pbjson::private::base64::encode(&self.slash_fraction_double_sign).as_str(),
@@ -688,6 +692,7 @@ impl serde::Serialize for Params {
         }
         if !self.slash_fraction_downtime.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "slashFractionDowntime",
                 pbjson::private::base64::encode(&self.slash_fraction_downtime).as_str(),
@@ -1738,6 +1743,7 @@ impl serde::Serialize for ValidatorSigningInfo {
         }
         if self.start_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "startHeight",
                 alloc::string::ToString::to_string(&self.start_height).as_str(),
@@ -1745,6 +1751,7 @@ impl serde::Serialize for ValidatorSigningInfo {
         }
         if self.index_offset != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "indexOffset",
                 alloc::string::ToString::to_string(&self.index_offset).as_str(),
@@ -1758,6 +1765,7 @@ impl serde::Serialize for ValidatorSigningInfo {
         }
         if self.missed_blocks_counter != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "missedBlocksCounter",
                 alloc::string::ToString::to_string(&self.missed_blocks_counter).as_str(),

@@ -166,6 +166,7 @@ impl serde::Serialize for CommitId {
         let mut struct_ser = serializer.serialize_struct("cosmos.store.v1beta1.CommitID", len)?;
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "version",
                 alloc::string::ToString::to_string(&self.version).as_str(),
@@ -173,6 +174,7 @@ impl serde::Serialize for CommitId {
         }
         if !self.hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("hash", pbjson::private::base64::encode(&self.hash).as_str())?;
         }
@@ -292,6 +294,7 @@ impl serde::Serialize for CommitInfo {
         let mut struct_ser = serializer.serialize_struct("cosmos.store.v1beta1.CommitInfo", len)?;
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "version",
                 alloc::string::ToString::to_string(&self.version).as_str(),
@@ -547,11 +550,13 @@ impl serde::Serialize for StoreKvPair {
         }
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }
         if !self.value.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "value",
                 pbjson::private::base64::encode(&self.value).as_str(),

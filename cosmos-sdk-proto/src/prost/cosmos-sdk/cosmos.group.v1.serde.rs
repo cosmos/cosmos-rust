@@ -143,6 +143,7 @@ impl serde::Serialize for EventCreateGroup {
             serializer.serialize_struct("cosmos.group.v1.EventCreateGroup", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -358,6 +359,7 @@ impl serde::Serialize for EventExec {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.EventExec", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -492,6 +494,7 @@ impl serde::Serialize for EventLeaveGroup {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.EventLeaveGroup", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -614,6 +617,7 @@ impl serde::Serialize for EventProposalPruned {
             serializer.serialize_struct("cosmos.group.v1.EventProposalPruned", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -759,6 +763,7 @@ impl serde::Serialize for EventSubmitProposal {
             serializer.serialize_struct("cosmos.group.v1.EventSubmitProposal", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -854,6 +859,125 @@ impl<'de> serde::Deserialize<'de> for EventSubmitProposal {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for EventTallyError {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.proposal_id != 0 {
+            len += 1;
+        }
+        if !self.error_message.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.EventTallyError", len)?;
+        if self.proposal_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field(
+                "proposalId",
+                alloc::string::ToString::to_string(&self.proposal_id).as_str(),
+            )?;
+        }
+        if !self.error_message.is_empty() {
+            struct_ser.serialize_field("errorMessage", &self.error_message)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for EventTallyError {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["proposal_id", "proposalId", "error_message", "errorMessage"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            ProposalId,
+            ErrorMessage,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "proposalId" | "proposal_id" => Ok(GeneratedField::ProposalId),
+                            "errorMessage" | "error_message" => Ok(GeneratedField::ErrorMessage),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = EventTallyError;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                formatter.write_str("struct cosmos.group.v1.EventTallyError")
+            }
+
+            fn visit_map<V>(self, mut map_: V) -> core::result::Result<EventTallyError, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut proposal_id__ = None;
+                let mut error_message__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::ProposalId => {
+                            if proposal_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("proposalId"));
+                            }
+                            proposal_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::ErrorMessage => {
+                            if error_message__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("errorMessage"));
+                            }
+                            error_message__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(EventTallyError {
+                    proposal_id: proposal_id__.unwrap_or_default(),
+                    error_message: error_message__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("cosmos.group.v1.EventTallyError", FIELDS, GeneratedVisitor)
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for EventUpdateGroup {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
@@ -869,6 +993,7 @@ impl serde::Serialize for EventUpdateGroup {
             serializer.serialize_struct("cosmos.group.v1.EventUpdateGroup", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -1078,6 +1203,7 @@ impl serde::Serialize for EventVote {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.EventVote", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -1181,6 +1307,7 @@ impl serde::Serialize for EventWithdrawProposal {
             serializer.serialize_struct("cosmos.group.v1.EventWithdrawProposal", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -1381,6 +1508,7 @@ impl serde::Serialize for GenesisState {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.GenesisState", len)?;
         if self.group_seq != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupSeq",
                 alloc::string::ToString::to_string(&self.group_seq).as_str(),
@@ -1394,6 +1522,7 @@ impl serde::Serialize for GenesisState {
         }
         if self.group_policy_seq != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupPolicySeq",
                 alloc::string::ToString::to_string(&self.group_policy_seq).as_str(),
@@ -1404,6 +1533,7 @@ impl serde::Serialize for GenesisState {
         }
         if self.proposal_seq != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalSeq",
                 alloc::string::ToString::to_string(&self.proposal_seq).as_str(),
@@ -1619,6 +1749,7 @@ impl serde::Serialize for GroupInfo {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.GroupInfo", len)?;
         if self.id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("id", alloc::string::ToString::to_string(&self.id).as_str())?;
         }
@@ -1630,6 +1761,7 @@ impl serde::Serialize for GroupInfo {
         }
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "version",
                 alloc::string::ToString::to_string(&self.version).as_str(),
@@ -1803,6 +1935,7 @@ impl serde::Serialize for GroupMember {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.GroupMember", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -1939,6 +2072,7 @@ impl serde::Serialize for GroupPolicyInfo {
         }
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -1952,6 +2086,7 @@ impl serde::Serialize for GroupPolicyInfo {
         }
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "version",
                 alloc::string::ToString::to_string(&self.version).as_str(),
@@ -2546,6 +2681,7 @@ impl serde::Serialize for MsgCreateGroupPolicy {
         }
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -2804,6 +2940,7 @@ impl serde::Serialize for MsgCreateGroupResponse {
             serializer.serialize_struct("cosmos.group.v1.MsgCreateGroupResponse", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -3121,6 +3258,7 @@ impl serde::Serialize for MsgCreateGroupWithPolicyResponse {
             serializer.serialize_struct("cosmos.group.v1.MsgCreateGroupWithPolicyResponse", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -3255,6 +3393,7 @@ impl serde::Serialize for MsgExec {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.MsgExec", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -3474,6 +3613,7 @@ impl serde::Serialize for MsgLeaveGroup {
         }
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -3881,6 +4021,7 @@ impl serde::Serialize for MsgSubmitProposalResponse {
             serializer.serialize_struct("cosmos.group.v1.MsgSubmitProposalResponse", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -4000,6 +4141,7 @@ impl serde::Serialize for MsgUpdateGroupAdmin {
         }
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -4224,6 +4366,7 @@ impl serde::Serialize for MsgUpdateGroupMembers {
         }
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -4454,6 +4597,7 @@ impl serde::Serialize for MsgUpdateGroupMetadata {
         }
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -5365,6 +5509,7 @@ impl serde::Serialize for MsgVote {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.MsgVote", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -5610,6 +5755,7 @@ impl serde::Serialize for MsgWithdrawProposal {
             serializer.serialize_struct("cosmos.group.v1.MsgWithdrawProposal", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -5972,6 +6118,7 @@ impl serde::Serialize for Proposal {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.Proposal", len)?;
         if self.id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("id", alloc::string::ToString::to_string(&self.id).as_str())?;
         }
@@ -5989,6 +6136,7 @@ impl serde::Serialize for Proposal {
         }
         if self.group_version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupVersion",
                 alloc::string::ToString::to_string(&self.group_version).as_str(),
@@ -5996,6 +6144,7 @@ impl serde::Serialize for Proposal {
         }
         if self.group_policy_version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupPolicyVersion",
                 alloc::string::ToString::to_string(&self.group_policy_version).as_str(),
@@ -6468,6 +6617,7 @@ impl serde::Serialize for QueryGroupInfoRequest {
             serializer.serialize_struct("cosmos.group.v1.QueryGroupInfoRequest", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -6682,6 +6832,7 @@ impl serde::Serialize for QueryGroupMembersRequest {
             serializer.serialize_struct("cosmos.group.v1.QueryGroupMembersRequest", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -7165,6 +7316,7 @@ impl serde::Serialize for QueryGroupPoliciesByGroupRequest {
             serializer.serialize_struct("cosmos.group.v1.QueryGroupPoliciesByGroupRequest", len)?;
         if self.group_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "groupId",
                 alloc::string::ToString::to_string(&self.group_id).as_str(),
@@ -8306,6 +8458,7 @@ impl serde::Serialize for QueryProposalRequest {
             serializer.serialize_struct("cosmos.group.v1.QueryProposalRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -8757,6 +8910,7 @@ impl serde::Serialize for QueryTallyResultRequest {
             serializer.serialize_struct("cosmos.group.v1.QueryTallyResultRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -8971,6 +9125,7 @@ impl serde::Serialize for QueryVoteByProposalVoterRequest {
             serializer.serialize_struct("cosmos.group.v1.QueryVoteByProposalVoterRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -9198,6 +9353,7 @@ impl serde::Serialize for QueryVotesByProposalRequest {
             serializer.serialize_struct("cosmos.group.v1.QueryVotesByProposalRequest", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),
@@ -9962,6 +10118,7 @@ impl serde::Serialize for Vote {
         let mut struct_ser = serializer.serialize_struct("cosmos.group.v1.Vote", len)?;
         if self.proposal_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposalId",
                 alloc::string::ToString::to_string(&self.proposal_id).as_str(),

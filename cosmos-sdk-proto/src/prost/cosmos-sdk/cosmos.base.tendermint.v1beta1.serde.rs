@@ -24,6 +24,7 @@ impl serde::Serialize for AbciQueryRequest {
             serializer.serialize_struct("cosmos.base.tendermint.v1beta1.ABCIQueryRequest", len)?;
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -32,6 +33,7 @@ impl serde::Serialize for AbciQueryRequest {
         }
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -208,6 +210,7 @@ impl serde::Serialize for AbciQueryResponse {
         }
         if self.index != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "index",
                 alloc::string::ToString::to_string(&self.index).as_str(),
@@ -215,11 +218,13 @@ impl serde::Serialize for AbciQueryResponse {
         }
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }
         if !self.value.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "value",
                 pbjson::private::base64::encode(&self.value).as_str(),
@@ -230,6 +235,7 @@ impl serde::Serialize for AbciQueryResponse {
         }
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -593,6 +599,7 @@ impl serde::Serialize for GetBlockByHeightRequest {
         )?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -1172,6 +1179,7 @@ impl serde::Serialize for GetLatestValidatorSetResponse {
         )?;
         if self.block_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "blockHeight",
                 alloc::string::ToString::to_string(&self.block_height).as_str(),
@@ -1703,6 +1711,7 @@ impl serde::Serialize for GetValidatorSetByHeightRequest {
         )?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -1836,6 +1845,7 @@ impl serde::Serialize for GetValidatorSetByHeightResponse {
         )?;
         if self.block_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "blockHeight",
                 alloc::string::ToString::to_string(&self.block_height).as_str(),
@@ -2019,6 +2029,7 @@ impl serde::Serialize for Header {
         }
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -2032,6 +2043,7 @@ impl serde::Serialize for Header {
         }
         if !self.last_commit_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "lastCommitHash",
                 pbjson::private::base64::encode(&self.last_commit_hash).as_str(),
@@ -2039,6 +2051,7 @@ impl serde::Serialize for Header {
         }
         if !self.data_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "dataHash",
                 pbjson::private::base64::encode(&self.data_hash).as_str(),
@@ -2046,6 +2059,7 @@ impl serde::Serialize for Header {
         }
         if !self.validators_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "validatorsHash",
                 pbjson::private::base64::encode(&self.validators_hash).as_str(),
@@ -2053,6 +2067,7 @@ impl serde::Serialize for Header {
         }
         if !self.next_validators_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "nextValidatorsHash",
                 pbjson::private::base64::encode(&self.next_validators_hash).as_str(),
@@ -2060,6 +2075,7 @@ impl serde::Serialize for Header {
         }
         if !self.consensus_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "consensusHash",
                 pbjson::private::base64::encode(&self.consensus_hash).as_str(),
@@ -2067,6 +2083,7 @@ impl serde::Serialize for Header {
         }
         if !self.app_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "appHash",
                 pbjson::private::base64::encode(&self.app_hash).as_str(),
@@ -2074,6 +2091,7 @@ impl serde::Serialize for Header {
         }
         if !self.last_results_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "lastResultsHash",
                 pbjson::private::base64::encode(&self.last_results_hash).as_str(),
@@ -2081,6 +2099,7 @@ impl serde::Serialize for Header {
         }
         if !self.evidence_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "evidenceHash",
                 pbjson::private::base64::encode(&self.evidence_hash).as_str(),
@@ -2524,11 +2543,13 @@ impl serde::Serialize for ProofOp {
         }
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -2772,6 +2793,7 @@ impl serde::Serialize for Validator {
         }
         if self.voting_power != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "votingPower",
                 alloc::string::ToString::to_string(&self.voting_power).as_str(),
@@ -2779,6 +2801,7 @@ impl serde::Serialize for Validator {
         }
         if self.proposer_priority != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "proposerPriority",
                 alloc::string::ToString::to_string(&self.proposer_priority).as_str(),

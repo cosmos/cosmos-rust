@@ -112,6 +112,7 @@ impl serde::Serialize for ConfigResponse {
         }
         if self.halt_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "haltHeight",
                 alloc::string::ToString::to_string(&self.halt_height).as_str(),
@@ -355,6 +356,7 @@ impl serde::Serialize for StatusResponse {
             serializer.serialize_struct("cosmos.base.node.v1beta1.StatusResponse", len)?;
         if self.earliest_store_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "earliestStoreHeight",
                 alloc::string::ToString::to_string(&self.earliest_store_height).as_str(),
@@ -362,6 +364,7 @@ impl serde::Serialize for StatusResponse {
         }
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -372,6 +375,7 @@ impl serde::Serialize for StatusResponse {
         }
         if !self.app_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "appHash",
                 pbjson::private::base64::encode(&self.app_hash).as_str(),
@@ -379,6 +383,7 @@ impl serde::Serialize for StatusResponse {
         }
         if !self.validator_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "validatorHash",
                 pbjson::private::base64::encode(&self.validator_hash).as_str(),

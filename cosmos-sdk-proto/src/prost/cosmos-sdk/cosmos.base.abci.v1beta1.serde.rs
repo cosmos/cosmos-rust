@@ -269,6 +269,7 @@ impl serde::Serialize for GasInfo {
             serializer.serialize_struct("cosmos.base.abci.v1beta1.GasInfo", len)?;
         if self.gas_wanted != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "gasWanted",
                 alloc::string::ToString::to_string(&self.gas_wanted).as_str(),
@@ -276,6 +277,7 @@ impl serde::Serialize for GasInfo {
         }
         if self.gas_used != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "gasUsed",
                 alloc::string::ToString::to_string(&self.gas_used).as_str(),
@@ -402,6 +404,7 @@ impl serde::Serialize for MsgData {
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -525,6 +528,7 @@ impl serde::Serialize for Result {
         let mut struct_ser = serializer.serialize_struct("cosmos.base.abci.v1beta1.Result", len)?;
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -680,6 +684,7 @@ impl serde::Serialize for SearchBlocksResult {
             serializer.serialize_struct("cosmos.base.abci.v1beta1.SearchBlocksResult", len)?;
         if self.total_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "totalCount",
                 alloc::string::ToString::to_string(&self.total_count).as_str(),
@@ -687,6 +692,7 @@ impl serde::Serialize for SearchBlocksResult {
         }
         if self.count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "count",
                 alloc::string::ToString::to_string(&self.count).as_str(),
@@ -694,6 +700,7 @@ impl serde::Serialize for SearchBlocksResult {
         }
         if self.page_number != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "pageNumber",
                 alloc::string::ToString::to_string(&self.page_number).as_str(),
@@ -701,6 +708,7 @@ impl serde::Serialize for SearchBlocksResult {
         }
         if self.page_total != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "pageTotal",
                 alloc::string::ToString::to_string(&self.page_total).as_str(),
@@ -708,6 +716,7 @@ impl serde::Serialize for SearchBlocksResult {
         }
         if self.limit != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "limit",
                 alloc::string::ToString::to_string(&self.limit).as_str(),
@@ -905,6 +914,7 @@ impl serde::Serialize for SearchTxsResult {
             serializer.serialize_struct("cosmos.base.abci.v1beta1.SearchTxsResult", len)?;
         if self.total_count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "totalCount",
                 alloc::string::ToString::to_string(&self.total_count).as_str(),
@@ -912,6 +922,7 @@ impl serde::Serialize for SearchTxsResult {
         }
         if self.count != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "count",
                 alloc::string::ToString::to_string(&self.count).as_str(),
@@ -919,6 +930,7 @@ impl serde::Serialize for SearchTxsResult {
         }
         if self.page_number != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "pageNumber",
                 alloc::string::ToString::to_string(&self.page_number).as_str(),
@@ -926,6 +938,7 @@ impl serde::Serialize for SearchTxsResult {
         }
         if self.page_total != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "pageTotal",
                 alloc::string::ToString::to_string(&self.page_total).as_str(),
@@ -933,6 +946,7 @@ impl serde::Serialize for SearchTxsResult {
         }
         if self.limit != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "limit",
                 alloc::string::ToString::to_string(&self.limit).as_str(),
@@ -1499,6 +1513,7 @@ impl serde::Serialize for TxResponse {
             serializer.serialize_struct("cosmos.base.abci.v1beta1.TxResponse", len)?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -1527,6 +1542,7 @@ impl serde::Serialize for TxResponse {
         }
         if self.gas_wanted != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "gasWanted",
                 alloc::string::ToString::to_string(&self.gas_wanted).as_str(),
@@ -1534,6 +1550,7 @@ impl serde::Serialize for TxResponse {
         }
         if self.gas_used != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "gasUsed",
                 alloc::string::ToString::to_string(&self.gas_used).as_str(),

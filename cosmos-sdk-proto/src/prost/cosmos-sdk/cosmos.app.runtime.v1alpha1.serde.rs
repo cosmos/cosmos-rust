@@ -26,6 +26,9 @@ impl serde::Serialize for Module {
         if !self.override_store_keys.is_empty() {
             len += 1;
         }
+        if !self.skip_store_keys.is_empty() {
+            len += 1;
+        }
         if !self.order_migrations.is_empty() {
             len += 1;
         }
@@ -33,6 +36,9 @@ impl serde::Serialize for Module {
             len += 1;
         }
         if !self.prepare_check_staters.is_empty() {
+            len += 1;
+        }
+        if !self.pre_blockers.is_empty() {
             len += 1;
         }
         let mut struct_ser =
@@ -55,6 +61,9 @@ impl serde::Serialize for Module {
         if !self.override_store_keys.is_empty() {
             struct_ser.serialize_field("overrideStoreKeys", &self.override_store_keys)?;
         }
+        if !self.skip_store_keys.is_empty() {
+            struct_ser.serialize_field("skipStoreKeys", &self.skip_store_keys)?;
+        }
         if !self.order_migrations.is_empty() {
             struct_ser.serialize_field("orderMigrations", &self.order_migrations)?;
         }
@@ -63,6 +72,9 @@ impl serde::Serialize for Module {
         }
         if !self.prepare_check_staters.is_empty() {
             struct_ser.serialize_field("prepareCheckStaters", &self.prepare_check_staters)?;
+        }
+        if !self.pre_blockers.is_empty() {
+            struct_ser.serialize_field("preBlockers", &self.pre_blockers)?;
         }
         struct_ser.end()
     }
@@ -87,11 +99,15 @@ impl<'de> serde::Deserialize<'de> for Module {
             "exportGenesis",
             "override_store_keys",
             "overrideStoreKeys",
+            "skip_store_keys",
+            "skipStoreKeys",
             "order_migrations",
             "orderMigrations",
             "precommiters",
             "prepare_check_staters",
             "prepareCheckStaters",
+            "pre_blockers",
+            "preBlockers",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -102,9 +118,11 @@ impl<'de> serde::Deserialize<'de> for Module {
             InitGenesis,
             ExportGenesis,
             OverrideStoreKeys,
+            SkipStoreKeys,
             OrderMigrations,
             Precommiters,
             PrepareCheckStaters,
+            PreBlockers,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -138,6 +156,9 @@ impl<'de> serde::Deserialize<'de> for Module {
                             "overrideStoreKeys" | "override_store_keys" => {
                                 Ok(GeneratedField::OverrideStoreKeys)
                             }
+                            "skipStoreKeys" | "skip_store_keys" => {
+                                Ok(GeneratedField::SkipStoreKeys)
+                            }
                             "orderMigrations" | "order_migrations" => {
                                 Ok(GeneratedField::OrderMigrations)
                             }
@@ -145,6 +166,7 @@ impl<'de> serde::Deserialize<'de> for Module {
                             "prepareCheckStaters" | "prepare_check_staters" => {
                                 Ok(GeneratedField::PrepareCheckStaters)
                             }
+                            "preBlockers" | "pre_blockers" => Ok(GeneratedField::PreBlockers),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -170,9 +192,11 @@ impl<'de> serde::Deserialize<'de> for Module {
                 let mut init_genesis__ = None;
                 let mut export_genesis__ = None;
                 let mut override_store_keys__ = None;
+                let mut skip_store_keys__ = None;
                 let mut order_migrations__ = None;
                 let mut precommiters__ = None;
                 let mut prepare_check_staters__ = None;
+                let mut pre_blockers__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::AppName => {
@@ -211,6 +235,12 @@ impl<'de> serde::Deserialize<'de> for Module {
                             }
                             override_store_keys__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::SkipStoreKeys => {
+                            if skip_store_keys__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("skipStoreKeys"));
+                            }
+                            skip_store_keys__ = Some(map_.next_value()?);
+                        }
                         GeneratedField::OrderMigrations => {
                             if order_migrations__.is_some() {
                                 return Err(serde::de::Error::duplicate_field("orderMigrations"));
@@ -231,6 +261,12 @@ impl<'de> serde::Deserialize<'de> for Module {
                             }
                             prepare_check_staters__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::PreBlockers => {
+                            if pre_blockers__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("preBlockers"));
+                            }
+                            pre_blockers__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(Module {
@@ -240,9 +276,11 @@ impl<'de> serde::Deserialize<'de> for Module {
                     init_genesis: init_genesis__.unwrap_or_default(),
                     export_genesis: export_genesis__.unwrap_or_default(),
                     override_store_keys: override_store_keys__.unwrap_or_default(),
+                    skip_store_keys: skip_store_keys__.unwrap_or_default(),
                     order_migrations: order_migrations__.unwrap_or_default(),
                     precommiters: precommiters__.unwrap_or_default(),
                     prepare_check_staters: prepare_check_staters__.unwrap_or_default(),
+                    pre_blockers: pre_blockers__.unwrap_or_default(),
                 })
             }
         }

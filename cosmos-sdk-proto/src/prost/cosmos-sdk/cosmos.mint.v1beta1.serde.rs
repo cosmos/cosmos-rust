@@ -471,6 +471,7 @@ impl serde::Serialize for Params {
         }
         if self.blocks_per_year != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "blocksPerYear",
                 alloc::string::ToString::to_string(&self.blocks_per_year).as_str(),
@@ -725,6 +726,7 @@ impl serde::Serialize for QueryAnnualProvisionsResponse {
             .serialize_struct("cosmos.mint.v1beta1.QueryAnnualProvisionsResponse", len)?;
         if !self.annual_provisions.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "annualProvisions",
                 pbjson::private::base64::encode(&self.annual_provisions).as_str(),
@@ -919,6 +921,7 @@ impl serde::Serialize for QueryInflationResponse {
             serializer.serialize_struct("cosmos.mint.v1beta1.QueryInflationResponse", len)?;
         if !self.inflation.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "inflation",
                 pbjson::private::base64::encode(&self.inflation).as_str(),

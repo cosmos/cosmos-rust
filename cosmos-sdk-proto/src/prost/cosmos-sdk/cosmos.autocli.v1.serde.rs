@@ -509,6 +509,9 @@ impl serde::Serialize for PositionalArgDescriptor {
         if self.varargs {
             len += 1;
         }
+        if self.optional {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.autocli.v1.PositionalArgDescriptor", len)?;
         if !self.proto_field.is_empty() {
@@ -516,6 +519,9 @@ impl serde::Serialize for PositionalArgDescriptor {
         }
         if self.varargs {
             struct_ser.serialize_field("varargs", &self.varargs)?;
+        }
+        if self.optional {
+            struct_ser.serialize_field("optional", &self.optional)?;
         }
         struct_ser.end()
     }
@@ -527,12 +533,13 @@ impl<'de> serde::Deserialize<'de> for PositionalArgDescriptor {
     where
         D: serde::Deserializer<'de>,
     {
-        const FIELDS: &[&str] = &["proto_field", "protoField", "varargs"];
+        const FIELDS: &[&str] = &["proto_field", "protoField", "varargs", "optional"];
 
         #[allow(clippy::enum_variant_names)]
         enum GeneratedField {
             ProtoField,
             Varargs,
+            Optional,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -560,6 +567,7 @@ impl<'de> serde::Deserialize<'de> for PositionalArgDescriptor {
                         match value {
                             "protoField" | "proto_field" => Ok(GeneratedField::ProtoField),
                             "varargs" => Ok(GeneratedField::Varargs),
+                            "optional" => Ok(GeneratedField::Optional),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -584,6 +592,7 @@ impl<'de> serde::Deserialize<'de> for PositionalArgDescriptor {
             {
                 let mut proto_field__ = None;
                 let mut varargs__ = None;
+                let mut optional__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::ProtoField => {
@@ -598,11 +607,18 @@ impl<'de> serde::Deserialize<'de> for PositionalArgDescriptor {
                             }
                             varargs__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::Optional => {
+                            if optional__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("optional"));
+                            }
+                            optional__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(PositionalArgDescriptor {
                     proto_field: proto_field__.unwrap_or_default(),
                     varargs: varargs__.unwrap_or_default(),
+                    optional: optional__.unwrap_or_default(),
                 })
             }
         }
@@ -658,6 +674,9 @@ impl serde::Serialize for RpcCommandOptions {
         if self.skip {
             len += 1;
         }
+        if self.gov_proposal {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.autocli.v1.RpcCommandOptions", len)?;
         if !self.rpc_method.is_empty() {
@@ -696,6 +715,9 @@ impl serde::Serialize for RpcCommandOptions {
         if self.skip {
             struct_ser.serialize_field("skip", &self.skip)?;
         }
+        if self.gov_proposal {
+            struct_ser.serialize_field("govProposal", &self.gov_proposal)?;
+        }
         struct_ser.end()
     }
 }
@@ -723,6 +745,8 @@ impl<'de> serde::Deserialize<'de> for RpcCommandOptions {
             "positional_args",
             "positionalArgs",
             "skip",
+            "gov_proposal",
+            "govProposal",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -739,6 +763,7 @@ impl<'de> serde::Deserialize<'de> for RpcCommandOptions {
             FlagOptions,
             PositionalArgs,
             Skip,
+            GovProposal,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -778,6 +803,7 @@ impl<'de> serde::Deserialize<'de> for RpcCommandOptions {
                                 Ok(GeneratedField::PositionalArgs)
                             }
                             "skip" => Ok(GeneratedField::Skip),
+                            "govProposal" | "gov_proposal" => Ok(GeneratedField::GovProposal),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -809,6 +835,7 @@ impl<'de> serde::Deserialize<'de> for RpcCommandOptions {
                 let mut flag_options__ = None;
                 let mut positional_args__ = None;
                 let mut skip__ = None;
+                let mut gov_proposal__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::RpcMethod => {
@@ -884,6 +911,12 @@ impl<'de> serde::Deserialize<'de> for RpcCommandOptions {
                             }
                             skip__ = Some(map_.next_value()?);
                         }
+                        GeneratedField::GovProposal => {
+                            if gov_proposal__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("govProposal"));
+                            }
+                            gov_proposal__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(RpcCommandOptions {
@@ -899,6 +932,7 @@ impl<'de> serde::Deserialize<'de> for RpcCommandOptions {
                     flag_options: flag_options__.unwrap_or_default(),
                     positional_args: positional_args__.unwrap_or_default(),
                     skip: skip__.unwrap_or_default(),
+                    gov_proposal: gov_proposal__.unwrap_or_default(),
                 })
             }
         }
@@ -927,6 +961,12 @@ impl serde::Serialize for ServiceCommandDescriptor {
         if !self.sub_commands.is_empty() {
             len += 1;
         }
+        if self.enhance_custom_command {
+            len += 1;
+        }
+        if !self.short.is_empty() {
+            len += 1;
+        }
         let mut struct_ser =
             serializer.serialize_struct("cosmos.autocli.v1.ServiceCommandDescriptor", len)?;
         if !self.service.is_empty() {
@@ -937,6 +977,12 @@ impl serde::Serialize for ServiceCommandDescriptor {
         }
         if !self.sub_commands.is_empty() {
             struct_ser.serialize_field("subCommands", &self.sub_commands)?;
+        }
+        if self.enhance_custom_command {
+            struct_ser.serialize_field("enhanceCustomCommand", &self.enhance_custom_command)?;
+        }
+        if !self.short.is_empty() {
+            struct_ser.serialize_field("short", &self.short)?;
         }
         struct_ser.end()
     }
@@ -954,6 +1000,9 @@ impl<'de> serde::Deserialize<'de> for ServiceCommandDescriptor {
             "rpcCommandOptions",
             "sub_commands",
             "subCommands",
+            "enhance_custom_command",
+            "enhanceCustomCommand",
+            "short",
         ];
 
         #[allow(clippy::enum_variant_names)]
@@ -961,6 +1010,8 @@ impl<'de> serde::Deserialize<'de> for ServiceCommandDescriptor {
             Service,
             RpcCommandOptions,
             SubCommands,
+            EnhanceCustomCommand,
+            Short,
         }
         #[cfg(feature = "serde")]
         impl<'de> serde::Deserialize<'de> for GeneratedField {
@@ -991,6 +1042,10 @@ impl<'de> serde::Deserialize<'de> for ServiceCommandDescriptor {
                                 Ok(GeneratedField::RpcCommandOptions)
                             }
                             "subCommands" | "sub_commands" => Ok(GeneratedField::SubCommands),
+                            "enhanceCustomCommand" | "enhance_custom_command" => {
+                                Ok(GeneratedField::EnhanceCustomCommand)
+                            }
+                            "short" => Ok(GeneratedField::Short),
                             _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
                         }
                     }
@@ -1016,6 +1071,8 @@ impl<'de> serde::Deserialize<'de> for ServiceCommandDescriptor {
                 let mut service__ = None;
                 let mut rpc_command_options__ = None;
                 let mut sub_commands__ = None;
+                let mut enhance_custom_command__ = None;
+                let mut short__ = None;
                 while let Some(k) = map_.next_key()? {
                     match k {
                         GeneratedField::Service => {
@@ -1037,12 +1094,28 @@ impl<'de> serde::Deserialize<'de> for ServiceCommandDescriptor {
                             sub_commands__ =
                                 Some(map_.next_value::<std::collections::HashMap<_, _>>()?);
                         }
+                        GeneratedField::EnhanceCustomCommand => {
+                            if enhance_custom_command__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "enhanceCustomCommand",
+                                ));
+                            }
+                            enhance_custom_command__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Short => {
+                            if short__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("short"));
+                            }
+                            short__ = Some(map_.next_value()?);
+                        }
                     }
                 }
                 Ok(ServiceCommandDescriptor {
                     service: service__.unwrap_or_default(),
                     rpc_command_options: rpc_command_options__.unwrap_or_default(),
                     sub_commands: sub_commands__.unwrap_or_default(),
+                    enhance_custom_command: enhance_custom_command__.unwrap_or_default(),
+                    short: short__.unwrap_or_default(),
                 })
             }
         }

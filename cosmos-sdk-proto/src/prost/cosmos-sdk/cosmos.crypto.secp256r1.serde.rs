@@ -14,6 +14,7 @@ impl serde::Serialize for PrivKey {
         let mut struct_ser = serializer.serialize_struct("cosmos.crypto.secp256r1.PrivKey", len)?;
         if !self.secret.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "secret",
                 pbjson::private::base64::encode(&self.secret).as_str(),
@@ -116,6 +117,7 @@ impl serde::Serialize for PubKey {
         let mut struct_ser = serializer.serialize_struct("cosmos.crypto.secp256r1.PubKey", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }

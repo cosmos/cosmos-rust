@@ -140,6 +140,7 @@ impl serde::Serialize for ModuleVersion {
         }
         if self.version != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "version",
                 alloc::string::ToString::to_string(&self.version).as_str(),
@@ -654,6 +655,7 @@ impl serde::Serialize for Plan {
         }
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -917,6 +919,7 @@ impl serde::Serialize for QueryAppliedPlanResponse {
             serializer.serialize_struct("cosmos.upgrade.v1beta1.QueryAppliedPlanResponse", len)?;
         if self.height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "height",
                 alloc::string::ToString::to_string(&self.height).as_str(),
@@ -1605,6 +1608,7 @@ impl serde::Serialize for QueryUpgradedConsensusStateRequest {
         )?;
         if self.last_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "lastHeight",
                 alloc::string::ToString::to_string(&self.last_height).as_str(),
@@ -1718,6 +1722,7 @@ impl serde::Serialize for QueryUpgradedConsensusStateResponse {
         )?;
         if !self.upgraded_consensus_state.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "upgradedConsensusState",
                 pbjson::private::base64::encode(&self.upgraded_consensus_state).as_str(),

@@ -74,11 +74,8 @@ impl TryFrom<proto::cosmos::staking::v1beta1::Validator> for Validator {
             unbonding_time: proto
                 .unbonding_time
                 .map(|jailed_until| {
-                    cosmos_sdk_proto::tendermint::google::protobuf::Timestamp {
-                        seconds: jailed_until.seconds,
-                        nanos: jailed_until.nanos,
-                    }
-                    .try_into()
+                    Time::from_unix_timestamp(jailed_until.seconds, jailed_until.nanos as u32)
+                        .map_err(|_| crate::ErrorReport::msg("Invalid timestamp"))
                 })
                 .transpose()?,
             commission: proto.commission.map(TryInto::try_into).transpose()?,
@@ -100,13 +97,10 @@ impl From<Validator> for proto::cosmos::staking::v1beta1::Validator {
             unbonding_height: validator.unbonding_height,
             unbonding_ids: validator.unbonding_ids,
             unbonding_on_hold_ref_count: validator.unbonding_on_hold_ref_count,
-            unbonding_time: validator
-                .unbonding_time
-                .map(cosmos_sdk_proto::tendermint::google::protobuf::Timestamp::from)
-                .map(|t| Timestamp {
-                    seconds: t.seconds,
-                    nanos: t.nanos,
-                }),
+            unbonding_time: validator.unbonding_time.map(|t| Timestamp {
+                seconds: t.unix_timestamp(),
+                nanos: t.unix_timestamp_nanos() as i32 % 1_000_000_000,
+            }),
             commission: validator.commission.map(Into::into),
             min_self_delegation: validator.min_self_delegation,
         }

@@ -21,6 +21,7 @@ impl serde::Serialize for CompactBitArray {
         }
         if !self.elems.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "elems",
                 pbjson::private::base64::encode(&self.elems).as_str(),

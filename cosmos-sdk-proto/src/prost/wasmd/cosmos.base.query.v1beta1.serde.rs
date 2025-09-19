@@ -27,11 +27,13 @@ impl serde::Serialize for PageRequest {
             serializer.serialize_struct("cosmos.base.query.v1beta1.PageRequest", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }
         if self.offset != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "offset",
                 alloc::string::ToString::to_string(&self.offset).as_str(),
@@ -39,6 +41,7 @@ impl serde::Serialize for PageRequest {
         }
         if self.limit != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "limit",
                 alloc::string::ToString::to_string(&self.limit).as_str(),
@@ -208,6 +211,7 @@ impl serde::Serialize for PageResponse {
             serializer.serialize_struct("cosmos.base.query.v1beta1.PageResponse", len)?;
         if !self.next_key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "nextKey",
                 pbjson::private::base64::encode(&self.next_key).as_str(),
@@ -215,6 +219,7 @@ impl serde::Serialize for PageResponse {
         }
         if self.total != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "total",
                 alloc::string::ToString::to_string(&self.total).as_str(),

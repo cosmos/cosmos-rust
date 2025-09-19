@@ -18,6 +18,7 @@ impl serde::Serialize for AbsoluteTxPosition {
             serializer.serialize_struct("cosmwasm.wasm.v1.AbsoluteTxPosition", len)?;
         if self.block_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "blockHeight",
                 alloc::string::ToString::to_string(&self.block_height).as_str(),
@@ -25,6 +26,7 @@ impl serde::Serialize for AbsoluteTxPosition {
         }
         if self.tx_index != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "txIndex",
                 alloc::string::ToString::to_string(&self.tx_index).as_str(),
@@ -478,6 +480,7 @@ impl serde::Serialize for AccessConfigUpdate {
             serializer.serialize_struct("cosmwasm.wasm.v1.AccessConfigUpdate", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -1011,6 +1014,7 @@ impl serde::Serialize for Code {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.Code", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -1021,6 +1025,7 @@ impl serde::Serialize for Code {
         }
         if !self.code_bytes.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeBytes",
                 pbjson::private::base64::encode(&self.code_bytes).as_str(),
@@ -1170,6 +1175,7 @@ impl serde::Serialize for CodeGrant {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.CodeGrant", len)?;
         if !self.code_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeHash",
                 pbjson::private::base64::encode(&self.code_hash).as_str(),
@@ -1300,6 +1306,7 @@ impl serde::Serialize for CodeInfo {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.CodeInfo", len)?;
         if !self.code_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeHash",
                 pbjson::private::base64::encode(&self.code_hash).as_str(),
@@ -1446,6 +1453,7 @@ impl serde::Serialize for CodeInfoResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.CodeInfoResponse", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -1456,6 +1464,7 @@ impl serde::Serialize for CodeInfoResponse {
         }
         if !self.data_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "dataHash",
                 pbjson::private::base64::encode(&self.data_hash).as_str(),
@@ -1613,6 +1622,7 @@ impl serde::Serialize for CombinedLimit {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.CombinedLimit", len)?;
         if self.calls_remaining != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "callsRemaining",
                 alloc::string::ToString::to_string(&self.calls_remaining).as_str(),
@@ -1904,6 +1914,7 @@ impl serde::Serialize for ContractCodeHistoryEntry {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -1914,6 +1925,7 @@ impl serde::Serialize for ContractCodeHistoryEntry {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -2390,6 +2402,7 @@ impl serde::Serialize for ContractInfo {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.ContractInfo", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -2711,6 +2724,7 @@ impl serde::Serialize for ExecuteContractProposal {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -3062,6 +3076,7 @@ impl serde::Serialize for InstantiateContract2Proposal {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -3072,6 +3087,7 @@ impl serde::Serialize for InstantiateContract2Proposal {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -3080,6 +3096,7 @@ impl serde::Serialize for InstantiateContract2Proposal {
         }
         if !self.salt.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("salt", pbjson::private::base64::encode(&self.salt).as_str())?;
         }
@@ -3334,6 +3351,7 @@ impl serde::Serialize for InstantiateContractProposal {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -3344,6 +3362,7 @@ impl serde::Serialize for InstantiateContractProposal {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -3538,6 +3557,7 @@ impl serde::Serialize for MaxCallsLimit {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.MaxCallsLimit", len)?;
         if self.remaining != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "remaining",
                 alloc::string::ToString::to_string(&self.remaining).as_str(),
@@ -3757,6 +3777,7 @@ impl serde::Serialize for MigrateContractProposal {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -3764,6 +3785,7 @@ impl serde::Serialize for MigrateContractProposal {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -3924,11 +3946,13 @@ impl serde::Serialize for Model {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.Model", len)?;
         if !self.key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("key", pbjson::private::base64::encode(&self.key).as_str())?;
         }
         if !self.value.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "value",
                 pbjson::private::base64::encode(&self.value).as_str(),
@@ -4457,6 +4481,7 @@ impl serde::Serialize for MsgExecuteContract {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -4595,6 +4620,7 @@ impl serde::Serialize for MsgExecuteContractResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.MsgExecuteContractResponse", len)?;
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -4814,6 +4840,7 @@ impl serde::Serialize for MsgIbcSend {
         }
         if self.timeout_height != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "timeoutHeight",
                 alloc::string::ToString::to_string(&self.timeout_height).as_str(),
@@ -4821,6 +4848,7 @@ impl serde::Serialize for MsgIbcSend {
         }
         if self.timeout_timestamp != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "timeoutTimestamp",
                 alloc::string::ToString::to_string(&self.timeout_timestamp).as_str(),
@@ -4828,6 +4856,7 @@ impl serde::Serialize for MsgIbcSend {
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -4974,6 +5003,7 @@ impl serde::Serialize for MsgIbcSendResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.MsgIBCSendResponse", len)?;
         if self.sequence != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "sequence",
                 alloc::string::ToString::to_string(&self.sequence).as_str(),
@@ -5184,6 +5214,7 @@ impl serde::Serialize for MsgInstantiateContract {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -5194,6 +5225,7 @@ impl serde::Serialize for MsgInstantiateContract {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -5387,6 +5419,7 @@ impl serde::Serialize for MsgInstantiateContract2 {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -5397,6 +5430,7 @@ impl serde::Serialize for MsgInstantiateContract2 {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -5405,6 +5439,7 @@ impl serde::Serialize for MsgInstantiateContract2 {
         }
         if !self.salt.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("salt", pbjson::private::base64::encode(&self.salt).as_str())?;
         }
@@ -5601,6 +5636,7 @@ impl serde::Serialize for MsgInstantiateContract2Response {
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -5725,6 +5761,7 @@ impl serde::Serialize for MsgInstantiateContractResponse {
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -5858,6 +5895,7 @@ impl serde::Serialize for MsgMigrateContract {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -5865,6 +5903,7 @@ impl serde::Serialize for MsgMigrateContract {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -6003,6 +6042,7 @@ impl serde::Serialize for MsgMigrateContractResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.MsgMigrateContractResponse", len)?;
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -6551,6 +6591,7 @@ impl serde::Serialize for MsgStoreAndInstantiateContract {
         }
         if !self.wasm_byte_code.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "wasmByteCode",
                 pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
@@ -6570,6 +6611,7 @@ impl serde::Serialize for MsgStoreAndInstantiateContract {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -6584,6 +6626,7 @@ impl serde::Serialize for MsgStoreAndInstantiateContract {
         }
         if !self.code_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeHash",
                 pbjson::private::base64::encode(&self.code_hash).as_str(),
@@ -6828,6 +6871,7 @@ impl serde::Serialize for MsgStoreAndInstantiateContractResponse {
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -6962,6 +7006,7 @@ impl serde::Serialize for MsgStoreAndMigrateContract {
         }
         if !self.wasm_byte_code.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "wasmByteCode",
                 pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
@@ -6975,6 +7020,7 @@ impl serde::Serialize for MsgStoreAndMigrateContract {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -7144,6 +7190,7 @@ impl serde::Serialize for MsgStoreAndMigrateContractResponse {
             .serialize_struct("cosmwasm.wasm.v1.MsgStoreAndMigrateContractResponse", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -7151,6 +7198,7 @@ impl serde::Serialize for MsgStoreAndMigrateContractResponse {
         }
         if !self.checksum.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "checksum",
                 pbjson::private::base64::encode(&self.checksum).as_str(),
@@ -7158,6 +7206,7 @@ impl serde::Serialize for MsgStoreAndMigrateContractResponse {
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -7300,6 +7349,7 @@ impl serde::Serialize for MsgStoreCode {
         }
         if !self.wasm_byte_code.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "wasmByteCode",
                 pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
@@ -7439,6 +7489,7 @@ impl serde::Serialize for MsgStoreCodeResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.MsgStoreCodeResponse", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -7446,6 +7497,7 @@ impl serde::Serialize for MsgStoreCodeResponse {
         }
         if !self.checksum.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "checksum",
                 pbjson::private::base64::encode(&self.checksum).as_str(),
@@ -7581,6 +7633,7 @@ impl serde::Serialize for MsgSudoContract {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -7706,6 +7759,7 @@ impl serde::Serialize for MsgSudoContractResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.MsgSudoContractResponse", len)?;
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -8452,6 +8506,7 @@ impl serde::Serialize for MsgUpdateInstantiateConfig {
         }
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -9403,6 +9458,7 @@ impl serde::Serialize for QueryBuildAddressRequest {
         }
         if !self.init_args.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "initArgs",
                 pbjson::private::base64::encode(&self.init_args).as_str(),
@@ -9641,6 +9697,295 @@ impl<'de> serde::Deserialize<'de> for QueryBuildAddressResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for QueryCodeInfoRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.code_id != 0 {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryCodeInfoRequest", len)?;
+        if self.code_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field(
+                "codeId",
+                alloc::string::ToString::to_string(&self.code_id).as_str(),
+            )?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryCodeInfoRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["code_id", "codeId"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            CodeId,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "codeId" | "code_id" => Ok(GeneratedField::CodeId),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryCodeInfoRequest;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryCodeInfoRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> core::result::Result<QueryCodeInfoRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut code_id__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::CodeId => {
+                            if code_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeId"));
+                            }
+                            code_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(QueryCodeInfoRequest {
+                    code_id: code_id__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryCodeInfoRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryCodeInfoResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.code_id != 0 {
+            len += 1;
+        }
+        if !self.creator.is_empty() {
+            len += 1;
+        }
+        if !self.checksum.is_empty() {
+            len += 1;
+        }
+        if self.instantiate_permission.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryCodeInfoResponse", len)?;
+        if self.code_id != 0 {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field(
+                "codeId",
+                alloc::string::ToString::to_string(&self.code_id).as_str(),
+            )?;
+        }
+        if !self.creator.is_empty() {
+            struct_ser.serialize_field("creator", &self.creator)?;
+        }
+        if !self.checksum.is_empty() {
+            #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
+            struct_ser.serialize_field(
+                "checksum",
+                pbjson::private::base64::encode(&self.checksum).as_str(),
+            )?;
+        }
+        if let Some(v) = self.instantiate_permission.as_ref() {
+            struct_ser.serialize_field("instantiatePermission", v)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryCodeInfoResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "code_id",
+            "codeId",
+            "creator",
+            "checksum",
+            "instantiate_permission",
+            "instantiatePermission",
+        ];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            CodeId,
+            Creator,
+            Checksum,
+            InstantiatePermission,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "codeId" | "code_id" => Ok(GeneratedField::CodeId),
+                            "creator" => Ok(GeneratedField::Creator),
+                            "checksum" => Ok(GeneratedField::Checksum),
+                            "instantiatePermission" | "instantiate_permission" => {
+                                Ok(GeneratedField::InstantiatePermission)
+                            }
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryCodeInfoResponse;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryCodeInfoResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> core::result::Result<QueryCodeInfoResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut code_id__ = None;
+                let mut creator__ = None;
+                let mut checksum__ = None;
+                let mut instantiate_permission__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::CodeId => {
+                            if code_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("codeId"));
+                            }
+                            code_id__ = Some(
+                                map_.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Creator => {
+                            if creator__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("creator"));
+                            }
+                            creator__ = Some(map_.next_value()?);
+                        }
+                        GeneratedField::Checksum => {
+                            if checksum__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("checksum"));
+                            }
+                            checksum__ = Some(
+                                map_.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::InstantiatePermission => {
+                            if instantiate_permission__.is_some() {
+                                return Err(serde::de::Error::duplicate_field(
+                                    "instantiatePermission",
+                                ));
+                            }
+                            instantiate_permission__ = map_.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryCodeInfoResponse {
+                    code_id: code_id__.unwrap_or_default(),
+                    creator: creator__.unwrap_or_default(),
+                    checksum: checksum__.unwrap_or_default(),
+                    instantiate_permission: instantiate_permission__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryCodeInfoResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for QueryCodeRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
@@ -9656,6 +10001,7 @@ impl serde::Serialize for QueryCodeRequest {
             serializer.serialize_struct("cosmwasm.wasm.v1.QueryCodeRequest", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -9769,6 +10115,7 @@ impl serde::Serialize for QueryCodeResponse {
         }
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -10563,6 +10910,7 @@ impl serde::Serialize for QueryContractsByCodeRequest {
             serializer.serialize_struct("cosmwasm.wasm.v1.QueryContractsByCodeRequest", len)?;
         if self.code_id != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeId",
                 alloc::string::ToString::to_string(&self.code_id).as_str(),
@@ -11464,6 +11812,7 @@ impl serde::Serialize for QueryRawContractStateRequest {
         }
         if !self.query_data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "queryData",
                 pbjson::private::base64::encode(&self.query_data).as_str(),
@@ -11584,6 +11933,7 @@ impl serde::Serialize for QueryRawContractStateResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.QueryRawContractStateResponse", len)?;
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -11698,6 +12048,7 @@ impl serde::Serialize for QuerySmartContractStateRequest {
         }
         if !self.query_data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "queryData",
                 pbjson::private::base64::encode(&self.query_data).as_str(),
@@ -11818,6 +12169,7 @@ impl serde::Serialize for QuerySmartContractStateResponse {
             serializer.serialize_struct("cosmwasm.wasm.v1.QuerySmartContractStateResponse", len)?;
         if !self.data.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("data", pbjson::private::base64::encode(&self.data).as_str())?;
         }
@@ -11911,6 +12263,191 @@ impl<'de> serde::Deserialize<'de> for QuerySmartContractStateResponse {
     }
 }
 #[cfg(feature = "serde")]
+impl serde::Serialize for QueryWasmLimitsConfigRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryWasmLimitsConfigRequest", len)?;
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryWasmLimitsConfigRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryWasmLimitsConfigRequest;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryWasmLimitsConfigRequest")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> core::result::Result<QueryWasmLimitsConfigRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map_.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map_.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(QueryWasmLimitsConfigRequest {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryWasmLimitsConfigRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
+impl serde::Serialize for QueryWasmLimitsConfigResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.config.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("cosmwasm.wasm.v1.QueryWasmLimitsConfigResponse", len)?;
+        if !self.config.is_empty() {
+            struct_ser.serialize_field("config", &self.config)?;
+        }
+        struct_ser.end()
+    }
+}
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for QueryWasmLimitsConfigResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> core::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["config"];
+
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Config,
+        }
+        #[cfg(feature = "serde")]
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> core::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+
+                    fn expecting(
+                        &self,
+                        formatter: &mut core::fmt::Formatter<'_>,
+                    ) -> core::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> core::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "config" => Ok(GeneratedField::Config),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryWasmLimitsConfigResponse;
+
+            fn expecting(&self, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                formatter.write_str("struct cosmwasm.wasm.v1.QueryWasmLimitsConfigResponse")
+            }
+
+            fn visit_map<V>(
+                self,
+                mut map_: V,
+            ) -> core::result::Result<QueryWasmLimitsConfigResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut config__ = None;
+                while let Some(k) = map_.next_key()? {
+                    match k {
+                        GeneratedField::Config => {
+                            if config__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("config"));
+                            }
+                            config__ = Some(map_.next_value()?);
+                        }
+                    }
+                }
+                Ok(QueryWasmLimitsConfigResponse {
+                    config: config__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "cosmwasm.wasm.v1.QueryWasmLimitsConfigResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+#[cfg(feature = "serde")]
 impl serde::Serialize for Sequence {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> core::result::Result<S::Ok, S::Error>
@@ -11928,6 +12465,7 @@ impl serde::Serialize for Sequence {
         let mut struct_ser = serializer.serialize_struct("cosmwasm.wasm.v1.Sequence", len)?;
         if !self.id_key.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "idKey",
                 pbjson::private::base64::encode(&self.id_key).as_str(),
@@ -11935,6 +12473,7 @@ impl serde::Serialize for Sequence {
         }
         if self.value != 0 {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "value",
                 alloc::string::ToString::to_string(&self.value).as_str(),
@@ -12096,6 +12635,7 @@ impl serde::Serialize for StoreAndInstantiateContractProposal {
         }
         if !self.wasm_byte_code.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "wasmByteCode",
                 pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
@@ -12115,6 +12655,7 @@ impl serde::Serialize for StoreAndInstantiateContractProposal {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
@@ -12129,6 +12670,7 @@ impl serde::Serialize for StoreAndInstantiateContractProposal {
         }
         if !self.code_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeHash",
                 pbjson::private::base64::encode(&self.code_hash).as_str(),
@@ -12524,6 +13066,7 @@ impl serde::Serialize for StoreCodeProposal {
         }
         if !self.wasm_byte_code.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "wasmByteCode",
                 pbjson::private::base64::encode(&self.wasm_byte_code).as_str(),
@@ -12543,6 +13086,7 @@ impl serde::Serialize for StoreCodeProposal {
         }
         if !self.code_hash.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser.serialize_field(
                 "codeHash",
                 pbjson::private::base64::encode(&self.code_hash).as_str(),
@@ -12770,6 +13314,7 @@ impl serde::Serialize for SudoContractProposal {
         }
         if !self.msg.is_empty() {
             #[allow(clippy::needless_borrow)]
+            #[allow(clippy::needless_borrows_for_generic_args)]
             struct_ser
                 .serialize_field("msg", pbjson::private::base64::encode(&self.msg).as_str())?;
         }
